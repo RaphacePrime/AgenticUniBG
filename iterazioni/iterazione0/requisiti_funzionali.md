@@ -324,4 +324,4 @@ Ogni use case è descritto secondo il seguente template:
 - Gli use case UC-06 a UC-11 sono specializzazioni di UC-05
 - UC-12 è incluso in UC-11 e rappresenta la fase finale di risposta
 - UC-13 estende UC-12 per raccogliere feedback
-- Tutte le interazioni avvengono tramite interfaccia conversazionale (chat)
+- Tutte le interazioni avvengono tramite interfaccia conversazionale (chat) o tramite scorciatoie (vedi mockup)
