@@ -1,0 +1,9 @@
+{
+  "name": "Mario Rossi",
+  "passwordHash": "$2b$10$hashedpasswordexample",
+  "department": "Dipartimento di Ingegneria",
+  "course": "Ingegneria Informatica",
+  "tipology": "Triennale",
+  "year": 2,
+  "matricola": "123456"
+}
