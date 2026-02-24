@@ -1,0 +1,36 @@
+@startuml
+title Class Diagram - Iterazione 1
+
+class OrchestratorAgent {
+    - classifier : ClassifierAgent
+    - generator : GeneratorAgent
+    - revision : RevisionAgent
+    + handleQuery(query : String) : String
+}
+
+class ClassifierAgent {
+    + classify(query : String) : String
+}
+
+class GeneratorAgent {
+    + generate(query : String, classification : String) : String
+}
+
+class RevisionAgent {
+    + revise(draft : String) : String
+}
+
+class AgentState {
+    + query : String
+    + classification : String
+    + generatedResponse : String
+    + finalResponse : String
+}
+
+OrchestratorAgent --> ClassifierAgent
+OrchestratorAgent --> GeneratorAgent
+OrchestratorAgent --> RevisionAgent
+
+AgentState --> OrchestratorAgent
+
+@enduml

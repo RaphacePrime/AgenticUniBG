@@ -1,0 +1,16 @@
+@startuml
+title Use Case Diagram - Iterazione 1
+
+left to right direction
+
+actor Studente
+
+rectangle "Sistema Assistente Universitario" {
+    usecase "Inviare domanda" as UC1
+    usecase "Ricevere risposta" as UC2
+}
+
+Studente --> UC1
+Studente --> UC2
+
+@enduml

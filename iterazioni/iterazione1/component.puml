@@ -1,0 +1,37 @@
+@startuml
+skinparam componentStyle uml2
+
+title Component Diagram - Iterazione 1
+
+package "Client Tier" {
+    component [Client] <<component>> as Client
+}
+
+package "Application Logic Tier" {
+    interface "HTTP" as IHTTP
+    interface "BusinessLogic" as IBL
+    
+    component [Web Server] <<component>> as WS
+    component [App Server] <<component>> as AS
+}
+
+package "Data Tier" {
+    interface "JDBC/SQL" as IDB
+    component [Database] <<component>> as DB
+}
+
+' Relazioni e Interfacce
+Client --( IHTTP
+IHTTP - WS
+
+WS --( IBL
+IBL - AS
+
+AS --( IDB
+IDB - DB
+
+note right of IHTTP : Provided by Web Server
+note right of IBL : Logic & Services
+note right of IDB : Data Access Interface
+
+@enduml

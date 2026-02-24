@@ -1,0 +1,21 @@
+@startuml
+title Sequence Diagram - Iterazione 1
+
+actor Utente
+
+participant "Orchestrator Agent" as O
+participant "Classifier Agent" as C
+participant "Revision Agent" as R
+participant "Generator Agent" as G
+
+Utente -> O: invia domanda (query)
+O -> C: classifica domanda (query)
+C -> O: classificazione
+O -> G : genera risposta (query, classificazione)
+G -> O: risposta generata
+O -> R: revisiona risposta (risposta generata)
+R -> O: risposta revisionata
+
+O -> Utente: ritorna(risposta revisionata)
+
+@enduml

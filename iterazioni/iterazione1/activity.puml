@@ -1,0 +1,37 @@
+@startuml
+title Activity Diagram - Iterazione 1
+
+|Utente|
+start
+:Inserisce domanda;
+
+|Orchestrator Agent|
+:Riceve richiesta;
+:Invia richiesta al Classifier;
+
+|Classifier Agent|
+:Classifica intento;
+:Restituisce categoria;
+
+|Orchestrator Agent|
+:Invia richiesta al Generator;
+
+|Generator Agent|
+:Genera risposta preliminare;
+:Restituisce bozza;
+
+|Orchestrator Agent|
+:Invia bozza al Revision;
+
+|Revision Agent|
+:Revisiona risposta;
+:Restituisce risposta finale;
+
+|Orchestrator Agent|
+:Invia risposta all'utente;
+
+|Utente|
+:Visualizza risposta;
+
+stop
+@enduml
