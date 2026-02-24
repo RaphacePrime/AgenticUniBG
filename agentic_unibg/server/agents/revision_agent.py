@@ -43,16 +43,19 @@ Se necessita miglioramenti, rielaborala mantenendo il significato originale.
 
 Rispondi SOLO con la risposta migliorata in formato testo semplice, senza commenti aggiuntivi."""
     
-    async def revise(self, original_query: str, generated_response: str, category: str) -> Dict[str, str]:
+    async def revise(self, original_query: str, generated_response: str, category: str, user_context: str = "") -> Dict[str, str]:
         """
         Rivede e migliora una risposta generata
         """
         try:
+            user_section = f"\n{user_context}\n" if user_context else ""
+            
             revision_prompt = f"""Domanda originale: {original_query}
 Categoria: {category}
+{user_section}
 Risposta generata: {generated_response}
 
-Rivedi e migliora questa risposta se necessario."""
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa."""
             
             messages = [
                 SystemMessage(content=self.system_prompt),

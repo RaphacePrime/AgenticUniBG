@@ -1,5 +1,6 @@
 {
-  "name": "Mario Rossi",
+  "name": "Mario",
+  "surname": "Rossi",
   "passwordHash": "$2b$10$hashedpasswordexample",
   "department": "Dipartimento di Ingegneria",
   "course": "Ingegneria Informatica",

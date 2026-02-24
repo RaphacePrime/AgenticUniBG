@@ -29,7 +29,7 @@ body {
 
 .App {
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--primary-light) 0%, var(--background) 100%);
+  background: var(--background);
   display: flex;
   flex-direction: column;
 }
@@ -45,6 +45,52 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  background: var(--primary-light);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.user-badge-icon {
+  font-size: 1.1rem;
+}
+
+.logout-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--error-color);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--error-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.logout-btn:hover {
+  background: var(--error-color);
+  color: white;
+}
+
+.welcome-user-info {
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
 }
 
 .header-content h1 {

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import LoginPage from './LoginPage'
 
 function App() {
   const [message, setMessage] = useState('')
@@ -7,6 +8,10 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [connectionStatus, setConnectionStatus] = useState('checking')
   const [showWorkflow, setShowWorkflow] = useState(false)
+
+  // Auth state
+  const [userInfo, setUserInfo] = useState(null) // null = not logged in, show login page
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
     // Test connection to backend
@@ -21,6 +26,32 @@ function App() {
         setConnectionStatus('error')
       })
   }, [])
+
+  // Auth handlers
+  const handleLogin = (userData) => {
+    setUserInfo(userData)
+    setIsAuthenticated(true)
+  }
+
+  const handleGuest = () => {
+    setUserInfo({
+      status: 'ospite',
+      name: null,
+      surname: null,
+      department: null,
+      course: null,
+      tipology: null,
+      year: null,
+      matricola: null,
+    })
+    setIsAuthenticated(true)
+  }
+
+  const handleLogout = () => {
+    setUserInfo(null)
+    setIsAuthenticated(false)
+    setConversation([])
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -41,7 +72,7 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ query: currentQuery })
+        body: JSON.stringify({ query: currentQuery, user_info: userInfo })
       })
       
       const data = await res.json()
@@ -96,6 +127,11 @@ function App() {
     return labels[category] || category
   }
 
+  // Show login page if not authenticated
+  if (!isAuthenticated) {
+    return <LoginPage onLogin={handleLogin} onGuest={handleGuest} />
+  }
+
   return (
     <div className="App">
       <header className="app-header">
@@ -103,9 +139,25 @@ function App() {
           <h1>🎓 Agentic UniBG</h1>
           <p className="subtitle">Assistente Intelligente per l'Università di Bergamo</p>
         </div>
-        <div className="connection-status">
-          <span className={`status-indicator ${connectionStatus}`}></span>
-          {connectionStatus === 'connected' ? 'Connesso' : connectionStatus === 'error' ? 'Disconnesso' : 'Connessione...'}
+        <div className="header-right">
+          <div className="user-badge">
+            {userInfo?.status === 'loggato' ? (
+              <>
+                <span className="user-badge-icon">🎓</span>
+                <span className="user-badge-text">{userInfo.name} {userInfo.surname}</span>
+              </>
+            ) : (
+              <>
+                <span className="user-badge-icon">👤</span>
+                <span className="user-badge-text">Ospite</span>
+              </>
+            )}
+          </div>
+          <div className="connection-status">
+            <span className={`status-indicator ${connectionStatus}`}></span>
+            {connectionStatus === 'connected' ? 'Connesso' : connectionStatus === 'error' ? 'Disconnesso' : 'Connessione...'}
+          </div>
+          <button className="logout-btn" onClick={handleLogout}>Esci</button>
         </div>
       </header>
 
@@ -113,8 +165,17 @@ function App() {
         <div className="conversation-container">
           {conversation.length === 0 ? (
             <div className="welcome-message">
-              <h2>Benvenuto! 👋</h2>
+              <h2>
+                {userInfo?.status === 'loggato'
+                  ? `Benvenuto, ${userInfo.name}! 👋`
+                  : 'Benvenuto! 👋'}
+              </h2>
               <p>Sono il tuo assistente per l'Università di Bergamo.</p>
+              {userInfo?.status === 'loggato' && (
+                <p className="welcome-user-info">
+                  📋 {userInfo.course} &bull; {userInfo.tipology} &bull; {userInfo.year}° Anno &bull; {userInfo.department}
+                </p>
+              )}
               <p>Puoi chiedermi informazioni su:</p>
               <ul>
                 <li>📚 Corsi e programmi di studio</li>

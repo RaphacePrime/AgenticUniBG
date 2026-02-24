@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Optional
 from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage, SystemMessage
 
@@ -19,15 +19,20 @@ class ClassifierAgent:
     
     def __init__(self, llm: ChatGroq):
         self.llm = llm
-        self.system_prompt = self._build_system_prompt()
     
-    def _build_system_prompt(self) -> str:
+    def _build_system_prompt(self, user_context: str = "") -> str:
         categories_text = "\n".join([f"- {cat}: {desc}" for cat, desc in self.CATEGORIES.items()])
+        
+        user_section = f"\n\n{user_context}\n" if user_context else ""
         
         return f"""Sei un agente classificatore per l'Università di Bergamo.
 Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
 
 {categories_text}
+{user_section}
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
 
 Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
 Esempi:
@@ -37,13 +42,13 @@ Esempi:
 - "Dove si trova la mensa?" -> servizi
 """
     
-    async def classify(self, query: str) -> Dict[str, str]:
+    async def classify(self, query: str, user_context: str = "") -> Dict[str, str]:
         """
         Classifica una query e restituisce la categoria
         """
         try:
             messages = [
-                SystemMessage(content=self.system_prompt),
+                SystemMessage(content=self._build_system_prompt(user_context)),
                 HumanMessage(content=query)
             ]
             
@@ -57,7 +62,7 @@ Esempi:
             return {
                 "category": category,
                 "description": self.CATEGORIES.get(category, "Non classificata"),
-                "confidence": "high"  # Potremmo implementare un sistema di confidence
+                "confidence": "high"
             }
         except Exception as e:
             return {

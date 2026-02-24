@@ -3,7 +3,7 @@ from langchain_groq import ChatGroq
 import os
 
 from langgraph.graph import StateGraph, END
-from .agent_state import AgentState
+from .agent_state import AgentState, build_user_context
 from .classifier_agent import ClassifierAgent
 from .generator_agent import GeneratorAgent
 from .revision_agent import RevisionAgent
@@ -18,7 +18,7 @@ class OrchestratorAgent:
     def __init__(self):
         self.llm = ChatGroq(
             model="llama-3.3-70b-versatile",
-            temperature=0.7,
+            temperature=0.3,
             api_key=os.getenv("GROQ_API_KEY")
         )
         
@@ -59,7 +59,8 @@ class OrchestratorAgent:
         Nodo per la classificazione della query
         """
         try:
-            classification = await self.classifier.classify(state["query"])
+            user_ctx = build_user_context(state)
+            classification = await self.classifier.classify(state["query"], user_context=user_ctx)
             
             state["category"] = classification["category"]
             state["category_description"] = classification["description"]
@@ -84,10 +85,12 @@ class OrchestratorAgent:
         Nodo per la generazione della risposta
         """
         try:
+            user_ctx = build_user_context(state)
             generation = await self.generator.generate(
                 query=state["query"],
                 category=state["category"],
-                context=state.get("context")
+                context=state.get("context"),
+                user_context=user_ctx
             )
             
             state["generated_response"] = generation["response"]
@@ -112,10 +115,12 @@ class OrchestratorAgent:
         Nodo per la revisione della risposta
         """
         try:
+            user_ctx = build_user_context(state)
             revision = await self.reviser.revise(
                 original_query=state["query"],
                 generated_response=state["generated_response"],
-                category=state["category"]
+                category=state["category"],
+                user_context=user_ctx
             )
             
             state["final_response"] = revision["revised_response"]
@@ -139,18 +144,32 @@ class OrchestratorAgent:
         return state
     
     async def process_query(
-        self, 
-        query: str, 
-        context: Optional[Dict] = None
+        self,
+        query: str,
+        context: Optional[Dict] = None,
+        user_info: Optional[Dict] = None
     ) -> Dict:
         """
         Processa una query attraverso il workflow LangGraph
         """
         try:
+            # Estrai informazioni utente
+            ui = user_info or {}
+
             # Inizializza lo stato
             initial_state: AgentState = {
                 "query": query,
                 "context": context,
+                # User info
+                "user_status": ui.get("status", "ospite"),
+                "user_name": ui.get("name"),
+                "user_surname": ui.get("surname"),
+                "user_department": ui.get("department"),
+                "user_course": ui.get("course"),
+                "user_tipology": ui.get("tipology"),
+                "user_year": ui.get("year"),
+                "user_matricola": ui.get("matricola"),
+                # Classification
                 "category": None,
                 "category_description": None,
                 "confidence": None,

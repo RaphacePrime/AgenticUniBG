@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Optional
 from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage, SystemMessage
 
@@ -35,9 +35,9 @@ Cerca di comprendere la richiesta e fornire una risposta utile o indirizzare l'u
     def __init__(self, llm: ChatGroq):
         self.llm = llm
     
-    def _build_system_prompt(self, category: str, context: Dict = None) -> str:
+    def _build_system_prompt(self, category: str, context: Dict = None, user_context: str = "") -> str:
         """
-        Costruisce il prompt di sistema basato sulla categoria
+        Costruisce il prompt di sistema basato sulla categoria e contesto utente
         """
         base_prompt = self.CATEGORY_PROMPTS.get(category, self.CATEGORY_PROMPTS["altro"])
         
@@ -45,17 +45,27 @@ Cerca di comprendere la richiesta e fornire una risposta utile o indirizzare l'u
         if context and "additional_info" in context:
             additional_context = f"\n\nInformazioni aggiuntive:\n{context['additional_info']}"
         
-        return f"""{base_prompt}
+        user_section = ""
+        if user_context:
+            user_section = f"""
 
+{user_context}
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative."""
+        
+        return f"""{base_prompt}
+{user_section}
 Rispondi in italiano in modo chiaro, conciso e professionale.
 Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.{additional_context}"""
     
-    async def generate(self, query: str, category: str, context: Dict = None) -> Dict[str, str]:
+    async def generate(self, query: str, category: str, context: Dict = None, user_context: str = "") -> Dict[str, str]:
         """
         Genera una risposta basata sulla query e categoria
         """
         try:
-            system_prompt = self._build_system_prompt(category, context)
+            system_prompt = self._build_system_prompt(category, context, user_context)
             
             messages = [
                 SystemMessage(content=system_prompt),

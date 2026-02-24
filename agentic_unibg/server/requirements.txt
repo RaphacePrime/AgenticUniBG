@@ -15,6 +15,13 @@ langgraph>=0.0.20
 chromadb>=0.4.22
 faiss-cpu>=1.7.4
 
+# MongoDB
+motor>=3.3.0
+pymongo>=4.6.0
+
+# Authentication
+bcrypt>=4.1.0
+
 # Additional dependencies
 requests>=2.31.0
 aiohttp>=3.9.1
