@@ -1,4 +1,4 @@
-# Iterazione 0 – Visione Iniziale e Analisi Preliminare
+﻿# Iterazione 0 – Visione Iniziale e Analisi Preliminare
 ---
 
 # 1. Introduzione
@@ -80,9 +80,6 @@ Il sistema deve implementare i seguenti macro-casi d’uso:
 - Fornire risposta (UC-12)
 - Raccolta feedback (UC-13)
 
-Il documento dettagliato dei requisiti funzionali è allegato separatamente:
-`Requisiti_Funzionali_Agentic_UniBG.md`
-
 ---
 
 ## 4.2 Requisiti Non Funzionali
@@ -103,11 +100,11 @@ Il documento dettagliato dei requisiti funzionali è allegato separatamente:
 L’architettura iniziale prevede:
 
 ### Frontend
-- React Native App
+- React Native App (comunicazione via REST `/api/v1` e WebSocket `/ws`)
 
 ### Backend (LangChain)
 - API Gateway
-- Orchestrator Agent
+- Orchestrator Agent (coordina tutti gli agenti tramite interfacce dedicate)
 - Classifier Agent
 - Profile Agent
 - Memory Agent
@@ -118,47 +115,61 @@ L’architettura iniziale prevede:
 - Feedback Agent
 
 ### Persistence Layer
-- Student Profile DB
-- Q&A History DB (NoSQL)
+- **Student Profile DB** (SQL) — dati anagrafici e di profilo degli studenti
+- **Q&A History DB** (NoSQL) — cronologia delle conversazioni
+
+### Componenti Esterni
+- **LLM Provider (Ollama)** — modello linguistico locale interrogato da Generator Agent e Revision Agent tramite interfaccia `LLM API`
+- **Web / Internet** — sorgente esterna consultata dal Web Agent per recupero informazioni
 
 ---
 
-## 5.2 Agent Interaction Diagram
+## 5.2 Flusso di Interazione tra Agenti
 
-Questo diagramma rappresenta il flusso teorico completo tra agenti, mostrando:
+Il flusso teorico completo prevede:
 
-- Coordinamento centralizzato
-- Comunicazione interna tra agenti
-- Accesso a basi dati
-- Pipeline di generazione e revisione
+1. Il **Frontend** invia la richiesta all'**API Gateway** via REST o WebSocket.
+2. L'**API Gateway** la inoltra all'**Orchestrator Agent**.
+3. L'**Orchestrator** instrada la richiesta agli agenti specializzati nell'ordine opportuno:
+   - **Classifier Agent** → classifica l'intento
+   - **Profile Agent** → recupera il profilo da Student Profile DB (SQL)
+   - **Memory Agent** → recupera la cronologia da Q&A History DB (NoSQL)
+   - **Web Agent** → eventuale ricerca su Internet
+   - **Documents Agent** → eventuale ricerca su documenti interni
+   - **Generator Agent** → genera la risposta chiamando l'**LLM Provider (Ollama)**
+   - **Revision Agent** → revisiona la bozza chiamando l'**LLM Provider (Ollama)**
+   - **Feedback Agent** → raccoglie il feedback utente
+4. La risposta finale risale all'**Orchestrator** e viene restituita al **Frontend**.
 
 ---
 
 # 6. Use Case Diagram – Visione Completa
 
-Il sistema supporta tre tipologie di attori:
+Il sistema supporta due tipologie di attori principali:
 
-- Studente
-- Ospite
-- User generico
+- **Studente** — utente autenticato con profilo personale
+- **Ospite** — utente non autenticato con accesso limitato alle funzionalità generali
 
-Il caso d’uso principale è:
+I macro-casi d'uso della visione completa sono:
 
-> UC-05: Inviare Domanda/Richiesta
+| ID | Nome | Attore |
+|----|------|--------|
+| UC-01 | Login come Studente | Studente |
+| UC-02 | Registrazione Studente | Studente |
+| UC-03 | Accesso come Ospite | Ospite |
+| UC-04 | Gestione Profilo | Studente |
+| UC-05 | Inviare Domanda/Richiesta | Studente, Ospite |
+| UC-06 | Richiedere Guida Procedurale | Studente |
+| UC-07 | Recupero Documento Ufficiale | Studente |
+| UC-08 | Informazioni su un Corso | Studente |
+| UC-09 | Consultazione Orari Lezioni | Studente |
+| UC-10 | Verifica Occupazione Aule | Studente |
+| UC-11 | Informazioni Generali | Studente, Ospite |
+| UC-12 | Ricevere Risposta | Studente, Ospite |
+| UC-13 | Fornire Feedback | Studente, Ospite |
 
-Da cui derivano i casi specializzati:
-
-- Richiedere guida
-- Richiedere documenti
-- Informazioni corsi
-- Orari lezioni
-- Occupazione aule
-- Informazioni generali
-
-Il sistema include inoltre:
-
-- UC-12: Ricevere Risposta
-- UC-13: Fornire Feedback
+La descrizione dettagliata di ciascun caso d'uso (precondizioni, flusso principale, flussi alternativi, postcondizioni) è riportata nel file allegato:
+`requisiti_funzionali.md`
 
 ---
 
