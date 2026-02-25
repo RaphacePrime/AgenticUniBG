@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, Response, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
@@ -29,9 +29,11 @@ def create_access_token(data: dict):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
+def verify_token(request: Request):
+    token = request.cookies.get("access_token")
+    if not token:
+        raise HTTPException(status_code=401, detail="Non autenticato")
     try:
-        token = credentials.credentials
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
     except JWTError:
@@ -46,7 +48,7 @@ app = FastAPI(
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:3000", "http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -104,10 +106,10 @@ async def health_check():
 # ─── Auth Endpoints ───────────────────────────────────────────────
 
 @app.post("/api/auth/login")
-async def login(request: LoginRequest):
+async def login(request: LoginRequest, response: Response):
     """
     Login con matricola e password.
-    Restituisce JWT token e informazioni studente.
+    Imposta httpOnly cookie con JWT token.
     """
     student = await students_collection.find_one({"matricola": request.matricola})
     if not student:
@@ -127,27 +129,33 @@ async def login(request: LoginRequest):
     }
     access_token = create_access_token(token_data)
 
+    # Imposta cookie httpOnly
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True,
+        secure=False,  # True in production con HTTPS
+        samesite="lax",
+        max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60
+    )
+
     return {
-        "access_token": access_token,
-        "token_type": "bearer",
-        "user": {
-            "status": "loggato",
-            "name": student.get("name"),
-            "surname": student.get("surname"),
-            "department": student.get("department"),
-            "course": student.get("course"),
-            "tipology": student.get("tipology"),
-            "year": student.get("year"),
-            "matricola": student.get("matricola"),
-        }
+        "status": "loggato",
+        "name": student.get("name"),
+        "surname": student.get("surname"),
+        "department": student.get("department"),
+        "course": student.get("course"),
+        "tipology": student.get("tipology"),
+        "year": student.get("year"),
+        "matricola": student.get("matricola"),
     }
 
 
 @app.post("/api/auth/register")
-async def register(request: RegisterRequest):
+async def register(request: RegisterRequest, response: Response):
     """
     Registrazione nuovo studente.
-    Restituisce JWT token e informazioni studente.
+    Imposta httpOnly cookie con JWT token.
     """
     existing = await students_collection.find_one({"matricola": request.matricola})
     if existing:
@@ -174,26 +182,32 @@ async def register(request: RegisterRequest):
     }
     access_token = create_access_token(token_data)
 
+    # Imposta cookie httpOnly
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True,
+        secure=False,  # True in production con HTTPS
+        samesite="lax",
+        max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60
+    )
+
     return {
-        "access_token": access_token,
-        "token_type": "bearer",
-        "user": {
-            "status": "loggato",
-            "name": request.name,
-            "surname": request.surname,
-            "department": request.department,
-            "course": request.course,
-            "tipology": request.tipology,
-            "year": request.year,
-            "matricola": request.matricola,
-        }
+        "status": "loggato",
+        "name": request.name,
+        "surname": request.surname,
+        "department": request.department,
+        "course": request.course,
+        "tipology": request.tipology,
+        "year": request.year,
+        "matricola": request.matricola,
     }
 
 
 @app.get("/api/auth/verify")
-async def verify_auth(payload: dict = Depends(verify_token)):
+async def verify_auth(request: Request, payload: dict = Depends(verify_token)):
     """
-    Verifica il token JWT e restituisce le informazioni dell'utente.
+    Verifica il token JWT dal cookie e restituisce le informazioni dell'utente.
     """
     matricola = payload.get("matricola")
     if not matricola:
@@ -213,6 +227,15 @@ async def verify_auth(payload: dict = Depends(verify_token)):
         "year": student.get("year"),
         "matricola": student.get("matricola"),
     }
+
+
+@app.post("/api/auth/logout")
+async def logout(response: Response):
+    """
+    Logout - cancella il cookie httpOnly.
+    """
+    response.delete_cookie(key="access_token")
+    return {"status": "success", "message": "Logout effettuato"}
 
 
 # ─── Agent Endpoints ──────────────────────────────────────────────

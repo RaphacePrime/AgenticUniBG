@@ -172,6 +172,7 @@ function LoginPage({ onLogin, onGuest }) {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           matricola: loginData.matricola,
           password: loginData.password
@@ -181,10 +182,8 @@ function LoginPage({ onLogin, onGuest }) {
         const data = await res.json()
         throw new Error(data.detail || 'Errore nel login')
       }
-      const data = await res.json()
-      // Salva il token in localStorage
-      localStorage.setItem('access_token', data.access_token)
-      onLogin(data.user)
+      const userData = await res.json()
+      onLogin(userData)
     } catch (err) {
       setError(err.message)
     } finally {
@@ -207,6 +206,7 @@ function LoginPage({ onLogin, onGuest }) {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           name: registerData.name,
           surname: registerData.surname,
@@ -222,10 +222,8 @@ function LoginPage({ onLogin, onGuest }) {
         const data = await res.json()
         throw new Error(data.detail || 'Errore nella registrazione')
       }
-      const data = await res.json()
-      // Salva il token in localStorage
-      localStorage.setItem('access_token', data.access_token)
-      onLogin(data.user)
+      const userData = await res.json()
+      onLogin(userData)
     } catch (err) {
       setError(err.message)
     } finally {

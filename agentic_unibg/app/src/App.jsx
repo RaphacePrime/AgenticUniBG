@@ -27,32 +27,24 @@ function App() {
         setConnectionStatus('error')
       })
     
-    // Verifica token salvato
-    const token = localStorage.getItem('access_token')
-    if (token) {
-      fetch('/api/auth/verify', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+    // Verifica token dal cookie
+    fetch('/api/auth/verify', {
+      credentials: 'include'
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('Token invalido')
+        return res.json()
       })
-        .then(res => {
-          if (!res.ok) throw new Error('Token invalido')
-          return res.json()
-        })
-        .then(userData => {
-          setUserInfo(userData)
-          setIsAuthenticated(true)
-        })
-        .catch(err => {
-          console.error('Token verification failed:', err)
-          localStorage.removeItem('access_token')
-        })
-        .finally(() => {
-          setIsInitialLoading(false)
-        })
-    } else {
-      setIsInitialLoading(false)
-    }
+      .then(userData => {
+        setUserInfo(userData)
+        setIsAuthenticated(true)
+      })
+      .catch(err => {
+        console.error('Token verification failed:', err)
+      })
+      .finally(() => {
+        setIsInitialLoading(false)
+      })
   }, [])
 
   // Auth handlers
@@ -75,11 +67,19 @@ function App() {
     setIsAuthenticated(true)
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem('access_token')
-    setUserInfo(null)
-    setIsAuthenticated(false)
-    setConversation([])
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+      })
+    } catch (err) {
+      console.error('Logout error:', err)
+    } finally {
+      setUserInfo(null)
+      setIsAuthenticated(false)
+      setConversation([])
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -96,17 +96,12 @@ function App() {
     setMessage('') // Pulisci l'input subito
     
     try {
-      const token = localStorage.getItem('access_token')
-      const headers = {
-        'Content-Type': 'application/json',
-      }
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`
-      }
-      
       const res = await fetch('/api/agent/query', {
         method: 'POST',
-        headers: headers,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
         body: JSON.stringify({ query: currentQuery, user_info: userInfo })
       })
       
