@@ -1,4 +1,4 @@
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage, SystemMessage
 
@@ -42,14 +42,23 @@ Esempi:
 - "Dove si trova la mensa?" -> servizi
 """
     
-    async def classify(self, query: str, user_context: str = "") -> Dict[str, str]:
+    async def classify(self, query: str, user_context: str = "", conversation_history: List[Dict] = None) -> Dict[str, str]:
         """
         Classifica una query e restituisce la categoria
         """
         try:
+            query_text = query
+            if conversation_history:
+                recent = conversation_history[-4:]  # Ultimi 2 turni per contesto
+                ctx_lines = ["Contesto conversazione recente:"]
+                for msg in recent:
+                    role = "Studente" if msg.get('role') == 'user' else "Assistente"
+                    ctx_lines.append(f"- {role}: {msg.get('content', '')[:150]}")
+                query_text = "\n".join(ctx_lines) + f"\n\nNuova domanda: {query}"
+
             messages = [
                 SystemMessage(content=self._build_system_prompt(user_context)),
-                HumanMessage(content=query)
+                HumanMessage(content=query_text)
             ]
             
             response = await self.llm.ainvoke(messages)

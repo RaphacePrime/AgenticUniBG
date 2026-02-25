@@ -62,6 +62,7 @@ class QueryRequest(BaseModel):
     query: str
     context: Optional[dict] = None
     user_info: Optional[dict] = None
+    conversation_history: Optional[list] = None
 
 
 class QueryResponse(BaseModel):
@@ -250,7 +251,8 @@ async def process_query(request: QueryRequest):
         result = await agent_manager.process_query(
             query=request.query,
             context=request.context,
-            user_info=request.user_info
+            user_info=request.user_info,
+            conversation_history=request.conversation_history
         )
         
         return QueryResponse(

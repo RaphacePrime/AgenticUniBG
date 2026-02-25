@@ -8,6 +8,7 @@ class AgentState(TypedDict):
     # Input originale
     query: str
     context: Optional[Dict]
+    conversation_history: Optional[List[Dict]]
     
     # Informazioni utente
     user_status: Optional[str]       # "loggato" | "ospite"

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import LoginPage from './LoginPage'
 
@@ -6,6 +6,7 @@ function App() {
   const [message, setMessage] = useState('')
   const [conversation, setConversation] = useState([])
   const [loading, setLoading] = useState(false)
+  const conversationEndRef = useRef(null)
   const [connectionStatus, setConnectionStatus] = useState('checking')
   const [showWorkflow, setShowWorkflow] = useState(false)
 
@@ -38,6 +39,11 @@ function App() {
       .then(userData => {
         setUserInfo(userData)
         setIsAuthenticated(true)
+        const key = `conversation_${userData.matricola || 'ospite'}`
+        const saved = localStorage.getItem(key)
+        if (saved) {
+          try { setConversation(JSON.parse(saved)) } catch (e) {}
+        }
       })
       .catch(err => {
         console.error('Token verification failed:', err)
@@ -46,6 +52,19 @@ function App() {
         setIsInitialLoading(false)
       })
   }, [])
+
+  // Auto-scroll al fondo quando arriva un nuovo messaggio
+  useEffect(() => {
+    conversationEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [conversation, loading])
+
+  // Salva conversazione in localStorage ad ogni aggiornamento
+  useEffect(() => {
+    if (isAuthenticated && userInfo) {
+      const key = `conversation_${userInfo.matricola || 'ospite'}`
+      localStorage.setItem(key, JSON.stringify(conversation))
+    }
+  }, [conversation, isAuthenticated, userInfo])
 
   // Auth handlers
   const handleLogin = (userData) => {
@@ -76,6 +95,10 @@ function App() {
     } catch (err) {
       console.error('Logout error:', err)
     } finally {
+      if (userInfo) {
+        const key = `conversation_${userInfo.matricola || 'ospite'}`
+        localStorage.removeItem(key)
+      }
       setUserInfo(null)
       setIsAuthenticated(false)
       setConversation([])
@@ -94,7 +117,16 @@ function App() {
     
     const currentQuery = message
     setMessage('') // Pulisci l'input subito
-    
+
+    // Ultimi 5 turni (10 messaggi) come contesto conversazionale
+    const conversationHistory = conversation
+      .filter(msg => msg.type === 'user' || msg.type === 'agent')
+      .slice(-10)
+      .map(msg => ({
+        role: msg.type === 'user' ? 'user' : 'assistant',
+        content: msg.content
+      }))
+
     try {
       const res = await fetch('/api/agent/query', {
         method: 'POST',
@@ -102,7 +134,7 @@ function App() {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({ query: currentQuery, user_info: userInfo })
+        body: JSON.stringify({ query: currentQuery, user_info: userInfo, conversation_history: conversationHistory })
       })
       
       const data = await res.json()
@@ -131,6 +163,10 @@ function App() {
 
   const clearConversation = () => {
     setConversation([])
+    if (userInfo) {
+      const key = `conversation_${userInfo.matricola || 'ospite'}`
+      localStorage.removeItem(key)
+    }
   }
 
   const getCategoryIcon = (category) => {
@@ -285,6 +321,7 @@ function App() {
                   </div>
                 </div>
               )}
+              <div ref={conversationEndRef} />
             </div>
           )}
         </div>
@@ -300,7 +337,7 @@ function App() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Scrivi la tua domanda qui..."
-              rows="3"
+              rows="2"
               disabled={loading}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {

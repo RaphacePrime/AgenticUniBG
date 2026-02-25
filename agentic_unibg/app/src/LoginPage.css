@@ -54,24 +54,12 @@
   max-height: 90vh;
   overflow-y: auto;
   overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .auth-panel::-webkit-scrollbar {
-  width: 8px;
-}
-
-.auth-panel::-webkit-scrollbar-track {
-  background: var(--lp-surface-soft);
-  border-radius: 10px;
-}
-
-.auth-panel::-webkit-scrollbar-thumb {
-  background: var(--lp-border);
-  border-radius: 10px;
-}
-
-.auth-panel::-webkit-scrollbar-thumb:hover {
-  background: var(--lp-text-muted);
+  display: none;
 }
 
 .auth-brand {

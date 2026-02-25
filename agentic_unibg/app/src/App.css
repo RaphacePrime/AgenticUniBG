@@ -190,12 +190,15 @@ body {
 /* Conversation Container */
 .conversation-container {
   flex: 1;
-  background: var(--surface);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  padding: 2rem;
   overflow-y: auto;
-  max-height: calc(100vh - 350px);
+  max-height: calc(100vh - 280px);
+  padding: 0.5rem 0;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.conversation-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .welcome-message {
@@ -360,16 +363,16 @@ body {
   background: var(--surface);
   border-radius: 12px;
   box-shadow: var(--shadow-lg);
-  padding: 1.5rem;
+  padding: 0.6rem 1rem;
 }
 
 .clear-btn {
   background: transparent;
   color: var(--error-color);
   border: 1px solid var(--error-color);
-  padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
+  padding: 0.3rem 0.8rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s;
@@ -388,11 +391,11 @@ body {
 
 .input-form textarea {
   flex: 1;
-  padding: 1rem;
+  padding: 0.6rem 0.8rem;
   border: 2px solid var(--border-color);
   border-radius: 8px;
   font-family: inherit;
-  font-size: 1rem;
+  font-size: 0.95rem;
   resize: none;
   transition: border-color 0.3s;
 }
@@ -403,12 +406,12 @@ body {
 }
 
 .input-form button {
-  padding: 1rem 2rem;
+  padding: 0.6rem 1.4rem;
   background: var(--primary-color);
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
@@ -447,8 +450,7 @@ body {
   }
 
   .conversation-container {
-    padding: 1rem;
-    max-height: calc(100vh - 400px);
+    max-height: calc(100vh - 320px);
   }
 
   .message-content {

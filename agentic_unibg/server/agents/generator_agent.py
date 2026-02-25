@@ -1,6 +1,6 @@
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 from langchain_groq import ChatGroq
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
 
 class GeneratorAgent:
@@ -60,17 +60,24 @@ Se è un ospite, fornisci risposte generiche e orientative."""
 Rispondi in italiano in modo chiaro, conciso e professionale.
 Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.{additional_context}"""
     
-    async def generate(self, query: str, category: str, context: Dict = None, user_context: str = "") -> Dict[str, str]:
+    async def generate(self, query: str, category: str, context: Dict = None, user_context: str = "", conversation_history: List[Dict] = None) -> Dict[str, str]:
         """
         Genera una risposta basata sulla query e categoria
         """
         try:
             system_prompt = self._build_system_prompt(category, context, user_context)
-            
-            messages = [
-                SystemMessage(content=system_prompt),
-                HumanMessage(content=query)
-            ]
+
+            messages = [SystemMessage(content=system_prompt)]
+
+            # Aggiungi storico come messaggi LLM nativi per vera memoria conversazionale
+            if conversation_history:
+                for msg in conversation_history:
+                    if msg.get('role') == 'user':
+                        messages.append(HumanMessage(content=msg['content']))
+                    elif msg.get('role') == 'assistant':
+                        messages.append(AIMessage(content=msg['content']))
+
+            messages.append(HumanMessage(content=query))
             
             response = await self.llm.ainvoke(messages)
             

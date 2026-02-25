@@ -26,10 +26,7 @@ class OrchestratorAgent:
         self.classifier = ClassifierAgent(self.llm)
         self.generator = GeneratorAgent(self.llm)
         self.reviser = RevisionAgent(self.llm)
-        
-        # Cronologia conversazioni
-        self.conversation_history: List[Dict] = []
-        
+
         # Costruisci il grafo
         self.workflow = self._build_workflow()
     
@@ -60,7 +57,7 @@ class OrchestratorAgent:
         """
         try:
             user_ctx = build_user_context(state)
-            classification = await self.classifier.classify(state["query"], user_context=user_ctx)
+            classification = await self.classifier.classify(state["query"], user_context=user_ctx, conversation_history=state.get("conversation_history"))
             
             state["category"] = classification["category"]
             state["category_description"] = classification["description"]
@@ -90,7 +87,8 @@ class OrchestratorAgent:
                 query=state["query"],
                 category=state["category"],
                 context=state.get("context"),
-                user_context=user_ctx
+                user_context=user_ctx,
+                conversation_history=state.get("conversation_history")
             )
             
             state["generated_response"] = generation["response"]
@@ -120,7 +118,8 @@ class OrchestratorAgent:
                 original_query=state["query"],
                 generated_response=state["generated_response"],
                 category=state["category"],
-                user_context=user_ctx
+                user_context=user_ctx,
+                conversation_history=state.get("conversation_history")
             )
             
             state["final_response"] = revision["revised_response"]
@@ -147,7 +146,8 @@ class OrchestratorAgent:
         self,
         query: str,
         context: Optional[Dict] = None,
-        user_info: Optional[Dict] = None
+        user_info: Optional[Dict] = None,
+        conversation_history: Optional[List[Dict]] = None
     ) -> Dict:
         """
         Processa una query attraverso il workflow LangGraph
@@ -160,6 +160,7 @@ class OrchestratorAgent:
             initial_state: AgentState = {
                 "query": query,
                 "context": context,
+                "conversation_history": conversation_history,
                 # User info
                 "user_status": ui.get("status", "ospite"),
                 "user_name": ui.get("name"),
@@ -185,15 +186,6 @@ class OrchestratorAgent:
             
             # Esegui il workflow
             final_state = await self.workflow.ainvoke(initial_state)
-            
-            # Salva nella cronologia
-            conversation_entry = {
-                "query": query,
-                "category": final_state.get("category"),
-                "response": final_state.get("final_response"),
-                "workflow": final_state.get("workflow_steps", [])
-            }
-            self.conversation_history.append(conversation_entry)
             
             # Restituisci il risultato
             return {
@@ -228,17 +220,15 @@ class OrchestratorAgent:
     
     def get_conversation_history(self, limit: Optional[int] = None) -> List[Dict]:
         """
-        Restituisce la cronologia delle conversazioni
+        La cronologia è ora gestita lato client.
         """
-        if limit:
-            return self.conversation_history[-limit:]
-        return self.conversation_history
+        return []
     
     def clear_conversation_history(self):
         """
-        Pulisce la cronologia delle conversazioni
+        La cronologia è ora gestita lato client.
         """
-        self.conversation_history = []
+        pass
     
     async def analyze_query(self, query: str) -> Dict:
         """
