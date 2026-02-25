@@ -99,6 +99,8 @@ function LoginPage({ onLogin, onGuest }) {
     tipology: 'Triennale',
     year: 1
   })
+  
+  const [selectedCourseIndex, setSelectedCourseIndex] = useState('')
 
   // Calcola i corsi disponibili in base al dipartimento selezionato
   const availableCourses = useMemo(() => {
@@ -116,20 +118,26 @@ function LoginPage({ onLogin, onGuest }) {
 
   // Quando cambia il dipartimento, resetta il corso se non è più disponibile
   const handleDepartmentChange = (newDepartment) => {
+    setSelectedCourseIndex('')
     setRegisterData(prev => {
-      const newCourses = DIPARTIMENTI_CORSI[newDepartment] || []
-      const courseStillValid = newCourses.some(c => c.nome === prev.course)
       return {
         ...prev,
         department: newDepartment,
-        course: courseStillValid ? prev.course : ''
+        course: '',
+        tipology: 'Altro',
+        year: 1
       }
     })
   }
 
   // Quando cambia il corso, imposta automaticamente tipologia e anno
-  const handleCourseChange = (courseName) => {
-    const selectedCourse = availableCourses.find(c => c.nome === courseName)
+  const handleCourseChange = (courseIndex) => {
+    if (!courseIndex) {
+      setRegisterData(prev => ({ ...prev, course: '', tipology: 'Altro', year: 1 }))
+      return
+    }
+    
+    const selectedCourse = availableCourses[parseInt(courseIndex)]
     
     let tipology = 'Altro'
     let year = 1
@@ -146,14 +154,14 @@ function LoginPage({ onLogin, onGuest }) {
         tipology = 'Ciclo Unico'
         year = 1
       }
+      
+      setRegisterData(prev => ({
+        ...prev,
+        course: selectedCourse.nome,
+        tipology: tipology,
+        year: year
+      }))
     }
-    
-    setRegisterData(prev => ({
-      ...prev,
-      course: courseName,
-      tipology: tipology,
-      year: year
-    }))
   }
 
   const handleLogin = async (e) => {
@@ -173,8 +181,10 @@ function LoginPage({ onLogin, onGuest }) {
         const data = await res.json()
         throw new Error(data.detail || 'Errore nel login')
       }
-      const userData = await res.json()
-      onLogin(userData)
+      const data = await res.json()
+      // Salva il token in localStorage
+      localStorage.setItem('access_token', data.access_token)
+      onLogin(data.user)
     } catch (err) {
       setError(err.message)
     } finally {
@@ -212,8 +222,10 @@ function LoginPage({ onLogin, onGuest }) {
         const data = await res.json()
         throw new Error(data.detail || 'Errore nella registrazione')
       }
-      const userData = await res.json()
-      onLogin(userData)
+      const data = await res.json()
+      // Salva il token in localStorage
+      localStorage.setItem('access_token', data.access_token)
+      onLogin(data.user)
     } catch (err) {
       setError(err.message)
     } finally {
@@ -351,13 +363,16 @@ function LoginPage({ onLogin, onGuest }) {
                   <label htmlFor="reg-course">Corso di Laurea</label>
                   <select
                     id="reg-course"
-                    value={registerData.course}
-                    onChange={e => handleCourseChange(e.target.value)}
+                    value={selectedCourseIndex}
+                    onChange={e => {
+                      setSelectedCourseIndex(e.target.value)
+                      handleCourseChange(e.target.value)
+                    }}
                     required
                   >
                     <option value="">Seleziona un corso</option>
                     {availableCourses.map((course, index) => (
-                      <option key={`${course.nome}-${index}`} value={course.nome}>
+                      <option key={`${course.nome}-${course.tipo}-${index}`} value={index}>
                         {course.nome} - {course.tipo}
                       </option>
                     ))}

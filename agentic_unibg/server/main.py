@@ -1,16 +1,41 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from typing import Optional
 import os
 import bcrypt
 from dotenv import load_dotenv
+from jose import JWTError, jwt
+from datetime import datetime, timedelta
 
 from agents.orchestrator_agent import OrchestratorAgent
 from db import students_collection
 
 # Load environment variables
 load_dotenv()
+
+# JWT Configuration
+SECRET_KEY = os.getenv("JWT_SECRET_KEY", "your-secret-key-change-in-production")
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
+
+security = HTTPBearer()
+
+def create_access_token(data: dict):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        token = credentials.credentials
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Token invalido o scaduto")
 
 app = FastAPI(
     title="Agentic UniBG API",
@@ -82,7 +107,7 @@ async def health_check():
 async def login(request: LoginRequest):
     """
     Login con matricola e password.
-    Restituisce tutte le informazioni dello studente.
+    Restituisce JWT token e informazioni studente.
     """
     student = await students_collection.find_one({"matricola": request.matricola})
     if not student:
@@ -95,15 +120,26 @@ async def login(request: LoginRequest):
     ):
         raise HTTPException(status_code=401, detail="Password errata")
 
-    return {
-        "status": "loggato",
-        "name": student.get("name"),
-        "surname": student.get("surname"),
-        "department": student.get("department"),
-        "course": student.get("course"),
-        "tipology": student.get("tipology"),
-        "year": student.get("year"),
+    # Crea JWT token
+    token_data = {
         "matricola": student.get("matricola"),
+        "status": "loggato"
+    }
+    access_token = create_access_token(token_data)
+
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user": {
+            "status": "loggato",
+            "name": student.get("name"),
+            "surname": student.get("surname"),
+            "department": student.get("department"),
+            "course": student.get("course"),
+            "tipology": student.get("tipology"),
+            "year": student.get("year"),
+            "matricola": student.get("matricola"),
+        }
     }
 
 
@@ -111,6 +147,7 @@ async def login(request: LoginRequest):
 async def register(request: RegisterRequest):
     """
     Registrazione nuovo studente.
+    Restituisce JWT token e informazioni studente.
     """
     existing = await students_collection.find_one({"matricola": request.matricola})
     if existing:
@@ -130,15 +167,51 @@ async def register(request: RegisterRequest):
     }
     await students_collection.insert_one(student_doc)
 
+    # Crea JWT token
+    token_data = {
+        "matricola": request.matricola,
+        "status": "loggato"
+    }
+    access_token = create_access_token(token_data)
+
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user": {
+            "status": "loggato",
+            "name": request.name,
+            "surname": request.surname,
+            "department": request.department,
+            "course": request.course,
+            "tipology": request.tipology,
+            "year": request.year,
+            "matricola": request.matricola,
+        }
+    }
+
+
+@app.get("/api/auth/verify")
+async def verify_auth(payload: dict = Depends(verify_token)):
+    """
+    Verifica il token JWT e restituisce le informazioni dell'utente.
+    """
+    matricola = payload.get("matricola")
+    if not matricola:
+        raise HTTPException(status_code=401, detail="Token invalido")
+    
+    student = await students_collection.find_one({"matricola": matricola})
+    if not student:
+        raise HTTPException(status_code=404, detail="Utente non trovato")
+    
     return {
         "status": "loggato",
-        "name": request.name,
-        "surname": request.surname,
-        "department": request.department,
-        "course": request.course,
-        "tipology": request.tipology,
-        "year": request.year,
-        "matricola": request.matricola,
+        "name": student.get("name"),
+        "surname": student.get("surname"),
+        "department": student.get("department"),
+        "course": student.get("course"),
+        "tipology": student.get("tipology"),
+        "year": student.get("year"),
+        "matricola": student.get("matricola"),
     }
 
 

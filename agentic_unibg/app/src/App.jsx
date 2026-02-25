@@ -12,6 +12,7 @@ function App() {
   // Auth state
   const [userInfo, setUserInfo] = useState(null) // null = not logged in, show login page
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isInitialLoading, setIsInitialLoading] = useState(true)
 
   useEffect(() => {
     // Test connection to backend
@@ -25,6 +26,33 @@ function App() {
         console.error('Backend connection error:', err)
         setConnectionStatus('error')
       })
+    
+    // Verifica token salvato
+    const token = localStorage.getItem('access_token')
+    if (token) {
+      fetch('/api/auth/verify', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+        .then(res => {
+          if (!res.ok) throw new Error('Token invalido')
+          return res.json()
+        })
+        .then(userData => {
+          setUserInfo(userData)
+          setIsAuthenticated(true)
+        })
+        .catch(err => {
+          console.error('Token verification failed:', err)
+          localStorage.removeItem('access_token')
+        })
+        .finally(() => {
+          setIsInitialLoading(false)
+        })
+    } else {
+      setIsInitialLoading(false)
+    }
   }, [])
 
   // Auth handlers
@@ -48,6 +76,7 @@ function App() {
   }
 
   const handleLogout = () => {
+    localStorage.removeItem('access_token')
     setUserInfo(null)
     setIsAuthenticated(false)
     setConversation([])
@@ -67,11 +96,17 @@ function App() {
     setMessage('') // Pulisci l'input subito
     
     try {
+      const token = localStorage.getItem('access_token')
+      const headers = {
+        'Content-Type': 'application/json',
+      }
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`
+      }
+      
       const res = await fetch('/api/agent/query', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: headers,
         body: JSON.stringify({ query: currentQuery, user_info: userInfo })
       })
       
@@ -125,6 +160,19 @@ function App() {
       'altro': 'Altro'
     }
     return labels[category] || category
+  }
+
+  // Show loading screen during initial token verification
+  if (isInitialLoading) {
+    return (
+      <div className="loading-screen">
+        <div className="loading-content">
+          <div className="loading-spinner"></div>
+          <h2>🎓 Agentic UniBG</h2>
+          <p>Caricamento in corso...</p>
+        </div>
+      </div>
+    )
   }
 
   // Show login page if not authenticated
