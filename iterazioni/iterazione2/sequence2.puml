@@ -1,0 +1,27 @@
+@startuml
+title Sequence diagram (Login flow) - Iterazione 2
+
+actor User as U
+participant "Frontend"          as FE
+participant "API Gateway"       as GW
+participant "Auth Controller"   as AC
+participant "Auth Service"      as AS
+participant "Profile Repository" as PR
+participant "MongoDB"           as DB
+participant "JWT Manager"       as JWT
+
+U  -> FE  : Insert credentials
+FE -> GW  : POST /login
+GW -> AC  : login()
+AC -> AS  : authenticate()
+AS -> PR  : findByEmail()
+PR -> DB  : query
+DB --> PR : user data
+PR --> AS : User
+AS -> JWT : generateToken()
+JWT --> AS : JWT
+AS --> AC : token
+AC --> GW : token
+GW --> FE : token
+
+@enduml

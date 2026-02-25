@@ -1,0 +1,73 @@
+@startuml
+title Component Diagram - Iteration 2
+
+skinparam componentStyle uml2
+
+' ─── Interfacce fornite (ball) ────────────────────────────────
+() "HTTP/REST"       as IHTTP
+() "IAuthAPI"        as IAuthAPI
+() "IAuthService"    as IAuthSvc
+() "IJWTManager"     as IJWT
+() "IOrchestrator"   as IOrch
+() "IClassifier"     as IClassif
+() "IGenerator"      as IGen
+() "IRevision"       as IRev
+() "IProfileRepo"    as IProfile
+() "IMongoDriver"    as IMongo
+
+' ─── Client Tier ─────────────────────────────────────────────
+package "Client Tier" {
+  [Web / Mobile App] as Client
+}
+
+' ─── Backend Tier ────────────────────────────────────────────
+package "Backend Tier" {
+
+  [API Gateway] as Gateway
+
+  package "Authentication Layer" {
+    [Auth Controller] as AuthCtrl
+    [Auth Service]    as AuthSvc
+    [JWT Manager]     as JWT
+  }
+
+  package "Agent Layer" {
+    [Orchestrator]      as Orch
+    [Classifier Agent]  as Classifier
+    [Generator Agent]   as Generator
+    [Revision Agent]    as Revision
+  }
+}
+
+' ─── Data Tier ───────────────────────────────────────────────
+package "Data Tier" {
+  [Profile Repository] as ProfileRepo
+  [MongoDB]            as DB
+}
+
+' ─── Provided interfaces (ball sul lato del fornitore) ────────
+Gateway     - IHTTP
+AuthCtrl    - IAuthAPI
+AuthSvc     - IAuthSvc
+JWT         - IJWT
+Orch        - IOrch
+Classifier  - IClassif
+Generator   - IGen
+Revision    - IRev
+ProfileRepo - IProfile
+DB          - IMongo
+
+' ─── Required interfaces (socket sul lato del richiedente) ───
+Client      ..> IHTTP     : usa
+Gateway     ..> IAuthAPI  : delega autenticazione
+Gateway     ..> IOrch     : invia richiesta
+AuthCtrl    ..> IAuthSvc  : verifica credenziali
+AuthSvc     ..> IJWT      : genera / valida token
+AuthSvc     ..> IProfile  : recupera profilo utente
+Orch        ..> IClassif  : classifica intent
+Orch        ..> IGen      : genera risposta
+Orch        ..> IRev      : revisiona risposta
+Orch        ..> IProfile  : recupera contesto utente
+ProfileRepo ..> IMongo    : persistenza dati
+
+@enduml

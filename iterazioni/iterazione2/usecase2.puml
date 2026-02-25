@@ -1,0 +1,35 @@
+@startuml
+title Use Case Diagram - Iterazione 2
+
+' Attore base in alto, specializzazione sotto
+actor "Utente" as User
+actor "Studente" as Student
+actor "Ospite" as Guest
+
+Student --|> User
+Guest  --|> User
+
+rectangle "Agentic UniBG System" {
+
+  usecase "Registrazione" as UC1
+  usecase "Login" as UC2
+  usecase "Inviare Richiesta" as UC4
+  usecase "Ricevere Risposta" as UC5
+  usecase "Recupero Profilo" as UC6
+  usecase "Risposta Personalizzata" as UC7
+}
+
+' --- Associazioni dirette ---
+Student --> UC1
+Student --> UC2
+User    --> UC4
+
+' --- Include: il base case richiede obbligatoriamente il sotto-caso ---
+UC2 ..> UC6 : <<include>>
+UC4 ..> UC5 : <<include>>
+UC6 ..> UC7 : <<include>>
+
+' --- Extend: risposta personalizzata solo se l'utente è autenticato ---
+UC7 ..> UC5 : <<extend>>\ncondizione: utente autenticato
+
+@enduml

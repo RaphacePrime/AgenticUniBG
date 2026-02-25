@@ -1,0 +1,47 @@
+@startuml
+title Activity Diagram - Iterazione 2
+
+|Utente|
+start
+:Inserisce domanda;
+
+|API Gateway|
+:Riceve richiesta + JWT;
+
+if (Token JWT valido?) then (Sì)
+  :Recupera profilo da MongoDB;
+  :Inietta profilo nel prompt;
+else (No)
+  :Accesso senza profilo\n(risposta generica);
+endif
+
+|Orchestrator Agent|
+:Riceve richiesta;
+:Invia richiesta al Classifier;
+
+|Classifier Agent|
+:Classifica intento;
+:Restituisce categoria;
+
+|Orchestrator Agent|
+:Invia richiesta + profilo al Generator;
+
+|Generator Agent|
+:Genera risposta preliminare;
+:Restituisce bozza;
+
+|Orchestrator Agent|
+:Invia bozza al Revision;
+
+|Revision Agent|
+:Revisiona risposta;
+:Restituisce risposta finale;
+
+|Orchestrator Agent|
+:Invia risposta all'utente;
+
+|Utente|
+:Visualizza risposta;
+stop
+
+@enduml

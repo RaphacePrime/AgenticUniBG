@@ -1,0 +1,92 @@
+@startuml
+title Class Diagram - Iteration 2
+
+' ─── Domain Model ─────────────────────────────────────────────
+class User {
+  +id: String
+  +name: String
+  +email: String
+  +course: String
+  +year: int
+  -passwordHash: String
+}
+
+' ─── Authentication Layer ─────────────────────────────────────
+class AuthController {
+  +register(name: String, email: String, password: String): User
+  +login(email: String, password: String): String
+}
+
+class AuthService {
+  +authenticate(email: String, password: String): User
+  +createUser(name: String, email: String, password: String): User
+}
+
+class JWTManager {
+  +generateToken(userId: String): String
+  +validateToken(token: String): String
+}
+
+class ProfileRepository {
+  +findById(id: String): User
+  +findByEmail(email: String): User
+  +save(user: User): User
+}
+
+' ─── Agent Layer (base dall'iterazione 1) ────────────────────
+abstract class Agent {
+  +{abstract} execute(state: AgentState): AgentState
+}
+
+class AgentState {
+  +query: String
+  +classification: String
+  +generatedResponse: String
+  +finalResponse: String
+  +userId: String
+}
+
+class OrchestratorAgent {
+  -classifier: ClassifierAgent
+  -generator: GeneratorAgent
+  -revision: RevisionAgent
+  +handleQuery(query: String, userId: String): String
+}
+
+class ClassifierAgent {
+  +classify(query: String): String
+  +execute(state: AgentState): AgentState
+}
+
+class GeneratorAgent {
+  +generate(query: String, classification: String): String
+  +execute(state: AgentState): AgentState
+}
+
+class RevisionAgent {
+  +revise(draft: String): String
+  +execute(state: AgentState): AgentState
+}
+
+' ─── Ereditarietà agenti ──────────────────────────────────────
+Agent <|-- ClassifierAgent
+Agent <|-- GeneratorAgent
+Agent <|-- RevisionAgent
+
+' ─── Relazioni Authentication Layer ──────────────────────────
+AuthController --> AuthService      : delega
+AuthService    --> JWTManager       : genera/valida token
+AuthService    --> ProfileRepository: gestisce profilo
+ProfileRepository "1" --> "0..1" User : persiste
+
+' ─── Relazioni Agent Layer ────────────────────────────────────
+OrchestratorAgent "1" *--> "1" ClassifierAgent : classifier
+OrchestratorAgent "1" *--> "1" GeneratorAgent  : generator
+OrchestratorAgent "1" *--> "1" RevisionAgent   : revision
+OrchestratorAgent --> AgentState               : crea/aggiorna
+AgentState ..> OrchestratorAgent               : passato come contesto
+
+' ─── Collegamento tra i layer ────────────────────────────────
+OrchestratorAgent --> ProfileRepository : recupera profilo utente
+
+@enduml

@@ -14,9 +14,9 @@ L'obiettivo dell'Iterazione 1 è realizzare un primo **Minimum Viable Product (M
 ## 2. Obiettivo dell'Incremento
 
 ### User Stories incluse
-* **US-10 – Invio Richiesta**: *As a* utente, voglio inviare una richiesta testuale *so that* ricevo una risposta dal sistema.
+* **US-10 – Invio Richiesta**: *As a* studente, voglio inviare una domanda testuale *so that* ricevo una risposta dal sistema.
 * **US-11 – Classificazione Intento**: *As a* sistema, voglio classificare la richiesta *so that* posso generare una risposta coerente.
-* **US-12 – Generazione Risposta**: *As a* sistema, voglio generare una risposta tramite **LLM** *so that* l'utente riceva una risposta pertinente.
+* **US-12 – Generazione Risposta**: *As a* sistema, voglio generare una risposta tramite **LLM** *so that* lo studente riceva una risposta pertinente.
 * **US-13 – Revisione Risposta**: *As a* sistema, voglio verificare la qualità della risposta *so that* riduco errori o incoerenze.
 
 ---
@@ -31,12 +31,12 @@ L'obiettivo dell'Iterazione 1 è realizzare un primo **Minimum Viable Product (M
 * **Classifier Agent**
 * **Generator Agent**
 * **Revision Agent**
-* **Database** (con interfaccia JDBC/SQL)
 
-L'architettura è organizzata in tre tier:
-- **Client Tier**: interfaccia utente minimale.
+L'architettura è organizzata in **due tier**:
+- **Client Tier**: interfaccia utente minimale per l'invio di query.
 - **Application Logic Tier**: Web Server e App Server che ospitano la logica degli agenti.
-- **Data Tier**: Database per la persistenza dei dati.
+
+> **Nota**: in questa iterazione non è presente alcun **Data Tier** né connessione a database. Non vi è autenticazione, registrazione o profilazione utente. Tali funzionalità sono introdotte nell'Iterazione 2.
 
 ---
 
@@ -98,7 +98,9 @@ Il sistema dimostra una corretta classificazione degli intenti semplici e una ge
 ---
 
 ## 8. Limitazioni dell'Iterazione 1
-* Nessun accesso a dati reali.
-* Nessuna personalizzazione del profilo utente.
-* Possibili allucinazioni tipiche degli **LLM** non vincolati a documenti.
-* Architettura a tre tier semplificata: funzionalità avanzate degli agenti (es. memoria, ricerca web, documenti) rimandate alle iterazioni successive.
+* **Nessun database**: non è presente alcuna connessione a un sistema di persistenza. I dati non vengono salvati tra le sessioni.
+* **Nessuna autenticazione**: non è implementato alcun meccanismo di login, registrazione o gestione sessioni.
+* **Nessuna personalizzazione**: le risposte non tengono conto del profilo utente (corso, anno, dipartimento) poiché non esiste ancora un concetto di utente nel sistema.
+* **Nessun accesso a dati reali UniBG**: le risposte sono interamente generate dall'LLM senza recupero da fonti strutturate.
+* **Possibili allucinazioni**: tipiche degli LLM non vincolati a documenti o basi di conoscenza specifiche.
+* **Architettura semplificata a due tier**: le funzionalità avanzate (autenticazione, profilazione, database, memoria) sono rimandate alle iterazioni successive.
