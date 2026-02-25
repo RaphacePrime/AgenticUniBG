@@ -51,6 +51,27 @@
   flex-direction: column;
   gap: 1.5rem;
   background: var(--lp-surface);
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.auth-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.auth-panel::-webkit-scrollbar-track {
+  background: var(--lp-surface-soft);
+  border-radius: 10px;
+}
+
+.auth-panel::-webkit-scrollbar-thumb {
+  background: var(--lp-border);
+  border-radius: 10px;
+}
+
+.auth-panel::-webkit-scrollbar-thumb:hover {
+  background: var(--lp-text-muted);
 }
 
 .auth-brand {
@@ -164,15 +185,21 @@
 
 .form-group input,
 .form-group select {
-  padding: 0.75rem 1rem;
+  padding: 0.65rem 0.9rem;
   border: 1.5px solid var(--lp-border);
   border-radius: 10px;
   background: var(--lp-surface-soft);
   color: var(--lp-text);
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-family: inherit;
   transition: all 0.3s ease;
   outline: none;
+}
+
+.form-group select {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .form-group input::placeholder {
@@ -189,16 +216,36 @@
 .form-group select {
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235a6880' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%235a6880' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 1rem center;
-  padding-right: 2.5rem;
+  background-position: right 0.8rem center;
+  padding-right: 2.2rem;
   background-color: var(--lp-surface-soft);
 }
 
 .form-group select option {
   background: #fff;
   color: var(--lp-text);
+  font-size: 0.85rem;
+}
+
+/* Menu a tendina dipartimento e corso - dimensioni ridotte */
+#reg-department,
+#reg-course {
+  width: 100%;
+  max-width: 100%;
+  font-size: 0.8rem;
+  padding: 0.6rem 0.8rem;
+  padding-right: 2rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+#reg-department option,
+#reg-course option {
+  font-size: 0.82rem;
 }
 
 /* Submit Button */
