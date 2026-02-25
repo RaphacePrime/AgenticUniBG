@@ -204,7 +204,6 @@ Il backend utilizza `uvicorn` con `motor` per la connessione asincrona a MongoDB
 - **JWT non implementato**: il token di sessione non è ancora presente; il profilo è mantenuto lato frontend in memoria. Previsto nelle iterazioni successive.
 - **Nessun accesso a dati reali UniBG**: le risposte sono generate dall'LLM senza recupero da fonti strutturate (orari, corsi, documenti ufficiali).
 - **Conversation history in memoria**: la cronologia delle conversazioni non è persistita su MongoDB ma mantenuta nell'istanza dell'`OrchestratorAgent`.
-- **CORS aperto**: in produzione il middleware CORS andrebbe ristretto ai domini autorizzati.
 
 ---
 
