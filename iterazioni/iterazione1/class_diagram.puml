@@ -32,5 +32,6 @@ OrchestratorAgent --> GeneratorAgent
 OrchestratorAgent --> RevisionAgent
 
 AgentState --> OrchestratorAgent
+OrchestratorAgent --> AgentState
 
 @enduml
