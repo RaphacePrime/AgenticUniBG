@@ -1,92 +1,123 @@
 @startuml
 title Class Diagram - Iteration 2
 
-' ─── Domain Model ─────────────────────────────────────────────
+' ─── Domain Model (models/user.py) ───────────────────────────
 class User {
-  +id: String
   +name: String
-  +email: String
+  +surname: String
+  +matricola: String
+  +department: String
   +course: String
+  +tipology: String
   +year: int
   -passwordHash: String
 }
 
-' ─── Authentication Layer ─────────────────────────────────────
+' ─── Authentication Layer (auth/) ────────────────────────────
 class AuthController {
-  +register(name: String, email: String, password: String): User
-  +login(email: String, password: String): String
+  -_service: AuthService
+  -_cookie_max_age: int
+  +login(matricola: String, password: String, response: Response): dict
+  +register(name: String, surname: String, matricola: String, password: String, department: String, course: String, tipology: String, year: int, response: Response): dict
 }
 
 class AuthService {
-  +authenticate(email: String, password: String): User
-  +createUser(name: String, email: String, password: String): User
+  -_repo: ProfileRepository
+  -_jwt: JWTManager
+  +authenticate(matricola: String, password: String): dict
+  +createUser(name: String, surname: String, matricola: String, password: String, department: String, course: String, tipology: String, year: int): dict
 }
 
 class JWTManager {
-  +generateToken(userId: String): String
-  +validateToken(token: String): String
+  +secret_key: String
+  +algorithm: String
+  +expire_minutes: int
+  +generateToken(data: dict): String
+  +validateToken(token: String): dict
+  +validateFromRequest(request: Request): dict
 }
 
 class ProfileRepository {
-  +findById(id: String): User
-  +findByEmail(email: String): User
-  +save(user: User): User
+  -_collection: AsyncIOMotorCollection
+  +findById(matricola: String): dict
+  +findByEmail(email: String): dict
+  +save(user_doc: dict): dict
+  +exists(matricola: String): bool
 }
 
-' ─── Agent Layer (base dall'iterazione 1) ────────────────────
-abstract class Agent {
-  +{abstract} execute(state: AgentState): AgentState
-}
-
+' ─── Agent Layer (agents/) ───────────────────────────────────
 class AgentState {
   +query: String
-  +classification: String
-  +generatedResponse: String
-  +finalResponse: String
-  +userId: String
+  +context: dict
+  +conversation_history: List
+  +user_status: String
+  +user_name: String
+  +user_surname: String
+  +user_department: String
+  +user_course: String
+  +user_tipology: String
+  +user_year: int
+  +user_matricola: String
+  +category: String
+  +category_description: String
+  +confidence: String
+  +generated_response: String
+  +generation_status: String
+  +final_response: String
+  +has_revisions: bool
+  +workflow_steps: List
+  +current_step: String
+  +error: String
+  +status: String
 }
 
 class OrchestratorAgent {
+  -llm: ChatGroq
   -classifier: ClassifierAgent
   -generator: GeneratorAgent
-  -revision: RevisionAgent
-  +handleQuery(query: String, userId: String): String
+  -reviser: RevisionAgent
+  -workflow: StateGraph
+  +process_query(query: String, context: dict, user_info: dict, conversation_history: List): dict
+  +get_available_agents(): List
+  +get_conversation_history(limit: int): List
+  +clear_conversation_history(): void
+  +analyze_query(query: String): dict
 }
 
 class ClassifierAgent {
-  +classify(query: String): String
-  +execute(state: AgentState): AgentState
+  -CATEGORIES: dict
+  -llm: ChatGroq
+  +classify(query: String, user_context: String, conversation_history: List): dict
 }
 
 class GeneratorAgent {
-  +generate(query: String, classification: String): String
-  +execute(state: AgentState): AgentState
+  -CATEGORY_PROMPTS: dict
+  -llm: ChatGroq
+  +generate(query: String, category: String, context: dict, user_context: String, conversation_history: List): dict
 }
 
 class RevisionAgent {
-  +revise(draft: String): String
-  +execute(state: AgentState): AgentState
+  -llm: ChatGroq
+  -system_prompt: String
+  +revise(original_query: String, generated_response: String, category: String, user_context: String, conversation_history: List): dict
+  +quick_check(response: String): dict
 }
 
-' ─── Ereditarietà agenti ──────────────────────────────────────
-Agent <|-- ClassifierAgent
-Agent <|-- GeneratorAgent
-Agent <|-- RevisionAgent
-
 ' ─── Relazioni Authentication Layer ──────────────────────────
-AuthController --> AuthService      : delega
-AuthService    --> JWTManager       : genera/valida token
-AuthService    --> ProfileRepository: gestisce profilo
+AuthController --> AuthService       : delega
+AuthService    --> JWTManager        : genera/valida token
+AuthService    --> ProfileRepository : gestisce profilo
 ProfileRepository "1" --> "0..1" User : persiste
 
 ' ─── Relazioni Agent Layer ────────────────────────────────────
 OrchestratorAgent "1" *--> "1" ClassifierAgent : classifier
 OrchestratorAgent "1" *--> "1" GeneratorAgent  : generator
-OrchestratorAgent "1" *--> "1" RevisionAgent   : revision
+OrchestratorAgent "1" *--> "1" RevisionAgent   : reviser
 OrchestratorAgent --> AgentState               : crea/aggiorna
 AgentState ..> OrchestratorAgent               : passato come contesto
 
 ' ─── Collegamento tra i layer ────────────────────────────────
-OrchestratorAgent --> ProfileRepository : recupera profilo utente
+AuthController ..> OrchestratorAgent  : (main.py li istanzia entrambi)
+AuthService    --> ProfileRepository  : verifica utente
 
 @enduml

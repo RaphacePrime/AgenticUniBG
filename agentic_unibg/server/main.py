@@ -1,43 +1,27 @@
 from fastapi import FastAPI, HTTPException, Depends, Response, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from pydantic import BaseModel
-from typing import Optional
-import os
-import bcrypt
 from dotenv import load_dotenv
-from jose import JWTError, jwt
-from datetime import datetime, timedelta
 
-from agents.orchestrator_agent import OrchestratorAgent
 from db import students_collection
+from models.user import LoginRequest, RegisterRequest, QueryRequest, QueryResponse
+from auth.jwt_manager import JWTManager
+from auth.profile_repository import ProfileRepository
+from auth.service import AuthService
+from auth.controller import AuthController
+from agents.orchestrator_agent import OrchestratorAgent
 
-# Load environment variables
+# ─── Bootstrap ────────────────────────────────────────────────────
 load_dotenv()
 
-# JWT Configuration
-SECRET_KEY = os.getenv("JWT_SECRET_KEY", "your-secret-key-change-in-production")
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
+jwt_manager     = JWTManager()
+profile_repo    = ProfileRepository(students_collection)
+auth_service    = AuthService(profile_repo, jwt_manager)
+auth_controller = AuthController(auth_service, cookie_max_age=jwt_manager.expire_minutes * 60)
 
-security = HTTPBearer()
 
-def create_access_token(data: dict):
-    to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-    return encoded_jwt
-
-def verify_token(request: Request):
-    token = request.cookies.get("access_token")
-    if not token:
-        raise HTTPException(status_code=401, detail="Non autenticato")
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        return payload
-    except JWTError:
-        raise HTTPException(status_code=401, detail="Token invalido o scaduto")
+def verify_token(request: Request) -> dict:
+    """Dipendenza FastAPI: estrae e valida il JWT dall'httpOnly cookie."""
+    return jwt_manager.validateFromRequest(request)
 
 app = FastAPI(
     title="Agentic UniBG API",
@@ -57,35 +41,6 @@ app.add_middleware(
 
 # Initialize orchestrator
 agent_manager = OrchestratorAgent()
-
-
-class QueryRequest(BaseModel):
-    query: str
-    context: Optional[dict] = None
-    user_info: Optional[dict] = None
-    conversation_history: Optional[list] = None
-
-
-class QueryResponse(BaseModel):
-    response: str
-    agent_used: Optional[str] = None
-    metadata: Optional[dict] = None
-
-
-class LoginRequest(BaseModel):
-    matricola: str
-    password: str
-
-
-class RegisterRequest(BaseModel):
-    name: str
-    surname: str
-    matricola: str
-    password: str
-    department: str
-    course: str
-    tipology: str
-    year: int
 
 
 @app.get("/")
@@ -108,117 +63,38 @@ async def health_check():
 # ─── Auth Endpoints ───────────────────────────────────────────────
 
 @app.post("/api/auth/login")
-async def login(request: LoginRequest, response: Response):
-    """
-    Login con matricola e password.
-    Imposta httpOnly cookie con JWT token.
-    """
-    student = await students_collection.find_one({"matricola": request.matricola})
-    if not student:
-        raise HTTPException(status_code=401, detail="Matricola non trovata")
-
-    # Verifica password con bcrypt
-    if not bcrypt.checkpw(
-        request.password.encode("utf-8"),
-        student["passwordHash"].encode("utf-8")
-    ):
-        raise HTTPException(status_code=401, detail="Password errata")
-
-    # Crea JWT token
-    token_data = {
-        "matricola": student.get("matricola"),
-        "status": "loggato"
-    }
-    access_token = create_access_token(token_data)
-
-    # Imposta cookie httpOnly
-    response.set_cookie(
-        key="access_token",
-        value=access_token,
-        httponly=True,
-        secure=False,  # True in production con HTTPS
-        samesite="lax",
-        max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60
-    )
-
-    return {
-        "status": "loggato",
-        "name": student.get("name"),
-        "surname": student.get("surname"),
-        "department": student.get("department"),
-        "course": student.get("course"),
-        "tipology": student.get("tipology"),
-        "year": student.get("year"),
-        "matricola": student.get("matricola"),
-    }
+async def login(body: LoginRequest, response: Response):
+    """Login con matricola e password. Imposta httpOnly cookie con JWT token."""
+    return await auth_controller.login(body.matricola, body.password, response)
 
 
 @app.post("/api/auth/register")
-async def register(request: RegisterRequest, response: Response):
-    """
-    Registrazione nuovo studente.
-    Imposta httpOnly cookie con JWT token.
-    """
-    existing = await students_collection.find_one({"matricola": request.matricola})
-    if existing:
-        raise HTTPException(status_code=409, detail="Matricola già registrata")
-
-    hashed = bcrypt.hashpw(request.password.encode("utf-8"), bcrypt.gensalt())
-
-    student_doc = {
-        "name": request.name,
-        "surname": request.surname,
-        "passwordHash": hashed.decode("utf-8"),
-        "department": request.department,
-        "course": request.course,
-        "tipology": request.tipology,
-        "year": request.year,
-        "matricola": request.matricola,
-    }
-    await students_collection.insert_one(student_doc)
-
-    # Crea JWT token
-    token_data = {
-        "matricola": request.matricola,
-        "status": "loggato"
-    }
-    access_token = create_access_token(token_data)
-
-    # Imposta cookie httpOnly
-    response.set_cookie(
-        key="access_token",
-        value=access_token,
-        httponly=True,
-        secure=False,  # True in production con HTTPS
-        samesite="lax",
-        max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60
+async def register(body: RegisterRequest, response: Response):
+    """Registrazione nuovo studente. Imposta httpOnly cookie con JWT token."""
+    return await auth_controller.register(
+        name=body.name,
+        surname=body.surname,
+        matricola=body.matricola,
+        password=body.password,
+        department=body.department,
+        course=body.course,
+        tipology=body.tipology,
+        year=body.year,
+        response=response,
     )
-
-    return {
-        "status": "loggato",
-        "name": request.name,
-        "surname": request.surname,
-        "department": request.department,
-        "course": request.course,
-        "tipology": request.tipology,
-        "year": request.year,
-        "matricola": request.matricola,
-    }
 
 
 @app.get("/api/auth/verify")
 async def verify_auth(request: Request, payload: dict = Depends(verify_token)):
-    """
-    Verifica il token JWT dal cookie e restituisce le informazioni dell'utente.
-    """
+    """Verifica il token JWT dal cookie e restituisce le informazioni dell'utente."""
     matricola = payload.get("matricola")
     if not matricola:
         raise HTTPException(status_code=401, detail="Token invalido")
-    
-    student = await students_collection.find_one({"matricola": matricola})
+
+    student = await profile_repo.findById(matricola)
     if not student:
         raise HTTPException(status_code=404, detail="Utente non trovato")
-    
+
     return {
         "status": "loggato",
         "name": student.get("name"),
