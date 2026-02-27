@@ -1,0 +1,98 @@
+@startuml
+title Architettura a Componenti - Opzione MongoDB
+
+skinparam componentStyle rectangle
+
+package "Browser" {
+  component [App.jsx\n(React)] as FE
+  note right of FE
+    invia conv_id ad ogni query
+    mostra lista conversazioni
+    in sidebar
+  end note
+}
+
+package "Docker - server" {
+  component [main.py\n(FastAPI)] as API
+
+  package "auth/" {
+    component [JWTManager]        as JWT
+    component [AuthController]    as AC
+    component [AuthService]       as AS
+    component [ProfileRepository] as PR
+  }
+
+  package "conversations/" {
+    component [ConversationRepository] as CR
+    note right of CR
+      getConversations(matricola)
+      createConversation(matricola)
+      getMessages(conv_id, limit)
+      appendMessages(conv_id, ...)
+      getRecentHistory(conv_id, limit)
+    end note
+  }
+
+  package "agents/" {
+    component [OrchestratorAgent]       as ORC
+    component [ClassifierAgent]         as CLA
+    component [GeneratorAgent]          as GEN
+    component [RevisionAgent]           as REV
+    component [AgentState\n(TypedDict)] as AS2
+  }
+}
+
+package "Docker - mongodb" {
+  database "MongoDB" as MDB {
+    collections users
+    collections conversations
+  }
+  note right of MDB
+    conversations document:
+    {
+      _id, matricola,
+      title, createdAt,
+      updatedAt,
+      messages: [
+        { role, content,
+          timestamp }
+      ]
+    }
+  end note
+}
+
+cloud "Groq API\nllama-3.3-70b" as GROQ
+
+' ─── Flussi ──────────────────────────────────────────────────
+FE  --> API : POST /api/auth/*
+FE  --> API : GET  /api/conversations
+FE  --> API : POST /api/conversations
+FE  --> API : GET  /api/conversations/{conv_id}
+FE  --> API : POST /api/agent/query\n{ query, user_info, conv_id }
+
+API --> AC  : login / register
+AC  --> AS  : authenticate / createUser
+AS  --> JWT : generateToken / validateToken
+AS  --> PR  : findById / save
+
+API --> CR  : getConversations / createConversation
+API --> ORC : process_query(query, user_info, conv_repo, conv_id)
+
+ORC --> CR  : getRecentHistory(conv_id, 10)
+CR  <--> MDB : conversations collection
+
+ORC --> AS2 : crea / aggiorna stato
+ORC --> CLA : classify(state)
+ORC --> GEN : generate(state)
+ORC --> REV : revise(state)
+
+CLA --> GROQ : ainvoke
+GEN --> GROQ : ainvoke
+REV --> GROQ : ainvoke
+
+ORC --> CR  : appendMessages(conv_id, ...)
+CR  --> MDB : updateOne $push messages
+
+PR  <--> MDB : users collection
+
+@enduml

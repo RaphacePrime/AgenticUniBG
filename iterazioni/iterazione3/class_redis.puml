@@ -1,0 +1,93 @@
+@startuml
+title Class Diagram - Opzione Redis
+
+' ─── Nuova classe ─────────────────────────────────────────────
+class ConversationRepository {
+  -_redis: Redis
+  -_max_messages: int
+  -_ttl_seconds: int
+  +getHistory(matricola: String): List[Dict]
+  +appendMessages(matricola: String, user_msg: String, assistant_msg: String): void
+  +flushToMongoDB(matricola: String, conv_collection): void
+  +deleteSession(matricola: String): void
+}
+
+note right of ConversationRepository
+  Redis key: "chat:{matricola}"
+  Tipo: List
+  Max: 20 elementi (LTRIM)
+  TTL: 86400s reset ad ogni messaggio
+end note
+
+' ─── Modifiche a classi esistenti ────────────────────────────
+class OrchestratorAgent {
+  -llm: ChatGroq
+  -classifier: ClassifierAgent
+  -generator: GeneratorAgent
+  -reviser: RevisionAgent
+  -workflow: StateGraph
+  +process_query(query: String, user_info: Dict, conv_repo: ConversationRepository): Dict
+  +get_available_agents(): List
+  +analyze_query(query: String): Dict
+}
+
+note right of OrchestratorAgent
+  Aggiunta dipendenza su
+  ConversationRepository.
+  La conversation_history non
+  arriva più dal client.
+end note
+
+class QueryRequest {
+  +query: String
+  +user_info: Optional[Dict]
+  ' context e conversation_history rimossi
+}
+
+note right of QueryRequest
+  conversation_history rimossa:
+  la history la legge il server
+  da Redis tramite matricola
+end note
+
+' ─── Classi invariate (solo per contesto) ────────────────────
+class AgentState {
+  +query: String
+  +conversation_history: List[Dict]
+  +user_status: String
+  +user_matricola: String
+  +category: String
+  +generated_response: String
+  +final_response: String
+  +workflow_steps: List
+  +status: String
+  ' ... altri campi invariati
+}
+
+class ClassifierAgent {
+  +classify(query: String, user_context: String, conversation_history: List): Dict
+}
+
+class GeneratorAgent {
+  +generate(query: String, category: String, context: Dict, user_context: String, conversation_history: List): Dict
+}
+
+class RevisionAgent {
+  +revise(original_query: String, generated_response: String, category: String, user_context: String, conversation_history: List): Dict
+}
+
+class AuthController {
+  +login(matricola: String, password: String, response: Response): dict
+  +register(...): dict
+}
+
+' ─── Relazioni ───────────────────────────────────────────────
+OrchestratorAgent "1" *--> "1" ClassifierAgent
+OrchestratorAgent "1" *--> "1" GeneratorAgent
+OrchestratorAgent "1" *--> "1" RevisionAgent
+OrchestratorAgent --> AgentState           : crea / aggiorna
+OrchestratorAgent --> ConversationRepository : legge e scrive history
+
+AuthController ..> ConversationRepository  : flushToMongoDB al logout
+
+@enduml
