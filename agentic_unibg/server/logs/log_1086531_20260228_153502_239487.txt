@@ -1,0 +1,393 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-02-28 15:35:02
+Status    : success
+
+------------------------------------------------------------
+USER INFORMATION
+------------------------------------------------------------
+User type   : loggato
+Name        : Raphace Prime
+Matricola   : 1086531
+Department  : Ingegneria
+Course      : ign
+Typology    : Magistrale
+Year        : 3
+
+------------------------------------------------------------
+ORIGINAL USER QUERY
+------------------------------------------------------------
+cercami questo https://www.unibg.it/studiare/iscriversi/corsi-laurea-triennale-ad-accesso-programmato-test-selettivo
+
+------------------------------------------------------------
+CONVERSATION HISTORY (recent)
+------------------------------------------------------------
+[User]: come posso iscrivermi ad un corso di laurea ad accesso programmato?
+[Assistant]: Per iscriverti ad un corso di laurea ad accesso programmato, Raphace, segui questi passaggi:
+1. **Consulta il bando**: leggi attentamente il bando di ammissione sul sito web dell'Università di Bergamo.
+2. **Pre-iscrizione online**: effettua la pre-iscrizione online entro la scadenza indicata.
+3. **T
+[User]: spuie
+[Assistant]: Mi dispiace, Raphace, ma non capisco cosa intendi con "spuie". Potresti per favore fornire più contesto o chiarire la tua richiesta? Sono qui per aiutarti con informazioni relative al tuo corso di laurea magistrale in Ingegneria. Se hai una domanda specifica, sarò felice di aiutarti.
+[User]: spiegami come iscrivermi ai corsi con accesso programmato con test selettivo
+[Assistant]: Per iscriverti ai corsi con accesso programmato con test selettivo, Raphace Prime, segui questi passaggi:
+1. **Consulta il bando**: leggi attentamente il bando di ammissione sul sito web dell'Università di Bergamo.
+2. **Pre-iscrizione online**: effettua la pre-iscrizione online entro la scadenza ind
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: procedure
+Description: Richieste su procedure amministrative, iscrizioni, tasse
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, esami, ricevimenti
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 3
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: spuie
+- Assistente: Mi dispiace, Raphace, ma non capisco cosa intendi con "spuie". Potresti per favore fornire più contesto o chiarire la tua richiesta? Sono qui per aiut
+- Studente: spiegami come iscrivermi ai corsi con accesso programmato con test selettivo
+- Assistente: Per iscriverti ai corsi con accesso programmato con test selettivo, Raphace Prime, segui questi passaggi:
+1. **Consulta il bando**: leggi attentamente
+
+Nuova domanda: cercami questo https://www.unibg.it/studiare/iscriversi/corsi-laurea-triennale-ad-accesso-programmato-test-selettivo
+
+>>> RESPONSE:
+procedure
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: iscrizione corsi laurea accesso programmato unibg
+Original Query: cercami questo https://www.unibg.it/studiare/iscriversi/corsi-laurea-triennale-ad-accesso-programmato-test-selettivo
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- Tieni conto del contesto della conversazione per capire cosa cerca lo studente
+- La query deve essere in italiano
+- Massimo 6-8 parole
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Quali sono le tasse universitarie per il primo anno di ingegneria?"
+Query generata: tasse universitarie primo anno ingegneria unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Come posso iscrivermi al test di ammissione?"
+Query generata: iscrizione test ammissione unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Dove trovo gli orari delle lezioni di informatica?"
+Query generata: orari lezioni informatica unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Cos'è il top 10 student program?"
+Query generata: top 10 student program unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: come posso iscrivermi ad un corso di laurea ad accesso programmato?
+- Assistente: Per iscriverti ad un corso di laurea ad accesso programmato, Raphace, segui questi passaggi:
+1. **Consulta il bando**: leggi attentamente il bando di ammissione sul sito web dell'Università di Bergamo
+- Studente: spuie
+- Assistente: Mi dispiace, Raphace, ma non capisco cosa intendi con "spuie". Potresti per favore fornire più contesto o chiarire la tua richiesta? Sono qui per aiutarti con informazioni relative al tuo corso di lau
+- Studente: spiegami come iscrivermi ai corsi con accesso programmato con test selettivo
+- Assistente: Per iscriverti ai corsi con accesso programmato con test selettivo, Raphace Prime, segui questi passaggi:
+1. **Consulta il bando**: leggi attentamente il bando di ammissione sul sito web dell'Universi
+
+Ultima richiesta dello studente: cercami questo https://www.unibg.it/studiare/iscriversi/corsi-laurea-triennale-ad-accesso-programmato-test-selettivo
+
+Genera la query di ricerca web:
+
+>>> RESPONSE:
+iscrizione corsi laurea accesso programmato unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status          : success
+Search query    : iscrizione corsi laurea accesso programmato unibg
+Total results   : 20
+Top results used: 5
+
+>>> TOP RESULTS:
+  [1] Score: 0.9989
+      Title  : [PDF] GUIDA ALLA PROCEDURA ONLINE PRE-ISCRIZIONE CORSI ... - UniBg
+      URL    : https://www.unibg.it/sites/default/files/media/documents/2025-03-31/2025_Guida+Preiscrizione+Laurea+Magistrale+accesso+programmato_PC_SPED_SMDAS_0.pdf
+      Content: Mar 31, 2025 · PRE-ISCRIZIONE CORSI DI LAUREA MAGISTRALE AD ACCESSO PROGRAMMATO. Gentile Studentessa, Gentile Studente, prima di effettuare la pre
+
+  [2] Score: 0.9983
+      Title  : [PDF] INFORMAZIONI UTILI a.a. 2026-2027 Corsi di studio ad accesso ... - UniBg
+      URL    : https://www.unibg.it/sites/default/files/media/documents/2026-01-27/Informazioni+utili+a.a.+2026-2027_ACCESSO+PROGRAMMATO+POLO+UMANISTICO_0.pdf
+      Content: Jan 24, 2026 · Per effettuare l'iscrizione dovrai collegarti al sito web dell'Ateneo www.unibg.it e accedere allo SPORTELLO. INTERNET, evidenziato in home page
+
+  [3] Score: 0.9979
+      Title  : Corsi di laurea magistrale a ciclo unico ad accesso programmato
+      URL    : https://www.unibg.it/studiare/iscriversi/corsi-laurea-magistrale-ciclo-unico-ad-accesso-programmato
+      Content: ## Link utili utente. ## Navigazione principale. + Ambiti e progetti di ricerca. + UniBg for peace: opportunità e iniziative. ## Servizi on line. ## Navigazione principale. ## Breadcrumb. 4. Corsi di laurea magistrale a ciclo unico ad accesso programmato. ### Anno accademico 2025-2026. Per accedere ai seguenti corsi di laurea magistrale a ciclo unico è previsto un numero massimo di posti disponibili stabiliti a livello nazionale:. * Scienze della Formazione Primaria - Test selettivo obbligatorio. * Medicine and Surgery -  corso interateneo con Università degli Studi di Milano - Bicocca - A questa pagina informazioni sul test selettivo IMAT.
+
+  [4] Score: 0.9979
+      Title  : Corsi di laurea triennale ad accesso programmato: prima iscrizione in 4 passi | Università degli studi di Bergamo
+      URL    : https://www.unibg.it/studia-noi/iscriversi/passi-iscriversi/corsi-laurea-triennale-ad-accesso-programmato-prima
+      Content: ## Link utili utente. ## Navigazione principale. + Ambiti e progetti di ricerca. + UniBg for peace: opportunità e iniziative. ## Servizi on line. ## Navigazione principale. ## Breadcrumb. Scopri i corsi disponibili e tutte le informazioni su requisiti, scadenze e modalità di immatricolazione. Corsi di laurea triennale e magistrale a ciclo unico a accesso libero. Corsi di laurea triennale ad accesso programmato con immatricolazione ad esaurimento posti. Corsi di laurea triennale ad accesso programmato con test selettivo. Corsi di laurea magistrale a ciclo unico ad accesso programmato. Corsi di laurea magistrale ad accesso programmato. Corsi di laurea magistrale ad accesso libero. Semestre aperto di Area Medica.
+
+  [5] Score: 0.9978
+      Title  : GUIDA ALLA PROCEDURA ONLINE PRE-ISCRIZIONE ...
+      URL    : https://www.unibg.it/sites/default/files/media/documents/2025-03-31/2025_Guida+Preiscrizione+Laurea+Magistrale+accesso+programmato.pdf
+      Content: PRE-ISCRIZIONE CORSI DI LAUREA MAGISTRALE AD ACCESSO PROGRAMMATO · Gentile Studente, prima di effettuare la pre-iscrizione on line, ti invitiamo a consultare il Bando di ammissione al corso di · laurea magistrale ad accesso programato di tuo interesse (pubblicato nella pagina del corso stesso) per prendere visione ·
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: procedure
+
+>>> SYSTEM PROMPT:
+Sei un esperto delle procedure amministrative dell'Università di Bergamo.
+Guida gli studenti attraverso procedure come iscrizioni, pagamento tasse, richieste documenti.
+Fornisci istruzioni chiare e passo-passo.
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 3
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: [PDF] GUIDA ALLA PROCEDURA ONLINE PRE-ISCRIZIONE CORSI ... - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2025-03-31/2025_Guida+Preiscrizione+Laurea+Magistrale+accesso+programmato_PC_SPED_SMDAS_0.pdf
+Contenuto: Mar 31, 2025 · PRE-ISCRIZIONE CORSI DI LAUREA MAGISTRALE AD ACCESSO PROGRAMMATO. Gentile Studentessa, Gentile Studente, prima di effettuare la pre
+
+Fonte 2: [PDF] INFORMAZIONI UTILI a.a. 2026-2027 Corsi di studio ad accesso ... - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2026-01-27/Informazioni+utili+a.a.+2026-2027_ACCESSO+PROGRAMMATO+POLO+UMANISTICO_0.pdf
+Contenuto: Jan 24, 2026 · Per effettuare l'iscrizione dovrai collegarti al sito web dell'Ateneo www.unibg.it e accedere allo SPORTELLO. INTERNET, evidenziato in home page
+
+Fonte 3: Corsi di laurea magistrale a ciclo unico ad accesso programmato
+URL: https://www.unibg.it/studiare/iscriversi/corsi-laurea-magistrale-ciclo-unico-ad-accesso-programmato
+Contenuto: ## Link utili utente. ## Navigazione principale. + Ambiti e progetti di ricerca. + UniBg for peace: opportunità e iniziative. ## Servizi on line. ## Navigazione principale. ## Breadcrumb. 4. Corsi di laurea magistrale a ciclo unico ad accesso programmato. ### Anno accademico 2025-2026. Per accedere ai seguenti corsi di laurea magistrale a ciclo unico è previsto un numero massimo di posti disponibili stabiliti a livello nazionale:. * Scienze della Formazione Primaria - Test selettivo obbligatorio. * Medicine and Surgery -  corso interateneo con Università degli Studi di Milano - Bicocca - A questa pagina informazioni sul test selettivo IMAT.
+
+Fonte 4: Corsi di laurea triennale ad accesso programmato: prima iscrizione in 4 passi | Università degli studi di Bergamo
+URL: https://www.unibg.it/studia-noi/iscriversi/passi-iscriversi/corsi-laurea-triennale-ad-accesso-programmato-prima
+Contenuto: ## Link utili utente. ## Navigazione principale. + Ambiti e progetti di ricerca. + UniBg for peace: opportunità e iniziative. ## Servizi on line. ## Navigazione principale. ## Breadcrumb. Scopri i corsi disponibili e tutte le informazioni su requisiti, scadenze e modalità di immatricolazione. Corsi di laurea triennale e magistrale a ciclo unico a accesso libero. Corsi di laurea triennale ad accesso programmato con immatricolazione ad esaurimento posti. Corsi di laurea triennale ad accesso programmato con test selettivo. Corsi di laurea magistrale a ciclo unico ad accesso programmato. Corsi di laurea magistrale ad accesso programmato. Corsi di laurea magistrale ad accesso libero. Semestre aperto di Area Medica.
+
+Fonte 5: GUIDA ALLA PROCEDURA ONLINE PRE-ISCRIZIONE ...
+URL: https://www.unibg.it/sites/default/files/media/documents/2025-03-31/2025_Guida+Preiscrizione+Laurea+Magistrale+accesso+programmato.pdf
+Contenuto: PRE-ISCRIZIONE CORSI DI LAUREA MAGISTRALE AD ACCESSO PROGRAMMATO · Gentile Studente, prima di effettuare la pre-iscrizione on line, ti invitiamo a consultare il Bando di ammissione al corso di · laurea magistrale ad accesso programato di tuo interesse (pubblicato nella pagina del corso stesso) per prendere visione ·
+
+
+>>> USER PROMPT:
+cercami questo https://www.unibg.it/studiare/iscriversi/corsi-laurea-triennale-ad-accesso-programmato-test-selettivo
+
+>>> RESPONSE:
+Grazie per la richiesta, Raphace! Ecco le informazioni che ho trovato sul sito web dell'Università di Bergamo:
+
+**Corsi di laurea triennale ad accesso programmato con test selettivo**
+
+Per accedere ai corsi di laurea triennale ad accesso programmato con test selettivo, è necessario seguire le seguenti fasi:
+
+1. **Pre-iscrizione online**: effettua la pre-iscrizione online entro la scadenza indicata.
+2. **Pagamento della quota di partecipazione**: verifica il bando per informazioni sulla quota e sulle modalità di pagamento.
+3. **Test selettivo**: partecipa al test selettivo nella data e nell'orario indicati.
+4. **Verifica dei requisiti**: l'Università verificherà i requisiti necessari per l'ammissione.
+5. **Graduatoria**: se superi il test selettivo, sarai inserito nella graduatoria degli ammessi.
+6. **Immatricolazione**: se sei ammesso, dovrai immatricolarti al corso di laurea entro la scadenza indicata.
+7. **Pagamento delle tasse**: dovrai pagare le tasse universitarie e altri contributi richiesti.
+
+**Informazioni utili**
+
+* La pre-iscrizione online è obbligatoria per partecipare al test selettivo.
+* Il test selettivo è unico per tutti i corsi di laurea triennale ad accesso programmato con test selettivo.
+* La graduatoria degli ammessi sarà pubblicata sul sito web dell'Università di Bergamo.
+
+**Scadenze**
+
+* Pre-iscrizione online: [inserisci data]
+* Pagamento della quota di partecipazione: [inserisci data]
+* Test selettivo: [inserisci data]
+* Verifica dei requisiti: [inserisci data]
+* Graduatoria degli ammessi: [inserisci data]
+* Immatricolazione: [inserisci data]
+
+**Bando di ammissione**
+
+* Il bando di ammissione è disponibile sul sito web dell'Università di Bergamo.
+* Il bando contiene tutte le informazioni necessarie per partecipare al test selettivo e per l'ammissione ai corsi di laurea triennale ad accesso programmato con test selettivo.
+
+Spero che queste informazioni siano utili, Raphace! Se hai altre domande, non esitare a chiedere.
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo principale è produrre risposte BREVI, DIRETTE e SCHEMATICHE.
+
+PRIORITÀ ASSOLUTE:
+1. BREVITÀ: elimina tutto il superfluo. Se una frase non aggiunge valore, toglila.
+2. CHIAREZZA: una sola idea per frase. Evita subordinate lunghe e perifrasi.
+3. SCHEMA: quando la risposta elenca più elementi, usa sempre un elenco puntato invece di un paragrafo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti, no ripetizioni del concetto già espresso.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco): max 6-8 punti brevi
+- NON superare mai le 150 parole salvo casi eccezionali
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti e le introduzioni inutili
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Contesto conversazione:
+- Studente: spuie
+- Assistente: Mi dispiace, Raphace, ma non capisco cosa intendi con "spuie". Potresti per favore fornire più contesto o chiarire la tua richiesta? Sono qui per aiut
+- Studente: spiegami come iscrivermi ai corsi con accesso programmato con test selettivo
+- Assistente: Per iscriverti ai corsi con accesso programmato con test selettivo, Raphace Prime, segui questi passaggi:
+1. **Consulta il bando**: leggi attentamente
+
+Domanda originale: cercami questo https://www.unibg.it/studiare/iscriversi/corsi-laurea-triennale-ad-accesso-programmato-test-selettivo
+Categoria: procedure
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 3
+
+Risposta generata: Grazie per la richiesta, Raphace! Ecco le informazioni che ho trovato sul sito web dell'Università di Bergamo:
+
+**Corsi di laurea triennale ad accesso programmato con test selettivo**
+
+Per accedere ai corsi di laurea triennale ad accesso programmato con test selettivo, è necessario seguire le seguenti fasi:
+
+1. **Pre-iscrizione online**: effettua la pre-iscrizione online entro la scadenza indicata.
+2. **Pagamento della quota di partecipazione**: verifica il bando per informazioni sulla quota e sulle modalità di pagamento.
+3. **Test selettivo**: partecipa al test selettivo nella data e nell'orario indicati.
+4. **Verifica dei requisiti**: l'Università verificherà i requisiti necessari per l'ammissione.
+5. **Graduatoria**: se superi il test selettivo, sarai inserito nella graduatoria degli ammessi.
+6. **Immatricolazione**: se sei ammesso, dovrai immatricolarti al corso di laurea entro la scadenza indicata.
+7. **Pagamento delle tasse**: dovrai pagare le tasse universitarie e altri contributi richiesti.
+
+**Informazioni utili**
+
+* La pre-iscrizione online è obbligatoria per partecipare al test selettivo.
+* Il test selettivo è unico per tutti i corsi di laurea triennale ad accesso programmato con test selettivo.
+* La graduatoria degli ammessi sarà pubblicata sul sito web dell'Università di Bergamo.
+
+**Scadenze**
+
+* Pre-iscrizione online: [inserisci data]
+* Pagamento della quota di partecipazione: [inserisci data]
+* Test selettivo: [inserisci data]
+* Verifica dei requisiti: [inserisci data]
+* Graduatoria degli ammessi: [inserisci data]
+* Immatricolazione: [inserisci data]
+
+**Bando di ammissione**
+
+* Il bando di ammissione è disponibile sul sito web dell'Università di Bergamo.
+* Il bando contiene tutte le informazioni necessarie per partecipare al test selettivo e per l'ammissione ai corsi di laurea triennale ad accesso programmato con test selettivo.
+
+Spero che queste informazioni siano utili, Raphace! Se hai altre domande, non esitare a chiedere.
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RESPONSE:
+Per iscriverti ai corsi con accesso programmato con test selettivo, Raphace Prime, segui questi passaggi:
+1. Consulta il bando sul sito web dell'Università di Bergamo.
+2. Effettua la pre-iscrizione online entro la scadenza indicata.
+3. Verifica il bando per informazioni sulla quota di partecipazione e sulle modalità di pagamento.
+4. Partecipa al test selettivo nella data e nell'orario indicati.
+5. L'Università verificherà i requisiti necessari per l'ammissione.
+6. Se superi il test selettivo, sarai inserito nella graduatoria degli ammessi.
+7. Se sei ammesso, dovrai immatricolarti al corso di laurea entro la scadenza indicata.
+Controlla il sito web dell'Università di Bergamo per le scadenze e le informazioni aggiornate.
+
+================================================================================
+FINAL RESPONSE
+================================================================================
+Per iscriverti ai corsi con accesso programmato con test selettivo, Raphace Prime, segui questi passaggi:
+1. Consulta il bando sul sito web dell'Università di Bergamo.
+2. Effettua la pre-iscrizione online entro la scadenza indicata.
+3. Verifica il bando per informazioni sulla quota di partecipazione e sulle modalità di pagamento.
+4. Partecipa al test selettivo nella data e nell'orario indicati.
+5. L'Università verificherà i requisiti necessari per l'ammissione.
+6. Se superi il test selettivo, sarai inserito nella graduatoria degli ammessi.
+7. Se sei ammesso, dovrai immatricolarti al corso di laurea entro la scadenza indicata.
+Controlla il sito web dell'Università di Bergamo per le scadenze e le informazioni aggiornate.
+
+================================================================================
+END OF LOG
+================================================================================

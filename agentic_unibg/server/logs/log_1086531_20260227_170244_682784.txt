@@ -1,0 +1,375 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-02-27 17:02:44
+Status    : success
+
+------------------------------------------------------------
+USER INFORMATION
+------------------------------------------------------------
+User type   : loggato
+Name        : Raphace Prime
+Matricola   : 1086531
+Department  : Ingegneria
+Course      : ign
+Typology    : Magistrale
+Year        : 3
+
+------------------------------------------------------------
+ORIGINAL USER QUERY
+------------------------------------------------------------
+dove trovo il bando per l'erasmus?
+
+------------------------------------------------------------
+CONVERSATION HISTORY (recent)
+------------------------------------------------------------
+[User]: cosa è il top 10 student program?
+[Assistant]: Il Top 10 Student Program è un riconoscimento su base di merito che offre l'esenzione totale o parziale dal pagamento del contributo onnicomprensivo.
+- Valido per gli studenti iscritti alle lauree triennali, magistrali e magistrali a ciclo unico dell'Università di Bergamo
+- La selezione viene effett
+[User]: che materie si studiano al primo anno di ingegneria informatica triennale?
+[Assistant]: Al primo anno del corso di laurea triennale in Ingegneria Informatica, le materie di studio sono:
+- Analisi Matematica I
+- Fisica Generale
+- Chimica
+- Fondamenti di Informatica
+- Programmazione
+- Calcolatori Elettronici
+- Matematica Discreta
+- Fondamenti di Elettronica
+
+Il piano di studio prevede es
+[User]: il secondo?
+[Assistant]: Al secondo anno del corso di laurea triennale in Ingegneria Informatica, le materie di studio sono:
+- Analisi Matematica II
+- Geometria e Algebra Lineare
+- Fondamenti di Automatica
+- Sistemi Operativi
+- Basi di Dati
+- Fondamenti di Elettronica
+- Reti e Telecomunicazioni
+- Statistica 
+
+Nota: le mater
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: procedure
+Description: Richieste su procedure amministrative, iscrizioni, tasse
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, esami, ricevimenti
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 3
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: che materie si studiano al primo anno di ingegneria informatica triennale?
+- Assistente: Al primo anno del corso di laurea triennale in Ingegneria Informatica, le materie di studio sono:
+- Analisi Matematica I
+- Fisica Generale
+- Chimica
+-
+- Studente: il secondo?
+- Assistente: Al secondo anno del corso di laurea triennale in Ingegneria Informatica, le materie di studio sono:
+- Analisi Matematica II
+- Geometria e Algebra Line
+
+Nuova domanda: dove trovo il bando per l'erasmus?
+
+>>> RESPONSE:
+procedure
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: bando erasmus unibg
+Original Query: dove trovo il bando per l'erasmus?
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- Tieni conto del contesto della conversazione per capire cosa cerca lo studente
+- La query deve essere in italiano
+- Massimo 6-8 parole
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Quali sono le tasse universitarie per il primo anno di ingegneria?"
+Query generata: tasse universitarie primo anno ingegneria unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Come posso iscrivermi al test di ammissione?"
+Query generata: iscrizione test ammissione unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Dove trovo gli orari delle lezioni di informatica?"
+Query generata: orari lezioni informatica unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Cos'è il top 10 student program?"
+Query generata: top 10 student program unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: cosa è il top 10 student program?
+- Assistente: Il Top 10 Student Program è un riconoscimento su base di merito che offre l'esenzione totale o parziale dal pagamento del contributo onnicomprensivo.
+- Valido per gli studenti iscritti alle lauree tri
+- Studente: che materie si studiano al primo anno di ingegneria informatica triennale?
+- Assistente: Al primo anno del corso di laurea triennale in Ingegneria Informatica, le materie di studio sono:
+- Analisi Matematica I
+- Fisica Generale
+- Chimica
+- Fondamenti di Informatica
+- Programmazione
+- Calc
+- Studente: il secondo?
+- Assistente: Al secondo anno del corso di laurea triennale in Ingegneria Informatica, le materie di studio sono:
+- Analisi Matematica II
+- Geometria e Algebra Lineare
+- Fondamenti di Automatica
+- Sistemi Operativi
+
+Ultima richiesta dello studente: dove trovo il bando per l'erasmus?
+
+Genera la query di ricerca web:
+
+>>> RESPONSE:
+bando erasmus unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status          : success
+Search query    : bando erasmus unibg
+Total results   : 10
+Top results used: 5
+
+>>> TOP RESULTS:
+  [1] Score: 0.9931
+      Title  : Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio | Università degli studi di Bergamo
+      URL    : http://www.unibg.it/bandi/bando-erasmus-aa-2025-2026-mobilita-studio
+      Content: Salta al contenuto principale ## Link utili utente * MyUniBg * Webmail * Motore di ricerca * EN ## Navigazione principale * Ateneo + Chi siamo + Organizzazione e struttura + Amministrazione + Assicurazione della qualità * Studiare + Perché scegliere UniBg + I corsi + Orientarsi + Iscriversi + Freque...
+
+  [2] Score: 0.9859
+      Title  : Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio - UniBg
+      URL    : https://www.unibg.it/bandi/bando-erasmus-aa-2025-2026-mobilita-studio
+      Content: Nella settimana 17-21 febbraio i docenti referenti delle sedi del Dipartimento di LLCS si renderanno disponibili a ricevere gli studenti
+
+  [3] Score: 0.9850
+      Title  : Bando ERASMUS+ per la mobilità ai fini di studio a.a. 2026/2027
+      URL    : https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027
+      Content: E' pubblicato il bando per la mobilità Erasmus+ a.a. 2026/2027. La scadenza per candidarsi è il 20/01/2026, alle ore 08.00.
+
+  [4] Score: 0.9835
+      Title  : [PDF] Table of contents - UniBg
+      URL    : https://www.unibg.it/sites/default/files/media/documents/2025-12-18/Bando%20ERASMUS%20%2B%202026-2027_eng.pdf
+      Content: Furthermore, for the academic year 2026/2027, the University of Bergamo has activated Erasmus interinstitutional mobility agreements with
+
+  [5] Score: 0.9784
+      Title  : Erasmus+ | Università degli studi di Bergamo - UniBg
+      URL    : https://www.unibg.it/internazionale/andare-allestero/erasmus
+      Content: Gli studenti Erasmus+ possono inoltre ricevere un contributo comunitario *ad hoc*, seguire corsi universitari e usufruire delle strutture disponibili presso l'Università ospitante senza dover pagare tasse aggiuntive, con la garanzia del riconoscimento del periodo di studi all'estero tramite il trasf...
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: procedure
+
+>>> SYSTEM PROMPT:
+Sei un esperto delle procedure amministrative dell'Università di Bergamo.
+Guida gli studenti attraverso procedure come iscrizioni, pagamento tasse, richieste documenti.
+Fornisci istruzioni chiare e passo-passo.
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 3
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio | Università degli studi di Bergamo
+URL: http://www.unibg.it/bandi/bando-erasmus-aa-2025-2026-mobilita-studio
+Contenuto: Salta al contenuto principale ## Link utili utente * MyUniBg * Webmail * Motore di ricerca * EN ## Navigazione principale * Ateneo + Chi siamo + Organizzazione e struttura + Amministrazione + Assicurazione della qualità * Studiare + Perché scegliere UniBg + I corsi + Orientarsi + Iscriversi + Frequentare + eLearning UniBg + Laurearsi + Diritto allo studio + Contatta la Segreteria * Ricerca + Fare ricerca + Ambiti e progetti di ricerca + Ricercatori e prodotti + Strutture, organizzazione e governance * Terza missione + Valorizzare la conoscenza + Formazione continua + Collaborazioni enti e imprese + Cultura e Società * Internazionale + Andare all’estero + Destinazione UniBg + Cooperazione allo sviluppo + UniBg for peace: opportunità e iniziative * Vivere UniBg + Open Campus + Spazi e servizi + Opportunità + Eventi istituzionali ## Servizi on line * eLearning * Orari * Help Desk Studenti * Sportello internet * Rubrica * Biblioteche * Piano Strategico * Web Radio ## Navigazione principale * Ateneo * Studiare * Ricerca * Terza missione * Internazionale * Vivere UniBg ## Breadcrumb 1. Home 2. Bandi 3. Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio Bando Erasmus+ a.a. 2025-2026 Bando Erasmus+ a.a. 2025-2026 - English version ### Tabelle sedi di destinazione Tabella Dipartimento di Scienze Aziendali e Dipartimento di Scienze Economiche Tabella Dip. Giurisprudenza Tabella Scuola di Ingegneria Tabella Dip. Lettere, Filosofia, Comunicazione Tabella Dip. Lingue, Letterature e Culture Straniere Tabella Dip. Scienze Umane e Sociali ### Formula calcolo punteggio graduatoria Formula calcolo punteggio graduatoria ### Settimana informativa Erasmus - Dipartimento di LLCS Nella settimana 17-21 febbraio i docenti referenti delle sedi del Dipartimento di LLCS si renderanno disponibili a ricevere gli studenti negli orari secondo il calendario allegato. settimana informativa LLCS ### Date planarie assegnazione sedi Programma Erasmus+ 2025-2026 Avviso date plenarie Programma Erasmus+ a.a. 2025-2026 Delega ### Modulo di accettazione/rinuncia Erasmus+ Form di accettazione/rinuncia alla sede Erasmus+ ## Esito Graduatoria definitiva Lingue, Letterature e Culture Straniere Graduatoria definitiva Scienze Umane e Sociali Graduatoria definitiva Lettere, Filosofia e Comunicazione Graduatoria definitiva Scuola di Ingegneria Graduatoria definitiva Scuola di Economia Graduatoria definitiva Giurisprudenza Data di pubblicazione bando Data di scadenza bando
+
+Fonte 2: Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio - UniBg
+URL: https://www.unibg.it/bandi/bando-erasmus-aa-2025-2026-mobilita-studio
+Contenuto: Nella settimana 17-21 febbraio i docenti referenti delle sedi del Dipartimento di LLCS si renderanno disponibili a ricevere gli studenti
+
+Fonte 3: Bando ERASMUS+ per la mobilità ai fini di studio a.a. 2026/2027
+URL: https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027
+Contenuto: E' pubblicato il bando per la mobilità Erasmus+ a.a. 2026/2027. La scadenza per candidarsi è il 20/01/2026, alle ore 08.00.
+
+Fonte 4: [PDF] Table of contents - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2025-12-18/Bando%20ERASMUS%20%2B%202026-2027_eng.pdf
+Contenuto: Furthermore, for the academic year 2026/2027, the University of Bergamo has activated Erasmus interinstitutional mobility agreements with
+
+Fonte 5: Erasmus+ | Università degli studi di Bergamo - UniBg
+URL: https://www.unibg.it/internazionale/andare-allestero/erasmus
+Contenuto: Gli studenti Erasmus+ possono inoltre ricevere un contributo comunitario *ad hoc*, seguire corsi universitari e usufruire delle strutture disponibili presso l'Università ospitante senza dover pagare tasse aggiuntive, con la garanzia del riconoscimento del periodo di studi all'estero tramite il trasferimento dei rispettivi crediti formativi all'interno della loro carriera. L'**Erasmus+ KA107 ICM International Credit Mobility** è un programma innovativo che permette di attivare progetti di **mobilità internazionale fuori dall’Unione Europea** ed è destinato a studenti, docenti e personale tecnico amministrativo europei. Il Programma Erasmus+ Traineeship, in generale, consente agli studenti universitari iscritti, di candidarsi  per un'esperienza di tirocinio presso imprese attive nel mercato del lavoro o in settori quali l’istruzione, la formazione e la gioventù e presenti in uno dei Paesi partecipanti al Programma. **N.B.**: nell'ambito del Bando Erasmus+Traineeship CALL 2024 (2024/2025 e 2025/2026), sono ammessi tirocini curriculari, in piano di studio, oppure tirocini da inserire come scelta libera  o in sovrannumero (laddove non sia presente il tirocinio in piano), mentre sono esclusi i tirocini post-laurea.
+
+
+>>> USER PROMPT:
+dove trovo il bando per l'erasmus?
+
+>>> RESPONSE:
+Il bando per l'Erasmus+ può essere trovato sul sito web dell'Università degli Studi di Bergamo, nella sezione "Bandi" o "Internazionale". 
+
+In particolare, puoi seguire questi passaggi:
+1. Vai sul sito web dell'Università di Bergamo ([www.unibg.it](http://www.unibg.it))
+2. Seleziona la sezione "Internazionale" o "Bandi"
+3. Cerca la voce "Erasmus+" o "Mobilità per studio"
+4. Seleziona il bando relativo all'anno accademico di tuo interesse (ad esempio, "Bando Erasmus+ a.a. 2025-2026")
+
+In alternativa, puoi anche cercare direttamente sul sito web dell'Università utilizzando le parole chiave "Bando Erasmus+" o "Mobilità per studio".
+
+Come studente di Ingegneria, potresti anche contattare il dipartimento di Ingegneria o la segreteria studenti per avere informazioni più aggiornate e personalizzate sul bando Erasmus+.
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo principale è produrre risposte BREVI, DIRETTE e SCHEMATICHE.
+
+PRIORITÀ ASSOLUTE:
+1. BREVITÀ: elimina tutto il superfluo. Se una frase non aggiunge valore, toglila.
+2. CHIAREZZA: una sola idea per frase. Evita subordinate lunghe e perifrasi.
+3. SCHEMA: quando la risposta elenca più elementi, usa sempre un elenco puntato invece di un paragrafo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti, no ripetizioni del concetto già espresso.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco): max 6-8 punti brevi
+- NON superare mai le 150 parole salvo casi eccezionali
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti e le introduzioni inutili
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Contesto conversazione:
+- Studente: che materie si studiano al primo anno di ingegneria informatica triennale?
+- Assistente: Al primo anno del corso di laurea triennale in Ingegneria Informatica, le materie di studio sono:
+- Analisi Matematica I
+- Fisica Generale
+- Chimica
+-
+- Studente: il secondo?
+- Assistente: Al secondo anno del corso di laurea triennale in Ingegneria Informatica, le materie di studio sono:
+- Analisi Matematica II
+- Geometria e Algebra Line
+
+Domanda originale: dove trovo il bando per l'erasmus?
+Categoria: procedure
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 3
+
+Risposta generata: Il bando per l'Erasmus+ può essere trovato sul sito web dell'Università degli Studi di Bergamo, nella sezione "Bandi" o "Internazionale". 
+
+In particolare, puoi seguire questi passaggi:
+1. Vai sul sito web dell'Università di Bergamo ([www.unibg.it](http://www.unibg.it))
+2. Seleziona la sezione "Internazionale" o "Bandi"
+3. Cerca la voce "Erasmus+" o "Mobilità per studio"
+4. Seleziona il bando relativo all'anno accademico di tuo interesse (ad esempio, "Bando Erasmus+ a.a. 2025-2026")
+
+In alternativa, puoi anche cercare direttamente sul sito web dell'Università utilizzando le parole chiave "Bando Erasmus+" o "Mobilità per studio".
+
+Come studente di Ingegneria, potresti anche contattare il dipartimento di Ingegneria o la segreteria studenti per avere informazioni più aggiornate e personalizzate sul bando Erasmus+.
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RESPONSE:
+Il bando per l'Erasmus+ è sul sito web dell'Università degli Studi di Bergamo, nella sezione "Bandi" o "Internazionale".
+- Vai sul sito web dell'Università di Bergamo
+- Seleziona la sezione "Internazionale" o "Bandi"
+- Cerca la voce "Erasmus+" o "Mobilità per studio"
+- Seleziona il bando relativo all'anno accademico di tuo interesse
+Come studente di Ingegneria, puoi anche contattare il dipartimento di Ingegneria per informazioni più aggiornate.
+
+================================================================================
+FINAL RESPONSE
+================================================================================
+Il bando per l'Erasmus+ è sul sito web dell'Università degli Studi di Bergamo, nella sezione "Bandi" o "Internazionale".
+- Vai sul sito web dell'Università di Bergamo
+- Seleziona la sezione "Internazionale" o "Bandi"
+- Cerca la voce "Erasmus+" o "Mobilità per studio"
+- Seleziona il bando relativo all'anno accademico di tuo interesse
+Come studente di Ingegneria, puoi anche contattare il dipartimento di Ingegneria per informazioni più aggiornate.
+
+================================================================================
+END OF LOG
+================================================================================

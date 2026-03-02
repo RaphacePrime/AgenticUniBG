@@ -41,8 +41,8 @@ Thumbs.db
 .docker/
 
 # Logs
-*.log
-logs/
+# *.log
+# logs/
 
 # Database
 *.db

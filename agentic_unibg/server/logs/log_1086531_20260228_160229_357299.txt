@@ -1,0 +1,1650 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-02-28 16:02:29
+Status    : success
+
+------------------------------------------------------------
+USER INFORMATION
+------------------------------------------------------------
+User type   : loggato
+Name        : Raphace Prime
+Matricola   : 1086531
+Department  : Ingegneria
+Course      : ign
+Typology    : Magistrale
+Year        : 3
+
+------------------------------------------------------------
+ORIGINAL USER QUERY
+------------------------------------------------------------
+spiegami come iscrivermi ai corsi con accesso programmato con test selettivo
+
+
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: procedure
+Description: Richieste su procedure amministrative, iscrizioni, tasse
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, esami, ricevimenti
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 3
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+
+
+>>> USER PROMPT:
+spiegami come iscrivermi ai corsi con accesso programmato con test selettivo
+
+
+
+>>> RESPONSE:
+procedure
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: iscrizione corsi accesso programmato test unibg
+Original Query: spiegami come iscrivermi ai corsi con accesso programmato con test selettivo
+
+
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- Tieni conto del contesto della conversazione per capire cosa cerca lo studente
+- La query deve essere in italiano
+- Massimo 6-8 parole
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Quali sono le tasse universitarie per il primo anno di ingegneria?"
+Query generata: tasse universitarie primo anno ingegneria unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Come posso iscrivermi al test di ammissione?"
+Query generata: iscrizione test ammissione unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Dove trovo gli orari delle lezioni di informatica?"
+Query generata: orari lezioni informatica unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Cos'è il top 10 student program?"
+Query generata: top 10 student program unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+Ultima richiesta dello studente: spiegami come iscrivermi ai corsi con accesso programmato con test selettivo
+
+
+
+Genera la query di ricerca web:
+
+>>> RESPONSE:
+iscrizione corsi accesso programmato test unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status          : success
+Search query    : iscrizione corsi accesso programmato test unibg
+Total results   : 17
+Top results used: 5
+
+>>> TOP RESULTS:
+  [1] Score: 1.0000
+      Title  : [PDF] immatricolazioni ai corsi ad accesso libero e programmato - UniBg
+      URL    : https://www.unibg.it/sites/default/files/media/documents/2026-01-27/Presentazione%20Settore%20Carriere%20e%20Servizi%20agli%20studenti%2024%20gennaio%202026.pdf
+      Content: IMMATRICOLAZIONI AI CORSI AD ACCESSO LIBERO E PROGRAMMATO a.a. 2026-2027 Settore Carriere e Servizi agli studenti OFFERTA FORMATIVA QUALI CORSI SONO A NUMERO PROGRAMMATO? Corsi di studio che utilizzano il TOLC come strumento di selezione: • Scienze Psicologiche (TOLC-PSI) 250 posti • Scienze dell’Educazione (TOLC-SU) 470 posti • Scienze Motorie e Sportive (TOLC-SU) 100 posti • Scienze della Comunicazione (TOLC-SU) 400 posti Corsi di studio che utilizzano il criterio dell’immatricolazione ad esaurimento posti: • Economia (TOLC-E per valutare la preparazione iniziale) 400 posti • Economia aziendale (TOLC-E per valutare la preparazione iniziale) 800 posti Il corso di laurea magistrale a ciclo unico in Scienze della formazione primaria prevede invece un test nazionale MUR. Il bando di ammissione, che conterrà tutte le informazioni utili, sarà pubblicato a seguito dell’emanazione dei DD.MM. di riferimento.
+TOLC – TEST ONLINE CISIA COSA SONO I Test Online Cisia (TOLC) sono uno strumento di orientamento e valutazione delle capacità iniziali, erogati su piattaforma informatizzata e gestiti dal Consorzio Interuniversitario Sistemi integrati per l’Accesso (CISIA).
+A COSA SERVONO ACCESSO LIBERO E ACCESSO PROGRAMMATO CON UTILIZZO DEL CRITERIO DELL’IMMATRICOLAZIONE AD ESAURIMENTO POSTI: il TOLC rappresenta il test di verifica della preparazione iniziale degli studenti.
+L’attribuzione di eventuali Obblighi Formativi Aggiuntivi (OFA) viene effettuata sulla base del punteggio ottenuto in relazione alle soglie stabilite dai singoli Dipartimenti.
+Nel caso del Dipartimento di Lingue, letterature e culture straniere è FORTEMENTE consigliato sostenere anche i Placement test: https://lt-llsm.unibg.it/it/iscriversi/placement-test ACCESSO PROGRAMMATO CON UTILIZZO DEL TOLC COME STRUMENTO DI SELEZIONE: il TOLC rappresenta il test selettivo per l’ammissione al corso. Sulla base del punteggio ottenuto (esclusa la sezione di Inglese), il candidato viene collocato in graduatoria. Serve anche per definire eventuali Obblighi Formativi Aggiuntivi (OFA) assegnati ai candidati ammessi.
+TOLC – TEST ONLINE CISIA Potrai iscriverti a un TOLC dello stesso tipo una volta per mese solare. Ogni TOLC ha un costo di 35,00 euro. Potrai sostenere il TOLC in qualunque università aderente ai TOLC; l’iscrizione al TOLC può essere fatta in qualunque momento entro la scadenza fissata dal CISIA, indicativamente 7 giorni prima dello svolgimento del test (ATTENZIONE, POSTI LIMITATI).
+È valido il test TOLC sostenuto a partire dal 1° gennaio 2025 presso qualunque sede universitaria aderente al TOLC. Il test può essere sostenuto all’università (TOLC@UNI) oppure a distanza (TOLC@CASA); in quest’ultimo caso deve essere utilizzato un PC portatile, dotato di telecamera incorporata e funzionante, per svolgere la prova e occorre un dispositivo mobile in cui installare il programma Webex che gestisce l’aula virtuale.
+Potrai anche ripetere il test TOLC; ai fini dell’ammissione in graduatoria e/o dell’assegnazione dell’OFA sarà comunque considerato il miglior esito tra tutti i test effettuati.
+Se risulterai ammesso al corso con assegnazione di un obbligo formativo aggiuntivo (OFA), non avendo raggiunto il punteggio soglia indicato, sarai tenuto ad assolvere tale obbligo formativo entro il 30 settembre 2027, pena l’impossibilità di iscrizione al secondo anno di corso.
+TOLC – TEST ONLINE CISIA VALUTAZIONE: • 1 PUNTO PER OGNI RISPOSTA CORRETTA • 0 PUNTI PER OGNI RISPOSTA NON DATA • - 0,25 PUNTI PER OGNI RISPOSTA SBAGLIATA Per la LINGUA INGLESE non è prevista penalizzazione per le risposte sbagliate e il punteggio è determinato da: • 1 PUNTO PER LE RISPOSTE ESATTE • 0 PUNTI PER LE RISPOSTE SBAGLIATE E NON DATE TOLC – SIMULAZIONI Lo studente verrà a conoscenza del proprio punteggio già a fine prova, così da sapere immediatamente se la prova è stata superata o meno con riferimento all’assegnazione di obblighi formativi aggiuntivi (OFA).
+N.B: Per i corsi ad accesso programmato che utilizzano il TOLC come strumento di selezione, l’ammissione dipenderà dal posto in graduatoria. Se si è collocati in posizione utile in graduatoria bisogna accettare il posto e immatricolarsi entro i termini indicati, pena la perdita del posto e l’esclusione dalla graduatoria.
+CISIA mette a disposizione dello studente delle ESERCITAZIONI ONLINE DI POSIZIONAMENTO con la medesima struttura del TOLC.
+Le simulazioni NON sostituiscono lo studio e la preparazione alle prove.
+TOLC TIPOLOGIE TOLC-SU per l’accesso ai corsi di studio di area umanistica; TOLC-PSI per l’accesso al corso di Scienze psicologiche; TOLC-E per l’accesso ai corsi dell’area economico-aziendale; TOLC-I per l’accesso ai corsi della Scuola di Ingegneria.
+TOLC-SPS per l’accesso al corso di laurea in Scienze politiche e strategie globali ATTENZIONE: per Scienze della formazione primaria TEST (non TOLC) in data fissata a livello nazionale.
+TITOLI DI STUDIO RICHIESTI Titoli necessari per l’immatricolazione ad un corso di laurea triennale o magistrale a ciclo unico Per essere ammessi ad un corso di laurea o di laurea magistrale a ciclo unico occorre essere in possesso di un diploma di scuola secondaria superiore di secondo grado (diploma di maturità) oppure di un titolo di studio conseguito all’estero riconosciuto idoneo.
+ACCESSO LIBERO: ADEMPIMENTI (cds Lingue e letterature straniere moderne, Lettere, Filosofia, Giurisprudenza, Diritto per l’impresa nazionale e internazionale, Data Analytics, economia e tecnologie digitali, Scienze politiche e strategie globali, Scuola di Ingegneria) 1. Immatricolazione sul portale UniBg con versamento della quota della tassa regionale per il Diritto allo Studio + imposta di bollo assolta in modo virtuale dal 1° luglio al 2 ottobre 2026 2. Sostenimento del TOLC di riferimento entro il 25 settembre 2026 con iscrizione al test online sul portale del CISIA entro la data prevista (indicativamente 7 gg prima della data di svolgimento del test).
+Immatricolazioni tardive: 1. Immatricolazione sul portale UniBg con versamento della quota della tassa regionale per il Diritto allo Studio + imposta di bollo assolta in modo virtuale dal 3 ottobre al 13 novembre 2026 (con pagamento della corrispondente sanzione per ritardato pagamento).
+2. Sostenimento del TOLC di riferimento entro il 19 novembre 2026 con iscrizione al test online sul portale del CISIA entro la data prevista (indicativamente 7 gg prima della data di svolgimento del test).
+Nel caso di mancato sostenimento del TOLC entro le date previste verrà attribuito allo studente un obbligo formativo aggiuntivo (OFA) da colmare entro il primo anno di corso.
+In caso di mancato assolvimento del debito formativo entro il 30 settembre 2027, lo studente non potrà iscriversi al secondo anno e sarà tenuto ad iscriversi come ripetente del primo anno.
+ACCESSO PROGRAMMATO (corsi che utilizzano il TOLC come strumento di selezione: Scienze dell’educazione 470 posti, Scienze della comunicazione 400 posti, Scienze motorie e sportive 100 posti e Scienze psicologiche 250 posti) ADEMPIMENTI • Iscrizione al TOLC dal sito www.cisiaonline.it • Versamento del contributo di iscrizione al test al consorzio CISIA (€ 35,00) • Sostenimento del TOLC all’università/Tolc@casa entro il 22 maggio 2026 • Pre-iscrizione sul sito dell’Università di Bergamo dal 2 marzo al 22 maggio 2026 Il candidato deve sostenere, presso una qualsiasi università, il TOLC associato al corso di laurea a cui si vorrà iscrivere.
+Ci sono due possibili TOLC, associati a diversi Corsi di laurea: TOLC-SU (corsi di laurea in Scienze dell’educazione, Scienze della comunicazione, Scienze motorie e sportive); TOLC-PSI (corso di laurea in Scienze psicologiche).
+NB: Possono partecipare alla prima sessione di selezione anche studenti iscritti all’ultimo anno di scuola superiore.
+Le modalità di svolgimento dei TOLC, il calendario delle prove previste, la tipologia delle prove e tutte le informazioni utili sono reperibili sul sito del CISIA https://www.cisiaonline.it ACCESSO PROGRAMMATO PRIMA SELEZIONE (corsi che utilizzano il TOLC come strumento di selezione) 50% dei posti disponibili • Sostenimento del TOLC entro il 22 maggio 2026 con iscrizione al test sul portale del CISIA e pre-iscrizione sul portale UniBg dal 2 marzo al 22 maggio 2026; • Pubblicazione graduatorie entro il 5 giugno 2026; • Accettazione posto entro il 10 giugno 2026 compilando la domanda di pre-immatricolazione; • Pubblicazione di eventuali posti rimasti disponibili entro il 16 giugno 2026; • Accettazione posto (primo scorrimento) entro il 19 giugno 2026 compilando la domanda di pre-immatricolazione; • Domanda di ripescaggio (manifestazione di interesse) dal 16 al 19 giugno 2026; • Pubblicazione eventuali posti ulteriori entro il 24 giugno 2026; • Accettazione posto (a seguito ripescaggio) entro il 29 giugno 2026 compilando la domanda di pre-immatricolazione; • Perfezionamento immatricolazione con pagamento della quota della tassa regionale per il Diritto allo Studio + imposta di bollo assolta in modo virtuale dal 1° al 31 luglio 2026.
+PRE-ISCRIZIONE SUL PORTALE UNIBG E PRE-IMMATRICOLAZIONE Se il candidato non è mai stato iscritto presso l’Ateneo deve effettuare la registrazione al portale: www.unibg.it.
+Dallo Sportello internet deve iscriversi al concorso di ammissione (= pre-iscrizione) corrispondente al corso di studio di suo interesse.
+È possibile pre-iscriversi a più corsi di studio.
+Verrà richiesto al candidato, per la prima sessione di selezione, l’inserimento della media dei voti del quarto anno di scuola superiore arrotondata alla seconda cifra decimale (per il collocamento in graduatoria di eventuali parimerito, in caso di parità di punteggio TOLC ed età anagrafica).
+Dopo la pubblicazione delle graduatorie il candidato ammesso dovrà effettuare, entro il 10 giugno 2026, la pre-immatricolazione che bloccherà il posto, in attesa di ottenere il diploma di maturità nell’a.s. 2025/2026.
+ACCESSO PROGRAMMATO SECONDA SELEZIONE (corsi che utilizzano il TOLC come strumento di selezione) 50% dei posti disponibili • Sostenimento TOLC entro il 28 agosto 2026 con iscrizione al test online sul portale CISIA entro la data prevista (indicativamente 7 giorni prima della data di svolgimento del test); • Pre-iscrizione sul portale UniBg dal 6 luglio al 28 agosto 2026; • Pubblicazione graduatorie entro il 9 settembre 2026; • Accettazione posto entro il 14 settembre 2026 tramite domanda di immatricolazione con pagamento della quota della tassa regionale per il Diritto allo Studio + imposta di bollo assolta in modo virtuale; • Pubblicazione di eventuali posti rimasti disponibili entro il 18 settembre 2026; • Accettazione posto primo scorrimento (immatricolazione online e quota tassa regionale + imposta di bollo assolta in modo virtuale) entro il 23 settembre 2026; • Domanda di ripescaggio (manifestazione di interesse) dal 18 al 23 settembre 2026; • Pubblicazione eventuali posti ulteriori entro il 28 settembre 2026; • Accettazione posto (a seguito ripescaggio) tramite immatricolazione online con versamento quota tassa regionale + imposta di bollo assolta in modo virtuale entro il 2 ottobre 2026.
+Si procederà ad ulteriori scorrimenti della graduatoria che si rendessero necessari fino alla data del 13 novembre 2026.
+ACCESSO PROGRAMMATO: CORSI DI STUDIO CHE UTILIZZANO IL CRITERIO DELL’IMMATRICOLAZIONE AD ESAURIMENTO POSTI • Economia (TOLC-E) 400 posti • Economia aziendale (TOLC-E) 800 posti Gli studenti vengono ammessi al corso sulla base dell’ordine cronologico di presentazione della domanda di immatricolazione fino a copertura dei posti messi a disposizione.
+È comunque necessario sostenere il TOLC-E in presenza (TOLC@UNI) oppure da remoto (TOLC@CASA) unicamente ai fini della verifica della preparazione iniziale e dell’eventuale assegnazione di OFA.
+È valido il TOLC-E sostenuto a partire dal 1/01/2025.
+Il TOLC deve essere sostenuto entro il 25 settembre 2026 (per gli immatricolati entro il 10 settembre 2026) ed entro il 19 novembre 2026 (per gli immatricolati a partire dal 14 settembre 2026).
+In caso di mancato sostenimento del TOLC entro la scadenza prevista, agli studenti verrà assegnato d’ufficio l’OFA.
+ACCESSO PROGRAMMATO: CORSI DI STUDIO CHE UTILIZZANO IL CRITERIO DELL’IMMATRICOLAZIONE AD ESAURIMENTO POSTI ADEMPIMENTI • Immatricolazione sul portale UniBg dal 1° aprile al 30 giugno 2026; • Perfezionamento immatricolazione con pagamento della quota della tassa regionale per il Diritto allo Studio + imposta di bollo assolta in modo virtuale dal 1° luglio al 20 luglio 2026.
+Dal 24 luglio 2026 in poi, fino all’esaurimento dei posti, immatricolazione più perfezionamento tramite pagamento della quota della tassa regionale per il Diritto allo Studio + imposta di bollo assolta in modo virtuale secondo il calendario che verrà pubblicato nel bando di ammissione.
+ISCRIZIONE PART-TIME L’iscrizione a tempo parziale può essere richiesta dagli studenti iscritti IN CORSO che rientrino in una delle categorie previste dal Regolamento di Ateneo per le iscrizioni a tempo parziale reperibile alla pagina https://www.unibg.it/studiare/iscriversi/tipi-iscrizione In caso di iscrizione a un corso di laurea triennale, il percorso di studio sarà così composto: 1° anno, 1° anno ripetente, 2° anno, 2° anno ripetente, 3° anno, 3° anno ripetente per una durata complessiva di 6 anni.
+In caso di iscrizione a un corso di laurea magistrale a ciclo unico (quinquennale), il percorso di studio avrà di conseguenza la durata di 10 anni.
+Numero di cfu annuale per gli studenti part-time: Il numero di crediti da prevedere nel piano di studi per ogni anno accademico dovrà essere pari al 50% di quelli previsti per il proprio corso di laurea; le strutture didattiche individueranno le eventuali priorità tra gli insegnamenti.
+Gli obblighi formativi aggiuntivi (OFA) dovranno essere soddisfatti entro il primo anno ripetuto del corso (e, se correlati ad un determinato insegnamento, prima del sostenimento del relativo esame).
+ISCRIZIONE PART-TIME Contributi per studenti part-time Gli studenti che, all’atto dell’immatricolazione, optano per il regime a tempo parziale, dovranno versare il contributo onnicomprensivo in misura ridotta del 50%, secondo l’indicatore ISEEU da richiedere ogni anno. All’atto dell’immatricolazione sono tenuti a pagare la quota della tassa regionale per il Diritto allo Studio e l’imposta di bollo assolta in modo virtuale.
+Variazione di status (da iscrizione part-time a tempo pieno e viceversa) È possibile cambiare status sia per i corsi di laurea triennale che per i corsi di laurea magistrale a ciclo unico.
+Lo studente potrà fare una prima scelta all'atto dell'immatricolazione e poi una sola scelta successiva all'atto del rinnovo dell'iscrizione.
+Nel caso di variazione di status da tempo part-time a tempo pieno, lo studente dovrà aver completato un’annualità intera (es. primo anno + primo anno ripetente) prima di poter richiedere la variazione.
+GRAZIE DELL’ATTENZIONE UniBg > Studiare > Contatta la Segreteria: https://www.unibg.it/studiare/contatta-segreteria CONTATTO DIRETTO: UniBg > Help Desk Studenti > Apri un nuovo ticket SCOPRI DI PIÙ!
+
+  [2] Score: 1.0000
+      Title  : [PDF] immatricolazioni ai corsi ad accesso libero e programmato - UniBg
+      URL    : https://www.unibg.it/sites/default/files/media/documents/2025-01-21/Presentazione%20Settore%20Carriere%20e%20Servizi%20agli%20studenti%2018%20gennaio%202025.pdf
+      Content: IMMATRICOLAZIONI AI CORSI AD ACCESSO LIBERO E PROGRAMMATO a.a. 2025-2026 Settore Carriere e Servizi agli studenti OFFERTA FORMATIVA QUALI CORSI SONO A NUMERO PROGRAMMATO? Corsi di studio che utilizzano il TOLC come strumento di selezione: • Scienze Psicologiche (TOLC-PSI) • Scienze dell’Educazione (TOLC-SU) • Scienze Motorie e Sportive (TOLC-SU) • Scienze della Comunicazione (TOLC-SU) Corsi di studio che utilizzano il criterio dell’immatricolazione ad esaurimento posti: • Economia (TOLC-E per valutare la preparazione iniziale) • Economia aziendale (TOLC-E per valutare la preparazione iniziale) Il corso di laurea magistrale a ciclo unico in Scienze della formazione primaria prevede invece un test nazionale MUR. Il bando di ammissione, che conterrà tutte le informazioni utili, sarà pubblicato a seguito dell’emanazione dei DD.MM. di riferimento.
+TOLC – TEST ONLINE CISIA COSA SONO I Test Online Cisia (TOLC) sono uno strumento di orientamento e valutazione delle capacità iniziali, erogati su piattaforma informatizzata e gestiti dal Consorzio Interuniversitario Sistemi integrati per l’Accesso (CISIA).
+A COSA SERVONO ACCESSO LIBERO E ACCESSO PROGRAMMATO CON UTILIZZO DEL CRITERIO DELL’IMMATRICOLAZIONE AD ESAURIMENTO POSTI: il TOLC rappresenta il test di verifica della preparazione iniziale degli studenti.
+L’attribuzione di eventuali Obblighi Formativi Aggiuntivi (OFA) viene effettuata sulla base del punteggio ottenuto in relazione alle soglie stabilite dai singoli Dipartimenti.
+Nel caso del Dipartimento di Lingue, letterature e culture straniere è FORTEMENTE consigliato sostenere anche i Placement test: https://lt-llsm.unibg.it/it/iscriversi/placement-test ACCESSO PROGRAMMATO CON UTILIZZO DEL TOLC COME STRUMENTO DI SELEZIONE: il TOLC rappresenta il test selettivo per l’ammissione al corso. Sulla base del punteggio ottenuto (esclusa la sezione di Inglese), il candidato viene collocato in graduatoria. Serve anche per definire eventuali Obblighi Formativi Aggiuntivi (OFA) assegnati ai candidati ammessi.
+TOLC – TEST ONLINE CISIA Potrai iscriverti a un TOLC dello stesso tipo una volta per mese solare. Ogni TOLC ha un costo di 35,00 euro. Potrai sostenere il TOLC in qualunque università aderente ai TOLC; l’iscrizione al TOLC può essere fatta in qualunque momento entro la scadenza fissata dal CISIA, indicativamente 7 giorni prima dello svolgimento del test (ATTENZIONE, POSTI LIMITATI).
+È valido il test TOLC sostenuto a partire dal 1° gennaio 2024 presso qualunque sede universitaria aderente al TOLC. Il test può essere sostenuto all’università (TOLC@UNI) oppure a distanza (TOLC@CASA); in quest’ultimo caso deve essere utilizzato un PC portatile, dotato di telecamera incorporata e funzionante, per svolgere la prova e occorre un dispositivo mobile in cui installare il programma ZOOM che gestisce l’aula virtuale.
+Potrai anche ripetere il test TOLC; ai fini dell’ammissione in graduatoria e/o dell’assegnazione dell’OFA sarà comunque considerato il miglior esito tra tutti i test effettuati.
+Se risulterai ammesso al corso con assegnazione di un obbligo formativo aggiuntivo (OFA), non avendo raggiunto il punteggio soglia indicato, sarai tenuto ad assolvere tale obbligo formativo entro il 30 settembre 2026, pena l’impossibilità di iscrizione al secondo anno di corso.
+TOLC – TEST ONLINE CISIA VALUTAZIONE: • 1 PUNTO PER OGNI RISPOSTA CORRETTA • 0 PUNTI PER OGNI RISPOSTA NON DATA • - 0,25 PUNTI PER OGNI RISPOSTA SBAGLIATA Per la LINGUA INGLESE non è prevista penalizzazione per le risposte sbagliate e il punteggio è determinato da: • 1 PUNTO PER LE RISPOSTE ESATTE • 0 PUNTI PER LE RISPOSTE SBAGLIATE E NON DATE TOLC – SIMULAZIONI Lo studente verrà a conoscenza del proprio punteggio già a fine prova, così da sapere immediatamente se la prova è stata superata o meno con riferimento all’assegnazione di obblighi formativi aggiuntivi (OFA).
+N.B: Per i corsi ad accesso programmato che utilizzano il TOLC come strumento di selezione, l’ammissione dipenderà dal posto in graduatoria. Se si è collocati in posizione utile in graduatoria bisogna accettare il posto e immatricolarsi entro i termini indicati, pena la perdita del posto e l’esclusione dalla graduatoria.
+CISIA mette a disposizione dello studente delle ESERCITAZIONI ONLINE DI POSIZIONAMENTO con la medesima struttura del TOLC.
+Le simulazioni NON sostituiscono lo studio e la preparazione alle prove.
+TOLC TIPOLOGIE TOLC-SU per l’accesso ai corsi di STUDI UMANISTICI; TOLC-PSI per l’accesso al corso di SCIENZE PSICOLOGICHE; TOLC-E per l’accesso ai corsi dell’area economico-aziendale; TOLC-I per l’accesso ai corsi della Scuola di Ingegneria.
+ATTENZIONE: per Scienze della formazione primaria TEST (non TOLC) in data fissata a livello nazionale.
+TITOLI DI STUDIO RICHIESTI Titoli necessari per l’immatricolazione ad un corso di laurea triennale o magistrale a ciclo unico Per essere ammessi ad un corso di laurea o di laurea magistrale a ciclo unico occorre essere in possesso di un diploma di scuola secondaria superiore di secondo grado (diploma di maturità) oppure di un titolo di studio conseguito all’estero riconosciuto idoneo.
+ACCESSO LIBERO: ADEMPIMENTI (cds Lingue e letterature straniere moderne, Lettere, Filosofia, Giurisprudenza, Diritto per l’impresa nazionale e internazionale, Data Analytics, economia e tecnologie digitali, Scuola di Ingegneria) 1. Immatricolazione sul portale UniBg + versamento contestuale della quota di 156,00 euro* dal 1° luglio al 3 ottobre 2025 2. Sostenimento del TOLC di riferimento entro il 26 settembre 2025 con iscrizione al test online sul portale del CISIA entro la data prevista (indicativamente 7 gg prima della data di svolgimento del test).
+Immatricolazioni tardive: 1. Immatricolazione sul portale UniBg + versamento contestuale della quota di 156,00 euro* dal 4 ottobre al 28 novembre 2025 (con pagamento della corrispondente mora).
+2. Sostenimento del TOLC di riferimento entro il 20 novembre 2025 con iscrizione al test online sul portale del CISIA entro la data prevista (indicativamente 7 gg prima della data di svolgimento del test).
+Nel caso di mancato sostenimento del TOLC entro le date previste verrà attribuito allo studente un obbligo formativo aggiuntivo da colmare entro il primo anno di corso.
+In caso di mancato assolvimento del debito formativo entro il 30 settembre 2026, lo studente non potrà iscriversi al secondo anno e sarà tenuto ad iscriversi come ripetente del primo anno.
+* salvo adeguamento a diverso importo stabilito dalla Regione Lombardia ACCESSO PROGRAMMATO (corsi che utilizzano il TOLC come strumento di selezione: Scienze dell’educazione, Scienze della comunicazione, Scienze motorie e sportive e Scienze psicologiche): ADEMPIMENTI • Iscrizione al TOLC dal sito www.cisiaonline.it • Versamento del contributo di iscrizione al test al consorzio CISIA (€ 35,00) • Sostenimento del TOLC all’università/Tolc@casa entro il 23 maggio 2025 • Pre-iscrizione sul sito dell’Università di Bergamo dal 3 marzo al 23 maggio 2025 Il candidato deve sostenere, presso una qualsiasi università, il TOLC associato al corso di laurea a cui si vorrà iscrivere.
+Ci sono due possibili TOLC, associati a diversi Corsi di laurea: TOLC-SU (corsi di laurea in Scienze dell’educazione, Scienze della comunicazione, Scienze motorie e sportive); TOLC-PSI (corso di laurea in Scienze psicologiche).
+NB: Possono partecipare alla prima sessione di selezione anche studenti iscritti all’ultimo anno di scuola superiore.
+Le modalità di svolgimento dei TOLC, il calendario delle prove previste, la tipologia delle prove e tutte le informazioni utili sono reperibili sul sito del CISIA https://www.cisiaonline.it ACCESSO PROGRAMMATO PRIMA SELEZIONE (corsi che utilizzano il TOLC come strumento di selezione) • Sostenimento del TOLC entro il 23 maggio 2025 con iscrizione al test sul portale del CISIA e pre-iscrizione sul portale UniBg dal 3 marzo al 23 maggio 2025; • Pubblicazione graduatorie entro il 6 giugno 2025; • Accettazione posto entro l’11 giugno 2025 compilando la domanda di pre-immatricolazione; • Pubblicazione di eventuali posti rimasti disponibili entro il 17 giugno 2025; • Accettazione posto (primo scorrimento) entro il 20 giugno 2025 compilando la domanda di pre-immatricolazione; • Domanda di ripescaggio (manifestazione di interesse) dal 17 al 20 giugno 2025; • Pubblicazione eventuali posti ulteriori entro il 25 giugno 2025; • Accettazione posto (a seguito ripescaggio) entro il 30 giugno 2025 compilando la domanda di pre-immatricolazione; • Perfezionamento immatricolazione + contestuale pagamento 156,00 euro (salvo adeguamento a diverso importo stabilito dalla Regione Lombardia) dal 1° al 31 luglio 2025.
+PRE-ISCRIZIONE SUL PORTALE UNIBG E PRE-IMMATRICOLAZIONE Se il candidato non è mai stato iscritto presso l’Ateneo deve effettuare la registrazione al portale: www.unibg.it.
+Dallo Sportello internet deve iscriversi al concorso di ammissione (= pre-iscrizione) corrispondente al corso di studio di suo interesse.
+È possibile pre-iscriversi a più corsi di studio.
+Verrà richiesto al candidato, per la prima sessione di selezione, l’inserimento della media dei voti del quarto anno di scuola superiore arrotondata alla seconda cifra decimale (per il collocamento in graduatoria di eventuali parimerito, in caso di parità di punteggio TOLC ed età anagrafica).
+Dopo la pubblicazione delle graduatorie il candidato ammesso dovrà effettuare, entro l’11 giugno 2025, la pre-immatricolazione che bloccherà il posto, in attesa di ottenere il diploma di maturità nell’a.s. 2024/2025.
+ACCESSO PROGRAMMATO SECONDA SELEZIONE (corsi che utilizzano il TOLC come strumento di selezione) • Sostenimento TOLC entro il 29 agosto 2025 con iscrizione al test online sul portale CISIA entro la data prevista (indicativamente 7 giorni prima della data di svolgimento del test); • Pre-iscrizione sul portale UniBg dal 7 luglio al 29 agosto 2025; • Pubblicazione graduatorie entro il 10 settembre 2025; • Accettazione posto entro il 15 settembre 2025 tramite domanda di immatricolazione + pagamento della quota di 156,00 euro*; • Pubblicazione di eventuali posti rimasti disponibili entro il 19 settembre 2025; • Accettazione posto primo scorrimento (immatricolazione + 156,00 euro*) entro il 24 settembre 2025; • Domanda di ripescaggio (manifestazione di interesse) dal 19 al 24 settembre 2025; • Pubblicazione eventuali posti ulteriori entro il 29 settembre 2025; • Accettazione posto (a seguito ripescaggio) tramite immatricolazione + versamento 156,00 euro* entro il 3 ottobre 2025.
+Si procederà ad ulteriori scorrimenti della graduatoria che si rendessero necessari fino alla data del 14 novembre 2025.
+* (salvo adeguamento a diverso importo stabilito dalla Regione Lombardia) ACCESSO PROGRAMMATO: CORSI DI STUDIO CHE UTILIZZANO IL CRITERIO DELL’IMMATRICOLAZIONE AD ESAURIMENTO POSTI • Economia (TOLC-E) • Economia aziendale (TOLC-E) Gli studenti vengono ammessi al corso sulla base dell’ordine cronologico di presentazione della domanda di immatricolazione fino a copertura dei posti messi a disposizione.
+È comunque necessario sostenere il TOLC-E in presenza (TOLC@UNI) oppure da remoto (TOLC@CASA) unicamente ai fini della verifica della preparazione iniziale e dell’eventuale assegnazione di OFA.
+È valido il TOLC-E sostenuto a partire dal 1/01/2024.
+Il TOLC deve essere sostenuto entro il 26 settembre 2025 (per gli immatricolati entro il 17 settembre 2025) ed entro il 20 novembre 2025 (per gli immatricolati a partire dal 18 settembre 2025).
+In caso di mancato sostenimento del TOLC entro la scadenza prevista, agli studenti verrà assegnato d’ufficio l’OFA.
+ACCESSO PROGRAMMATO: CORSI DI STUDIO CHE UTILIZZANO IL CRITERIO DELL’IMMATRICOLAZIONE AD ESAURIMENTO POSTI ADEMPIMENTI • Immatricolazione sul portale UniBg dal 1° aprile al 30 giugno 2025; • Perfezionamento immatricolazione con contestuale pagamento della quota di 156,00 euro* dal 1° luglio al 21 luglio 2025.
+Dal 29 luglio 2025 in poi, fino all’esaurimento dei posti, immatricolazione più perfezionamento tramite pagamento della quota di 156 euro* secondo il calendario che verrà pubblicato nel bando di ammissione.
+* salvo adeguamento a diverso importo stabilito dalla Regione Lombardia ISCRIZIONE PART-TIME L’iscrizione a tempo parziale può essere richiesta dagli studenti iscritti IN CORSO che rientrino in una delle categorie previste dal Regolamento di Ateneo per le iscrizioni a tempo parziale reperibile alla pagina https://www.unibg.it/studiare/iscriversi/tipi-iscrizione In caso di iscrizione a un corso di laurea triennale, il percorso di studio sarà così composto: 1° anno, 1° anno ripetente, 2° anno, 2° anno ripetente, 3° anno, 3° anno ripetente per una durata complessiva di 6 anni.
+In caso di iscrizione a un corso di laurea magistrale a ciclo unico (quinquennale), il percorso di studio avrà di conseguenza la durata di 10 anni.
+Numero di cfu annuale per gli studenti part-time: Il numero di crediti da prevedere nel piano di studi per ogni anno accademico dovrà essere pari al 50% di quelli previsti per il proprio corso di laurea; le strutture didattiche individueranno le eventuali priorità tra gli insegnamenti.
+Gli obblighi formativi aggiuntivi (OFA) dovranno essere soddisfatti entro il primo anno ripetuto del corso (e, se correlati ad un determinato insegnamento, prima del sostenimento del relativo esame).
+ISCRIZIONE PART-TIME Contributi per studenti part-time Gli studenti che, all’atto dell’immatricolazione, optano per il regime a tempo parziale, dovranno versare il contributo onnicomprensivo in misura ridotta del 50%, secondo l’indicatore ISEEU da richiedere ogni anno. All’atto dell’immatricolazione sono tenuti a pagare la tassa regionale per il diritto allo studio e l’imposta di bollo assolta in modo virtuale (156,00 euro, salvo adeguamento a diverso importo stabilito dalla Regione Lombardia).
+Variazione di status (da iscrizione part-time a tempo pieno e viceversa) È possibile cambiare status sia per i corsi di laurea triennale che per i corsi di laurea magistrale a ciclo unico.
+Lo studente potrà fare una prima scelta all'atto dell'immatricolazione e poi una sola scelta successiva all'atto del rinnovo dell'iscrizione.
+Nel caso di variazione di status da tempo part-time a tempo pieno, lo studente dovrà aver completato un’annualità intera (es. primo anno + primo anno ripetente) prima di poter richiedere la variazione.
+GRAZIE DELL’ATTENZIONE UniBg > Studiare > Ti aiutiamo > Contatta la Segreteria: https://www.unibg.it/studiare/ti-aiutiamo/contatta-segreteria CONTATTO DIRETTO: UniBg > Help Desk Studenti > Apri un nuovo ticket SCOPRI DI PIÙ!
+
+  [3] Score: 0.9999
+      Title  : Corsi di laurea magistrale ad accesso programmato - UniBg
+      URL    : https://www.unibg.it/studiare/iscriversi/corsi-laurea-magistrale-ad-accesso-programmato
+      Content:  [Salta al contenuto principale](#main-content) 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](https://en.unibg.it)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e servizi](/vivere-unibg/spazi-e-servizi)
+  + [Opportunità](/vivere-unibg/opportunita)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. [Studiare](/studiare)
+3. [Iscriversi](/studiare/iscriversi)
+4. [Corsi di laurea magistrale ad accesso programmato](/studiare/iscriversi/corsi-laurea-magistrale-ad-accesso-programmato)
+
+### Anno accademico 2025-2026
+
+Questa modalità di accesso è prevista per i corsi di laurea magistrale in:
+
+* **Psicologia clinica** (curriculum Psicologia clinica + curriculum Psicologia della salute nei contesti sociali) - **100 posti -***Lingua di erogazione:**Italiano*  
+   - Curriculum Clinical Psychology for Individuals, Families and Organizations - **50 posti -***Lingua di erogazione:**Inglese*
+* **Scienze pedagogiche** - **150 posti**
+* **Scienze, metodi e didattiche delle attività sportive** - **50 posti**
+* **Progettazione di contesti di vita accessibili ed inclusivi** - **100 posti**
+
+L'ammissione al corso prevede un numero massimo di posti disponibili; occorre essere in possesso di una laurea/diploma universitario triennale o di altro titolo idoneo conseguito all'estero.  
+ È necessario il possesso di specifici requisiti curriculari e di un’adeguata preparazione personale, verificata tramite colloquio/test per stabilire il posto in graduatoria e l’eventuale possibilità di immatricolarsi.  
+ I requisiti di accesso sono riportati sui siti dei singoli corsi di laurea alla pagina *Il Corso / Requisiti di accesso.*
+
+Per iscriversi completa i passi elencati di seguito.
+
+### 1. Consulta il bando
+
+Leggi il **bando relativo al tuo corso di laurea**con tutte le informazioni dettagliate.
+
+Le **graduatorie** saranno pubblicate alla pagina **[Graduatorie di merito corsi di laurea magistrale](https://www.unibg.it/studiare/iscriversi/corsi-laurea-magistrale-ad-accesso-programmato/graduatorie-corsi-laurea "Graduatorie di merito corsi di laurea magistrale")**
+
+### Bando corso di laurea magistrale ad accesso programmato in Progettazione di contesti di vita accessibili ed inclusivi - terza sessione di selezione
+
+Per l’anno accademico 2025-2026 sono disponibili per l’ammissione al Corso di laurea magistrale in Progettazione di contesti di vita accessibili ed inclusivi, classe LM-85R, n. 100 posti, di cui n. 10 riservati ai dipendenti pubblici che si iscrivono nell’ambito del Protocollo d’Intesa stipulato fra il Ministro per la Pubblica Amministrazione e l’Ateneo (iniziativa “PA 110 e lode”).  
+ A seguito della mancata assegnazione di tutti i posti al termine degli scorrimenti della graduatoria relativa alla seconda selezione, è prevista una **terza sessione di selezione**, in cui verranno messi a disposizione **n. 56 posti,** **di cui n. 5 riservati ai dipendenti pubblici** che si iscrivono nell’ambito del Protocollo d’intesa stipulato fra il Ministro per la Pubblica Amministrazione e l’Ateneo (iniziativa “PA 110 e lode”).
+
+**L’iscrizione alla terza sessione di selezione deve essere effettuata a partire dal 27 ottobre 2025 (ore 14:00) fino al 10 novembre 2025 (ore 23:59)** con le modalità indicate nel Bando di ammissione (da leggere con attenzione).
+
+[DR approvazione bando di ammissione terza sessione di selezione a.a. 2025-2026](/sites/default/files/media/documents/2025-10-27/DR%20approvazione%20bando%20di%20ammissione%20LM%20PCVAI%20a.a.%202025-2026_terza%20selezione%2025-26_prot..pdf "DR approvazione bando di ammissione LM PCVAI a.a. 2025-2026_terza selezione 25-26_prot..pdf")
+
+[Bando di ammissione terza sessione di selezione a.a. 2025-2026](/sites/default/files/media/documents/2025-10-27/Bando%20ammissione%20LM%20Progettazione%20di%20contesti%20di%20vita_terza%20selezione%2025-26_prot..pdf "Bando ammissione LM Progettazione di contesti di vita_terza selezione 25-26_prot..pdf")
+
+[Guida alla pre-iscrizione online](/sites/default/files/media/documents/2025-10-27/2025_Guida%20Preiscrizione%20Laurea%20Magistrale%20accesso%20programmato_PCVAI_0.pdf "2025_Guida Preiscrizione Laurea Magistrale accesso programmato_PCVAI_0.pdf")
+
+### Bando corso di laurea magistrale ad accesso programmato in Progettazione di contesti di vita accessibili ed inclusivi
+
+La pre-iscrizione per la seconda sessione di selezione a.a. 2025-2026 è prevista **dal 1° luglio al 22 agosto 2025.**
+
+[DR approvazione bando di ammissione](/sites/default/files/media/documents/2025-03-31/244_2025_DR%20approvazione%20bando%20di%20ammissione%20LM%20PCVAI%20a.a.%202025-2026%20firmato.pdf "244_2025_DR approvazione bando di ammissione LM PCVAI a.a. 2025-2026 firmato.pdf")
+
+[Bando di ammissione LM ad accesso programmato in Progettazione di contesti di vita accessibili ed inclusivi](/sites/default/files/media/documents/2025-03-31/244_2025_Bando%20ammissione%20LM%20Progettazione%20di%20contesti%20di%20vita%20accessibili%20ed%20inclusivi_2025-26_firmato.pdf "244_2025_Bando ammissione LM Progettazione di contesti di vita accessibili ed inclusivi_2025-26_firmato.pdf")
+
+[Allegato 1 - Griglia di valutazione richiedenti visto](/sites/default/files/media/documents/2025-03-31/244_2025_Progettazione_2025_26%20Richiedenti%20visto_griglia%20di%20valutazione%20firmato.pdf "244_2025_Progettazione_2025_26 Richiedenti visto_griglia di valutazione firmato.pdf")
+
+[Guida alla pre-iscrizione online](/sites/default/files/media/documents/2025-03-31/2025_Guida%20Preiscrizione%20Laurea%20Magistrale%20accesso%20programmato_PCVAI.pdf "2025_Guida Preiscrizione Laurea Magistrale accesso programmato_PCVAI.pdf")
+
+### Bando corso di laurea magistrale ad accesso programmato in Scienze, metodi e didattiche delle attività sportive a.a. 2025-2026
+
+La pre-iscrizione per la seconda sessione di selezione a.a. 2025-2026 è prevista **dal 1° luglio al 22 agosto 2025.**
+
+[DR approvazione bando di ammissione](/sites/default/files/media/documents/2025-03-28/241_2025_DR%20approvazione%20bando%20di%20ammissione%20LM%20Scienze_%20metodi%20e%20didattiche%20delle%20attivit_%20sportive%202025-2026.pdf "241_2025_DR approvazione bando di ammissione LM Scienze_ metodi e didattiche delle attivit_ sportive 2025-2026.pdf")
+
+[Bando di ammissione LM ad accesso programmato in Scienze, metodi e didattiche delle attività sportive](/sites/default/files/media/documents/2025-03-28/241_2025_Bando%20ammissione%20LM%20Scienze_%20metodi%20e%20%20didattiche%20delle%20attivita_%20sportive.pdf "241_2025_Bando ammissione LM Scienze_ metodi e  didattiche delle attivita_ sportive.pdf")
+
+[Allegato 1 - Griglia di valutazione richiedenti visto](/sites/default/files/media/documents/2025-03-28/241_2025_All_1_%20Richiedenti%20visto_griglia%20di%20valutazione%20SMDAS.pdf "241_2025_All_1_ Richiedenti visto_griglia di valutazione SMDAS.pdf")
+
+[Guida alla pre-iscrizione online](/sites/default/files/media/documents/2025-03-31/2025_Guida%20Preiscrizione%20Laurea%20Magistrale%20accesso%20programmato_PC_SPED_SMDAS.pdf "2025_Guida Preiscrizione Laurea Magistrale accesso programmato_PC_SPED_SMDAS.pdf")
+
+### Bando corso di laurea magistrale ad accesso programmato in Scienze pedagogiche a.a. 2025-2026
+
+La pre-iscrizione per la seconda sessione di selezione a.a. 2025-2026 è prevista **dal 1° luglio al 22 agosto 2025.**
+
+[DR approvazione bando di ammissione](/sites/default/files/media/documents/2025-03-28/240_2025_DR%20approvazione%20bando%20di%20ammissione%20LM%20Scienze%20pedagogiche%20a.a.%202025-2026.pdf "240_2025_DR approvazione bando di ammissione LM Scienze pedagogiche a.a. 2025-2026.pdf")
+
+[Bando di ammissione LM ad accesso programmato in Scienze pedagogiche](/sites/default/files/media/documents/2025-03-28/240_2025_Bando%20ammissione%20LM%20Scienze%20pedagogiche%202025_2026.pdf "240_2025_Bando ammissione LM Scienze pedagogiche 2025_2026.pdf")
+
+[Allegato 1 - Griglia di valutazione richiedenti visto](/sites/default/files/media/documents/2025-03-28/240_2025_2025_26%20Richiedenti%20visto_griglia%20di%20valutazione%20SPED%20griglia.pdf "240_2025_2025_26 Richiedenti visto_griglia di valutazione SPED griglia.pdf")
+
+[Guida alla pre-iscrizione online](/sites/default/files/media/documents/2025-03-31/2025_Guida%20Preiscrizione%20Laurea%20Magistrale%20accesso%20programmato_PC_SPED_SMDAS_0.pdf "2025_Guida Preiscrizione Laurea Magistrale accesso programmato_PC_SPED_SMDAS_0.pdf")
+
+### Bando corso di laurea magistrale ad accesso programmato in Psicologia clinica a.a. 2025-2026
+
+La pre-iscrizione per la seconda sessione di selezione a.a. 2025-2026 è prevista **dal 1° luglio al 22 agosto 2025.**
+
+[DR approvazione bando di ammissione](/sites/default/files/media/documents/2025-03-25/Prot_DR%20approvazione%20bando%20di%20ammissione%20LM%20Psicologia%20clinica%20a.a.%202025-2026.pdf "Prot_DR approvazione bando di ammissione LM Psicologia clinica a.a. 2025-2026.pdf")
+
+[Bando di ammissione LM ad accesso programmato in Psicologia clinica](/sites/default/files/media/documents/2025-03-25/Prot_Bando%20ammissione%20LM%20Psicologia%20clinica%202025_2026.pdf "Prot_Bando ammissione LM Psicologia clinica 2025_2026.pdf")
+
+[Allegato 1 - Griglia di valutazione richiedenti visto](/sites/default/files/media/documents/2025-03-25/Prot_All_1_2025_26%20Richiedenti%20visto_griglia%20di%20valutazione.pdf "Prot_All_1_2025_26 Richiedenti visto_griglia di valutazione.pdf")
+
+[Guida alla pre-iscrizione online](/sites/default/files/media/documents/2025-03-31/2025_Guida%20Preiscrizione%20Laurea%20Magistrale%20accesso%20programmato_PC_SPED_SMDAS_1.pdf "2025_Guida Preiscrizione Laurea Magistrale accesso programmato_PC_SPED_SMDAS_1.pdf")
+
+[Call for applications to the limited access Master's Degree Course in CLINICAL PSYCHOLOGY](/sites/default/files/media/documents/2025-04-01/ENG_Bando%20ammissione%20LM%20Psicologia%20clinica%202025_2026.pdf "ENG_Bando ammissione LM Psicologia clinica 2025_2026.pdf")
+
+### Le scadenze per iscriverti
+
+Per i corsi di laurea magistrale ad accesso programmato sono previsti due periodi di selezione.
+
+**Primo periodo**
+
+1. **Pre-iscrizioni**
+
+* Dall'1 aprile al 30 maggio 2025
+
+2.**Verifica preparazione iniziale***(ad esclusione degli studenti extra-UE che hanno già sostenuto il colloquio in fase di pre-valutazione)* da svolgere secondo criteri che verranno successivamente indicati nei relativi bandi di ammissione
+
+* Dal 16 al 20 giugno 2025
+
+3. **Pubblicazione graduatorie ammessi**
+
+* Entro il 1° luglio 2025
+
+4. **Immatricolazioni**
+
+* Immatricolazioni entro il 4 luglio 2025
+* Pubblicazione posti disponibili entro il 10 luglio 2025
+* Immatricolazioni primo scorrimento entro il 15 luglio 2025
+* Domanda ripescaggio (manifestazione di interesse) dal 10 al 15 luglio 2025
+* Pubblicazione posti disponibili entro il 21 luglio 2025
+* Immatricolazioni a seguito ripescaggio entro il 24 luglio 2025
+* Presentazione domanda di trasferimento, seconda laurea, abbreviazione e re-immatricolazione: dal 6 agosto al 3 ottobre 2025
+
+Eventuali posti non assegnati con la prima selezione verranno aggiunti ai posti disponibili per la seconda selezione.
+
+**Secondo periodo**
+
+1. **Pre-iscrizioni**
+
+* Dall'1 luglio al 22 agosto 2025
+
+2. **Verifica preparazione iniziale***(ad esclusione degli studenti extra-UE che hanno già sostenuto il colloquio in fase di pre-valutazione)* da svolgere secondo criteri che verranno successivamente indicati nei relativi bandi di ammissione
+
+* Dal 10 al 16 settembre 2025
+
+3. **Pubblicazione graduatoria ammessi**
+
+* Entro il 25 settembre 2025
+
+4.**Immatricolazioni**
+
+* Immatricolazioni entro il 30 settembre 2025
+* Pubblicazione posti disponibili entro il 6 ottobre 2025
+* Immatricolazioni primo scorrimento dal 6 al 9 ottobre 2025
+* Domanda ripescaggio (manifestazione di interesse) dal 6 al 9 ottobre 2025
+* Pubblicazione posti disponibili entro il 15 ottobre 2025
+* Immatricolazione a seguito ripescaggio entro il 20 ottobre 2025
+* Presentazione domanda di trasferimento, passaggio di corso, seconda laurea, abbreviazione e re-immatricolazione: entro il 20 ottobre 2025 (entro il 14 novembre 2025 per coloro che vengono ammessi a seguito scorrimenti effettuati dopo il 15/10/2025).
+
+Si procederà a scorrere la graduatoria fino ad esaurimento dei posti e comunque entro il 14 novembre 2025.
+
+**Indicazioni valide per entrambi i periodi**
+
+Gli studenti che chiedono il trasferimento da altre Università, il passaggio da altro corso di laurea specialistica/magistrale, il conseguimento di seconda laurea, l’abbreviazione di corso o la re-immatricolazione a seguito rinuncia/decadenza sono tenuti ad effettuare prima la pre-iscrizione ed in caso di ammissione al corso potranno presentare la successiva istanza volta ad ottenere il riconoscimento di cfu della carriera pregressa. In caso di passaggio di corso di studio l’istanza va presentata entro le scadenze previste per l’immatricolazione al fine di accettare il posto.
+
+Gli studenti che risulteranno collocati in posizione utile in graduatoria e pertanto ammessi al corso dovranno presentare domanda di immatricolazione unitamente al versamento della tassa regionale per il Diritto allo Studio Universitario e dell’imposta di bollo assolta in modo virtuale per un totale di 156,00 euro (salvo adeguamento a diverso importo stabilito dalla Regione Lombardia).
+
+A seguito di ammissione, potranno:
+
+a) immatricolarsi gli studenti già laureati;  
+ b) pre-immatricolarsi ‘con riserva’ coloro che non sono ancora laureati e conseguiranno il titolo entro e non oltre la sessione di marzo/aprile 2026, purché all’atto della pre-immatricolazione debbano ancora sostenere non più di 3 esami per un massimo di n. 24 cfu (eventuale tirocinio compreso) oltre alla prova finale. Con riferimento al tirocinio il requisito si intende assolto purché lo stesso sia stato già avviato;  
+ c) pre-immatricolarsi ‘con riserva’ gli studenti laureati che sono iscritti a corsi singoli per l’a.a. 2024/2025 al fine di integrare i requisiti necessari per l’ammissione, purché all’atto della pre-immatricolazione debbano ancora sostenere esami per un massimo di 24 cfu da superare entro la sessione di gennaio/febbraio 2026.
+
+Agli studenti che si saranno pre-immatricolati ‘con riserva’ pur non possedendo i requisiti di cui sopra relativi agli esami mancanti, la domanda verrà annullata d’ufficio dalla Segreteria.
+
+Gli studenti saranno pre-immatricolati ‘con riserva’ ovvero con clausola sospensiva e, quindi, non potranno sostenere esami del corso di laurea magistrale fino al conseguimento del titolo oppure fino al superamento di tutti i corsi singoli.
+
+Nel caso in cui lo studente pre-immatricolato “con riserva” non consegua la laurea di I livello entro la sessione di laurea di marzo/aprile 2026 oppure non superi tutti i corsi singoli entro la sessione di appelli di gennaio/febbraio 2026, ma abbia nel frattempo frequentato gli insegnamenti della laurea magistrale, potrà sostenere i relativi esami dopo il conseguimento della laurea oppure dopo il superamento dei corsi singoli, previa iscrizione a singoli insegnamenti  per l’a.a. 2025/2026 (senza oneri aggiuntivi se si tratta di laureati UniBg).
+
+**Requisiti di ammissione ai corsi di laurea magistrale e modalità di verifica dell’adeguata preparazione iniziale degli studenti**
+
+Gli ordinamenti didattici dei singoli corsi di studio indicano i requisiti curriculari necessari per l’iscrizione al corso: costituiscono requisiti curriculari il titolo di laurea conseguito in determinate classi e le competenze e conoscenze che lo studente deve aver acquisito nel percorso formativo pregresso, espresse sotto forma di crediti riferiti a specifici settori scientifico-disciplinari.
+
+Le singole strutture didattiche disciplinano inoltre le modalità di verifica dell’adeguata preparazione iniziale degli studenti.
+
+### 2. Registrazione al portale di Ateneo
+
+[Registrati sullo Sportello Internet UniBg](https://sportello.unibg.it/Home.do), se non ti sei ancora registrato (per es. provieni da un altro Ateneo).
+
+### 3. Pre-iscrizione
+
+Procedi alla pre-iscrizione sullo [Sportello Internet UniBg](https://sportello.unibg.it/Home.do) con pagamento del contributo di pre-iscrizione entro la scadenza prevista.
+
+### 4. Sostenimento del colloquio/test
+
+A seguito della valutazione dei requisiti di accesso, bisognerà sostenere un colloquio/test con la Commissione Esaminatrice del corso di laurea magistrale scelto che verificherà la preparazione iniziale.  
+ Eventuali casi di esonero dalla verifica della preparazione iniziale per i corsi di laurea magistrale ad accesso libero sono indicati sui siti dei singoli corsi di laurea alla pagina *Il Corso / Requisiti di accesso.*
+
+L'esito determinerà la posizione in graduatoria (sono possibili scorrimenti e ripescaggi).
+
+### 5. Immatricolazione
+
+I candidati ritenuti idonei possono procedere ad immatricolarsi:
+
+* Compila la domanda di immatricolazione online sullo [Sportello Internet UniBg](https://sportello.unibg.it/Home.do)
+* **Effettua l'upload della tua fotografia rispettando il formato richiesto**
+* La fotografia è necessaria per il rilascio della tessera universitaria [Flash Up Studio](https://www.unibg.it/servizi/vita-unibg/convenzioni-e-sconti)
+* **Compila i questionari obbligatori e completa la procedura**
+* Paga la quota di 156 euro (tassa regionale per il diritto allo studio + imposta di bollo) tramite [procedura PagoPA](https://www.unibg.it/servizi/segreteria/tasse-e-agevolazioni/modalita-pagamento); conserva la prova del pagamento effettuato, per eventuali necessità.
+
+ 
+
+  [4] Score: 0.9999
+      Title  : Corsi di laurea triennale ad accesso programmato con test selettivo
+      URL    : https://www.unibg.it/studiare/iscriversi/corsi-laurea-triennale-ad-accesso-programmato-test-selettivo
+      Content:  [Salta al contenuto principale](#main-content) 
+
+[![Home](/themes/custom/unibg/logo.svg)](/ "Home") 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e risorse](/vivere-unibg/spazi-e-risorse)
+  + [Opportunità e servizi](/vivere-unibg/opportunita-e-servizi)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. [Studiare](/studiare)
+3. [Iscriversi](/studiare/iscriversi)
+4. [Corsi di laurea triennale ad accesso programmato con test selettivo](/studiare/iscriversi/corsi-laurea-triennale-ad-accesso-programmato-test-selettivo)
+
+### Anno accademico 2026-2027
+
+Questa modalità di accesso è prevista per i corsi di laurea triennale in:
+
+* Scienze della Comunicazione - **400 posti** complessivi
+* Scienze dell’Educazione **- 470 posti** complessivi
+* Scienze Motorie e Sportive - **100 posti** complessivi
+* Scienze Psicologiche - **250 posti** complessivi
+
+L’ammissione al corso prevede un numero massimo di posti disponibili e il sostenimento della prova selettiva del TOLC che serve a stabilire il posto in graduatoria e l’eventuale possibilità di immatricolarsi.
+
+*Per iscriverti completa i passi elencati di seguito.*
+
+### 1. Consulta il bando
+
+Il bando della **prima sessione di selezione a.a. 2026-2027** (di prossima pubblicazione) conterrà tutte le informazioni dettagliate.
+
+Per partecipare alla prima sessione di selezione è necessario effettuare la pre-iscrizione online **a partire dal 2 marzo (ore 9:00) ed entro il 22 maggio 2026 (ore 23:59).**  
+**Il [TOLC](https://www.unibg.it/studiare/iscriversi/tolc) deve essere sostenuto entro e non oltre il 22 maggio 2026.**
+
+Il TOLC può essere sostenuto in presenza presso le università oppure a distanza ([Tolc@casa](https://www.unibg.it/studiare/iscriversi/tolc)).
+
+Di seguito i **documenti**relativi all'a.a. 2025-2026 (**in via di aggiornamento per l'a.a. 2026-2027**):
+
+[Bando prima sessione di selezione a.a. 2025-2026 (in via di aggiornamento per l'a.a. 2026-2027)](/sites/default/files/media/documents/2026-01-19/Bando%20prima%20sessione%20di%20selezione%20LT%202025-2026%20protocollato.pdf "Bando prima sessione di selezione LT 2025-2026 protocollato.pdf")
+
+[DR approvazione bando di ammissione prima sessione di selezione a.a. 2025-2026 (in via di aggiornamento per l'a.a. 2026-2027)](/sites/default/files/media/documents/2026-01-19/DR%20approvazione%20bando%20di%20ammissione%20I%20sessione%20selezione%202025-2026%20protocollato.pdf "DR approvazione bando di ammissione I sessione selezione 2025-2026 protocollato.pdf")
+
+### 2. Iscriviti al test sul portale del CISIA e sostieni il TOLC
+
+A seconda del corso di laurea che hai scelto, dovrai sostenere il relativo [TOLC](https://www.unibg.it/studiare/iscriversi/tolc), che servirà a definire la tua posizione in graduatoria:
+
+* [TOLC-SU](https://www.unibg.it/studiare/iscriversi/tolc/tolc-su) per i corsi di laurea in Scienze della Comunicazione, Scienze dell'Educazione, Scienze Motorie e Sportive
+* [TOLC-PSI](https://www.unibg.it/studiare/iscriversi/tolc/tolc-psi) per il corso di laurea in Scienze Psicologiche
+
+Sono validi il TOLC sostenuti a partire dal 1/01/2025 ed entro le scadenze indicate di seguito.
+
+### Sessioni e scadenze
+
+Il TOLC, una volta superato può essere utilizzato per partecipare a entrambe le sessioni di selezione.
+
+È necessariopre-iscriversi al corso (iscrizione alla selezione) per entrambe le selezioni.
+
+**Prima sessione** di selezione (50% dei posti messi a bando)
+
+* Entro il 22 maggio 2026, sostenimento del TOLC con iscrizione al test on line sul portale del CISIA entro la data prevista dal CISIA (indicativamente 7 gg prima della data di svolgimento del test).
+* Dal 2 marzo al 22 maggio 2026, iscrizione alla selezione (pre-iscrizione) sul portale UniBg.
+* Entro il 5 giugno 2026, pubblicazione delle graduatorie.
+* Entro il 10 giugno 2026, accettazione del posto compilando la domanda di pre-immatricolazione.
+* Entro il 16 giugno 2026, pubblicazione degli eventuali posti rimasti disponibili.
+* Entro il 19 giugno 2026, accettazione del posto (a seguito primo scorrimento graduatoria) compilando la domanda di pre-immatricolazione.
+* Dal 16 al 19 giugno 2026, presentazione della domanda di ripescaggio (manifestazione di interesse)
+* Entro il 24 giugno 2026, pubblicazione eventuali ulteriori posti disponibili.
+* Entro il 29 giugno 2026, accettazione del posto (a seguito ripescaggio) compilando la domanda di pre-immatricolazione.
+* Dal 1° luglio al 31 luglio 2026, perfezionamento dell’immatricolazione con contestuale pagamento della quota della tassa regionale + imposta di bollo assolta in modo virtuale
+* Dal 5 agosto al 2 ottobre 2026, presentazione di eventuali istanze di riconoscimento di carriera pregressa (seconda laurea, re-immatricolazione a seguito rinuncia/decadenza, abbreviazione di corso, trasferimento in ingresso).
+
+Possono partecipare alla prima selezione anche gli studenti iscritti all’ultimo anno della scuola superiore.  
+ La graduatoria di merito viene redatta sulla base dei seguenti criteri: punteggio TOLC (esclusa la sezione di inglese), età anagrafica (a parità di punteggio TOLC prevale il candidato più giovane), media voti 4° anno arrotondata alla seconda cifra decimale (a parità di età anagrafica prevale il candidato con la media più alta).
+
+**Seconda sessione** di selezione (50% dei posti messi a bando)
+
+* Entro il 28 agosto 2026, sostenimento del TOLC con iscrizione al test on line sul portale del CISIA entro la data prevista dal CISIA (indicativamente 7 gg prima della data di svolgimento del test).
+* Dal 6 luglio 2026 al 28 agosto 2026, iscrizione alla selezione (pre-iscrizione) sul portale Unibg.
+* Entro il 9 settembre 2026, pubblicazione graduatorie.
+* Entro il 14 settembre 2026, accettazione del posto compilando la domanda di immatricolazione e versando la quota della tassa regionale + imposta di bollo assolta in modo virtuale.
+* Entro il 18 settembre 2026, pubblicazione degli eventuali posti rimasti disponibili.
+* Entro il 23 settembre 2026, accettazione del posto (a seguito primo scorrimento della graduatoria) tramite immatricolazione e versamento quota della tassa regionale + imposta di bollo assolta in modo virtuale.
+* Dal 18 al 23 settembre 2026, presentazione domanda di ripescaggio (manifestazione di interesse).
+* Entro il 28 settembre 2026, pubblicazione eventuali ulteriori posti disponibili.
+* Entro il 2 ottobre 2026, accettazione del posto (a seguito ripescaggio) tramite immatricolazione e versamento della quota della tassa regionale + imposta di bollo assolta in modo virtuale.
+* Entro il 2 ottobre 2026, presentazione di eventuali istanze di riconoscimento di carriera pregressa (seconda laurea, re-immatricolazione a seguito rinuncia/decadenza, abbreviazione di corso, trasferimento in ingresso)
+
+Si procederà ad ulteriori scorrimenti della graduatoria che si rendessero necessari fino alla data del 13 novembre 2026.
+
+La graduatoria di merito viene redatta sulla base dei seguenti criteri: punteggio TOLC (esclusa la sezione di inglese), età anagrafica (a parità di punteggio TOLC prevale il candidato più giovane), voto di diploma (a parità di età anagrafica prevale il candidato con il voto più alto).
+
+[Esiti Tolc e Graduatorie di ammissione](/studiare/iscriversi/corsi-laurea-triennale-ad-accesso-programmato-test-selettivo/esiti-tolc-e)
+
+### Trasferimenti, re-immatricolazioni e passaggi di corso
+
+Gli studenti che chiedono il **trasferimento** ai suddetti corsi da altre Università, **re-immatricolazione a seguito rinuncia/decadenza** oppure **conseguimento seconda laurea** debbono sostenere il TOLC.  
+ Tali studenti, dopo aver superato il test di ammissione ed essersi collocati utilmente in graduatoria, potranno presentare all’organo competente istanza di riconoscimento dei crediti formativi della carriera pregressa per l’ammissione ad anni di corso successivi al primo.
+
+Gli studenti già iscritti nell’anno accademico 2025-2026 ad altro corso di laurea, intenzionati a richiedere un **passaggio di corso**, dovranno iscriversi alla selezione e sostenere lo specifico TOLC richiesto per l’ammissione al corso (salvo che sia stato già sostenuto in data successiva al 1 gennaio 2025).
+
+In caso di ammissione al corso saranno tenuti a presentare la domanda di passaggio di corso. **Tali studenti potranno partecipare soltanto alla seconda sessione di selezione** (potranno sostenere esami nella sessione autunnale se fissati in data antecedente a quella prevista per l’accettazione del posto).
+
+### 3. Registrati al portale
+
+Registrati sullo **[Sportello Internet UniBg](https://sportello.unibg.it/Home.do)**
+
+### 4. Fai la pre-iscrizione al corso
+
+Pre-iscriviti nell'apposita sezione online sullo [Sportello Internet UniBg](https://sportello.unibg.it/Home.do)
+
+**N.B**. La sola registrazione dei tuoi dati anagrafici **non è sufficiente** per l’iscrizione alla selezione (= pre-iscrizione).
+
+### 5. Se sei ammesso, accetta il posto
+
+La pubblicazione delle graduatorie avverrà entro le scadenze previste dal Bando: in caso di esito positivo, **accetta il posto e procedi con l’immatricolazione**.  
+Eventuali posti rimasti disponibili e le modalità per procedere all'accettazione verranno pubblicati successivamente secondo le scadenze indicate nel Bando.
+
+### 6. Immatricolati al corso
+
+* Compila la domanda di immatricolazione online sullo [Sportello Internet UniBg](https://sportello.unibg.it/Home.do)
+* **Effettua l'upload della tua fotografia rispettando il formato richiesto**  
+  La fotografia è necessaria per il rilascio della tessera universitaria [Flash Up Studio.](https://www.unibg.it/servizi/vita-unibg/convenzioni-e-sconti)
+* **Compila i questionari obbligatori e completa la procedura**
+* Paga la quota della tassa regionale per il diritto allo studio + imposta di bollo, con il versamento della quale risulterai iscritto, **entro le scadenze indicate nel bando, pena la decadenza dalla graduatoria ove prevista.**
+
+ 
+
+  [5] Score: 0.9999
+      Title  : [PDF] GUIDA ALLA PROCEDURA ONLINE PRE-ISCRIZIONE CORSI DI ...
+      URL    : https://www.unibg.it/sites/default/files/media/documents/2024-04-16/2024_Guida%20Preiscrizione%20Laurea%20Magistrale%20accesso%20programmato.pdf
+      Content: 1 GUIDA ALLA PROCEDURA ONLINE PRE-ISCRIZIONE CORSI DI LAUREA MAGISTRALE AD ACCESSO PROGRAMMATO Gentile Studente, prima di effettuare la pre-iscrizione on line, ti invitiamo a consultare il Bando di ammissione al corso di laurea magistrale ad accesso programato di tuo interesse (pubblicato nella pagina del corso stesso) per prendere visione dei requisiti curriculari previsti, delle modalità di svolgimento del test e di ogni ulteriore termine e adempimento previsto. Collegati al sito www.unibg.it e clicca “Sportello Internet” 2 Clicca poi Login ed accedi con le tue credenziali se sei già uno studente dell’Università degli studi di Bergamo o se ti sei già registrato. N.B. Se non sei mai stato iscritto all’Università di Bergamo, devi prima effettuare la registrazione inserendo il tuo codice fiscale e compilando i dati richiesti per ottenere nome utente e password. Se sei uno studente straniero e non sei ancora in possesso del codice fiscale, inserisci il flag su “Dichiaro di essere uno studente straniero senza Codice Fiscale Italiano e clicca “Avanti” proseguendo con l’inserimento dei dati richiesti. 3 Clicca “Login” per inserire nome utente e password e successivamente accedi al MENU in alto a destra per compilare la tua domanda di pre-iscrizione al corso di laurea magistrale prescelto. 4 Clicca poi “ Segreteria” e successivamente “Pre-iscrizione Corsi accesso programmato/Laurea Magistrale/Dottorati/Master/Sostegno” 5 Clicca “Iscrizione Concorsi” e poi seleziona “Laurea Magistrale”. Quindi clicca “Avanti” 6 Seleziona il corso di laurea magistrale a cui intendi pre-iscriverti, poi clicca su Avanti 7 Indica l’eventuale preferenza in caso di più curricula e clicca “Avanti”. 8 Se devi richiedere un ausilio per lo svolgimento della prova, inserisci il flag su “Sì”, clicca sul link per la compilazione del modulo di richiesta supporti, e clicca “Avanti”. Prosegui poi con l’inserimento della documentazione prevista nelle maschere successive. 9 In questa maschera devi inserire un tuo documento di identità in corso di validità. Clicca su “Inserisci nuovo documento d’identità” e successivamente seleziona “Prosegui”. 10 Poi indica gli estremi del documento e clicca “Avanti” 11 Effettua ora l’upload del documento stesso. Clicca su Inserisci allegato e poi “Avanti”. 12 Carica il file (pdf) del tuo documento d’identità e successivamente clicca “Avanti”. 13 Procedi ora con l’inserimento dei titoli di studio (diploma di maturità e Laurea). Se sei uno studente dell’Università degli studi di Bergamo, tale maschera sarà già popolata con i dati del tuo diploma e del titolo conseguito (o in procinto di conseguire). 14 Se sei uno studente laureando, inserisci il flag su “non ancora conseguito”. 15 Se sei uno studente laureando in un’altra Università, in questa maschera devi inserire il documento relativo all’autocertificazione di iscrizione con indicazione della denominazione dell’Ateneo, del corso di laurea, elenco degli esami superati con indicazione di data, voto, cfu e settori scientifico disciplinari e degli eventuali esami ancora da superare con indicazione di cfu, settore scientifico disciplinare e data prevista dell’appello d’esame. Se sei uno studente laureato in un’altra Università, devi invece caricare l’autocertificazione del conseguimento della laurea con indicazione dell’Ateneo, del corso di laurea, della data di conseguimento e della votazione finale e dell’elenco degli esami superati con indicazione di data, voto, cfu e settori scientifico-disciplinari. Consulta il bando di ammissione per allegare altri documenti necessari (esempio attestato di conoscenza lingua inglese del livello richiesto dal tuo bando o altra documentazione utile per dimostrare il possesso dei requisiti curriculari) o necessari per la valutazione della coerenza del curriculum accademico con gli obiettivi formativi del corso di laurea magistrale). N.B: se sei uno studente UNIBG non devi inserire l’autocertificazione e quindi clicca su NO e poi “Avanti” 16 Per effettuare l’upload della documentazione, clicca “Sì” e poi “Avanti”. 17 18 Quando hai caricato la documentazione relativa all’autocertificazione, ti viene riproposta la stessa pagina. Se non hai altri documenti da allegare, clicca su NO e poi su Avanti. 19 In questa maschera dovrai compilare il questionario che ti consentirà di riportare la media ponderata degli esami superati della carriera utilizzata per l’accesso alla Laurea magistrale. 20 Verifica quanto indicato nel Bando di ammissione del corso di laurea magistrale da te prescelto e inserisci la media ponderata dei voti degli esami superati fino alla data di compilazione della presente domanda di pre-iscrizione, arrotondata alla seconda cifra decimale. Esempio: per media pari a 27,623 indicare 27,62 mentre per media pari a 27,627 indicare 27,63. Arrotondare per eccesso se la terza cifra decimale è pari a 5: 27,625 diventa 27,63. Clicca poi “Avanti” 21 Per terminare la compilazione del questionario clicca “Conferma” e poi “Esci”. 22 Infine clicca “Completa ammissione al concorso” per completare la tua domanda di pre-iscrizione. Ricorda che devi ora effettuare il versamento del contributo di pre-iscrizione pari a € 52,00 23 Clicca “Pagamenti” per procedere al pagamento del contributo di pre-iscrizione entro la scadenza prevista dal bando di ammissione. 24 Clicca infine sul numero di fattura. Ti ricordiamo che la graduatoria di merito sarà pubblicata, nelle scadenze indicate nel Bando di ammissione, sul Portale d’Ateneo alla pagina https://www.unibg.it/studia-noi/iscriversi/passi-iscriversi/pre-iscrizioni-magistrali come unico mezzo di pubblicità legale sull’esito della selezione. I candidati vincitori, utilmente collocati nelle graduatorie di merito per l’ammissione al corso di laurea magistrale prescelto, devono immatricolarsi entro il termine perentorio riportato nel Bando di ammissione, pena la decadenza dal diritto all’iscrizione.
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: procedure
+
+>>> SYSTEM PROMPT:
+Sei un esperto delle procedure amministrative dell'Università di Bergamo.
+Guida gli studenti attraverso procedure come iscrizioni, pagamento tasse, richieste documenti.
+Fornisci istruzioni chiare e passo-passo.
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 3
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: [PDF] immatricolazioni ai corsi ad accesso libero e programmato - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2026-01-27/Presentazione%20Settore%20Carriere%20e%20Servizi%20agli%20studenti%2024%20gennaio%202026.pdf
+Contenuto: IMMATRICOLAZIONI AI CORSI AD ACCESSO LIBERO E PROGRAMMATO a.a. 2026-2027 Settore Carriere e Servizi agli studenti OFFERTA FORMATIVA QUALI CORSI SONO A NUMERO PROGRAMMATO? Corsi di studio che utilizzano il TOLC come strumento di selezione: • Scienze Psicologiche (TOLC-PSI) 250 posti • Scienze dell’Educazione (TOLC-SU) 470 posti • Scienze Motorie e Sportive (TOLC-SU) 100 posti • Scienze della Comunicazione (TOLC-SU) 400 posti Corsi di studio che utilizzano il criterio dell’immatricolazione ad esaurimento posti: • Economia (TOLC-E per valutare la preparazione iniziale) 400 posti • Economia aziendale (TOLC-E per valutare la preparazione iniziale) 800 posti Il corso di laurea magistrale a ciclo unico in Scienze della formazione primaria prevede invece un test nazionale MUR. Il bando di ammissione, che conterrà tutte le informazioni utili, sarà pubblicato a seguito dell’emanazione dei DD.MM. di riferimento.
+TOLC – TEST ONLINE CISIA COSA SONO I Test Online Cisia (TOLC) sono uno strumento di orientamento e valutazione delle capacità iniziali, erogati su piattaforma informatizzata e gestiti dal Consorzio Interuniversitario Sistemi integrati per l’Accesso (CISIA).
+A COSA SERVONO ACCESSO LIBERO E ACCESSO PROGRAMMATO CON UTILIZZO DEL CRITERIO DELL’IMMATRICOLAZIONE AD ESAURIMENTO POSTI: il TOLC rappresenta il test di verifica della preparazione iniziale degli studenti.
+L’attribuzione di eventuali Obblighi Formativi Aggiuntivi (OFA) viene effettuata sulla base del punteggio ottenuto in relazione alle soglie stabilite dai singoli Dipartimenti.
+Nel caso del Dipartimento di Lingue, letterature e culture straniere è FORTEMENTE consigliato sostenere anche i Placement test: https://lt-llsm.unibg.it/it/iscriversi/placement-test ACCESSO PROGRAMMATO CON UTILIZZO DEL TOLC COME STRUMENTO DI SELEZIONE: il TOLC rappresenta il test selettivo per l’ammissione al corso. Sulla base del punteggio ottenuto (esclusa la sezione di Inglese), il candidato viene collocato in graduatoria. Serve anche per definire eventuali Obblighi Formativi Aggiuntivi (OFA) assegnati ai candidati ammessi.
+TOLC – TEST ONLINE CISIA Potrai iscriverti a un TOLC dello stesso tipo una volta per mese solare. Ogni TOLC ha un costo di 35,00 euro. Potrai sostenere il TOLC in qualunque università aderente ai TOLC; l’iscrizione al TOLC può essere fatta in qualunque momento entro la scadenza fissata dal CISIA, indicativamente 7 giorni prima dello svolgimento del test (ATTENZIONE, POSTI LIMITATI).
+È valido il test TOLC sostenuto a partire dal 1° gennaio 2025 presso qualunque sede universitaria aderente al TOLC. Il test può essere sostenuto all’università (TOLC@UNI) oppure a distanza (TOLC@CASA); in quest’ultimo caso deve essere utilizzato un PC portatile, dotato di telecamera incorporata e funzionante, per svolgere la prova e occorre un dispositivo mobile in cui installare il programma Webex che gestisce l’aula virtuale.
+Potrai anche ripetere il test TOLC; ai fini dell’ammissione in graduatoria e/o dell’assegnazione dell’OFA sarà comunque considerato il miglior esito tra tutti i test effettuati.
+Se risulterai ammesso al corso con assegnazione di un obbligo formativo aggiuntivo (OFA), non avendo raggiunto il punteggio soglia indicato, sarai tenuto ad assolvere tale obbligo formativo entro il 30 settembre 2027, pena l’impossibilità di iscrizione al secondo anno di corso.
+TOLC – TEST ONLINE CISIA VALUTAZIONE: • 1 PUNTO PER OGNI RISPOSTA CORRETTA • 0 PUNTI PER OGNI RISPOSTA NON DATA • - 0,25 PUNTI PER OGNI RISPOSTA SBAGLIATA Per la LINGUA INGLESE non è prevista penalizzazione per le risposte sbagliate e il punteggio è determinato da: • 1 PUNTO PER LE RISPOSTE ESATTE • 0 PUNTI PER LE RISPOSTE SBAGLIATE E NON DATE TOLC – SIMULAZIONI Lo studente verrà a conoscenza del proprio punteggio già a fine prova, così da sapere immediatamente se la prova è stata superata o meno con riferimento all’assegnazione di obblighi formativi aggiuntivi (OFA).
+N.B: Per i corsi ad accesso programmato che utilizzano il TOLC come strumento di selezione, l’ammissione dipenderà dal posto in graduatoria. Se si è collocati in posizione utile in graduatoria bisogna accettare il posto e immatricolarsi entro i termini indicati, pena la perdita del posto e l’esclusione dalla graduatoria.
+CISIA mette a disposizione dello studente delle ESERCITAZIONI ONLINE DI POSIZIONAMENTO con la medesima struttura del TOLC.
+Le simulazioni NON sostituiscono lo studio e la preparazione alle prove.
+TOLC TIPOLOGIE TOLC-SU per l’accesso ai corsi di studio di area umanistica; TOLC-PSI per l’accesso al corso di Scienze psicologiche; TOLC-E per l’accesso ai corsi dell’area economico-aziendale; TOLC-I per l’accesso ai corsi della Scuola di Ingegneria.
+TOLC-SPS per l’accesso al corso di laurea in Scienze politiche e strategie globali ATTENZIONE: per Scienze della formazione primaria TEST (non TOLC) in data fissata a livello nazionale.
+TITOLI DI STUDIO RICHIESTI Titoli necessari per l’immatricolazione ad un corso di laurea triennale o magistrale a ciclo unico Per essere ammessi ad un corso di laurea o di laurea magistrale a ciclo unico occorre essere in possesso di un diploma di scuola secondaria superiore di secondo grado (diploma di maturità) oppure di un titolo di studio conseguito all’estero riconosciuto idoneo.
+ACCESSO LIBERO: ADEMPIMENTI (cds Lingue e letterature straniere moderne, Lettere, Filosofia, Giurisprudenza, Diritto per l’impresa nazionale e internazionale, Data Analytics, economia e tecnologie digitali, Scienze politiche e strategie globali, Scuola di Ingegneria) 1. Immatricolazione sul portale UniBg con versamento della quota della tassa regionale per il Diritto allo Studio + imposta di bollo assolta in modo virtuale dal 1° luglio al 2 ottobre 2026 2. Sostenimento del TOLC di riferimento entro il 25 settembre 2026 con iscrizione al test online sul portale del CISIA entro la data prevista (indicativamente 7 gg prima della data di svolgimento del test).
+Immatricolazioni tardive: 1. Immatricolazione sul portale UniBg con versamento della quota della tassa regionale per il Diritto allo Studio + imposta di bollo assolta in modo virtuale dal 3 ottobre al 13 novembre 2026 (con pagamento della corrispondente sanzione per ritardato pagamento).
+2. Sostenimento del TOLC di riferimento entro il 19 novembre 2026 con iscrizione al test online sul portale del CISIA entro la data prevista (indicativamente 7 gg prima della data di svolgimento del test).
+Nel caso di mancato sostenimento del TOLC entro le date previste verrà attribuito allo studente un obbligo formativo aggiuntivo (OFA) da colmare entro il primo anno di corso.
+In caso di mancato assolvimento del debito formativo entro il 30 settembre 2027, lo studente non potrà iscriversi al secondo anno e sarà tenuto ad iscriversi come ripetente del primo anno.
+ACCESSO PROGRAMMATO (corsi che utilizzano il TOLC come strumento di selezione: Scienze dell’educazione 470 posti, Scienze della comunicazione 400 posti, Scienze motorie e sportive 100 posti e Scienze psicologiche 250 posti) ADEMPIMENTI • Iscrizione al TOLC dal sito www.cisiaonline.it • Versamento del contributo di iscrizione al test al consorzio CISIA (€ 35,00) • Sostenimento del TOLC all’università/Tolc@casa entro il 22 maggio 2026 • Pre-iscrizione sul sito dell’Università di Bergamo dal 2 marzo al 22 maggio 2026 Il candidato deve sostenere, presso una qualsiasi università, il TOLC associato al corso di laurea a cui si vorrà iscrivere.
+Ci sono due possibili TOLC, associati a diversi Corsi di laurea: TOLC-SU (corsi di laurea in Scienze dell’educazione, Scienze della comunicazione, Scienze motorie e sportive); TOLC-PSI (corso di laurea in Scienze psicologiche).
+NB: Possono partecipare alla prima sessione di selezione anche studenti iscritti all’ultimo anno di scuola superiore.
+Le modalità di svolgimento dei TOLC, il calendario delle prove previste, la tipologia delle prove e tutte le informazioni utili sono reperibili sul sito del CISIA https://www.cisiaonline.it ACCESSO PROGRAMMATO PRIMA SELEZIONE (corsi che utilizzano il TOLC come strumento di selezione) 50% dei posti disponibili • Sostenimento del TOLC entro il 22 maggio 2026 con iscrizione al test sul portale del CISIA e pre-iscrizione sul portale UniBg dal 2 marzo al 22 maggio 2026; • Pubblicazione graduatorie entro il 5 giugno 2026; • Accettazione posto entro il 10 giugno 2026 compilando la domanda di pre-immatricolazione; • Pubblicazione di eventuali posti rimasti disponibili entro il 16 giugno 2026; • Accettazione posto (primo scorrimento) entro il 19 giugno 2026 compilando la domanda di pre-immatricolazione; • Domanda di ripescaggio (manifestazione di interesse) dal 16 al 19 giugno 2026; • Pubblicazione eventuali posti ulteriori entro il 24 giugno 2026; • Accettazione posto (a seguito ripescaggio) entro il 29 giugno 2026 compilando la domanda di pre-immatricolazione; • Perfezionamento immatricolazione con pagamento della quota della tassa regionale per il Diritto allo Studio + imposta di bollo assolta in modo virtuale dal 1° al 31 luglio 2026.
+PRE-ISCRIZIONE SUL PORTALE UNIBG E PRE-IMMATRICOLAZIONE Se il candidato non è mai stato iscritto presso l’Ateneo deve effettuare la registrazione al portale: www.unibg.it.
+Dallo Sportello internet deve iscriversi al concorso di ammissione (= pre-iscrizione) corrispondente al corso di studio di suo interesse.
+È possibile pre-iscriversi a più corsi di studio.
+Verrà richiesto al candidato, per la prima sessione di selezione, l’inserimento della media dei voti del quarto anno di scuola superiore arrotondata alla seconda cifra decimale (per il collocamento in graduatoria di eventuali parimerito, in caso di parità di punteggio TOLC ed età anagrafica).
+Dopo la pubblicazione delle graduatorie il candidato ammesso dovrà effettuare, entro il 10 giugno 2026, la pre-immatricolazione che bloccherà il posto, in attesa di ottenere il diploma di maturità nell’a.s. 2025/2026.
+ACCESSO PROGRAMMATO SECONDA SELEZIONE (corsi che utilizzano il TOLC come strumento di selezione) 50% dei posti disponibili • Sostenimento TOLC entro il 28 agosto 2026 con iscrizione al test online sul portale CISIA entro la data prevista (indicativamente 7 giorni prima della data di svolgimento del test); • Pre-iscrizione sul portale UniBg dal 6 luglio al 28 agosto 2026; • Pubblicazione graduatorie entro il 9 settembre 2026; • Accettazione posto entro il 14 settembre 2026 tramite domanda di immatricolazione con pagamento della quota della tassa regionale per il Diritto allo Studio + imposta di bollo assolta in modo virtuale; • Pubblicazione di eventuali posti rimasti disponibili entro il 18 settembre 2026; • Accettazione posto primo scorrimento (immatricolazione online e quota tassa regionale + imposta di bollo assolta in modo virtuale) entro il 23 settembre 2026; • Domanda di ripescaggio (manifestazione di interesse) dal 18 al 23 settembre 2026; • Pubblicazione eventuali posti ulteriori entro il 28 settembre 2026; • Accettazione posto (a seguito ripescaggio) tramite immatricolazione online con versamento quota tassa regionale + imposta di bollo assolta in modo virtuale entro il 2 ottobre 2026.
+Si procederà ad ulteriori scorrimenti della graduatoria che si rendessero necessari fino alla data del 13 novembre 2026.
+ACCESSO PROGRAMMATO: CORSI DI STUDIO CHE UTILIZZANO IL CRITERIO DELL’IMMATRICOLAZIONE AD ESAURIMENTO POSTI • Economia (TOLC-E) 400 posti • Economia aziendale (TOLC-E) 800 posti Gli studenti vengono ammessi al corso sulla base dell’ordine cronologico di presentazione della domanda di immatricolazione fino a copertura dei posti messi a disposizione.
+È comunque necessario sostenere il TOLC-E in presenza (TOLC@UNI) oppure da remoto (TOLC@CASA) unicamente ai fini della verifica della preparazione iniziale e dell’eventuale assegnazione di OFA.
+È valido il TOLC-E sostenuto a partire dal 1/01/2025.
+Il TOLC deve essere sostenuto entro il 25 settembre 2026 (per gli immatricolati entro il 10 settembre 2026) ed entro il 19 novembre 2026 (per gli immatricolati a partire dal 14 settembre 2026).
+In caso di mancato sostenimento del TOLC entro la scadenza prevista, agli studenti verrà assegnato d’ufficio l’OFA.
+ACCESSO PROGRAMMATO: CORSI DI STUDIO CHE UTILIZZANO IL CRITERIO DELL’IMMATRICOLAZIONE AD ESAURIMENTO POSTI ADEMPIMENTI • Immatricolazione sul portale UniBg dal 1° aprile al 30 giugno 2026; • Perfezionamento immatricolazione con pagamento della quota della tassa regionale per il Diritto allo Studio + imposta di bollo assolta in modo virtuale dal 1° luglio al 20 luglio 2026.
+Dal 24 luglio 2026 in poi, fino all’esaurimento dei posti, immatricolazione più perfezionamento tramite pagamento della quota della tassa regionale per il Diritto allo Studio + imposta di bollo assolta in modo virtuale secondo il calendario che verrà pubblicato nel bando di ammissione.
+ISCRIZIONE PART-TIME L’iscrizione a tempo parziale può essere richiesta dagli studenti iscritti IN CORSO che rientrino in una delle categorie previste dal Regolamento di Ateneo per le iscrizioni a tempo parziale reperibile alla pagina https://www.unibg.it/studiare/iscriversi/tipi-iscrizione In caso di iscrizione a un corso di laurea triennale, il percorso di studio sarà così composto: 1° anno, 1° anno ripetente, 2° anno, 2° anno ripetente, 3° anno, 3° anno ripetente per una durata complessiva di 6 anni.
+In caso di iscrizione a un corso di laurea magistrale a ciclo unico (quinquennale), il percorso di studio avrà di conseguenza la durata di 10 anni.
+Numero di cfu annuale per gli studenti part-time: Il numero di crediti da prevedere nel piano di studi per ogni anno accademico dovrà essere pari al 50% di quelli previsti per il proprio corso di laurea; le strutture didattiche individueranno le eventuali priorità tra gli insegnamenti.
+Gli obblighi formativi aggiuntivi (OFA) dovranno essere soddisfatti entro il primo anno ripetuto del corso (e, se correlati ad un determinato insegnamento, prima del sostenimento del relativo esame).
+ISCRIZIONE PART-TIME Contributi per studenti part-time Gli studenti che, all’atto dell’immatricolazione, optano per il regime a tempo parziale, dovranno versare il contributo onnicomprensivo in misura ridotta del 50%, secondo l’indicatore ISEEU da richiedere ogni anno. All’atto dell’immatricolazione sono tenuti a pagare la quota della tassa regionale per il Diritto allo Studio e l’imposta di bollo assolta in modo virtuale.
+Variazione di status (da iscrizione part-time a tempo pieno e viceversa) È possibile cambiare status sia per i corsi di laurea triennale che per i corsi di laurea magistrale a ciclo unico.
+Lo studente potrà fare una prima scelta all'atto dell'immatricolazione e poi una sola scelta successiva all'atto del rinnovo dell'iscrizione.
+Nel caso di variazione di status da tempo part-time a tempo pieno, lo studente dovrà aver completato un’annualità intera (es. primo anno + primo anno ripetente) prima di poter richiedere la variazione.
+GRAZIE DELL’ATTENZIONE UniBg > Studiare > Contatta la Segreteria: https://www.unibg.it/studiare/contatta-segreteria CONTATTO DIRETTO: UniBg > Help Desk Studenti > Apri un nuovo ticket SCOPRI DI PIÙ!
+
+Fonte 2: [PDF] immatricolazioni ai corsi ad accesso libero e programmato - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2025-01-21/Presentazione%20Settore%20Carriere%20e%20Servizi%20agli%20studenti%2018%20gennaio%202025.pdf
+Contenuto: IMMATRICOLAZIONI AI CORSI AD ACCESSO LIBERO E PROGRAMMATO a.a. 2025-2026 Settore Carriere e Servizi agli studenti OFFERTA FORMATIVA QUALI CORSI SONO A NUMERO PROGRAMMATO? Corsi di studio che utilizzano il TOLC come strumento di selezione: • Scienze Psicologiche (TOLC-PSI) • Scienze dell’Educazione (TOLC-SU) • Scienze Motorie e Sportive (TOLC-SU) • Scienze della Comunicazione (TOLC-SU) Corsi di studio che utilizzano il criterio dell’immatricolazione ad esaurimento posti: • Economia (TOLC-E per valutare la preparazione iniziale) • Economia aziendale (TOLC-E per valutare la preparazione iniziale) Il corso di laurea magistrale a ciclo unico in Scienze della formazione primaria prevede invece un test nazionale MUR. Il bando di ammissione, che conterrà tutte le informazioni utili, sarà pubblicato a seguito dell’emanazione dei DD.MM. di riferimento.
+TOLC – TEST ONLINE CISIA COSA SONO I Test Online Cisia (TOLC) sono uno strumento di orientamento e valutazione delle capacità iniziali, erogati su piattaforma informatizzata e gestiti dal Consorzio Interuniversitario Sistemi integrati per l’Accesso (CISIA).
+A COSA SERVONO ACCESSO LIBERO E ACCESSO PROGRAMMATO CON UTILIZZO DEL CRITERIO DELL’IMMATRICOLAZIONE AD ESAURIMENTO POSTI: il TOLC rappresenta il test di verifica della preparazione iniziale degli studenti.
+L’attribuzione di eventuali Obblighi Formativi Aggiuntivi (OFA) viene effettuata sulla base del punteggio ottenuto in relazione alle soglie stabilite dai singoli Dipartimenti.
+Nel caso del Dipartimento di Lingue, letterature e culture straniere è FORTEMENTE consigliato sostenere anche i Placement test: https://lt-llsm.unibg.it/it/iscriversi/placement-test ACCESSO PROGRAMMATO CON UTILIZZO DEL TOLC COME STRUMENTO DI SELEZIONE: il TOLC rappresenta il test selettivo per l’ammissione al corso. Sulla base del punteggio ottenuto (esclusa la sezione di Inglese), il candidato viene collocato in graduatoria. Serve anche per definire eventuali Obblighi Formativi Aggiuntivi (OFA) assegnati ai candidati ammessi.
+TOLC – TEST ONLINE CISIA Potrai iscriverti a un TOLC dello stesso tipo una volta per mese solare. Ogni TOLC ha un costo di 35,00 euro. Potrai sostenere il TOLC in qualunque università aderente ai TOLC; l’iscrizione al TOLC può essere fatta in qualunque momento entro la scadenza fissata dal CISIA, indicativamente 7 giorni prima dello svolgimento del test (ATTENZIONE, POSTI LIMITATI).
+È valido il test TOLC sostenuto a partire dal 1° gennaio 2024 presso qualunque sede universitaria aderente al TOLC. Il test può essere sostenuto all’università (TOLC@UNI) oppure a distanza (TOLC@CASA); in quest’ultimo caso deve essere utilizzato un PC portatile, dotato di telecamera incorporata e funzionante, per svolgere la prova e occorre un dispositivo mobile in cui installare il programma ZOOM che gestisce l’aula virtuale.
+Potrai anche ripetere il test TOLC; ai fini dell’ammissione in graduatoria e/o dell’assegnazione dell’OFA sarà comunque considerato il miglior esito tra tutti i test effettuati.
+Se risulterai ammesso al corso con assegnazione di un obbligo formativo aggiuntivo (OFA), non avendo raggiunto il punteggio soglia indicato, sarai tenuto ad assolvere tale obbligo formativo entro il 30 settembre 2026, pena l’impossibilità di iscrizione al secondo anno di corso.
+TOLC – TEST ONLINE CISIA VALUTAZIONE: • 1 PUNTO PER OGNI RISPOSTA CORRETTA • 0 PUNTI PER OGNI RISPOSTA NON DATA • - 0,25 PUNTI PER OGNI RISPOSTA SBAGLIATA Per la LINGUA INGLESE non è prevista penalizzazione per le risposte sbagliate e il punteggio è determinato da: • 1 PUNTO PER LE RISPOSTE ESATTE • 0 PUNTI PER LE RISPOSTE SBAGLIATE E NON DATE TOLC – SIMULAZIONI Lo studente verrà a conoscenza del proprio punteggio già a fine prova, così da sapere immediatamente se la prova è stata superata o meno con riferimento all’assegnazione di obblighi formativi aggiuntivi (OFA).
+N.B: Per i corsi ad accesso programmato che utilizzano il TOLC come strumento di selezione, l’ammissione dipenderà dal posto in graduatoria. Se si è collocati in posizione utile in graduatoria bisogna accettare il posto e immatricolarsi entro i termini indicati, pena la perdita del posto e l’esclusione dalla graduatoria.
+CISIA mette a disposizione dello studente delle ESERCITAZIONI ONLINE DI POSIZIONAMENTO con la medesima struttura del TOLC.
+Le simulazioni NON sostituiscono lo studio e la preparazione alle prove.
+TOLC TIPOLOGIE TOLC-SU per l’accesso ai corsi di STUDI UMANISTICI; TOLC-PSI per l’accesso al corso di SCIENZE PSICOLOGICHE; TOLC-E per l’accesso ai corsi dell’area economico-aziendale; TOLC-I per l’accesso ai corsi della Scuola di Ingegneria.
+ATTENZIONE: per Scienze della formazione primaria TEST (non TOLC) in data fissata a livello nazionale.
+TITOLI DI STUDIO RICHIESTI Titoli necessari per l’immatricolazione ad un corso di laurea triennale o magistrale a ciclo unico Per essere ammessi ad un corso di laurea o di laurea magistrale a ciclo unico occorre essere in possesso di un diploma di scuola secondaria superiore di secondo grado (diploma di maturità) oppure di un titolo di studio conseguito all’estero riconosciuto idoneo.
+ACCESSO LIBERO: ADEMPIMENTI (cds Lingue e letterature straniere moderne, Lettere, Filosofia, Giurisprudenza, Diritto per l’impresa nazionale e internazionale, Data Analytics, economia e tecnologie digitali, Scuola di Ingegneria) 1. Immatricolazione sul portale UniBg + versamento contestuale della quota di 156,00 euro* dal 1° luglio al 3 ottobre 2025 2. Sostenimento del TOLC di riferimento entro il 26 settembre 2025 con iscrizione al test online sul portale del CISIA entro la data prevista (indicativamente 7 gg prima della data di svolgimento del test).
+Immatricolazioni tardive: 1. Immatricolazione sul portale UniBg + versamento contestuale della quota di 156,00 euro* dal 4 ottobre al 28 novembre 2025 (con pagamento della corrispondente mora).
+2. Sostenimento del TOLC di riferimento entro il 20 novembre 2025 con iscrizione al test online sul portale del CISIA entro la data prevista (indicativamente 7 gg prima della data di svolgimento del test).
+Nel caso di mancato sostenimento del TOLC entro le date previste verrà attribuito allo studente un obbligo formativo aggiuntivo da colmare entro il primo anno di corso.
+In caso di mancato assolvimento del debito formativo entro il 30 settembre 2026, lo studente non potrà iscriversi al secondo anno e sarà tenuto ad iscriversi come ripetente del primo anno.
+* salvo adeguamento a diverso importo stabilito dalla Regione Lombardia ACCESSO PROGRAMMATO (corsi che utilizzano il TOLC come strumento di selezione: Scienze dell’educazione, Scienze della comunicazione, Scienze motorie e sportive e Scienze psicologiche): ADEMPIMENTI • Iscrizione al TOLC dal sito www.cisiaonline.it • Versamento del contributo di iscrizione al test al consorzio CISIA (€ 35,00) • Sostenimento del TOLC all’università/Tolc@casa entro il 23 maggio 2025 • Pre-iscrizione sul sito dell’Università di Bergamo dal 3 marzo al 23 maggio 2025 Il candidato deve sostenere, presso una qualsiasi università, il TOLC associato al corso di laurea a cui si vorrà iscrivere.
+Ci sono due possibili TOLC, associati a diversi Corsi di laurea: TOLC-SU (corsi di laurea in Scienze dell’educazione, Scienze della comunicazione, Scienze motorie e sportive); TOLC-PSI (corso di laurea in Scienze psicologiche).
+NB: Possono partecipare alla prima sessione di selezione anche studenti iscritti all’ultimo anno di scuola superiore.
+Le modalità di svolgimento dei TOLC, il calendario delle prove previste, la tipologia delle prove e tutte le informazioni utili sono reperibili sul sito del CISIA https://www.cisiaonline.it ACCESSO PROGRAMMATO PRIMA SELEZIONE (corsi che utilizzano il TOLC come strumento di selezione) • Sostenimento del TOLC entro il 23 maggio 2025 con iscrizione al test sul portale del CISIA e pre-iscrizione sul portale UniBg dal 3 marzo al 23 maggio 2025; • Pubblicazione graduatorie entro il 6 giugno 2025; • Accettazione posto entro l’11 giugno 2025 compilando la domanda di pre-immatricolazione; • Pubblicazione di eventuali posti rimasti disponibili entro il 17 giugno 2025; • Accettazione posto (primo scorrimento) entro il 20 giugno 2025 compilando la domanda di pre-immatricolazione; • Domanda di ripescaggio (manifestazione di interesse) dal 17 al 20 giugno 2025; • Pubblicazione eventuali posti ulteriori entro il 25 giugno 2025; • Accettazione posto (a seguito ripescaggio) entro il 30 giugno 2025 compilando la domanda di pre-immatricolazione; • Perfezionamento immatricolazione + contestuale pagamento 156,00 euro (salvo adeguamento a diverso importo stabilito dalla Regione Lombardia) dal 1° al 31 luglio 2025.
+PRE-ISCRIZIONE SUL PORTALE UNIBG E PRE-IMMATRICOLAZIONE Se il candidato non è mai stato iscritto presso l’Ateneo deve effettuare la registrazione al portale: www.unibg.it.
+Dallo Sportello internet deve iscriversi al concorso di ammissione (= pre-iscrizione) corrispondente al corso di studio di suo interesse.
+È possibile pre-iscriversi a più corsi di studio.
+Verrà richiesto al candidato, per la prima sessione di selezione, l’inserimento della media dei voti del quarto anno di scuola superiore arrotondata alla seconda cifra decimale (per il collocamento in graduatoria di eventuali parimerito, in caso di parità di punteggio TOLC ed età anagrafica).
+Dopo la pubblicazione delle graduatorie il candidato ammesso dovrà effettuare, entro l’11 giugno 2025, la pre-immatricolazione che bloccherà il posto, in attesa di ottenere il diploma di maturità nell’a.s. 2024/2025.
+ACCESSO PROGRAMMATO SECONDA SELEZIONE (corsi che utilizzano il TOLC come strumento di selezione) • Sostenimento TOLC entro il 29 agosto 2025 con iscrizione al test online sul portale CISIA entro la data prevista (indicativamente 7 giorni prima della data di svolgimento del test); • Pre-iscrizione sul portale UniBg dal 7 luglio al 29 agosto 2025; • Pubblicazione graduatorie entro il 10 settembre 2025; • Accettazione posto entro il 15 settembre 2025 tramite domanda di immatricolazione + pagamento della quota di 156,00 euro*; • Pubblicazione di eventuali posti rimasti disponibili entro il 19 settembre 2025; • Accettazione posto primo scorrimento (immatricolazione + 156,00 euro*) entro il 24 settembre 2025; • Domanda di ripescaggio (manifestazione di interesse) dal 19 al 24 settembre 2025; • Pubblicazione eventuali posti ulteriori entro il 29 settembre 2025; • Accettazione posto (a seguito ripescaggio) tramite immatricolazione + versamento 156,00 euro* entro il 3 ottobre 2025.
+Si procederà ad ulteriori scorrimenti della graduatoria che si rendessero necessari fino alla data del 14 novembre 2025.
+* (salvo adeguamento a diverso importo stabilito dalla Regione Lombardia) ACCESSO PROGRAMMATO: CORSI DI STUDIO CHE UTILIZZANO IL CRITERIO DELL’IMMATRICOLAZIONE AD ESAURIMENTO POSTI • Economia (TOLC-E) • Economia aziendale (TOLC-E) Gli studenti vengono ammessi al corso sulla base dell’ordine cronologico di presentazione della domanda di immatricolazione fino a copertura dei posti messi a disposizione.
+È comunque necessario sostenere il TOLC-E in presenza (TOLC@UNI) oppure da remoto (TOLC@CASA) unicamente ai fini della verifica della preparazione iniziale e dell’eventuale assegnazione di OFA.
+È valido il TOLC-E sostenuto a partire dal 1/01/2024.
+Il TOLC deve essere sostenuto entro il 26 settembre 2025 (per gli immatricolati entro il 17 settembre 2025) ed entro il 20 novembre 2025 (per gli immatricolati a partire dal 18 settembre 2025).
+In caso di mancato sostenimento del TOLC entro la scadenza prevista, agli studenti verrà assegnato d’ufficio l’OFA.
+ACCESSO PROGRAMMATO: CORSI DI STUDIO CHE UTILIZZANO IL CRITERIO DELL’IMMATRICOLAZIONE AD ESAURIMENTO POSTI ADEMPIMENTI • Immatricolazione sul portale UniBg dal 1° aprile al 30 giugno 2025; • Perfezionamento immatricolazione con contestuale pagamento della quota di 156,00 euro* dal 1° luglio al 21 luglio 2025.
+Dal 29 luglio 2025 in poi, fino all’esaurimento dei posti, immatricolazione più perfezionamento tramite pagamento della quota di 156 euro* secondo il calendario che verrà pubblicato nel bando di ammissione.
+* salvo adeguamento a diverso importo stabilito dalla Regione Lombardia ISCRIZIONE PART-TIME L’iscrizione a tempo parziale può essere richiesta dagli studenti iscritti IN CORSO che rientrino in una delle categorie previste dal Regolamento di Ateneo per le iscrizioni a tempo parziale reperibile alla pagina https://www.unibg.it/studiare/iscriversi/tipi-iscrizione In caso di iscrizione a un corso di laurea triennale, il percorso di studio sarà così composto: 1° anno, 1° anno ripetente, 2° anno, 2° anno ripetente, 3° anno, 3° anno ripetente per una durata complessiva di 6 anni.
+In caso di iscrizione a un corso di laurea magistrale a ciclo unico (quinquennale), il percorso di studio avrà di conseguenza la durata di 10 anni.
+Numero di cfu annuale per gli studenti part-time: Il numero di crediti da prevedere nel piano di studi per ogni anno accademico dovrà essere pari al 50% di quelli previsti per il proprio corso di laurea; le strutture didattiche individueranno le eventuali priorità tra gli insegnamenti.
+Gli obblighi formativi aggiuntivi (OFA) dovranno essere soddisfatti entro il primo anno ripetuto del corso (e, se correlati ad un determinato insegnamento, prima del sostenimento del relativo esame).
+ISCRIZIONE PART-TIME Contributi per studenti part-time Gli studenti che, all’atto dell’immatricolazione, optano per il regime a tempo parziale, dovranno versare il contributo onnicomprensivo in misura ridotta del 50%, secondo l’indicatore ISEEU da richiedere ogni anno. All’atto dell’immatricolazione sono tenuti a pagare la tassa regionale per il diritto allo studio e l’imposta di bollo assolta in modo virtuale (156,00 euro, salvo adeguamento a diverso importo stabilito dalla Regione Lombardia).
+Variazione di status (da iscrizione part-time a tempo pieno e viceversa) È possibile cambiare status sia per i corsi di laurea triennale che per i corsi di laurea magistrale a ciclo unico.
+Lo studente potrà fare una prima scelta all'atto dell'immatricolazione e poi una sola scelta successiva all'atto del rinnovo dell'iscrizione.
+Nel caso di variazione di status da tempo part-time a tempo pieno, lo studente dovrà aver completato un’annualità intera (es. primo anno + primo anno ripetente) prima di poter richiedere la variazione.
+GRAZIE DELL’ATTENZIONE UniBg > Studiare > Ti aiutiamo > Contatta la Segreteria: https://www.unibg.it/studiare/ti-aiutiamo/contatta-segreteria CONTATTO DIRETTO: UniBg > Help Desk Studenti > Apri un nuovo ticket SCOPRI DI PIÙ!
+
+Fonte 3: Corsi di laurea magistrale ad accesso programmato - UniBg
+URL: https://www.unibg.it/studiare/iscriversi/corsi-laurea-magistrale-ad-accesso-programmato
+Contenuto:  [Salta al contenuto principale](#main-content) 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](https://en.unibg.it)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e servizi](/vivere-unibg/spazi-e-servizi)
+  + [Opportunità](/vivere-unibg/opportunita)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. [Studiare](/studiare)
+3. [Iscriversi](/studiare/iscriversi)
+4. [Corsi di laurea magistrale ad accesso programmato](/studiare/iscriversi/corsi-laurea-magistrale-ad-accesso-programmato)
+
+### Anno accademico 2025-2026
+
+Questa modalità di accesso è prevista per i corsi di laurea magistrale in:
+
+* **Psicologia clinica** (curriculum Psicologia clinica + curriculum Psicologia della salute nei contesti sociali) - **100 posti -***Lingua di erogazione:**Italiano*  
+   - Curriculum Clinical Psychology for Individuals, Families and Organizations - **50 posti -***Lingua di erogazione:**Inglese*
+* **Scienze pedagogiche** - **150 posti**
+* **Scienze, metodi e didattiche delle attività sportive** - **50 posti**
+* **Progettazione di contesti di vita accessibili ed inclusivi** - **100 posti**
+
+L'ammissione al corso prevede un numero massimo di posti disponibili; occorre essere in possesso di una laurea/diploma universitario triennale o di altro titolo idoneo conseguito all'estero.  
+ È necessario il possesso di specifici requisiti curriculari e di un’adeguata preparazione personale, verificata tramite colloquio/test per stabilire il posto in graduatoria e l’eventuale possibilità di immatricolarsi.  
+ I requisiti di accesso sono riportati sui siti dei singoli corsi di laurea alla pagina *Il Corso / Requisiti di accesso.*
+
+Per iscriversi completa i passi elencati di seguito.
+
+### 1. Consulta il bando
+
+Leggi il **bando relativo al tuo corso di laurea**con tutte le informazioni dettagliate.
+
+Le **graduatorie** saranno pubblicate alla pagina **[Graduatorie di merito corsi di laurea magistrale](https://www.unibg.it/studiare/iscriversi/corsi-laurea-magistrale-ad-accesso-programmato/graduatorie-corsi-laurea "Graduatorie di merito corsi di laurea magistrale")**
+
+### Bando corso di laurea magistrale ad accesso programmato in Progettazione di contesti di vita accessibili ed inclusivi - terza sessione di selezione
+
+Per l’anno accademico 2025-2026 sono disponibili per l’ammissione al Corso di laurea magistrale in Progettazione di contesti di vita accessibili ed inclusivi, classe LM-85R, n. 100 posti, di cui n. 10 riservati ai dipendenti pubblici che si iscrivono nell’ambito del Protocollo d’Intesa stipulato fra il Ministro per la Pubblica Amministrazione e l’Ateneo (iniziativa “PA 110 e lode”).  
+ A seguito della mancata assegnazione di tutti i posti al termine degli scorrimenti della graduatoria relativa alla seconda selezione, è prevista una **terza sessione di selezione**, in cui verranno messi a disposizione **n. 56 posti,** **di cui n. 5 riservati ai dipendenti pubblici** che si iscrivono nell’ambito del Protocollo d’intesa stipulato fra il Ministro per la Pubblica Amministrazione e l’Ateneo (iniziativa “PA 110 e lode”).
+
+**L’iscrizione alla terza sessione di selezione deve essere effettuata a partire dal 27 ottobre 2025 (ore 14:00) fino al 10 novembre 2025 (ore 23:59)** con le modalità indicate nel Bando di ammissione (da leggere con attenzione).
+
+[DR approvazione bando di ammissione terza sessione di selezione a.a. 2025-2026](/sites/default/files/media/documents/2025-10-27/DR%20approvazione%20bando%20di%20ammissione%20LM%20PCVAI%20a.a.%202025-2026_terza%20selezione%2025-26_prot..pdf "DR approvazione bando di ammissione LM PCVAI a.a. 2025-2026_terza selezione 25-26_prot..pdf")
+
+[Bando di ammissione terza sessione di selezione a.a. 2025-2026](/sites/default/files/media/documents/2025-10-27/Bando%20ammissione%20LM%20Progettazione%20di%20contesti%20di%20vita_terza%20selezione%2025-26_prot..pdf "Bando ammissione LM Progettazione di contesti di vita_terza selezione 25-26_prot..pdf")
+
+[Guida alla pre-iscrizione online](/sites/default/files/media/documents/2025-10-27/2025_Guida%20Preiscrizione%20Laurea%20Magistrale%20accesso%20programmato_PCVAI_0.pdf "2025_Guida Preiscrizione Laurea Magistrale accesso programmato_PCVAI_0.pdf")
+
+### Bando corso di laurea magistrale ad accesso programmato in Progettazione di contesti di vita accessibili ed inclusivi
+
+La pre-iscrizione per la seconda sessione di selezione a.a. 2025-2026 è prevista **dal 1° luglio al 22 agosto 2025.**
+
+[DR approvazione bando di ammissione](/sites/default/files/media/documents/2025-03-31/244_2025_DR%20approvazione%20bando%20di%20ammissione%20LM%20PCVAI%20a.a.%202025-2026%20firmato.pdf "244_2025_DR approvazione bando di ammissione LM PCVAI a.a. 2025-2026 firmato.pdf")
+
+[Bando di ammissione LM ad accesso programmato in Progettazione di contesti di vita accessibili ed inclusivi](/sites/default/files/media/documents/2025-03-31/244_2025_Bando%20ammissione%20LM%20Progettazione%20di%20contesti%20di%20vita%20accessibili%20ed%20inclusivi_2025-26_firmato.pdf "244_2025_Bando ammissione LM Progettazione di contesti di vita accessibili ed inclusivi_2025-26_firmato.pdf")
+
+[Allegato 1 - Griglia di valutazione richiedenti visto](/sites/default/files/media/documents/2025-03-31/244_2025_Progettazione_2025_26%20Richiedenti%20visto_griglia%20di%20valutazione%20firmato.pdf "244_2025_Progettazione_2025_26 Richiedenti visto_griglia di valutazione firmato.pdf")
+
+[Guida alla pre-iscrizione online](/sites/default/files/media/documents/2025-03-31/2025_Guida%20Preiscrizione%20Laurea%20Magistrale%20accesso%20programmato_PCVAI.pdf "2025_Guida Preiscrizione Laurea Magistrale accesso programmato_PCVAI.pdf")
+
+### Bando corso di laurea magistrale ad accesso programmato in Scienze, metodi e didattiche delle attività sportive a.a. 2025-2026
+
+La pre-iscrizione per la seconda sessione di selezione a.a. 2025-2026 è prevista **dal 1° luglio al 22 agosto 2025.**
+
+[DR approvazione bando di ammissione](/sites/default/files/media/documents/2025-03-28/241_2025_DR%20approvazione%20bando%20di%20ammissione%20LM%20Scienze_%20metodi%20e%20didattiche%20delle%20attivit_%20sportive%202025-2026.pdf "241_2025_DR approvazione bando di ammissione LM Scienze_ metodi e didattiche delle attivit_ sportive 2025-2026.pdf")
+
+[Bando di ammissione LM ad accesso programmato in Scienze, metodi e didattiche delle attività sportive](/sites/default/files/media/documents/2025-03-28/241_2025_Bando%20ammissione%20LM%20Scienze_%20metodi%20e%20%20didattiche%20delle%20attivita_%20sportive.pdf "241_2025_Bando ammissione LM Scienze_ metodi e  didattiche delle attivita_ sportive.pdf")
+
+[Allegato 1 - Griglia di valutazione richiedenti visto](/sites/default/files/media/documents/2025-03-28/241_2025_All_1_%20Richiedenti%20visto_griglia%20di%20valutazione%20SMDAS.pdf "241_2025_All_1_ Richiedenti visto_griglia di valutazione SMDAS.pdf")
+
+[Guida alla pre-iscrizione online](/sites/default/files/media/documents/2025-03-31/2025_Guida%20Preiscrizione%20Laurea%20Magistrale%20accesso%20programmato_PC_SPED_SMDAS.pdf "2025_Guida Preiscrizione Laurea Magistrale accesso programmato_PC_SPED_SMDAS.pdf")
+
+### Bando corso di laurea magistrale ad accesso programmato in Scienze pedagogiche a.a. 2025-2026
+
+La pre-iscrizione per la seconda sessione di selezione a.a. 2025-2026 è prevista **dal 1° luglio al 22 agosto 2025.**
+
+[DR approvazione bando di ammissione](/sites/default/files/media/documents/2025-03-28/240_2025_DR%20approvazione%20bando%20di%20ammissione%20LM%20Scienze%20pedagogiche%20a.a.%202025-2026.pdf "240_2025_DR approvazione bando di ammissione LM Scienze pedagogiche a.a. 2025-2026.pdf")
+
+[Bando di ammissione LM ad accesso programmato in Scienze pedagogiche](/sites/default/files/media/documents/2025-03-28/240_2025_Bando%20ammissione%20LM%20Scienze%20pedagogiche%202025_2026.pdf "240_2025_Bando ammissione LM Scienze pedagogiche 2025_2026.pdf")
+
+[Allegato 1 - Griglia di valutazione richiedenti visto](/sites/default/files/media/documents/2025-03-28/240_2025_2025_26%20Richiedenti%20visto_griglia%20di%20valutazione%20SPED%20griglia.pdf "240_2025_2025_26 Richiedenti visto_griglia di valutazione SPED griglia.pdf")
+
+[Guida alla pre-iscrizione online](/sites/default/files/media/documents/2025-03-31/2025_Guida%20Preiscrizione%20Laurea%20Magistrale%20accesso%20programmato_PC_SPED_SMDAS_0.pdf "2025_Guida Preiscrizione Laurea Magistrale accesso programmato_PC_SPED_SMDAS_0.pdf")
+
+### Bando corso di laurea magistrale ad accesso programmato in Psicologia clinica a.a. 2025-2026
+
+La pre-iscrizione per la seconda sessione di selezione a.a. 2025-2026 è prevista **dal 1° luglio al 22 agosto 2025.**
+
+[DR approvazione bando di ammissione](/sites/default/files/media/documents/2025-03-25/Prot_DR%20approvazione%20bando%20di%20ammissione%20LM%20Psicologia%20clinica%20a.a.%202025-2026.pdf "Prot_DR approvazione bando di ammissione LM Psicologia clinica a.a. 2025-2026.pdf")
+
+[Bando di ammissione LM ad accesso programmato in Psicologia clinica](/sites/default/files/media/documents/2025-03-25/Prot_Bando%20ammissione%20LM%20Psicologia%20clinica%202025_2026.pdf "Prot_Bando ammissione LM Psicologia clinica 2025_2026.pdf")
+
+[Allegato 1 - Griglia di valutazione richiedenti visto](/sites/default/files/media/documents/2025-03-25/Prot_All_1_2025_26%20Richiedenti%20visto_griglia%20di%20valutazione.pdf "Prot_All_1_2025_26 Richiedenti visto_griglia di valutazione.pdf")
+
+[Guida alla pre-iscrizione online](/sites/default/files/media/documents/2025-03-31/2025_Guida%20Preiscrizione%20Laurea%20Magistrale%20accesso%20programmato_PC_SPED_SMDAS_1.pdf "2025_Guida Preiscrizione Laurea Magistrale accesso programmato_PC_SPED_SMDAS_1.pdf")
+
+[Call for applications to the limited access Master's Degree Course in CLINICAL PSYCHOLOGY](/sites/default/files/media/documents/2025-04-01/ENG_Bando%20ammissione%20LM%20Psicologia%20clinica%202025_2026.pdf "ENG_Bando ammissione LM Psicologia clinica 2025_2026.pdf")
+
+### Le scadenze per iscriverti
+
+Per i corsi di laurea magistrale ad accesso programmato sono previsti due periodi di selezione.
+
+**Primo periodo**
+
+1. **Pre-iscrizioni**
+
+* Dall'1 aprile al 30 maggio 2025
+
+2.**Verifica preparazione iniziale***(ad esclusione degli studenti extra-UE che hanno già sostenuto il colloquio in fase di pre-valutazione)* da svolgere secondo criteri che verranno successivamente indicati nei relativi bandi di ammissione
+
+* Dal 16 al 20 giugno 2025
+
+3. **Pubblicazione graduatorie ammessi**
+
+* Entro il 1° luglio 2025
+
+4. **Immatricolazioni**
+
+* Immatricolazioni entro il 4 luglio 2025
+* Pubblicazione posti disponibili entro il 10 luglio 2025
+* Immatricolazioni primo scorrimento entro il 15 luglio 2025
+* Domanda ripescaggio (manifestazione di interesse) dal 10 al 15 luglio 2025
+* Pubblicazione posti disponibili entro il 21 luglio 2025
+* Immatricolazioni a seguito ripescaggio entro il 24 luglio 2025
+* Presentazione domanda di trasferimento, seconda laurea, abbreviazione e re-immatricolazione: dal 6 agosto al 3 ottobre 2025
+
+Eventuali posti non assegnati con la prima selezione verranno aggiunti ai posti disponibili per la seconda selezione.
+
+**Secondo periodo**
+
+1. **Pre-iscrizioni**
+
+* Dall'1 luglio al 22 agosto 2025
+
+2. **Verifica preparazione iniziale***(ad esclusione degli studenti extra-UE che hanno già sostenuto il colloquio in fase di pre-valutazione)* da svolgere secondo criteri che verranno successivamente indicati nei relativi bandi di ammissione
+
+* Dal 10 al 16 settembre 2025
+
+3. **Pubblicazione graduatoria ammessi**
+
+* Entro il 25 settembre 2025
+
+4.**Immatricolazioni**
+
+* Immatricolazioni entro il 30 settembre 2025
+* Pubblicazione posti disponibili entro il 6 ottobre 2025
+* Immatricolazioni primo scorrimento dal 6 al 9 ottobre 2025
+* Domanda ripescaggio (manifestazione di interesse) dal 6 al 9 ottobre 2025
+* Pubblicazione posti disponibili entro il 15 ottobre 2025
+* Immatricolazione a seguito ripescaggio entro il 20 ottobre 2025
+* Presentazione domanda di trasferimento, passaggio di corso, seconda laurea, abbreviazione e re-immatricolazione: entro il 20 ottobre 2025 (entro il 14 novembre 2025 per coloro che vengono ammessi a seguito scorrimenti effettuati dopo il 15/10/2025).
+
+Si procederà a scorrere la graduatoria fino ad esaurimento dei posti e comunque entro il 14 novembre 2025.
+
+**Indicazioni valide per entrambi i periodi**
+
+Gli studenti che chiedono il trasferimento da altre Università, il passaggio da altro corso di laurea specialistica/magistrale, il conseguimento di seconda laurea, l’abbreviazione di corso o la re-immatricolazione a seguito rinuncia/decadenza sono tenuti ad effettuare prima la pre-iscrizione ed in caso di ammissione al corso potranno presentare la successiva istanza volta ad ottenere il riconoscimento di cfu della carriera pregressa. In caso di passaggio di corso di studio l’istanza va presentata entro le scadenze previste per l’immatricolazione al fine di accettare il posto.
+
+Gli studenti che risulteranno collocati in posizione utile in graduatoria e pertanto ammessi al corso dovranno presentare domanda di immatricolazione unitamente al versamento della tassa regionale per il Diritto allo Studio Universitario e dell’imposta di bollo assolta in modo virtuale per un totale di 156,00 euro (salvo adeguamento a diverso importo stabilito dalla Regione Lombardia).
+
+A seguito di ammissione, potranno:
+
+a) immatricolarsi gli studenti già laureati;  
+ b) pre-immatricolarsi ‘con riserva’ coloro che non sono ancora laureati e conseguiranno il titolo entro e non oltre la sessione di marzo/aprile 2026, purché all’atto della pre-immatricolazione debbano ancora sostenere non più di 3 esami per un massimo di n. 24 cfu (eventuale tirocinio compreso) oltre alla prova finale. Con riferimento al tirocinio il requisito si intende assolto purché lo stesso sia stato già avviato;  
+ c) pre-immatricolarsi ‘con riserva’ gli studenti laureati che sono iscritti a corsi singoli per l’a.a. 2024/2025 al fine di integrare i requisiti necessari per l’ammissione, purché all’atto della pre-immatricolazione debbano ancora sostenere esami per un massimo di 24 cfu da superare entro la sessione di gennaio/febbraio 2026.
+
+Agli studenti che si saranno pre-immatricolati ‘con riserva’ pur non possedendo i requisiti di cui sopra relativi agli esami mancanti, la domanda verrà annullata d’ufficio dalla Segreteria.
+
+Gli studenti saranno pre-immatricolati ‘con riserva’ ovvero con clausola sospensiva e, quindi, non potranno sostenere esami del corso di laurea magistrale fino al conseguimento del titolo oppure fino al superamento di tutti i corsi singoli.
+
+Nel caso in cui lo studente pre-immatricolato “con riserva” non consegua la laurea di I livello entro la sessione di laurea di marzo/aprile 2026 oppure non superi tutti i corsi singoli entro la sessione di appelli di gennaio/febbraio 2026, ma abbia nel frattempo frequentato gli insegnamenti della laurea magistrale, potrà sostenere i relativi esami dopo il conseguimento della laurea oppure dopo il superamento dei corsi singoli, previa iscrizione a singoli insegnamenti  per l’a.a. 2025/2026 (senza oneri aggiuntivi se si tratta di laureati UniBg).
+
+**Requisiti di ammissione ai corsi di laurea magistrale e modalità di verifica dell’adeguata preparazione iniziale degli studenti**
+
+Gli ordinamenti didattici dei singoli corsi di studio indicano i requisiti curriculari necessari per l’iscrizione al corso: costituiscono requisiti curriculari il titolo di laurea conseguito in determinate classi e le competenze e conoscenze che lo studente deve aver acquisito nel percorso formativo pregresso, espresse sotto forma di crediti riferiti a specifici settori scientifico-disciplinari.
+
+Le singole strutture didattiche disciplinano inoltre le modalità di verifica dell’adeguata preparazione iniziale degli studenti.
+
+### 2. Registrazione al portale di Ateneo
+
+[Registrati sullo Sportello Internet UniBg](https://sportello.unibg.it/Home.do), se non ti sei ancora registrato (per es. provieni da un altro Ateneo).
+
+### 3. Pre-iscrizione
+
+Procedi alla pre-iscrizione sullo [Sportello Internet UniBg](https://sportello.unibg.it/Home.do) con pagamento del contributo di pre-iscrizione entro la scadenza prevista.
+
+### 4. Sostenimento del colloquio/test
+
+A seguito della valutazione dei requisiti di accesso, bisognerà sostenere un colloquio/test con la Commissione Esaminatrice del corso di laurea magistrale scelto che verificherà la preparazione iniziale.  
+ Eventuali casi di esonero dalla verifica della preparazione iniziale per i corsi di laurea magistrale ad accesso libero sono indicati sui siti dei singoli corsi di laurea alla pagina *Il Corso / Requisiti di accesso.*
+
+L'esito determinerà la posizione in graduatoria (sono possibili scorrimenti e ripescaggi).
+
+### 5. Immatricolazione
+
+I candidati ritenuti idonei possono procedere ad immatricolarsi:
+
+* Compila la domanda di immatricolazione online sullo [Sportello Internet UniBg](https://sportello.unibg.it/Home.do)
+* **Effettua l'upload della tua fotografia rispettando il formato richiesto**
+* La fotografia è necessaria per il rilascio della tessera universitaria [Flash Up Studio](https://www.unibg.it/servizi/vita-unibg/convenzioni-e-sconti)
+* **Compila i questionari obbligatori e completa la procedura**
+* Paga la quota di 156 euro (tassa regionale per il diritto allo studio + imposta di bollo) tramite [procedura PagoPA](https://www.unibg.it/servizi/segreteria/tasse-e-agevolazioni/modalita-pagamento); conserva la prova del pagamento effettuato, per eventuali necessità.
+
+ 
+
+Fonte 4: Corsi di laurea triennale ad accesso programmato con test selettivo
+URL: https://www.unibg.it/studiare/iscriversi/corsi-laurea-triennale-ad-accesso-programmato-test-selettivo
+Contenuto:  [Salta al contenuto principale](#main-content) 
+
+[![Home](/themes/custom/unibg/logo.svg)](/ "Home") 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e risorse](/vivere-unibg/spazi-e-risorse)
+  + [Opportunità e servizi](/vivere-unibg/opportunita-e-servizi)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. [Studiare](/studiare)
+3. [Iscriversi](/studiare/iscriversi)
+4. [Corsi di laurea triennale ad accesso programmato con test selettivo](/studiare/iscriversi/corsi-laurea-triennale-ad-accesso-programmato-test-selettivo)
+
+### Anno accademico 2026-2027
+
+Questa modalità di accesso è prevista per i corsi di laurea triennale in:
+
+* Scienze della Comunicazione - **400 posti** complessivi
+* Scienze dell’Educazione **- 470 posti** complessivi
+* Scienze Motorie e Sportive - **100 posti** complessivi
+* Scienze Psicologiche - **250 posti** complessivi
+
+L’ammissione al corso prevede un numero massimo di posti disponibili e il sostenimento della prova selettiva del TOLC che serve a stabilire il posto in graduatoria e l’eventuale possibilità di immatricolarsi.
+
+*Per iscriverti completa i passi elencati di seguito.*
+
+### 1. Consulta il bando
+
+Il bando della **prima sessione di selezione a.a. 2026-2027** (di prossima pubblicazione) conterrà tutte le informazioni dettagliate.
+
+Per partecipare alla prima sessione di selezione è necessario effettuare la pre-iscrizione online **a partire dal 2 marzo (ore 9:00) ed entro il 22 maggio 2026 (ore 23:59).**  
+**Il [TOLC](https://www.unibg.it/studiare/iscriversi/tolc) deve essere sostenuto entro e non oltre il 22 maggio 2026.**
+
+Il TOLC può essere sostenuto in presenza presso le università oppure a distanza ([Tolc@casa](https://www.unibg.it/studiare/iscriversi/tolc)).
+
+Di seguito i **documenti**relativi all'a.a. 2025-2026 (**in via di aggiornamento per l'a.a. 2026-2027**):
+
+[Bando prima sessione di selezione a.a. 2025-2026 (in via di aggiornamento per l'a.a. 2026-2027)](/sites/default/files/media/documents/2026-01-19/Bando%20prima%20sessione%20di%20selezione%20LT%202025-2026%20protocollato.pdf "Bando prima sessione di selezione LT 2025-2026 protocollato.pdf")
+
+[DR approvazione bando di ammissione prima sessione di selezione a.a. 2025-2026 (in via di aggiornamento per l'a.a. 2026-2027)](/sites/default/files/media/documents/2026-01-19/DR%20approvazione%20bando%20di%20ammissione%20I%20sessione%20selezione%202025-2026%20protocollato.pdf "DR approvazione bando di ammissione I sessione selezione 2025-2026 protocollato.pdf")
+
+### 2. Iscriviti al test sul portale del CISIA e sostieni il TOLC
+
+A seconda del corso di laurea che hai scelto, dovrai sostenere il relativo [TOLC](https://www.unibg.it/studiare/iscriversi/tolc), che servirà a definire la tua posizione in graduatoria:
+
+* [TOLC-SU](https://www.unibg.it/studiare/iscriversi/tolc/tolc-su) per i corsi di laurea in Scienze della Comunicazione, Scienze dell'Educazione, Scienze Motorie e Sportive
+* [TOLC-PSI](https://www.unibg.it/studiare/iscriversi/tolc/tolc-psi) per il corso di laurea in Scienze Psicologiche
+
+Sono validi il TOLC sostenuti a partire dal 1/01/2025 ed entro le scadenze indicate di seguito.
+
+### Sessioni e scadenze
+
+Il TOLC, una volta superato può essere utilizzato per partecipare a entrambe le sessioni di selezione.
+
+È necessariopre-iscriversi al corso (iscrizione alla selezione) per entrambe le selezioni.
+
+**Prima sessione** di selezione (50% dei posti messi a bando)
+
+* Entro il 22 maggio 2026, sostenimento del TOLC con iscrizione al test on line sul portale del CISIA entro la data prevista dal CISIA (indicativamente 7 gg prima della data di svolgimento del test).
+* Dal 2 marzo al 22 maggio 2026, iscrizione alla selezione (pre-iscrizione) sul portale UniBg.
+* Entro il 5 giugno 2026, pubblicazione delle graduatorie.
+* Entro il 10 giugno 2026, accettazione del posto compilando la domanda di pre-immatricolazione.
+* Entro il 16 giugno 2026, pubblicazione degli eventuali posti rimasti disponibili.
+* Entro il 19 giugno 2026, accettazione del posto (a seguito primo scorrimento graduatoria) compilando la domanda di pre-immatricolazione.
+* Dal 16 al 19 giugno 2026, presentazione della domanda di ripescaggio (manifestazione di interesse)
+* Entro il 24 giugno 2026, pubblicazione eventuali ulteriori posti disponibili.
+* Entro il 29 giugno 2026, accettazione del posto (a seguito ripescaggio) compilando la domanda di pre-immatricolazione.
+* Dal 1° luglio al 31 luglio 2026, perfezionamento dell’immatricolazione con contestuale pagamento della quota della tassa regionale + imposta di bollo assolta in modo virtuale
+* Dal 5 agosto al 2 ottobre 2026, presentazione di eventuali istanze di riconoscimento di carriera pregressa (seconda laurea, re-immatricolazione a seguito rinuncia/decadenza, abbreviazione di corso, trasferimento in ingresso).
+
+Possono partecipare alla prima selezione anche gli studenti iscritti all’ultimo anno della scuola superiore.  
+ La graduatoria di merito viene redatta sulla base dei seguenti criteri: punteggio TOLC (esclusa la sezione di inglese), età anagrafica (a parità di punteggio TOLC prevale il candidato più giovane), media voti 4° anno arrotondata alla seconda cifra decimale (a parità di età anagrafica prevale il candidato con la media più alta).
+
+**Seconda sessione** di selezione (50% dei posti messi a bando)
+
+* Entro il 28 agosto 2026, sostenimento del TOLC con iscrizione al test on line sul portale del CISIA entro la data prevista dal CISIA (indicativamente 7 gg prima della data di svolgimento del test).
+* Dal 6 luglio 2026 al 28 agosto 2026, iscrizione alla selezione (pre-iscrizione) sul portale Unibg.
+* Entro il 9 settembre 2026, pubblicazione graduatorie.
+* Entro il 14 settembre 2026, accettazione del posto compilando la domanda di immatricolazione e versando la quota della tassa regionale + imposta di bollo assolta in modo virtuale.
+* Entro il 18 settembre 2026, pubblicazione degli eventuali posti rimasti disponibili.
+* Entro il 23 settembre 2026, accettazione del posto (a seguito primo scorrimento della graduatoria) tramite immatricolazione e versamento quota della tassa regionale + imposta di bollo assolta in modo virtuale.
+* Dal 18 al 23 settembre 2026, presentazione domanda di ripescaggio (manifestazione di interesse).
+* Entro il 28 settembre 2026, pubblicazione eventuali ulteriori posti disponibili.
+* Entro il 2 ottobre 2026, accettazione del posto (a seguito ripescaggio) tramite immatricolazione e versamento della quota della tassa regionale + imposta di bollo assolta in modo virtuale.
+* Entro il 2 ottobre 2026, presentazione di eventuali istanze di riconoscimento di carriera pregressa (seconda laurea, re-immatricolazione a seguito rinuncia/decadenza, abbreviazione di corso, trasferimento in ingresso)
+
+Si procederà ad ulteriori scorrimenti della graduatoria che si rendessero necessari fino alla data del 13 novembre 2026.
+
+La graduatoria di merito viene redatta sulla base dei seguenti criteri: punteggio TOLC (esclusa la sezione di inglese), età anagrafica (a parità di punteggio TOLC prevale il candidato più giovane), voto di diploma (a parità di età anagrafica prevale il candidato con il voto più alto).
+
+[Esiti Tolc e Graduatorie di ammissione](/studiare/iscriversi/corsi-laurea-triennale-ad-accesso-programmato-test-selettivo/esiti-tolc-e)
+
+### Trasferimenti, re-immatricolazioni e passaggi di corso
+
+Gli studenti che chiedono il **trasferimento** ai suddetti corsi da altre Università, **re-immatricolazione a seguito rinuncia/decadenza** oppure **conseguimento seconda laurea** debbono sostenere il TOLC.  
+ Tali studenti, dopo aver superato il test di ammissione ed essersi collocati utilmente in graduatoria, potranno presentare all’organo competente istanza di riconoscimento dei crediti formativi della carriera pregressa per l’ammissione ad anni di corso successivi al primo.
+
+Gli studenti già iscritti nell’anno accademico 2025-2026 ad altro corso di laurea, intenzionati a richiedere un **passaggio di corso**, dovranno iscriversi alla selezione e sostenere lo specifico TOLC richiesto per l’ammissione al corso (salvo che sia stato già sostenuto in data successiva al 1 gennaio 2025).
+
+In caso di ammissione al corso saranno tenuti a presentare la domanda di passaggio di corso. **Tali studenti potranno partecipare soltanto alla seconda sessione di selezione** (potranno sostenere esami nella sessione autunnale se fissati in data antecedente a quella prevista per l’accettazione del posto).
+
+### 3. Registrati al portale
+
+Registrati sullo **[Sportello Internet UniBg](https://sportello.unibg.it/Home.do)**
+
+### 4. Fai la pre-iscrizione al corso
+
+Pre-iscriviti nell'apposita sezione online sullo [Sportello Internet UniBg](https://sportello.unibg.it/Home.do)
+
+**N.B**. La sola registrazione dei tuoi dati anagrafici **non è sufficiente** per l’iscrizione alla selezione (= pre-iscrizione).
+
+### 5. Se sei ammesso, accetta il posto
+
+La pubblicazione delle graduatorie avverrà entro le scadenze previste dal Bando: in caso di esito positivo, **accetta il posto e procedi con l’immatricolazione**.  
+Eventuali posti rimasti disponibili e le modalità per procedere all'accettazione verranno pubblicati successivamente secondo le scadenze indicate nel Bando.
+
+### 6. Immatricolati al corso
+
+* Compila la domanda di immatricolazione online sullo [Sportello Internet UniBg](https://sportello.unibg.it/Home.do)
+* **Effettua l'upload della tua fotografia rispettando il formato richiesto**  
+  La fotografia è necessaria per il rilascio della tessera universitaria [Flash Up Studio.](https://www.unibg.it/servizi/vita-unibg/convenzioni-e-sconti)
+* **Compila i questionari obbligatori e completa la procedura**
+* Paga la quota della tassa regionale per il diritto allo studio + imposta di bollo, con il versamento della quale risulterai iscritto, **entro le scadenze indicate nel bando, pena la decadenza dalla graduatoria ove prevista.**
+
+ 
+
+Fonte 5: [PDF] GUIDA ALLA PROCEDURA ONLINE PRE-ISCRIZIONE CORSI DI ...
+URL: https://www.unibg.it/sites/default/files/media/documents/2024-04-16/2024_Guida%20Preiscrizione%20Laurea%20Magistrale%20accesso%20programmato.pdf
+Contenuto: 1 GUIDA ALLA PROCEDURA ONLINE PRE-ISCRIZIONE CORSI DI LAUREA MAGISTRALE AD ACCESSO PROGRAMMATO Gentile Studente, prima di effettuare la pre-iscrizione on line, ti invitiamo a consultare il Bando di ammissione al corso di laurea magistrale ad accesso programato di tuo interesse (pubblicato nella pagina del corso stesso) per prendere visione dei requisiti curriculari previsti, delle modalità di svolgimento del test e di ogni ulteriore termine e adempimento previsto. Collegati al sito www.unibg.it e clicca “Sportello Internet” 2 Clicca poi Login ed accedi con le tue credenziali se sei già uno studente dell’Università degli studi di Bergamo o se ti sei già registrato. N.B. Se non sei mai stato iscritto all’Università di Bergamo, devi prima effettuare la registrazione inserendo il tuo codice fiscale e compilando i dati richiesti per ottenere nome utente e password. Se sei uno studente straniero e non sei ancora in possesso del codice fiscale, inserisci il flag su “Dichiaro di essere uno studente straniero senza Codice Fiscale Italiano e clicca “Avanti” proseguendo con l’inserimento dei dati richiesti. 3 Clicca “Login” per inserire nome utente e password e successivamente accedi al MENU in alto a destra per compilare la tua domanda di pre-iscrizione al corso di laurea magistrale prescelto. 4 Clicca poi “ Segreteria” e successivamente “Pre-iscrizione Corsi accesso programmato/Laurea Magistrale/Dottorati/Master/Sostegno” 5 Clicca “Iscrizione Concorsi” e poi seleziona “Laurea Magistrale”. Quindi clicca “Avanti” 6 Seleziona il corso di laurea magistrale a cui intendi pre-iscriverti, poi clicca su Avanti 7 Indica l’eventuale preferenza in caso di più curricula e clicca “Avanti”. 8 Se devi richiedere un ausilio per lo svolgimento della prova, inserisci il flag su “Sì”, clicca sul link per la compilazione del modulo di richiesta supporti, e clicca “Avanti”. Prosegui poi con l’inserimento della documentazione prevista nelle maschere successive. 9 In questa maschera devi inserire un tuo documento di identità in corso di validità. Clicca su “Inserisci nuovo documento d’identità” e successivamente seleziona “Prosegui”. 10 Poi indica gli estremi del documento e clicca “Avanti” 11 Effettua ora l’upload del documento stesso. Clicca su Inserisci allegato e poi “Avanti”. 12 Carica il file (pdf) del tuo documento d’identità e successivamente clicca “Avanti”. 13 Procedi ora con l’inserimento dei titoli di studio (diploma di maturità e Laurea). Se sei uno studente dell’Università degli studi di Bergamo, tale maschera sarà già popolata con i dati del tuo diploma e del titolo conseguito (o in procinto di conseguire). 14 Se sei uno studente laureando, inserisci il flag su “non ancora conseguito”. 15 Se sei uno studente laureando in un’altra Università, in questa maschera devi inserire il documento relativo all’autocertificazione di iscrizione con indicazione della denominazione dell’Ateneo, del corso di laurea, elenco degli esami superati con indicazione di data, voto, cfu e settori scientifico disciplinari e degli eventuali esami ancora da superare con indicazione di cfu, settore scientifico disciplinare e data prevista dell’appello d’esame. Se sei uno studente laureato in un’altra Università, devi invece caricare l’autocertificazione del conseguimento della laurea con indicazione dell’Ateneo, del corso di laurea, della data di conseguimento e della votazione finale e dell’elenco degli esami superati con indicazione di data, voto, cfu e settori scientifico-disciplinari. Consulta il bando di ammissione per allegare altri documenti necessari (esempio attestato di conoscenza lingua inglese del livello richiesto dal tuo bando o altra documentazione utile per dimostrare il possesso dei requisiti curriculari) o necessari per la valutazione della coerenza del curriculum accademico con gli obiettivi formativi del corso di laurea magistrale). N.B: se sei uno studente UNIBG non devi inserire l’autocertificazione e quindi clicca su NO e poi “Avanti” 16 Per effettuare l’upload della documentazione, clicca “Sì” e poi “Avanti”. 17 18 Quando hai caricato la documentazione relativa all’autocertificazione, ti viene riproposta la stessa pagina. Se non hai altri documenti da allegare, clicca su NO e poi su Avanti. 19 In questa maschera dovrai compilare il questionario che ti consentirà di riportare la media ponderata degli esami superati della carriera utilizzata per l’accesso alla Laurea magistrale. 20 Verifica quanto indicato nel Bando di ammissione del corso di laurea magistrale da te prescelto e inserisci la media ponderata dei voti degli esami superati fino alla data di compilazione della presente domanda di pre-iscrizione, arrotondata alla seconda cifra decimale. Esempio: per media pari a 27,623 indicare 27,62 mentre per media pari a 27,627 indicare 27,63. Arrotondare per eccesso se la terza cifra decimale è pari a 5: 27,625 diventa 27,63. Clicca poi “Avanti” 21 Per terminare la compilazione del questionario clicca “Conferma” e poi “Esci”. 22 Infine clicca “Completa ammissione al concorso” per completare la tua domanda di pre-iscrizione. Ricorda che devi ora effettuare il versamento del contributo di pre-iscrizione pari a € 52,00 23 Clicca “Pagamenti” per procedere al pagamento del contributo di pre-iscrizione entro la scadenza prevista dal bando di ammissione. 24 Clicca infine sul numero di fattura. Ti ricordiamo che la graduatoria di merito sarà pubblicata, nelle scadenze indicate nel Bando di ammissione, sul Portale d’Ateneo alla pagina https://www.unibg.it/studia-noi/iscriversi/passi-iscriversi/pre-iscrizioni-magistrali come unico mezzo di pubblicità legale sull’esito della selezione. I candidati vincitori, utilmente collocati nelle graduatorie di merito per l’ammissione al corso di laurea magistrale prescelto, devono immatricolarsi entro il termine perentorio riportato nel Bando di ammissione, pena la decadenza dal diritto all’iscrizione.
+
+
+>>> USER PROMPT:
+spiegami come iscrivermi ai corsi con accesso programmato con test selettivo
+
+
+
+>>> RESPONSE:
+Ciao Raphace Prime,
+
+Capisco che, come studente Magistrale del Dipartimento di Ingegneria, tu stia cercando informazioni sull'iscrizione a corsi con accesso programmato e test selettivo. È importante distinguere tra le procedure per i corsi di laurea triennale e quelli di laurea magistrale, poiché le modalità di selezione e i "test" possono variare.
+
+### Corsi con Accesso Programmato e Test Selettivo all'Università di Bergamo
+
+**1. Per i Corsi di Laurea Triennale:**
+L'accesso programmato con test selettivo per i corsi di laurea triennale (come Scienze della Comunicazione, Scienze dell’Educazione, Scienze Motorie e Sportive, Scienze Psicologiche) prevede il sostenimento di un **TOLC (Test Online CISIA)** specifico (TOLC-SU o TOLC-PSI) che serve a stabilire la posizione in graduatoria.
+(Pagina di riferimento: Fonte 1, Fonte 4)
+
+**2. Per i Corsi di Laurea Magistrale:**
+Per i corsi di laurea magistrale ad accesso programmato (come Psicologia clinica, Scienze pedagogiche, Scienze, metodi e didattiche delle attività sportive, Progettazione di contesti di vita accessibili ed inclusivi), l'ammissione prevede il possesso di specifici requisiti curriculari e un'adeguata preparazione personale, verificata tramite un **colloquio/test** con la Commissione Esaminatrice. Non è previsto un TOLC per questi corsi magistrali.
+(Pagina di riferimento: Fonte 3)
+
+**Importante per te, Raphace:**
+Le fonti a mia disposizione non indicano corsi di laurea magistrale nel Dipartimento di Ingegneria con accesso programmato e test selettivo. I corsi magistrali ad accesso programmato elencati sono in ambiti diversi.
+
+Se il tuo interesse è per un corso di laurea magistrale, di seguito trovi la procedura generale per l'iscrizione ai corsi magistrali ad accesso programmato (riferita all'a.a. 2025-2026, in attesa di aggiornamenti per l'a.a. 2026-2027):
+
+---
+
+### Procedura di Iscrizione ai Corsi di Laurea Magistrale ad Accesso Programmato (a.a. 2025-2026)
+
+1.  **Consulta il Bando Specifico del Corso:**
+    *   Leggi attentamente il bando relativo al corso di laurea magistrale di tuo interesse. Troverai tutte le informazioni dettagliate sui requisiti curriculari, le modalità di svolgimento del colloquio/test e le scadenze.
+    *   Le graduatorie saranno pubblicate sulla pagina "Graduatorie di merito corsi di laurea magistrale" del portale di Ateneo.
+    *   *Nota:* I bandi disponibili per l'a.a. 2025-2026 riguardano Psicologia clinica, Scienze pedagogiche, Scienze, metodi e didattiche delle attività sportive, e Progettazione di contesti di vita accessibili ed inclusivi.
+    (Pagina di riferimento: Fonte 3)
+
+2.  **Registrazione al Portale di Ateneo:**
+    *   Se non sei mai stato iscritto all'Università di Bergamo, devi prima registrarti sullo **Sportello Internet UniBg** (www.unibg.it -> Sportello Internet) per ottenere nome utente e password.
+    *   Se sei già uno studente UniBg, puoi accedere direttamente con le tue credenziali.
+    (Pagina di riferimento: Fonte 3, punto 2; Fonte 5, punto 2)
+
+3.  **Pre-iscrizione Online:**
+    *   Accedi allo Sportello Internet UniBg con le tue credenziali.
+    *   Dal MENU, vai su "Segreteria" e poi "Pre-iscrizione Corsi accesso programmato/Laurea Magistrale/Dottorati/Master/Sostegno".
+    *   Clicca su "Iscrizione Concorsi", seleziona "Laurea Magistrale" e scegli il corso di tuo interesse.
+    *   Compila la domanda di pre-iscrizione online, inserendo i dati richiesti e caricando la documentazione necessaria (documento d'identità, titoli di studio, autocertificazioni se laureato/laureando in altra università, eventuale attestato di conoscenza lingua inglese se richiesto dal bando, ecc.).
+    *   Dovrai anche compilare un questionario inserendo la media ponderata degli esami superati della carriera precedente.
+    *   Completa l'ammissione al concorso e procedi al pagamento del **contributo di pre-iscrizione di € 52,00**.
+    *   **Scadenze per l'a.a. 2025-2026:**
+        *   **Primo periodo:** Dall'1 aprile al 30 maggio 2025.
+        *   **Secondo periodo:** Dall'1 luglio al 22 agosto 2025.
+    (Pagina di riferimento: Fonte 3, punto 3; Fonte 5, punti 3-23)
+
+4.  **Sostenimento del Colloquio/Test:**
+    *   A seguito della valutazione dei requisiti di accesso, dovrai sostenere un colloquio/test con la Commissione Esaminatrice del corso di laurea magistrale scelto. Questo serve a verificare la tua preparazione iniziale e determinerà la tua posizione in graduatoria.
+    *   **Scadenze per l'a.a. 2025-2026:**
+        *   **Primo periodo:** Dal 16 al 20 giugno 2025.
+        *   **Secondo periodo:** Dal 10 al 16 settembre 2025.
+    (Pagina di riferimento: Fonte 3, punto 4)
+
+5.  **Verifica l'Esito e Accetta il Posto:**
+    *   Le graduatorie degli ammessi saranno pubblicate sul Portale d'Ateneo. Se risulti ammesso, dovrai accettare il posto entro i termini indicati nel bando.
+    *   **Scadenze per l'a.a. 2025-2026:**
+        *   **Primo periodo:** Pubblicazione graduatorie entro il 1° luglio 2025. Immatricolazioni entro il 4 luglio 2025. Sono previsti scorrimenti e ripescaggi con scadenze successive.
+        *   **Secondo periodo:** Pubblicazione graduatorie entro il 25 settembre 2025. Immatricolazioni entro il 30 settembre 2025. Sono previsti scorrimenti e ripescaggi con scadenze successive fino al 14 novembre 2025.
+    (Pagina di riferimento: Fonte 3, punto 5; Fonte 5, punto 24)
+
+6.  **Immatricolazione:**
+    *   Se ammesso, compila la domanda di immatricolazione online sullo Sportello Internet UniBg.
+    *   Effettua l'upload di una tua fotografia (necessaria per la tessera universitaria).
+    *   Compila i questionari obbligatori e completa la procedura.
+    *   Paga la quota di **156,00 euro** (tassa regionale per il Diritto allo Studio Universitario + imposta di bollo) tramite la procedura PagoPA. Conserva la prova del pagamento.
+    *   **Nota per laureandi:** Se sei laureando, puoi pre-immatricolarti "con riserva" se conseguirai il titolo entro la sessione di marzo/aprile 2026 e ti mancano non più di 3 esami (per un massimo di 24 CFU) oltre alla prova finale. Non potrai sostenere esami del corso di laurea magistrale finché non avrai conseguito la laurea.
+    (Pagina di riferimento: Fonte 3, punto 5)
+
+---
+
+Se le tue domande riguardano specificamente corsi di laurea magistrale in Ingegneria o altre casistiche non coperte da queste informazioni, ti consiglio di contattare direttamente la Segreteria Studenti dell'Università di Bergamo tramite l'Help Desk Studenti per un supporto più mirato.
+
+Pagina di riferimento: https://www.unibg.it/studiare/iscriversi/corsi-laurea-magistrale-ad-accesso-programmato
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Domanda originale: spiegami come iscrivermi ai corsi con accesso programmato con test selettivo
+
+
+Categoria: procedure
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 3
+
+Risposta generata: Ciao Raphace Prime,
+
+Capisco che, come studente Magistrale del Dipartimento di Ingegneria, tu stia cercando informazioni sull'iscrizione a corsi con accesso programmato e test selettivo. È importante distinguere tra le procedure per i corsi di laurea triennale e quelli di laurea magistrale, poiché le modalità di selezione e i "test" possono variare.
+
+### Corsi con Accesso Programmato e Test Selettivo all'Università di Bergamo
+
+**1. Per i Corsi di Laurea Triennale:**
+L'accesso programmato con test selettivo per i corsi di laurea triennale (come Scienze della Comunicazione, Scienze dell’Educazione, Scienze Motorie e Sportive, Scienze Psicologiche) prevede il sostenimento di un **TOLC (Test Online CISIA)** specifico (TOLC-SU o TOLC-PSI) che serve a stabilire la posizione in graduatoria.
+(Pagina di riferimento: Fonte 1, Fonte 4)
+
+**2. Per i Corsi di Laurea Magistrale:**
+Per i corsi di laurea magistrale ad accesso programmato (come Psicologia clinica, Scienze pedagogiche, Scienze, metodi e didattiche delle attività sportive, Progettazione di contesti di vita accessibili ed inclusivi), l'ammissione prevede il possesso di specifici requisiti curriculari e un'adeguata preparazione personale, verificata tramite un **colloquio/test** con la Commissione Esaminatrice. Non è previsto un TOLC per questi corsi magistrali.
+(Pagina di riferimento: Fonte 3)
+
+**Importante per te, Raphace:**
+Le fonti a mia disposizione non indicano corsi di laurea magistrale nel Dipartimento di Ingegneria con accesso programmato e test selettivo. I corsi magistrali ad accesso programmato elencati sono in ambiti diversi.
+
+Se il tuo interesse è per un corso di laurea magistrale, di seguito trovi la procedura generale per l'iscrizione ai corsi magistrali ad accesso programmato (riferita all'a.a. 2025-2026, in attesa di aggiornamenti per l'a.a. 2026-2027):
+
+---
+
+### Procedura di Iscrizione ai Corsi di Laurea Magistrale ad Accesso Programmato (a.a. 2025-2026)
+
+1.  **Consulta il Bando Specifico del Corso:**
+    *   Leggi attentamente il bando relativo al corso di laurea magistrale di tuo interesse. Troverai tutte le informazioni dettagliate sui requisiti curriculari, le modalità di svolgimento del colloquio/test e le scadenze.
+    *   Le graduatorie saranno pubblicate sulla pagina "Graduatorie di merito corsi di laurea magistrale" del portale di Ateneo.
+    *   *Nota:* I bandi disponibili per l'a.a. 2025-2026 riguardano Psicologia clinica, Scienze pedagogiche, Scienze, metodi e didattiche delle attività sportive, e Progettazione di contesti di vita accessibili ed inclusivi.
+    (Pagina di riferimento: Fonte 3)
+
+2.  **Registrazione al Portale di Ateneo:**
+    *   Se non sei mai stato iscritto all'Università di Bergamo, devi prima registrarti sullo **Sportello Internet UniBg** (www.unibg.it -> Sportello Internet) per ottenere nome utente e password.
+    *   Se sei già uno studente UniBg, puoi accedere direttamente con le tue credenziali.
+    (Pagina di riferimento: Fonte 3, punto 2; Fonte 5, punto 2)
+
+3.  **Pre-iscrizione Online:**
+    *   Accedi allo Sportello Internet UniBg con le tue credenziali.
+    *   Dal MENU, vai su "Segreteria" e poi "Pre-iscrizione Corsi accesso programmato/Laurea Magistrale/Dottorati/Master/Sostegno".
+    *   Clicca su "Iscrizione Concorsi", seleziona "Laurea Magistrale" e scegli il corso di tuo interesse.
+    *   Compila la domanda di pre-iscrizione online, inserendo i dati richiesti e caricando la documentazione necessaria (documento d'identità, titoli di studio, autocertificazioni se laureato/laureando in altra università, eventuale attestato di conoscenza lingua inglese se richiesto dal bando, ecc.).
+    *   Dovrai anche compilare un questionario inserendo la media ponderata degli esami superati della carriera precedente.
+    *   Completa l'ammissione al concorso e procedi al pagamento del **contributo di pre-iscrizione di € 52,00**.
+    *   **Scadenze per l'a.a. 2025-2026:**
+        *   **Primo periodo:** Dall'1 aprile al 30 maggio 2025.
+        *   **Secondo periodo:** Dall'1 luglio al 22 agosto 2025.
+    (Pagina di riferimento: Fonte 3, punto 3; Fonte 5, punti 3-23)
+
+4.  **Sostenimento del Colloquio/Test:**
+    *   A seguito della valutazione dei requisiti di accesso, dovrai sostenere un colloquio/test con la Commissione Esaminatrice del corso di laurea magistrale scelto. Questo serve a verificare la tua preparazione iniziale e determinerà la tua posizione in graduatoria.
+    *   **Scadenze per l'a.a. 2025-2026:**
+        *   **Primo periodo:** Dal 16 al 20 giugno 2025.
+        *   **Secondo periodo:** Dal 10 al 16 settembre 2025.
+    (Pagina di riferimento: Fonte 3, punto 4)
+
+5.  **Verifica l'Esito e Accetta il Posto:**
+    *   Le graduatorie degli ammessi saranno pubblicate sul Portale d'Ateneo. Se risulti ammesso, dovrai accettare il posto entro i termini indicati nel bando.
+    *   **Scadenze per l'a.a. 2025-2026:**
+        *   **Primo periodo:** Pubblicazione graduatorie entro il 1° luglio 2025. Immatricolazioni entro il 4 luglio 2025. Sono previsti scorrimenti e ripescaggi con scadenze successive.
+        *   **Secondo periodo:** Pubblicazione graduatorie entro il 25 settembre 2025. Immatricolazioni entro il 30 settembre 2025. Sono previsti scorrimenti e ripescaggi con scadenze successive fino al 14 novembre 2025.
+    (Pagina di riferimento: Fonte 3, punto 5; Fonte 5, punto 24)
+
+6.  **Immatricolazione:**
+    *   Se ammesso, compila la domanda di immatricolazione online sullo Sportello Internet UniBg.
+    *   Effettua l'upload di una tua fotografia (necessaria per la tessera universitaria).
+    *   Compila i questionari obbligatori e completa la procedura.
+    *   Paga la quota di **156,00 euro** (tassa regionale per il Diritto allo Studio Universitario + imposta di bollo) tramite la procedura PagoPA. Conserva la prova del pagamento.
+    *   **Nota per laureandi:** Se sei laureando, puoi pre-immatricolarti "con riserva" se conseguirai il titolo entro la sessione di marzo/aprile 2026 e ti mancano non più di 3 esami (per un massimo di 24 CFU) oltre alla prova finale. Non potrai sostenere esami del corso di laurea magistrale finché non avrai conseguito la laurea.
+    (Pagina di riferimento: Fonte 3, punto 5)
+
+---
+
+Se le tue domande riguardano specificamente corsi di laurea magistrale in Ingegneria o altre casistiche non coperte da queste informazioni, ti consiglio di contattare direttamente la Segreteria Studenti dell'Università di Bergamo tramite l'Help Desk Studenti per un supporto più mirato.
+
+Pagina di riferimento: https://www.unibg.it/studiare/iscriversi/corsi-laurea-magistrale-ad-accesso-programmato
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RESPONSE:
+PER I CORSI DI LAUREA TRIENNALE:
+L'accesso programmato con test selettivo per i corsi di laurea triennale (come Scienze della Comunicazione, Scienze dell’Educazione, Scienze Motorie e Sportive, Scienze Psicologiche) prevede il sostenimento di un TOLC (Test Online CISIA) specifico (TOLC-SU o TOLC-PSI) che serve a stabilire la posizione in graduatoria.
+
+PER I CORSI DI LAUREA MAGISTRALE:
+Per i corsi di laurea magistrale ad accesso programmato (come Psicologia clinica, Scienze pedagogiche, Scienze, metodi e didattiche delle attività sportive, Progettazione di contesti di vita accessibili ed inclusivi), l'ammissione prevede il possesso di specifici requisiti curriculari e un'adeguata preparazione personale, verificata tramite un colloquio/test con la Commissione Esaminatrice. NON è previsto un TOLC per questi corsi magistrali.
+
+IMPORTANTE PER TE, RAPHACE:
+Le fonti a disposizione non indicano corsi di laurea magistrale nel Dipartimento di Ingegneria con accesso programmato e test selettivo. I corsi magistrali ad accesso programmato elencati sono in ambiti diversi.
+
+Se il tuo interesse è per un corso di laurea magistrale, di seguito trovi la procedura generale per l'iscrizione ai corsi magistrali ad accesso programmato (riferita all'a.a. 2025-2026, in attesa di aggiornamenti per l'a.a. 2026-2027):
+
+PROCEDURA DI ISCRIZIONE AI CORSI DI LAUREA MAGISTRALE AD ACCESSO PROGRAMMATO (A.A. 2025-2026)
+
+1.  CONSULTA IL BANDO SPECIFICO DEL CORSO:
+    Leggi attentamente il bando relativo al corso di laurea magistrale di tuo interesse. Troverai tutte le informazioni dettagliate sui requisiti curriculari, le modalità di svolgimento del colloquio/test e le scadenze.
+    Le graduatorie saranno pubblicate sulla pagina "Graduatorie di merito corsi di laurea magistrale" del portale di Ateneo.
+    Nota: I bandi disponibili per l'a.a. 2025-2026 riguardano Psicologia clinica, Scienze pedagogiche, Scienze, metodi e didattiche delle attività sportive, e Progettazione di contesti di vita accessibili ed inclusivi.
+
+2.  REGISTRAZIONE AL PORTALE DI ATENEO:
+    Se non sei mai stato iscritto all'Università di Bergamo, devi prima registrarti sullo Sportello Internet UniBg (www.unibg.it -> Sportello Internet) per ottenere nome utente e password.
+    Se sei già uno studente UniBg, puoi accedere direttamente con le tue credenziali.
+
+3.  PRE-ISCRIZIONE ONLINE:
+    Accedi allo Sportello Internet UniBg con le tue credenziali.
+    Dal MENU, vai su "Segreteria" e poi "Pre-iscrizione Corsi accesso programmato/Laurea Magistrale/Dottorati/Master/Sostegno".
+    Clicca su "Iscrizione Concorsi", seleziona "Laurea Magistrale" e scegli il corso di tuo interesse.
+    Compila la domanda di pre-iscrizione online, inserendo i dati richiesti e caricando la documentazione necessaria (documento d'identità, titoli di studio, autocertificazioni se laureato/laureando in altra università, eventuale attestato di conoscenza lingua inglese se richiesto dal bando, ecc.).
+    Dovrai anche compilare un questionario inserendo la media ponderata degli esami superati della carriera precedente.
+    Completa l'ammissione al concorso e procedi al pagamento del CONTRIBUTO DI PRE-ISCRIZIONE DI EUR 52,00.
+    SCADENZE PER L'A.A. 2025-2026:
+    - Primo periodo: Dall'1 aprile al 30 maggio 2025.
+    - Secondo periodo: Dall'1 luglio al 22 agosto 2025.
+
+4.  SOSTENIMENTO DEL COLLOQUIO/TEST:
+    A seguito della valutazione dei requisiti di accesso, dovrai sostenere un colloquio/test con la Commissione Esaminatrice del corso di laurea magistrale scelto. Questo serve a verificare la tua preparazione iniziale e determinerà la tua posizione in graduatoria.
+    SCADENZE PER L'A.A. 2025-2026:
+    - Primo periodo: Dal 16 al 20 giugno 2025.
+    - Secondo periodo: Dal 10 al 16 settembre 2025.
+
+5.  VERIFICA L'ESITO E ACCETTA IL POSTO:
+    Le graduatorie degli ammessi saranno pubblicate sul Portale d'Ateneo. Se risulti ammesso, dovrai accettare il posto entro i termini indicati nel bando.
+    SCADENZE PER L'A.A. 2025-2026:
+    - Primo periodo: Pubblicazione graduatorie entro il 1° luglio 2025. Immatricolazioni entro il 4 luglio 2025. Sono previsti scorrimenti e ripescaggi con scadenze successive.
+    - Secondo periodo: Pubblicazione graduatorie entro il 25 settembre 2025. Immatricolazioni entro il 30 settembre 2025. Sono previsti scorrimenti e ripescaggi con scadenze successive fino al 14 novembre 2025.
+
+6.  IMMATRICOLAZIONE:
+    Se ammesso, compila la domanda di immatricolazione online sullo Sportello Internet UniBg.
+    Effettua l'upload di una tua fotografia (necessaria per la tessera universitaria).
+    Compila i questionari obbligatori e completa la procedura.
+    Paga la quota di EUR 156,00 (tassa regionale per il Diritto allo Studio Universitario + imposta di bollo) tramite la procedura PagoPA. Conserva la prova del pagamento.
+    Nota per laureandi: Se sei laureando, puoi pre-immatricolarti "con riserva" se conseguirai il titolo entro la sessione di marzo/aprile 2026 e ti mancano non più di 3 esami (per un massimo di 24 CFU) oltre alla prova finale. Non potrai sostenere esami del corso di laurea magistrale finché non avrai conseguito la laurea.
+
+Se le tue domande riguardano specificamente corsi di laurea magistrale in Ingegneria o altre casistiche non coperte da queste informazioni, ti consiglio di contattare direttamente la Segreteria Studenti dell'Università di Bergamo tramite l'Help Desk Studenti per un supporto più mirato.
+
+Pagina di riferimento: https://www.unibg.it/studiare/iscriversi/corsi-laurea-magistrale-ad-accesso-programmato
+
+================================================================================
+FINAL RESPONSE
+================================================================================
+PER I CORSI DI LAUREA TRIENNALE:
+L'accesso programmato con test selettivo per i corsi di laurea triennale (come Scienze della Comunicazione, Scienze dell’Educazione, Scienze Motorie e Sportive, Scienze Psicologiche) prevede il sostenimento di un TOLC (Test Online CISIA) specifico (TOLC-SU o TOLC-PSI) che serve a stabilire la posizione in graduatoria.
+
+PER I CORSI DI LAUREA MAGISTRALE:
+Per i corsi di laurea magistrale ad accesso programmato (come Psicologia clinica, Scienze pedagogiche, Scienze, metodi e didattiche delle attività sportive, Progettazione di contesti di vita accessibili ed inclusivi), l'ammissione prevede il possesso di specifici requisiti curriculari e un'adeguata preparazione personale, verificata tramite un colloquio/test con la Commissione Esaminatrice. NON è previsto un TOLC per questi corsi magistrali.
+
+IMPORTANTE PER TE, RAPHACE:
+Le fonti a disposizione non indicano corsi di laurea magistrale nel Dipartimento di Ingegneria con accesso programmato e test selettivo. I corsi magistrali ad accesso programmato elencati sono in ambiti diversi.
+
+Se il tuo interesse è per un corso di laurea magistrale, di seguito trovi la procedura generale per l'iscrizione ai corsi magistrali ad accesso programmato (riferita all'a.a. 2025-2026, in attesa di aggiornamenti per l'a.a. 2026-2027):
+
+PROCEDURA DI ISCRIZIONE AI CORSI DI LAUREA MAGISTRALE AD ACCESSO PROGRAMMATO (A.A. 2025-2026)
+
+1.  CONSULTA IL BANDO SPECIFICO DEL CORSO:
+    Leggi attentamente il bando relativo al corso di laurea magistrale di tuo interesse. Troverai tutte le informazioni dettagliate sui requisiti curriculari, le modalità di svolgimento del colloquio/test e le scadenze.
+    Le graduatorie saranno pubblicate sulla pagina "Graduatorie di merito corsi di laurea magistrale" del portale di Ateneo.
+    Nota: I bandi disponibili per l'a.a. 2025-2026 riguardano Psicologia clinica, Scienze pedagogiche, Scienze, metodi e didattiche delle attività sportive, e Progettazione di contesti di vita accessibili ed inclusivi.
+
+2.  REGISTRAZIONE AL PORTALE DI ATENEO:
+    Se non sei mai stato iscritto all'Università di Bergamo, devi prima registrarti sullo Sportello Internet UniBg (www.unibg.it -> Sportello Internet) per ottenere nome utente e password.
+    Se sei già uno studente UniBg, puoi accedere direttamente con le tue credenziali.
+
+3.  PRE-ISCRIZIONE ONLINE:
+    Accedi allo Sportello Internet UniBg con le tue credenziali.
+    Dal MENU, vai su "Segreteria" e poi "Pre-iscrizione Corsi accesso programmato/Laurea Magistrale/Dottorati/Master/Sostegno".
+    Clicca su "Iscrizione Concorsi", seleziona "Laurea Magistrale" e scegli il corso di tuo interesse.
+    Compila la domanda di pre-iscrizione online, inserendo i dati richiesti e caricando la documentazione necessaria (documento d'identità, titoli di studio, autocertificazioni se laureato/laureando in altra università, eventuale attestato di conoscenza lingua inglese se richiesto dal bando, ecc.).
+    Dovrai anche compilare un questionario inserendo la media ponderata degli esami superati della carriera precedente.
+    Completa l'ammissione al concorso e procedi al pagamento del CONTRIBUTO DI PRE-ISCRIZIONE DI EUR 52,00.
+    SCADENZE PER L'A.A. 2025-2026:
+    - Primo periodo: Dall'1 aprile al 30 maggio 2025.
+    - Secondo periodo: Dall'1 luglio al 22 agosto 2025.
+
+4.  SOSTENIMENTO DEL COLLOQUIO/TEST:
+    A seguito della valutazione dei requisiti di accesso, dovrai sostenere un colloquio/test con la Commissione Esaminatrice del corso di laurea magistrale scelto. Questo serve a verificare la tua preparazione iniziale e determinerà la tua posizione in graduatoria.
+    SCADENZE PER L'A.A. 2025-2026:
+    - Primo periodo: Dal 16 al 20 giugno 2025.
+    - Secondo periodo: Dal 10 al 16 settembre 2025.
+
+5.  VERIFICA L'ESITO E ACCETTA IL POSTO:
+    Le graduatorie degli ammessi saranno pubblicate sul Portale d'Ateneo. Se risulti ammesso, dovrai accettare il posto entro i termini indicati nel bando.
+    SCADENZE PER L'A.A. 2025-2026:
+    - Primo periodo: Pubblicazione graduatorie entro il 1° luglio 2025. Immatricolazioni entro il 4 luglio 2025. Sono previsti scorrimenti e ripescaggi con scadenze successive.
+    - Secondo periodo: Pubblicazione graduatorie entro il 25 settembre 2025. Immatricolazioni entro il 30 settembre 2025. Sono previsti scorrimenti e ripescaggi con scadenze successive fino al 14 novembre 2025.
+
+6.  IMMATRICOLAZIONE:
+    Se ammesso, compila la domanda di immatricolazione online sullo Sportello Internet UniBg.
+    Effettua l'upload di una tua fotografia (necessaria per la tessera universitaria).
+    Compila i questionari obbligatori e completa la procedura.
+    Paga la quota di EUR 156,00 (tassa regionale per il Diritto allo Studio Universitario + imposta di bollo) tramite la procedura PagoPA. Conserva la prova del pagamento.
+    Nota per laureandi: Se sei laureando, puoi pre-immatricolarti "con riserva" se conseguirai il titolo entro la sessione di marzo/aprile 2026 e ti mancano non più di 3 esami (per un massimo di 24 CFU) oltre alla prova finale. Non potrai sostenere esami del corso di laurea magistrale finché non avrai conseguito la laurea.
+
+Se le tue domande riguardano specificamente corsi di laurea magistrale in Ingegneria o altre casistiche non coperte da queste informazioni, ti consiglio di contattare direttamente la Segreteria Studenti dell'Università di Bergamo tramite l'Help Desk Studenti per un supporto più mirato.
+
+Pagina di riferimento: https://www.unibg.it/studiare/iscriversi/corsi-laurea-magistrale-ad-accesso-programmato
+
+================================================================================
+END OF LOG
+================================================================================
