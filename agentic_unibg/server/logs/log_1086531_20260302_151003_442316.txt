@@ -1,0 +1,2683 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-02 15:10:03
+Status    : success
+
+------------------------------------------------------------
+USER INFORMATION
+------------------------------------------------------------
+User type   : loggato
+Name        : Raphace Prime
+Matricola   : 1086531
+Department  : Ingegneria
+Course      : ign
+Typology    : Magistrale
+Year        : 1
+
+------------------------------------------------------------
+ORIGINAL USER QUERY
+------------------------------------------------------------
+chi sono io
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: altro
+Description: Altre richieste non classificabili
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, esami, ricevimenti
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+
+
+>>> USER PROMPT:
+chi sono io
+
+>>> RESPONSE:
+altro
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: profilo studente unibg
+Original Query: chi sono io
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- Tieni conto del contesto della conversazione per capire cosa cerca lo studente
+- La query deve essere in italiano
+- Massimo 6-8 parole
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Quali sono le tasse universitarie per il primo anno di ingegneria?"
+Query generata: tasse universitarie primo anno ingegneria unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Come posso iscrivermi al test di ammissione?"
+Query generata: iscrizione test ammissione unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Dove trovo gli orari delle lezioni di informatica?"
+Query generata: orari lezioni informatica unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Cos'è il top 10 student program?"
+Query generata: top 10 student program unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+Ultima richiesta dello studente: chi sono io
+
+Genera la query di ricerca web:
+
+>>> RESPONSE:
+profilo studente unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status          : success
+Search query    : profilo studente unibg
+Total results   : 24
+Top results used: 5
+
+>>> TOP RESULTS:
+  [1] Score: 0.8110
+      Title  : Placement | Università di Bergamo
+      URL    : https://en.unibg.it/engagement/business-services/placement
+      Content: Placement | Università di Bergamo
+===============
+
+[Skip to main content](https://en.unibg.it/engagement/business-services/placement#it-main-content)[Skip to footer content](https://en.unibg.it/engagement/business-services/placement#footer)
+
+Menu top
+========
+
+*   [eLearning](https://elearning15.unibg.it/?lang=en)
+*   [Web Agenda](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=en)
+*   [Help Desk](https://helpdesk.unibg.it/helpdesksegrestud/index.php?lang=en_US)
+*   [Dashboard](https://sportello.unibg.it/Home.do;jsessionid=6FE185E1F5DCD2157F9638C908073054.jvm1a?cod_lingua=eng)
+*   [Contacts](https://www.unibg.it/rubrica)
+*   [Libraries](https://servizibibliotecari.unibg.it/en)
+
+*   [](https://my.unibg.it/ "Il mio account")
+*   [](https://www.unibg.it/webmail "Webmail")
+*   [](https://en.unibg.it/engagement/business-services/placement#)
+    *   Form di ricerca
+---------------
+
+ 
+
+*   [IT](https://en.unibg.it/language-switcher?url=https%3A%2F%2Fwww.unibg.it%2Fnode%2F969 "Italian version")
+
+[](https://bigsearch.unibg.it/discovery/account?vid=39BRG_INST:MAIN "Il mio account")[](https://en.unibg.it/webmail "Webmail")[IT](https://www.unibg.it/ "Italian version")
+
+[](https://en.unibg.it/engagement/business-services/placement#)
+*   Form di ricerca
+---------------
+
+ 
+
+*   [University](https://en.unibg.it/university)
+
+    *   [About us](https://en.unibg.it/university/about-us)
+    *   [Organization and structure](https://en.unibg.it/university/organization-and-structure)
+
+*   [Study](https://en.unibg.it/study)
+
+    *   [Discover UniBg](https://en.unibg.it/study/discover-unibg)
+    *   [Courses](https://en.unibg.it/study/courses)
+    *   [Orientation](https://en.unibg.it/study/orientation)
+    *   [Enrollment](https://en.unibg.it/study/enrollment)
+    *   [Attendance](https://en.unibg.it/study/attendance)
+    *   [How to graduate](https://en.unibg.it/study/how-graduate)
+    *   [eLearning - Moodle](https://en.unibg.it/study/elearning-moodle)
+    *   [Forms](https://en.unibg.it/study/forms)
+    *   [Student Services Office](https://en.unibg.it/study/student-services-office)
+
+*   [Research](https://en.unibg.it/research)
+
+    *   [Working in Research](https://en.unibg.it/research/working-research)
+    *   [Research areas and projects](https://en.unibg.it/research/research-areas-and-projects)
+    *   [Researchers and products](https://en.unibg.it/research/researchers-and-products)
+    *   [Structures, Organization and Governance](https://en.unibg.it/research/structures-organization-and-governance)
+
+*   [International](https://en.unibg.it/international)
+
+    *   [Going abroad](https://en.unibg.it/international/going-abroad)
+    *   [Students Exchange](https://en.unibg.it/international/students-exchange)
+    *   [Cooperation and Development](https://en.unibg.it/international/cooperation-and-development)
+
+*   [Engagement](https://en.unibg.it/engagement)
+
+    *   [Knowledge valorisation](https://en.unibg.it/engagement/knowledge-valorisation)
+    *   [Business Services](https://en.unibg.it/engagement/business-services)
+    *   [Lifelong Learning](https://en.unibg.it/engagement/lifelong-learning)
+    *   [Culture and Society](https://en.unibg.it/engagement/culture-and-society)
+
+*   [Life at UniBg](https://en.unibg.it/life-at-unibg)
+
+    *   [Open Campus](https://en.unibg.it/life-at-unibg/open-campus)
+    *   [Services](https://en.unibg.it/life-at-unibg/services)
+    *   [Work-study Opportunities](https://en.unibg.it/life-at-unibg/work-study-opportunities)
+
+Info for
+
+*   [Prospective student](https://en.unibg.it/prospective-student)
+*   [International student](https://en.unibg.it/international-student)
+
+[![Image 1: University of Bergamo](https://en.unibg.it/themes/custom/unibg_en/images/logo-international.svg)![Image 2: University of Bergamo](https://en.unibg.it/themes/custom/unibg_en/images/logo-international.svg)](https://en.unibg.it/ "Home")
+=====================================================================================================================================================================================================================================================
+
+Toggle navigation
+
+×
+
+*   [University](https://en.unibg.it/university "Go to: University")
+*   [Study](https://en.unibg.it/study "Go to: Study")
+*   [Research](https://en.unibg.it/research "Go to: Research")
+*   [International](https://en.unibg.it/international "Go to: International")
+*   [Engagement Active](https://en.unibg.it/engagement "Go to: Engagement")
+*   [Life at UniBg](https://en.unibg.it/life-at-unibg "Go to: Life at UniBg")
+
+[](https://bigsearch.unibg.it/discovery/account?vid=39BRG_INST:MAIN "Il mio account")[](https://en.unibg.it/webmail "Webmail")[IT](https://www.unibg.it/ "Italian version")
+
+[](https://en.unibg.it/engagement/business-services/placement#)
+*   Form di ricerca
+---------------
+
+ 
+
+*   [University](https://en.unibg.it/university)
+
+    *   [About us](https://en.unibg.it/university/about-us)
+    *   [Organization and structure](https://en.unibg.it/university/organization-and-structure)
+
+*   [Study](https://en.unibg.it/study)
+
+    *   [Discover UniBg](https://en.unibg.it/study/discover-unibg)
+    *   [Courses](https://en.unibg.it/study/courses)
+    *   [Orientation](https://en.unibg.it/study/orientation)
+    *   [Enrollment](https://en.unibg.it/study/enrollment)
+    *   [Attendance](https://en.unibg.it/study/attendance)
+    *   [How to graduate](https://en.unibg.it/study/how-graduate)
+    *   [eLearning - Moodle](https://en.unibg.it/study/elearning-moodle)
+    *   [Forms](https://en.unibg.it/study/forms)
+    *   [Student Services Office](https://en.unibg.it/study/student-services-office)
+
+*   [Research](https://en.unibg.it/research)
+
+    *   [Working in Research](https://en.unibg.it/research/working-research)
+    *   [Research areas and projects](https://en.unibg.it/research/research-areas-and-projects)
+    *   [Researchers and products](https://en.unibg.it/research/researchers-and-products)
+    *   [Structures, Organization and Governance](https://en.unibg.it/research/structures-organization-and-governance)
+
+*   [International](https://en.unibg.it/international)
+
+    *   [Going abroad](https://en.unibg.it/international/going-abroad)
+    *   [Students Exchange](https://en.unibg.it/international/students-exchange)
+    *   [Cooperation and Development](https://en.unibg.it/international/cooperation-and-development)
+
+*   [Engagement](https://en.unibg.it/engagement)
+
+    *   [Knowledge valorisation](https://en.unibg.it/engagement/knowledge-valorisation)
+    *   [Business Services](https://en.unibg.it/engagement/business-services)
+    *   [Lifelong Learning](https://en.unibg.it/engagement/lifelong-learning)
+    *   [Culture and Society](https://en.unibg.it/engagement/culture-and-society)
+
+*   [Life at UniBg](https://en.unibg.it/life-at-unibg)
+
+    *   [Open Campus](https://en.unibg.it/life-at-unibg/open-campus)
+    *   [Services](https://en.unibg.it/life-at-unibg/services)
+    *   [Work-study Opportunities](https://en.unibg.it/life-at-unibg/work-study-opportunities)
+
+Info for
+
+*   [Prospective student](https://en.unibg.it/prospective-student)
+*   [International student](https://en.unibg.it/international-student)
+
+Breadcrumb
+----------
+
+1.   [Home](https://en.unibg.it/)
+2.   /[Engagement](https://en.unibg.it/engagement)
+3.   /[Business Services](https://en.unibg.it/engagement/business-services)
+4.   / Placement 
+
+Placement
+=========
+
+Image
+
+![Image 3: Students](https://en.unibg.it/sites/cen00/files/i_nostri_laureati.jpg)
+
+Every year the University of Bergamo brings many students into the job market thanks to the quality of its teaching and the lively local industrial fabric, always looking for new profiles.
+
+UniBg students are characterized by:
+
+*   diversified curricular skills with around forty active courses and several extra-curricular training experiences
+*   orientation into teamwork and real projects of industrial relevance thanks to the continuous inputs coming from the business world
+*   strong international footprint thanks to the presence of international students and numerous mobility programs abroad
+
+To access the Placement Service a profile must be registered on the Placement Service platform. Within the platform it is possible to publish job offers and consult CVs of undergraduate and recent graduate students.
+
+Contacts
+--------
+
+**Internship & Placement**
+
+via S. Bernardino 72/e
+
+24122 Bergamo
+
+[tirocini@unibg.it](mailto:tirocini@unibg.it)
+
+placement@unibg.it
+
+Follow us on
+*   [![Image 4: x](https://en.unibg.it/themes/custom/unibg_en/images/social/x.png)X](https://x.com/UniBergamo "x")
+*   [![Image 5: facebook](https://en.unibg.it/themes/custom/unibg_en/images/social/facebook.png)Facebook](https://www.facebook.com/UniBergamo "facebook")
+*   [![Image 6: linkedin](https://en.unibg.it/themes/custom/unibg_en/images/social/linkedin.png)Linkedin](https://www.linkedin.com/school/unibergamo/?originalSubdomain=en "linkedin")
+*   [![Image 7: youtube](https://en.unibg.it/themes/custom/unibg_en/images/social/youtube.png)Youtube](https://www.youtube.com/user/UniBgTube/playlists "youtube")
+*   [![Image 8: instagram](https://en.unibg.it/themes/custom/unibg_en/images/social/instagram.png)Instagram](https://www.instagram.com/unibergamo "instagram")
+*   [![Image 9: telegram](https://en.unibg.it/themes/custom/unibg_en/images/social/telegram.png)Telegram](https://t.me/unibg "telegram")
+*   [![Image 10: unibgonair](https://en.unibg.it/themes/custom/unibg_en/images/social/unibgonair.png)Unibgonair](http://www.unibgonair.it/ "unibgonair")
+*   [![Image 11: threads](https://en.unibg.it/themes/custom/unibg_en/images/social/threads.png)Threads](https://www.threads.net/@unibergamo "threads")
+*   [![Image 12: whatsapp](https://en.unibg.it/themes/custom/unibg_en/images/social/whatsapp.png)Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "whatsapp")
+
+*   [Departments](https://en.unibg.it/university/organization-and-structure/departments)
+*   [Research Centres](https://en.unibg.it/university/organization-and-structure/research-centres-and-third-mission)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/?linguaCC=EN)
+*   [Courses](https://en.unibg.it/study/courses)
+
+[![Image 13: logo](https://en.unibg.it/themes/custom/unibg_en/images/sigillo-bianco.svg)](https://www.unibg.it/)
+
+**Università degli studi di Bergamo**
+
+ via Salvecchio 19
+
+ 24129 Bergamo
+
+ Cod. Fiscale 80004350163
+
+ P.IVA 01612800167
+
+ Centralino 035 2052111
+
+*   [Cookie settings](https://en.unibg.it/engagement/business-services/placement#editCookieSettings)
+*   [Privacy](https://en.unibg.it/privacy)
+*   [Sitemap](https://en.unibg.it/sitemap)
+
+  [2] Score: 0.8000
+      Title  : Avviso di selezione per il conferimento di 19 incarichi di ... - UniBg
+      URL    : https://www.unibg.it/bandi/avviso-selezione-conferimento-19-incarichi-collaborazione-autonoma-svolgimento-attivita
+      Content: Avviso di selezione per il conferimento di 19 incarichi di collaborazione autonoma per lo svolgimento di attività connesse al progetto “Università per il benessere psicologico: strategie di prevenzione e intervento sostenibili (UNIBEN-PI2)” | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/bandi/avviso-selezione-conferimento-19-incarichi-collaborazione-autonoma-svolgimento-attivita#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/bandi/avviso-selezione-conferimento-19-incarichi-collaborazione-autonoma-svolgimento-attivita#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/bandi/avviso-selezione-conferimento-19-incarichi-collaborazione-autonoma-svolgimento-attivita#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Avviso di selezione per il conferimento di 19 incarichi di collaborazione autonoma per lo svolgimento di attività connesse al progetto “Università per il benessere psicologico: strategie di prevenzione e intervento sostenibili (UNIBEN-PI2)”
+================================================================================================================================================================================================================================================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.    Bandi 
+3.   [Avviso di selezione per il conferimento di 19 incarichi di collaborazione autonoma per lo svolgimento di attività connesse al progetto “Università per il benessere psicologico: strategie di prevenzione e intervento sostenibili (UNIBEN-PI2)”](https://www.unibg.it/bandi/avviso-selezione-conferimento-19-incarichi-collaborazione-autonoma-svolgimento-attivita)
+
+[](https://www.unibg.it/bandi/avviso-selezione-conferimento-19-incarichi-collaborazione-autonoma-svolgimento-attivita)
+
+Si segnala che,per mero errore materiale, nel bando, nella tabella dei requisiti di partecipazione (pagina 9), il profilo 12 è riportato due volte, in corrispondenza di differenti requisiti,
+
+I requisiti corretti sono i seguenti:
+
+*   Profilo 12: 
+    *   Laurea Triennale L-22
+    *   Esperienza pregressa: esperienze lavorative in ambito sportivo e educativo 
+    *   Ruoli di tutoraggio e coordinamento di studenti
+
+*   Profilo 13: 
+    *   Laurea Magistrale LM-68
+    *   Esperienza pregressa: esperienze lavorative in ambito sportivo e educativo; esperienze di ricerca.
+
+[Avviso di selezione PROBEN2](https://www.unibg.it/sites/default/files/media/documents/2025-11-14/Bando%20prot.%20243309_PROBEN2%20-%20Errata%20corrige.pdf "Bando prot. 243309_PROBEN2 - Errata corrige.pdf")
+
+[Domanda di partecipazione](https://www.unibg.it/sites/default/files/media/documents/2025-11-14/Domanda%20partecipazione.docx "Domanda partecipazione.docx")
+
+[Decreto nomina commissione di valutazione](https://www.unibg.it/sites/default/files/media/documents/2025-12-01/DR%20872-2025_%20nomina%20della%20Commissione.pdf "DR 872-2025_ nomina della Commissione.pdf")
+
+[Provvedimento ammissione ed esclusione colloquio](https://www.unibg.it/sites/default/files/media/documents/2025-12-03/Det.%201106-2025_%20Provvedimento%20di%20ammissione%20esclusione%20bando%20PROBEN%202.pdf "Det. 1106-2025_ Provvedimento di ammissione esclusione bando PROBEN 2.pdf")
+
+Esito
+-----
+
+[Determina approvazione atti](https://www.unibg.it/sites/default/files/media/documents/2025-12-16/Det.%201160-2025_Approvazione%20atti%20incarichi%20progetto%20PROBEN2.pdf "Det. 1160-2025_Approvazione atti incarichi progetto PROBEN2.pdf")
+
+Data di pubblicazione bando
+
+13 Novembre 2025
+
+Data di scadenza bando
+
+28 Novembre 2025
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/bandi/avviso-selezione-conferimento-19-incarichi-collaborazione-autonoma-svolgimento-attivita#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+  [3] Score: 0.7681
+      Title  : Diritto allo studio | Università degli studi di Bergamo - UniBg
+      URL    : https://www.unibg.it/dsu
+      Content:  [Salta al contenuto principale](#main-content) 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e risorse](/vivere-unibg/spazi-e-risorse)
+  + [Opportunità e servizi](/vivere-unibg/opportunita-e-servizi)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. [Diritto allo studio](/dsu)
+
+Il **Diritto allo Studio Universitario (DSU) promuove la possibilità di studiare anche a chi si trova in una situazione economica svantaggiata**. A chi risulta idoneo ai benefici, arriva a garantire la gratuità dell'iscrizione insieme a un sostegno economico per affrontare le spese relative al proprio percorso di studio.
+
+**L'Università degli studi di Bergamo offre tante opportunità di Diritto allo Studio** come un'occasione per imparare, crescere e vivere l'Ateneo. Scoprile tutte!
+
+### Borse di studio
+
+**Di cosa si tratta?**
+
+Grazie al finanziamento di fondi ministeriali e regionali, UniBg eroga:
+
+* borse di studio a importo variabile a seconda della tua fascia di reddito e del tuo status (in sede, pendolare o fuori sede). Sono previste maggiorazioni per studentesse iscritte a corsi STEM, e studenti in prima fascia di reddito
+* un pasto quotidiano gratuito in mensa per l’anno solare successivo a quello di assegnazione della borsa
+* esonero totale dal pagamento del contributo onnicomprensivo, ad eccezione della tassa di iscrizione di 156 euro
+
+I benefici sono dimezzati per gli iscritti al primo anno fuori corso e per gli iscritti part time, i quali beneficiano dell’esonero totale dal pagamento del contributo onnicomprensivo.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti criteri:
+
+* sei intendi iscriverti a una laurea triennale, magistrale, magistrale a ciclo unico (5 anni) o a un Dottorato di ricerca, fino al primo anno fuori corso (o secondo anno fuori corso per studentesse e studenti con invalidità pari o superiore al 66% o che usufruiscono dei benefici previsti dalla L.104/92)
+* hai un voto di maturità pari o maggiore a 70/100 per primo anno di Laurea triennale e Laurea magistrali a ciclo unico (5 anni)
+* hai ottenuto il numero minimo di crediti per gli anni successivi al primo
+* hai la laurea triennale - o in alternativa almeno 150 cfu - o magistrale se richiedi la borsa per il primo anno e sei iscritto alla laurea magistrale o al corso di Dottorato
+* hai regolarità accademica
+* hai i requisiti di reddito previsti dal bando
+
+### Priorità di assegnazione
+
+Le studentesse e gli studenti con invalidità pari o superiore al 66% o che usufruiscono dei benefici previsti dalla L.104/92 hanno priorità nell’assegnazione delle borse di studio. A seconda delle valutazioni specifiche, esse o essi possono essere riconosciuti idonei anche se hanno fino al 40% in meno dei CFU o del voto di maturità richiesti. Possono altresì usufruire del beneficio intero anche per il primo anno fuori corso, mentre verrà dimezzato a partire dal secondo anno fuori corso.
+
+**Come richiedere la borsa di studio?**
+
+Consulta la pagina [Borse di studio](https://www.unibg.it/studiare/iscriversi/tasse-e-agevolazioni/borse-studio): una volta pubblicato il bando (mese di luglio), potrai compilare la domanda online entro le scadenze previste dallo stesso avviso di selezione. Dovrai presentare la domanda per ogni anno accademico, per permettere la valutazione dei tuoi requisiti.
+
+### Integrazioni o maggiorazioni della borsa di studio
+
+### Maggiorazione della borsa di studio per studenti con invalidità
+
+**Di cosa si tratta?**
+
+Puoi ottenere una maggiorazione della borsa di studio fino al 40% dell'importo.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti requisiti:
+
+* sei una studentessa o uno studente beneficiario o idoneo alla borsa di studio
+* hai un'invalidità pari o superiore al 66% o usufruisci dei benefici previsti dalla L.104/92
+
+**Come richiederla?**
+
+Devi richiedere la maggiorazione al momento della compilazione della domanda online della borsa di studio e motivata entro la scadenza prevista dal bando. Percepirai la maggiorazione con il saldo della borsa di studio.
+
+### Integrazione dell’importo di borsa per mobilità internazionale
+
+**Di cosa si tratta?**
+
+Puoi ottenere un'integrazione dell’importo di borsa che prevede un contributo mensile, dal quale vanno sottratti eventuali altri contributi ricevuti dall’Ufficio Programmi Internazionali. A questo si aggiunge il rimborso delle spese di viaggio fino a un tetto massimo di € 100 per destinazioni UE e di € 500 per destinazioni extra UE.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti requisiti:
+
+* sei una studentessa o uno studente beneficiario o idoneo alla borsa di studio
+* sei intenzionato a partecipare a programmi di mobilità internazionale organizzati dall’Ateneo nell’anno accademico, per il quale stai chiedendo i benefici della borsa di studio
+
+**Come richiederla?**
+
+Devi richiedere l'integrazione al momento della presentazione della domanda online di borsa di studio, partecipando a un programma di mobilità internazionale.
+
+### Contributo per il rimborso delle spese dei canoni di locazione
+
+**Di cosa si tratta?**
+
+UniBg contribuisce alle spese del tuo alloggio erogando un contributo a rimborso per il periodo oggetto del relativo bando.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti criteri:
+
+* sei iscritto a una laurea triennale, magistrale, magistrale a ciclo unico (5 anni) o a un Corso di Dottorato
+* hai un valore ISEE entro i limiti previsti dal Ministero
+* hai stipulato un regolare contratto d’affitto per un immobile in un Comune diverso da quello di residenza
+* non hai percepito altri contributi alloggio (es. borsa di studio come fuori sede)
+
+**Come richiederlo?**
+
+Il Servizio di Diritto allo studio metterà a disposizione delle studentesse e degli studenti tutte le informazioni necessarie. I dettagli saranno integralmente riportati nel bando
+
+### Esonero studentesse e studenti che diventano genitori
+
+**Di cosa si tratta?**
+
+L’Ateneo riconosce uno sconto parziale sulle tasse proporzionato alla fascia di reddito (dal 40% per chi è in fascia A al 10% per chi è in fascia G).
+
+**Chi sono i destinatari?**
+
+Benefici dell'esonero se sei una studentessa o uno studente iscritto che diventa genitore nel corso dell'anno solare. Nel caso entrambi da genitori siate entrambi iscritti in UniBg l’esonero può essere richiesto da uno solo dei due.
+
+**Come richiederlo?**
+
+Leggi il regolamento contribuzione studentesca che si trova all'interno della pagina [Tasse e Agevolazioni](https://www.unibg.it/studiare/iscriversi/tasse-e-agevolazioni/contribuzione-studentesca "Contribuzione studentesca").
+
+### TOP 10 student program
+
+**Di cosa si tratta?**
+
+**[TOP Ten student program](https://www.unibg.it/studiare/iscriversi/tasse-e-agevolazioni/top-10-student-program "Top 10 Student Program")** premia il tuo merito, a prescindere dal reddito, prevedendo l’esonero parziale o totale dal pagamento delle tasse universitarie (esclusa la tassa di iscrizione di 156 euro).
+
+**Chi sono i destinatari?**
+
+Puoi beneficiare del programma se sei una studentessa o studente iscritto in corso a una Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico entro le scadenze previste, entro i 30 anni di età, con alti requisiti di merito:
+
+* per il primo anno di Laurea triennale e Laurea Magistrale a ciclo unico. voto di maturità da 85 a 89 (sconto pari a 10%), per chi ha un voto di maturità da 90 a 95 (sconto del 25%) o totale in caso di voto di maturità da 96 a 100
+* per primo anno Laurea Magistrale: voto di laurea di almeno 105
+* crediti e media di almeno 28 per gli anni successivi al primo) e regolarità accademica
+
+Il programma non include alcune tipologie di iscrizioni e corsi (ad esempio iscrizione part time, corso di giurisprudenza della guardia di finanza).
+
+**Come richiederlo?**
+
+L'Ufficio Tasse seleziona automaticamente fino al 10% degli iscritti. L'elenco di beneficiari viene reso noto entro il 31 gennaio di ogni anno.
+
+### Servizio abitativo
+
+**Di cosa si tratta?**
+
+L'Ateneo mette a disposizione 200 posti alloggio distribuiti nelle 4 residenze universitarie:
+
+* 15 nella residenza di Caboto
+* 91 nella residenza di Garibaldi
+* 46 nella residenza del Seminario
+* 48 nella residenza di Dalmine
+
+Potrai ottenere l'alloggio per 10 mesi, dalla fine di settembre alla fine di luglio, pagando la cauzione e una retta mensile: chi rientra nelle tre prime fasce di reddito ha diritto a una retta agevolata. 
+
+**Chi sono i destinatari?**
+
+Puoi ottenere un alloggio in una residenza universitaria se rispetti tutti i seguenti requisiti:
+
+* sei iscritto a una Laurea triennale, Lauree magistrale, Laurea magistrale a ciclo unico o a un Corso di Dottorato fino al primo anno fuori corso (o secondo anno fuori corso per studentesse e studenti con invalidità pari o superiore al 66% o che usufruiscono dei benefici previsti dalla L.104/92) e
+* sei in possesso dei requisiti di merito e distanza previsti dal bando.
+
+Le studentesse e gli studenti borsisti che rispettano i requisiti previsti dal bando non pagano la retta mensile; il costo dell’alloggio è coperto dalla borsa di studio.
+
+Le studentesse e gli studenti in possesso di un ISEE entro i limiti previsti per la borsa di studio hanno la priorità in graduatoria.
+
+Le studentesse e gli studenti con invalidità pari o superiore al 66%, o che usufruiscono dei benefici previsti dalla L.104/92, hanno la priorità nell’assegnazione dell’alloggio ed è possibile che vengano riconosciuti idonei anche se hanno fino al 40% in meno dei CFU o del voto di maturità richiesti.
+
+**Come richiederlo?**
+
+Puoi richiedere l'alloggio, tramite il [bando di concorso](https://www.unibg.it/vivere-unibg/spazi-e-servizi/alloggi "Alloggi") pubblicato dall'Ateneo nel mese di luglio, compilando la domanda online entro le scadenze previste dall'avviso. Dovrai rispondere al bando per ogni anno di corso.
+
+### Accommodation Service
+
+**Di cosa si tratta?**
+
+L'**[Accommodation Service](https://www.unibg.it/vivere-unibg/spazi-e-servizi/alloggi/accommodation-service)** è un'offerta di mediazione gratuita che ti aiuta a trovare una soluzione abitativa a Bergamo, Dalmine e dintorni, supportandoti per le pratiche di stipulazione di un regolare contratto di locazione. **[Cerco Alloggio](https://www.cercoalloggio.com/bergamo "Cerco Alloggio")**, gestore del servizio, mette a tua disposizione una piattaforma dove consultare tutte le possibilità di alloggio, con profili completi di fotografie, video tour, indirizzi e contatti dei proprietari.
+
+L'unico costo extra a tuo carico è il compenso per la registrazione del contratto e per le pulizie finali.
+
+**Chi sono i destinatari?**
+
+Puoi utilizzare il servizio se:
+
+* sei iscritto a una Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico o Corso di Dottorato in corso o fuori corso,
+* sei uno studente o studentessa Erasmus in ingresso da altri Atenei
+
+**Come richiederlo?**
+
+Accedi alla piattaforma **[Cerco Alloggio](https://www.cercoalloggio.com/bergamo "Cerco Alloggio")**con le credenziali di Ateneo.
+
+### Servizio Ristorazione
+
+**Di cosa si tratta?**
+
+Il **[Servizio Ristorazione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/mense-e-caffetterie)** ti dà accesso a sconstistiche per mangiare nelle mense universitarie di Caniana, Dalmine e Città Alta (San Lorenzo).
+
+**Chi sono i destinatari?**
+
+Se sei una studentessa o uno studente UniBg, Erasmus incoming inclusi, puoi sempre utilizzare il Servizio Ristorazione. Se hai determinati requisiti di merito o reddito puoi accedere auna speciale scontistica:
+
+* sconto del 20,50% garantito a tutti gli studenti anche in assenza di ISEE presentato;
+* sconto del 48,10% per chi è collocato in fascia C;
+* sconto del 56,60% per chi è collocato in fascia B;
+* sconto del 65,30% per chi è collocato in fascia A.
+
+Sei sei un borsista hai diritto al pasto gratuito, il cui costo è parzialmente coperto dalla Borsa di studio.
+
+Sei sei una studentessa o studente Erasmus incoming benefici di uno sconto del 48,10% a prescindere dalla fascia di reddito.
+
+**Come richiederlo?**
+
+Per ricevere lo sconto dedicato a tutti gli studenti, o personalizzato in base alla fascia di reddito assegnata considerando ISEE universitario acquisito dall’Ateneo per l’anno accademico in corso, dovrai scaricare la App Unibg.EAT e associare il tuo profilo studente seguendo le istruzioni pubblicate alla pagina dedicata alle [Mense e caffetterie](https://www.unibg.it/vivere-unibg/spazi-e-risorse/mense-e-caffetterie).
+
+L'app ti consentirà di creare un Qr code dinamico da presentare alla cassa al momento del pagamento.
+
+L'ISEE universitario acquisito entro il 31 dicembre di ogni anno garantisce lo sconto per l’anno solare successivo.
+
+### Convenzione trasporti
+
+**Di cosa si tratta?**
+
+Puoi viaggiare, beneficiando di sconti speciali per i seguenti abbonamenti:
+
+* annuale per pullman ATB, Bergamo Trasporti, la BiGi
+* mensile per treni Trenord
+
+L'Ateneo copre sia il costo dello sconto sia dell'emissione della tessera IoViaggio.
+
+**Chi sono i destinatari?**
+
+Puoi accedere agli **[sconti e alle convenzioni trasporti](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti "Convenzioni e sconti")** se sei una studentessa o studente iscritto a una Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico o Corso di Dottorato in corso o fuori corso.
+
+**Come richiederla?**
+
+* Treno: richiedi l’emissione di una tessera IoViaggio tramite lo Sportello internet studenti e ritirarla presso lo sportello del Diritto allo studio personalmente o tramite delegato. La tessera con la quale si usufruisce degli sconti vale 3 anni e deve essere riconsegnata in caso di laurea, rinuncia agli studi o mancato rinnovo dell’iscrizione presso UniBg.
+* Pullman: acquista direttamente l’abbonamento presso l'ATB point, mostrando la ricevuta di pagamento della tassa d’iscrizione.
+
+### Centro stampa e copie gratuite
+
+**Di cosa si tratta?**
+
+L’Ateneo ti offre un servizio di stampa e fotocopie di documenti, stampa e rilegatura tesi con invio dei file via email, gestito da una società esterna e a listino prezzi concordato. La stampa della tesi avviene in automatico seguendo le regole tipografiche e di impaginazione richieste dall’università.
+
+L’Ateneo garantisce alle studentesse e agli studenti 250 copie gratuite ogni anno.
+
+**Chi sono i destinatari?**
+
+Puoi usufruire del **[Centro stampa e copie gratuite](https://www.unibg.it/vivere-unibg/spazi-e-servizi/servizio-stampe)** se sei in possesso della tessera universitaria.
+
+**Come richiederlo?**
+
+Utilizza la tua tessera presso i centri stampa nelle sedi di Caniana, Sant'Agostino e Dalmine, le postazioni self service di tutte le sedi e dei laboratori indicati sul sito alla sezione **[Centro stampa e copie gratuite](https://www.unibg.it/vivere-unibg/spazi-e-servizi/servizio-stampe)**.
+
+### Vuoi maggiori info? Sfoglia la brochure!
+
+ 
+
+  [4] Score: 0.7409
+      Title  : Why choose UniBg? | Università di Bergamo
+      URL    : https://en.unibg.it/study/discover-unibg/why-choose-unibg
+      Content: [Skip to footer content](#footer)
+
+# Menu top
+
+* [eLearning](https://elearning15.unibg.it/?lang=en)
+* [Web Agenda](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=en)
+* [Help Desk](https://helpdesk.unibg.it/helpdesksegrestud/index.php?lang=en_US)
+* [Dashboard](https://sportello.unibg.it/Home.do;jsessionid=6FE185E1F5DCD2157F9638C908073054.jvm1a?cod_lingua=eng)
+* [Contacts](https://www.unibg.it/rubrica)
+* [Libraries](https://servizibibliotecari.unibg.it/en)
+
+* + ## Form di ricerca
+* [IT](/language-switcher?url=https%3A%2F%2Fwww.unibg.it%2Fnode%2F13865 "Italian version")
+
+* ## Form di ricerca
+
+* [University](/university)
+
+  + [About us](/university/about-us)
+  + [Organization and structure](/university/organization-and-structure)
+* [Study](/study)
+
+  + [Discover UniBg](/study/discover-unibg)
+  + [Courses](/study/courses)
+  + [Orientation](/study/orientation)
+  + [Enrollment](/study/enrollment)
+  + [Attendance](/study/attendance)
+  + [How to graduate](/study/how-graduate)
+  + [eLearning - Moodle](/study/elearning-moodle)
+  + [Forms](/study/forms)
+  + [Student Services Office](/study/student-services-office)
+* [Research](/research)
+
+  + [Working in Research](/research/working-research)
+  + [Research areas and projects](/research/research-areas-and-projects)
+  + [Researchers and products](/research/researchers-and-products)
+  + [Structures, Organization and Governance](/research/structures-organization-and-governance)
+* [International](/international)
+
+  + [Going abroad](/international/going-abroad)
+  + [Students Exchange](/international/students-exchange)
+  + [Cooperation and Development](/international/cooperation-and-development)
+* [Engagement](/engagement)
+
+  + [Knowledge valorisation](/engagement/knowledge-valorisation)
+  + [Business Services](/engagement/business-services)
+  + [Lifelong Learning](/engagement/lifelong-learning)
+  + [Culture and Society](/engagement/culture-and-society)
+* [Life at UniBg](/life-at-unibg)
+
+  + [Open Campus](/life-at-unibg/open-campus)
+  + [Services](/life-at-unibg/services)
+  + [Work-study Opportunities](/life-at-unibg/work-study-opportunities)
+
+Info for
+
+* [Prospective student](/prospective-student)
+* [International student](/international-student)
+
+# [University of Bergamo University of Bergamo](/ "Home")
+
+[IT](https://www.unibg.it "Italian version")
+
+* ## Form di ricerca
+
+* [University](/university)
+
+  + [About us](/university/about-us)
+  + [Organization and structure](/university/organization-and-structure)
+* [Study](/study)
+
+  + [Discover UniBg](/study/discover-unibg)
+  + [Courses](/study/courses)
+  + [Orientation](/study/orientation)
+  + [Enrollment](/study/enrollment)
+  + [Attendance](/study/attendance)
+  + [How to graduate](/study/how-graduate)
+  + [eLearning - Moodle](/study/elearning-moodle)
+  + [Forms](/study/forms)
+  + [Student Services Office](/study/student-services-office)
+* [Research](/research)
+
+  + [Working in Research](/research/working-research)
+  + [Research areas and projects](/research/research-areas-and-projects)
+  + [Researchers and products](/research/researchers-and-products)
+  + [Structures, Organization and Governance](/research/structures-organization-and-governance)
+* [International](/international)
+
+  + [Going abroad](/international/going-abroad)
+  + [Students Exchange](/international/students-exchange)
+  + [Cooperation and Development](/international/cooperation-and-development)
+* [Engagement](/engagement)
+
+  + [Knowledge valorisation](/engagement/knowledge-valorisation)
+  + [Business Services](/engagement/business-services)
+  + [Lifelong Learning](/engagement/lifelong-learning)
+  + [Culture and Society](/engagement/culture-and-society)
+* [Life at UniBg](/life-at-unibg)
+
+  + [Open Campus](/life-at-unibg/open-campus)
+  + [Services](/life-at-unibg/services)
+  + [Work-study Opportunities](/life-at-unibg/work-study-opportunities)
+
+Info for
+
+* [Prospective student](/prospective-student)
+* [International student](/international-student)
+
+# Why choose UniBg?
+
+There is a place where you can shape your future. It is the **University of Bergamo**. Here you will find many opportunities for international mobility, programs that reward merit, student-friendly services and spaces where you can cultivate your thinking.
+
+Choose your major and get ready for the future!
+
+Training excellence
+
+Image
+
+![Group of students](/sites/cen00/files/formazione_eccellenza.jpg "Training excellence")
+
+The University's educational offer is **broad, in step with the times and designed to facilitate your entry into the world of work once you have completed your studies.** According to the 25th AlmaLaurea Graduate Profile Report, 81,1% of UniBg graduates find employment one year after graduation and 91,1% within five years.
+
+Whatever degree course you choose, your classmates will be just some of the many young people who, like you, have decided to invest in their future. You will have the opportunity to network with international students who have chosen the university as their destination for Erasmus and short-term mobility programmes. You will be tutored by lecturers who make your progress the focus, both outside and inside the classroom.
+
+Discover the variety of training on offer:
+
+* [First cycle and single-cycle degrees](/node/7453)
+* [Second-cycle degrees](/node/7454)
+
+Meritocracy programmes
+
+UniBg believes in the talent of its students and rewards those who give their all to achieve their goals. To recognise their commitment, the University has set up a programme dedicated to the total or partial exemption of **up to 10% of the all-inclusive contribution for students** enrolled in three-year, five-year and single-cycle degree courses who meet certain merit requirements.
+
+Find out about scholarships and grants:
+
+* Top 10 student program
+* [Scholarships](/node/7688)
+
+International mobility
+
+Image
+
+![Love Nice](/sites/cen00/files/mobilita_internazionale.jpeg "Love Nice")
+
+The distance from UniBg to the world is shorter than you think.
+
+By participating in calls for applications and the many international mobility initiatives, you will be able to go abroad and put yourself to the test at one of UniBg's partner universities. Besides offering you the chance to grow, it will be an opportunity **to perfect your language skills, come into contact with other cultures and enrich your CV**.
+
+Discover the [destinations](/node/998) and the international mobility programmes:
+
+* [Double qualification agreements](/node/7624)
+* [Extra-EU Mobility](/node/7608)
+* [Erasmus+](/node/7598)
+* [Joint Programmes and Summer Schools](/node/7615)
+* [Short-term mobility](/node/8504)
+
+Student-friendly services
+
+In addition to numerous educational opportunities, UniBg provides students with many **useful services to meet a variety of needs**.
+
+Discover some examples of how the University can help you:
+
+* [Orientation Service](/node/7638)
+* [Services for people with disabilities and SLDs](/node/7670)
+* [Placements](/node/7063)
+* [Internships](/node/7040)
+* [Accommodation](/node/7054)
+* [150 hours](/node/7689)
+* [Regional and national civil service](/node/7690)
+* [Print service](/node/7057)
+
+Meditative and creative spaces
+
+Image
+
+![Students at a table](/sites/cen00/files/spazi_dove_coltivare_il_pensiero.jpg "Students at a table")
+
+The UniBg campuses are **the places where you can make the most of life at university**.
+
+Highly functional and well connected, they house classrooms, [3 libraries](https://servizibibliotecari.unibg.it/en), [canteens](/node/7075), study rooms, laboratories and relaxation areas. Some are of significant historical value, such as the Sant'Agostino complex, while others are more modern, such as the buildings in Via dei Caniana or Via di Dalmine (BG). All are easily accessible thanks to the public transport network or sustainable forms of mobility.
+
+Each location is characterised by the presence of green areas, indoor gardens or its proximity to parks.
+
+Discover the 3 campuses:
+
+* [Economics and Law](/node/7115)
+* [Humanities](/node/7121)
+* [Engineering](/node/7116)
+
+Open Campus
+
+Image
+
+![Group of students](/sites/cen00/files/open_campus.jpg "Group of students")
+
+Open Campus is the new initiative with which the University aims to make university spaces into places to be used for socialising with others and fostering psycho-physical well-being. The many projects carried out include the introduction of a **psychological counselling service** and the [Freshers’ Party](https://www.unibg.it/node/14144), which involved 1,500 students joining in a large embrace at the Città Alta Walls.
+
+CUS - University Sports Centre
+
+Image
+
+![Training at the University Sports Centre](/sites/cen00/files/cus.jpg "Training at the University Sports Centre")
+
+The [CUS](https://cusbergamo.it/) spans an area of over **13,000 square metres** and offers the opportunity to practise some 26 sports.  Entirely accessible and barrier-free, it houses:
+
+* **2 gyms** for team sports of 900 square metres
+* **1 weights and fitness room** with 90 exercise stations
+* **2 course rooms** of 200 square metres each
+* **1 outdoor training course** of 200 metres, covered and lit
+* **1 dedicated medical practice**
+* **2 saunas** and **2 steam baths**
+
+How to enrol
+
+For the next academic year choose to enrol at the University of Bergamo. It will be the start of a **journey that will change you for the better, help you get to know yourself and better understand the world around you.**
+
+The journey starts here: follow the [steps to enrol](/node/7653)!
+
+## Related Links
+
+* [Undergraduate](/study/courses/undergraduate)
+* [Graduate](/study/courses/graduate)
+* [Orientation](/study/orientation)
+* [Steps for enrollment](/study/enrollment/steps-enrollment)
+* [Student service office](/node/8500)
+
+ 
+
+  [5] Score: 0.7019
+      Title  : [PDF] Guida dello studente - UniBg
+      URL    : https://www.unibg.it/sites/default/files/media/documents/2025-03-03/Guida%20Moodle%20studenti%20-%20Ita%20DEFINITIVA.pdf
+      Content: Moodle - servizio e-learning 1GUIDA 
+
+# Moodle Guida dello studente 
+
+# Servizio e-learning UniBg Moodle - servizio e-learning 2INDICE 
+
+1_ Prerequisiti                                                         3
+
+2_ Accesso alla piattaforma                                              4
+
+3_ Come iscriversi a un corso Moodle                                      6
+
+4_ Come discriversi da un corso Moodle                                    8
+
+5_ La dashboard                                                       9
+
+5_ Recupero dati di accesso                                             10 
+
+6_  Richiesta di assistenza                                                11 Moodle - servizio e-learning 3Prerequisiti 
+
+L’accesso alla piattaforma è consentito a tutti gli  studenti regolarmente immatricolati all’Università di 
+
+Bergamo  In attesa del perfezionamento dell’immatricolazione, è possibile accedere anche con la sola 
+
+registrazione al sito Unibg 
+
+Per registrarsi, accedere allo  Sportello Internet  dal menu superiore del sito  http://www.unibg.it. 
+
+Al termine del processo di registrazione saranno consegnati un nome utente e un codice di accesso 
+
+temporaneo, che permetteranno di accedere allo sportello studenti e ai servizi correlati 
+
+Gli studenti già immatricolati accedono con  user id  e password personale. 
+
+Fare clic su  “registrazione” Moodle - servizio e-learning 4Accesso alla piattaforma 
+
+Andare alla pagina  https://www.unibg.it/  e cliccare su “eLearning” che si trova in alto a  sinistra 
+
+Cliccare sulla voce “ Login”  in alto a destra e clicca su  “IDP-Unibg” 
+
+Digitare il nome utente (user id) e la password 
+
+In caso di problemi di accesso, effettuare la procedura di reset della password. Moodle - servizio e-learning 51.  Menu laterale:  per raggiungere la propria dashboard (l’elenco dei corsi a cui si è iscritti), il calendario, i files personali 
+
+2.  Link:  area per accedere alla documentazione utile, FAQ, e alle video guide principali 
+
+3.  Menu superiore:  per accedere al proprio profilo, alla messaggistica e alla scelta della lingua 
+
+4.  Lingua:  per  selezionare la lingua preferita 
+
+5.  Assistenza:  pagine dedicate alle guide per studenti e docenti 
+
+6.  Categorie dei corsi:  tutti gli insegnamenti attivi, divisi per dipartimenti 
+
+## 1
+
+## 2
+
+## 3
+
+## 4
+
+## 6
+
+## 5
+
+Dopo aver eseguito l’accesso, si viene reindirizzati alla Home di Moodle, composta dalle sezioni sotto evidenziate Moodle - servizio e-learning 6Come iscriversi a un corso Moodle 
+
+Nella homep age sono presenti tutti i corsi suddivisi in dipartimenti 
+
+Ricercare il corso desiderato per titolo o codice usando il campo della ricerca in basso 
+
+In alternativa, è possibile navigare la sezione cliccando sul link del dipartimento Moodle - servizio e-learning 7Dopo aver trovato il corso, fare clic sul pulsante  “Iscrivimi”. 
+
+Alcuni corsi richiedono una chiave di iscrizione per accedere  Tali chiavi vengono comunicate dai 
+
+docenti ai corsi  I non frequentanti possono richiederle al docente tramite email o a ricevimento 
+
+Una volta iscritti ad un insegnamento, è possibile accedervi per consultare i materiali caricati dai docenti, 
+
+interagire con eventuali forum, svolgere esercitazioni, esami, ricevere comunicazioni e valutazioni 
+
+Se un corso che si sta cercando non risulta visibile in Moodle o non è possibile accedervi, è probabile 
+
+che il docente titolare non l’abbia attivato o che non abbia ancora aperto le iscrizioni. In questo 
+
+caso si consiglia di contattare il docente per avere tutte le informazioni relative alle modalità della 
+
+didattica a distanza del corso. Moodle - servizio e-learning 8NB In caso non fosse presente la voce “Disiscrivimi da …”,  contattare il docente del corso. 
+
+## 1
+
+## 2
+
+Come discriversi da un corso Moodle 
+
+Per disiscriversi da un corso, fare clic s ul menu ingranaggio in alto a destra nella pagina del 
+
+corso  (1) , e selezionare “Disiscrivimi da  Titolo corso ” (2) Moodle - servizio e-learning 9La dashboard 
+
+Facendo clic su  Dashboard  nel menu laterale, è possibile visual izzare i corsi a cui si è iscritti 
+
+La pagina consente di impostare filtri, ordinare i corsi, nasconderli, cambiare la visualizzazione, 
+
+accedere al calendario personale e impostare corsi preferiti 
+
+1.  Filtro:  visualizza tutti i corsi sottoscritti o in base ad altre preferenze 
+
+2.  Ordinamento:  mostra in ordine alfabetico o in base all’ultima visita 
+
+3.  Visualizzazione:  mostra come griglia, elenco o sommario 
+
+4.  Modifica visualizzazione corso:  per aggiungere un corso ai preferiti o nasconderlo dalla 
+
+visualizzazione 
+
+5.  Calendario e cronologia:  mostra  gli eventi dei tuoi corsi, le scadenze 
+
+## 1 2 3
+
+## 4 5Moodle - servizio e-learning 10 Recupero dati di accesso 
+
+Qualora si sia smarrita la pass word, è possibile effettuare una procedura di recupero accedendo allo 
+
+sportello internet dal portale Unibg 
+
+Fare clic sulla voce dal menu nella barra in alto  “Sportello internet”. 
+
+Espandere il menu 
+
+Fare clic su  Password dimenticata 
+
+Per recuperare i dati di accesso, è necessario digitare l’indirizzo email secondario, ovvero un indirizzo 
+
+personale indicato in fase di immatricolazione 
+
+Qualora non si ricordi la mail secondaria, è possibile visualizzarla cliccando su “ qui”. 
+
+Nel caso non sia stata registrata alcuna email di recupero, aprire un ticket presso l’assistenza 
+
+informatica  (no eLearning Studenti). Moodle - servizio e-learning 11 Richiesta di assistenza 
+
+In caso di difficoltà nell’uso della piattaforma Moodle, aprire un ticket all’assistenza eLearning 
+
+Apri un Nuovo Ticket 
+
+Nel campo di  selezione indirizzo  scegliere  eLearning Studenti. 
+
+Per informazioni di tipo didattico, programmi, materiali, chiavi di iscrizione ed esami,  rivolgersi ai 
+
+docenti titolari degli insegnamenti.
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: altro
+
+>>> SYSTEM PROMPT:
+Sei un assistente dell'Università di Bergamo.
+Cerca di comprendere la richiesta e fornire una risposta utile o indirizzare l'utente verso la risorsa giusta.
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: Placement | Università di Bergamo
+URL: https://en.unibg.it/engagement/business-services/placement
+Contenuto: Placement | Università di Bergamo
+===============
+
+[Skip to main content](https://en.unibg.it/engagement/business-services/placement#it-main-content)[Skip to footer content](https://en.unibg.it/engagement/business-services/placement#footer)
+
+Menu top
+========
+
+*   [eLearning](https://elearning15.unibg.it/?lang=en)
+*   [Web Agenda](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=en)
+*   [Help Desk](https://helpdesk.unibg.it/helpdesksegrestud/index.php?lang=en_US)
+*   [Dashboard](https://sportello.unibg.it/Home.do;jsessionid=6FE185E1F5DCD2157F9638C908073054.jvm1a?cod_lingua=eng)
+*   [Contacts](https://www.unibg.it/rubrica)
+*   [Libraries](https://servizibibliotecari.unibg.it/en)
+
+*   [](https://my.unibg.it/ "Il mio account")
+*   [](https://www.unibg.it/webmail "Webmail")
+*   [](https://en.unibg.it/engagement/business-services/placement#)
+    *   Form di ricerca
+---------------
+
+ 
+
+*   [IT](https://en.unibg.it/language-switcher?url=https%3A%2F%2Fwww.unibg.it%2Fnode%2F969 "Italian version")
+
+[](https://bigsearch.unibg.it/discovery/account?vid=39BRG_INST:MAIN "Il mio account")[](https://en.unibg.it/webmail "Webmail")[IT](https://www.unibg.it/ "Italian version")
+
+[](https://en.unibg.it/engagement/business-services/placement#)
+*   Form di ricerca
+---------------
+
+ 
+
+*   [University](https://en.unibg.it/university)
+
+    *   [About us](https://en.unibg.it/university/about-us)
+    *   [Organization and structure](https://en.unibg.it/university/organization-and-structure)
+
+*   [Study](https://en.unibg.it/study)
+
+    *   [Discover UniBg](https://en.unibg.it/study/discover-unibg)
+    *   [Courses](https://en.unibg.it/study/courses)
+    *   [Orientation](https://en.unibg.it/study/orientation)
+    *   [Enrollment](https://en.unibg.it/study/enrollment)
+    *   [Attendance](https://en.unibg.it/study/attendance)
+    *   [How to graduate](https://en.unibg.it/study/how-graduate)
+    *   [eLearning - Moodle](https://en.unibg.it/study/elearning-moodle)
+    *   [Forms](https://en.unibg.it/study/forms)
+    *   [Student Services Office](https://en.unibg.it/study/student-services-office)
+
+*   [Research](https://en.unibg.it/research)
+
+    *   [Working in Research](https://en.unibg.it/research/working-research)
+    *   [Research areas and projects](https://en.unibg.it/research/research-areas-and-projects)
+    *   [Researchers and products](https://en.unibg.it/research/researchers-and-products)
+    *   [Structures, Organization and Governance](https://en.unibg.it/research/structures-organization-and-governance)
+
+*   [International](https://en.unibg.it/international)
+
+    *   [Going abroad](https://en.unibg.it/international/going-abroad)
+    *   [Students Exchange](https://en.unibg.it/international/students-exchange)
+    *   [Cooperation and Development](https://en.unibg.it/international/cooperation-and-development)
+
+*   [Engagement](https://en.unibg.it/engagement)
+
+    *   [Knowledge valorisation](https://en.unibg.it/engagement/knowledge-valorisation)
+    *   [Business Services](https://en.unibg.it/engagement/business-services)
+    *   [Lifelong Learning](https://en.unibg.it/engagement/lifelong-learning)
+    *   [Culture and Society](https://en.unibg.it/engagement/culture-and-society)
+
+*   [Life at UniBg](https://en.unibg.it/life-at-unibg)
+
+    *   [Open Campus](https://en.unibg.it/life-at-unibg/open-campus)
+    *   [Services](https://en.unibg.it/life-at-unibg/services)
+    *   [Work-study Opportunities](https://en.unibg.it/life-at-unibg/work-study-opportunities)
+
+Info for
+
+*   [Prospective student](https://en.unibg.it/prospective-student)
+*   [International student](https://en.unibg.it/international-student)
+
+[![Image 1: University of Bergamo](https://en.unibg.it/themes/custom/unibg_en/images/logo-international.svg)![Image 2: University of Bergamo](https://en.unibg.it/themes/custom/unibg_en/images/logo-international.svg)](https://en.unibg.it/ "Home")
+=====================================================================================================================================================================================================================================================
+
+Toggle navigation
+
+×
+
+*   [University](https://en.unibg.it/university "Go to: University")
+*   [Study](https://en.unibg.it/study "Go to: Study")
+*   [Research](https://en.unibg.it/research "Go to: Research")
+*   [International](https://en.unibg.it/international "Go to: International")
+*   [Engagement Active](https://en.unibg.it/engagement "Go to: Engagement")
+*   [Life at UniBg](https://en.unibg.it/life-at-unibg "Go to: Life at UniBg")
+
+[](https://bigsearch.unibg.it/discovery/account?vid=39BRG_INST:MAIN "Il mio account")[](https://en.unibg.it/webmail "Webmail")[IT](https://www.unibg.it/ "Italian version")
+
+[](https://en.unibg.it/engagement/business-services/placement#)
+*   Form di ricerca
+---------------
+
+ 
+
+*   [University](https://en.unibg.it/university)
+
+    *   [About us](https://en.unibg.it/university/about-us)
+    *   [Organization and structure](https://en.unibg.it/university/organization-and-structure)
+
+*   [Study](https://en.unibg.it/study)
+
+    *   [Discover UniBg](https://en.unibg.it/study/discover-unibg)
+    *   [Courses](https://en.unibg.it/study/courses)
+    *   [Orientation](https://en.unibg.it/study/orientation)
+    *   [Enrollment](https://en.unibg.it/study/enrollment)
+    *   [Attendance](https://en.unibg.it/study/attendance)
+    *   [How to graduate](https://en.unibg.it/study/how-graduate)
+    *   [eLearning - Moodle](https://en.unibg.it/study/elearning-moodle)
+    *   [Forms](https://en.unibg.it/study/forms)
+    *   [Student Services Office](https://en.unibg.it/study/student-services-office)
+
+*   [Research](https://en.unibg.it/research)
+
+    *   [Working in Research](https://en.unibg.it/research/working-research)
+    *   [Research areas and projects](https://en.unibg.it/research/research-areas-and-projects)
+    *   [Researchers and products](https://en.unibg.it/research/researchers-and-products)
+    *   [Structures, Organization and Governance](https://en.unibg.it/research/structures-organization-and-governance)
+
+*   [International](https://en.unibg.it/international)
+
+    *   [Going abroad](https://en.unibg.it/international/going-abroad)
+    *   [Students Exchange](https://en.unibg.it/international/students-exchange)
+    *   [Cooperation and Development](https://en.unibg.it/international/cooperation-and-development)
+
+*   [Engagement](https://en.unibg.it/engagement)
+
+    *   [Knowledge valorisation](https://en.unibg.it/engagement/knowledge-valorisation)
+    *   [Business Services](https://en.unibg.it/engagement/business-services)
+    *   [Lifelong Learning](https://en.unibg.it/engagement/lifelong-learning)
+    *   [Culture and Society](https://en.unibg.it/engagement/culture-and-society)
+
+*   [Life at UniBg](https://en.unibg.it/life-at-unibg)
+
+    *   [Open Campus](https://en.unibg.it/life-at-unibg/open-campus)
+    *   [Services](https://en.unibg.it/life-at-unibg/services)
+    *   [Work-study Opportunities](https://en.unibg.it/life-at-unibg/work-study-opportunities)
+
+Info for
+
+*   [Prospective student](https://en.unibg.it/prospective-student)
+*   [International student](https://en.unibg.it/international-student)
+
+Breadcrumb
+----------
+
+1.   [Home](https://en.unibg.it/)
+2.   /[Engagement](https://en.unibg.it/engagement)
+3.   /[Business Services](https://en.unibg.it/engagement/business-services)
+4.   / Placement 
+
+Placement
+=========
+
+Image
+
+![Image 3: Students](https://en.unibg.it/sites/cen00/files/i_nostri_laureati.jpg)
+
+Every year the University of Bergamo brings many students into the job market thanks to the quality of its teaching and the lively local industrial fabric, always looking for new profiles.
+
+UniBg students are characterized by:
+
+*   diversified curricular skills with around forty active courses and several extra-curricular training experiences
+*   orientation into teamwork and real projects of industrial relevance thanks to the continuous inputs coming from the business world
+*   strong international footprint thanks to the presence of international students and numerous mobility programs abroad
+
+To access the Placement Service a profile must be registered on the Placement Service platform. Within the platform it is possible to publish job offers and consult CVs of undergraduate and recent graduate students.
+
+Contacts
+--------
+
+**Internship & Placement**
+
+via S. Bernardino 72/e
+
+24122 Bergamo
+
+[tirocini@unibg.it](mailto:tirocini@unibg.it)
+
+placement@unibg.it
+
+Follow us on
+*   [![Image 4: x](https://en.unibg.it/themes/custom/unibg_en/images/social/x.png)X](https://x.com/UniBergamo "x")
+*   [![Image 5: facebook](https://en.unibg.it/themes/custom/unibg_en/images/social/facebook.png)Facebook](https://www.facebook.com/UniBergamo "facebook")
+*   [![Image 6: linkedin](https://en.unibg.it/themes/custom/unibg_en/images/social/linkedin.png)Linkedin](https://www.linkedin.com/school/unibergamo/?originalSubdomain=en "linkedin")
+*   [![Image 7: youtube](https://en.unibg.it/themes/custom/unibg_en/images/social/youtube.png)Youtube](https://www.youtube.com/user/UniBgTube/playlists "youtube")
+*   [![Image 8: instagram](https://en.unibg.it/themes/custom/unibg_en/images/social/instagram.png)Instagram](https://www.instagram.com/unibergamo "instagram")
+*   [![Image 9: telegram](https://en.unibg.it/themes/custom/unibg_en/images/social/telegram.png)Telegram](https://t.me/unibg "telegram")
+*   [![Image 10: unibgonair](https://en.unibg.it/themes/custom/unibg_en/images/social/unibgonair.png)Unibgonair](http://www.unibgonair.it/ "unibgonair")
+*   [![Image 11: threads](https://en.unibg.it/themes/custom/unibg_en/images/social/threads.png)Threads](https://www.threads.net/@unibergamo "threads")
+*   [![Image 12: whatsapp](https://en.unibg.it/themes/custom/unibg_en/images/social/whatsapp.png)Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "whatsapp")
+
+*   [Departments](https://en.unibg.it/university/organization-and-structure/departments)
+*   [Research Centres](https://en.unibg.it/university/organization-and-structure/research-centres-and-third-mission)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/?linguaCC=EN)
+*   [Courses](https://en.unibg.it/study/courses)
+
+[![Image 13: logo](https://en.unibg.it/themes/custom/unibg_en/images/sigillo-bianco.svg)](https://www.unibg.it/)
+
+**Università degli studi di Bergamo**
+
+ via Salvecchio 19
+
+ 24129 Bergamo
+
+ Cod. Fiscale 80004350163
+
+ P.IVA 01612800167
+
+ Centralino 035 2052111
+
+*   [Cookie settings](https://en.unibg.it/engagement/business-services/placement#editCookieSettings)
+*   [Privacy](https://en.unibg.it/privacy)
+*   [Sitemap](https://en.unibg.it/sitemap)
+
+Fonte 2: Avviso di selezione per il conferimento di 19 incarichi di ... - UniBg
+URL: https://www.unibg.it/bandi/avviso-selezione-conferimento-19-incarichi-collaborazione-autonoma-svolgimento-attivita
+Contenuto: Avviso di selezione per il conferimento di 19 incarichi di collaborazione autonoma per lo svolgimento di attività connesse al progetto “Università per il benessere psicologico: strategie di prevenzione e intervento sostenibili (UNIBEN-PI2)” | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/bandi/avviso-selezione-conferimento-19-incarichi-collaborazione-autonoma-svolgimento-attivita#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/bandi/avviso-selezione-conferimento-19-incarichi-collaborazione-autonoma-svolgimento-attivita#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/bandi/avviso-selezione-conferimento-19-incarichi-collaborazione-autonoma-svolgimento-attivita#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Avviso di selezione per il conferimento di 19 incarichi di collaborazione autonoma per lo svolgimento di attività connesse al progetto “Università per il benessere psicologico: strategie di prevenzione e intervento sostenibili (UNIBEN-PI2)”
+================================================================================================================================================================================================================================================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.    Bandi 
+3.   [Avviso di selezione per il conferimento di 19 incarichi di collaborazione autonoma per lo svolgimento di attività connesse al progetto “Università per il benessere psicologico: strategie di prevenzione e intervento sostenibili (UNIBEN-PI2)”](https://www.unibg.it/bandi/avviso-selezione-conferimento-19-incarichi-collaborazione-autonoma-svolgimento-attivita)
+
+[](https://www.unibg.it/bandi/avviso-selezione-conferimento-19-incarichi-collaborazione-autonoma-svolgimento-attivita)
+
+Si segnala che,per mero errore materiale, nel bando, nella tabella dei requisiti di partecipazione (pagina 9), il profilo 12 è riportato due volte, in corrispondenza di differenti requisiti,
+
+I requisiti corretti sono i seguenti:
+
+*   Profilo 12: 
+    *   Laurea Triennale L-22
+    *   Esperienza pregressa: esperienze lavorative in ambito sportivo e educativo 
+    *   Ruoli di tutoraggio e coordinamento di studenti
+
+*   Profilo 13: 
+    *   Laurea Magistrale LM-68
+    *   Esperienza pregressa: esperienze lavorative in ambito sportivo e educativo; esperienze di ricerca.
+
+[Avviso di selezione PROBEN2](https://www.unibg.it/sites/default/files/media/documents/2025-11-14/Bando%20prot.%20243309_PROBEN2%20-%20Errata%20corrige.pdf "Bando prot. 243309_PROBEN2 - Errata corrige.pdf")
+
+[Domanda di partecipazione](https://www.unibg.it/sites/default/files/media/documents/2025-11-14/Domanda%20partecipazione.docx "Domanda partecipazione.docx")
+
+[Decreto nomina commissione di valutazione](https://www.unibg.it/sites/default/files/media/documents/2025-12-01/DR%20872-2025_%20nomina%20della%20Commissione.pdf "DR 872-2025_ nomina della Commissione.pdf")
+
+[Provvedimento ammissione ed esclusione colloquio](https://www.unibg.it/sites/default/files/media/documents/2025-12-03/Det.%201106-2025_%20Provvedimento%20di%20ammissione%20esclusione%20bando%20PROBEN%202.pdf "Det. 1106-2025_ Provvedimento di ammissione esclusione bando PROBEN 2.pdf")
+
+Esito
+-----
+
+[Determina approvazione atti](https://www.unibg.it/sites/default/files/media/documents/2025-12-16/Det.%201160-2025_Approvazione%20atti%20incarichi%20progetto%20PROBEN2.pdf "Det. 1160-2025_Approvazione atti incarichi progetto PROBEN2.pdf")
+
+Data di pubblicazione bando
+
+13 Novembre 2025
+
+Data di scadenza bando
+
+28 Novembre 2025
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/bandi/avviso-selezione-conferimento-19-incarichi-collaborazione-autonoma-svolgimento-attivita#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Fonte 3: Diritto allo studio | Università degli studi di Bergamo - UniBg
+URL: https://www.unibg.it/dsu
+Contenuto:  [Salta al contenuto principale](#main-content) 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e risorse](/vivere-unibg/spazi-e-risorse)
+  + [Opportunità e servizi](/vivere-unibg/opportunita-e-servizi)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. [Diritto allo studio](/dsu)
+
+Il **Diritto allo Studio Universitario (DSU) promuove la possibilità di studiare anche a chi si trova in una situazione economica svantaggiata**. A chi risulta idoneo ai benefici, arriva a garantire la gratuità dell'iscrizione insieme a un sostegno economico per affrontare le spese relative al proprio percorso di studio.
+
+**L'Università degli studi di Bergamo offre tante opportunità di Diritto allo Studio** come un'occasione per imparare, crescere e vivere l'Ateneo. Scoprile tutte!
+
+### Borse di studio
+
+**Di cosa si tratta?**
+
+Grazie al finanziamento di fondi ministeriali e regionali, UniBg eroga:
+
+* borse di studio a importo variabile a seconda della tua fascia di reddito e del tuo status (in sede, pendolare o fuori sede). Sono previste maggiorazioni per studentesse iscritte a corsi STEM, e studenti in prima fascia di reddito
+* un pasto quotidiano gratuito in mensa per l’anno solare successivo a quello di assegnazione della borsa
+* esonero totale dal pagamento del contributo onnicomprensivo, ad eccezione della tassa di iscrizione di 156 euro
+
+I benefici sono dimezzati per gli iscritti al primo anno fuori corso e per gli iscritti part time, i quali beneficiano dell’esonero totale dal pagamento del contributo onnicomprensivo.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti criteri:
+
+* sei intendi iscriverti a una laurea triennale, magistrale, magistrale a ciclo unico (5 anni) o a un Dottorato di ricerca, fino al primo anno fuori corso (o secondo anno fuori corso per studentesse e studenti con invalidità pari o superiore al 66% o che usufruiscono dei benefici previsti dalla L.104/92)
+* hai un voto di maturità pari o maggiore a 70/100 per primo anno di Laurea triennale e Laurea magistrali a ciclo unico (5 anni)
+* hai ottenuto il numero minimo di crediti per gli anni successivi al primo
+* hai la laurea triennale - o in alternativa almeno 150 cfu - o magistrale se richiedi la borsa per il primo anno e sei iscritto alla laurea magistrale o al corso di Dottorato
+* hai regolarità accademica
+* hai i requisiti di reddito previsti dal bando
+
+### Priorità di assegnazione
+
+Le studentesse e gli studenti con invalidità pari o superiore al 66% o che usufruiscono dei benefici previsti dalla L.104/92 hanno priorità nell’assegnazione delle borse di studio. A seconda delle valutazioni specifiche, esse o essi possono essere riconosciuti idonei anche se hanno fino al 40% in meno dei CFU o del voto di maturità richiesti. Possono altresì usufruire del beneficio intero anche per il primo anno fuori corso, mentre verrà dimezzato a partire dal secondo anno fuori corso.
+
+**Come richiedere la borsa di studio?**
+
+Consulta la pagina [Borse di studio](https://www.unibg.it/studiare/iscriversi/tasse-e-agevolazioni/borse-studio): una volta pubblicato il bando (mese di luglio), potrai compilare la domanda online entro le scadenze previste dallo stesso avviso di selezione. Dovrai presentare la domanda per ogni anno accademico, per permettere la valutazione dei tuoi requisiti.
+
+### Integrazioni o maggiorazioni della borsa di studio
+
+### Maggiorazione della borsa di studio per studenti con invalidità
+
+**Di cosa si tratta?**
+
+Puoi ottenere una maggiorazione della borsa di studio fino al 40% dell'importo.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti requisiti:
+
+* sei una studentessa o uno studente beneficiario o idoneo alla borsa di studio
+* hai un'invalidità pari o superiore al 66% o usufruisci dei benefici previsti dalla L.104/92
+
+**Come richiederla?**
+
+Devi richiedere la maggiorazione al momento della compilazione della domanda online della borsa di studio e motivata entro la scadenza prevista dal bando. Percepirai la maggiorazione con il saldo della borsa di studio.
+
+### Integrazione dell’importo di borsa per mobilità internazionale
+
+**Di cosa si tratta?**
+
+Puoi ottenere un'integrazione dell’importo di borsa che prevede un contributo mensile, dal quale vanno sottratti eventuali altri contributi ricevuti dall’Ufficio Programmi Internazionali. A questo si aggiunge il rimborso delle spese di viaggio fino a un tetto massimo di € 100 per destinazioni UE e di € 500 per destinazioni extra UE.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti requisiti:
+
+* sei una studentessa o uno studente beneficiario o idoneo alla borsa di studio
+* sei intenzionato a partecipare a programmi di mobilità internazionale organizzati dall’Ateneo nell’anno accademico, per il quale stai chiedendo i benefici della borsa di studio
+
+**Come richiederla?**
+
+Devi richiedere l'integrazione al momento della presentazione della domanda online di borsa di studio, partecipando a un programma di mobilità internazionale.
+
+### Contributo per il rimborso delle spese dei canoni di locazione
+
+**Di cosa si tratta?**
+
+UniBg contribuisce alle spese del tuo alloggio erogando un contributo a rimborso per il periodo oggetto del relativo bando.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti criteri:
+
+* sei iscritto a una laurea triennale, magistrale, magistrale a ciclo unico (5 anni) o a un Corso di Dottorato
+* hai un valore ISEE entro i limiti previsti dal Ministero
+* hai stipulato un regolare contratto d’affitto per un immobile in un Comune diverso da quello di residenza
+* non hai percepito altri contributi alloggio (es. borsa di studio come fuori sede)
+
+**Come richiederlo?**
+
+Il Servizio di Diritto allo studio metterà a disposizione delle studentesse e degli studenti tutte le informazioni necessarie. I dettagli saranno integralmente riportati nel bando
+
+### Esonero studentesse e studenti che diventano genitori
+
+**Di cosa si tratta?**
+
+L’Ateneo riconosce uno sconto parziale sulle tasse proporzionato alla fascia di reddito (dal 40% per chi è in fascia A al 10% per chi è in fascia G).
+
+**Chi sono i destinatari?**
+
+Benefici dell'esonero se sei una studentessa o uno studente iscritto che diventa genitore nel corso dell'anno solare. Nel caso entrambi da genitori siate entrambi iscritti in UniBg l’esonero può essere richiesto da uno solo dei due.
+
+**Come richiederlo?**
+
+Leggi il regolamento contribuzione studentesca che si trova all'interno della pagina [Tasse e Agevolazioni](https://www.unibg.it/studiare/iscriversi/tasse-e-agevolazioni/contribuzione-studentesca "Contribuzione studentesca").
+
+### TOP 10 student program
+
+**Di cosa si tratta?**
+
+**[TOP Ten student program](https://www.unibg.it/studiare/iscriversi/tasse-e-agevolazioni/top-10-student-program "Top 10 Student Program")** premia il tuo merito, a prescindere dal reddito, prevedendo l’esonero parziale o totale dal pagamento delle tasse universitarie (esclusa la tassa di iscrizione di 156 euro).
+
+**Chi sono i destinatari?**
+
+Puoi beneficiare del programma se sei una studentessa o studente iscritto in corso a una Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico entro le scadenze previste, entro i 30 anni di età, con alti requisiti di merito:
+
+* per il primo anno di Laurea triennale e Laurea Magistrale a ciclo unico. voto di maturità da 85 a 89 (sconto pari a 10%), per chi ha un voto di maturità da 90 a 95 (sconto del 25%) o totale in caso di voto di maturità da 96 a 100
+* per primo anno Laurea Magistrale: voto di laurea di almeno 105
+* crediti e media di almeno 28 per gli anni successivi al primo) e regolarità accademica
+
+Il programma non include alcune tipologie di iscrizioni e corsi (ad esempio iscrizione part time, corso di giurisprudenza della guardia di finanza).
+
+**Come richiederlo?**
+
+L'Ufficio Tasse seleziona automaticamente fino al 10% degli iscritti. L'elenco di beneficiari viene reso noto entro il 31 gennaio di ogni anno.
+
+### Servizio abitativo
+
+**Di cosa si tratta?**
+
+L'Ateneo mette a disposizione 200 posti alloggio distribuiti nelle 4 residenze universitarie:
+
+* 15 nella residenza di Caboto
+* 91 nella residenza di Garibaldi
+* 46 nella residenza del Seminario
+* 48 nella residenza di Dalmine
+
+Potrai ottenere l'alloggio per 10 mesi, dalla fine di settembre alla fine di luglio, pagando la cauzione e una retta mensile: chi rientra nelle tre prime fasce di reddito ha diritto a una retta agevolata. 
+
+**Chi sono i destinatari?**
+
+Puoi ottenere un alloggio in una residenza universitaria se rispetti tutti i seguenti requisiti:
+
+* sei iscritto a una Laurea triennale, Lauree magistrale, Laurea magistrale a ciclo unico o a un Corso di Dottorato fino al primo anno fuori corso (o secondo anno fuori corso per studentesse e studenti con invalidità pari o superiore al 66% o che usufruiscono dei benefici previsti dalla L.104/92) e
+* sei in possesso dei requisiti di merito e distanza previsti dal bando.
+
+Le studentesse e gli studenti borsisti che rispettano i requisiti previsti dal bando non pagano la retta mensile; il costo dell’alloggio è coperto dalla borsa di studio.
+
+Le studentesse e gli studenti in possesso di un ISEE entro i limiti previsti per la borsa di studio hanno la priorità in graduatoria.
+
+Le studentesse e gli studenti con invalidità pari o superiore al 66%, o che usufruiscono dei benefici previsti dalla L.104/92, hanno la priorità nell’assegnazione dell’alloggio ed è possibile che vengano riconosciuti idonei anche se hanno fino al 40% in meno dei CFU o del voto di maturità richiesti.
+
+**Come richiederlo?**
+
+Puoi richiedere l'alloggio, tramite il [bando di concorso](https://www.unibg.it/vivere-unibg/spazi-e-servizi/alloggi "Alloggi") pubblicato dall'Ateneo nel mese di luglio, compilando la domanda online entro le scadenze previste dall'avviso. Dovrai rispondere al bando per ogni anno di corso.
+
+### Accommodation Service
+
+**Di cosa si tratta?**
+
+L'**[Accommodation Service](https://www.unibg.it/vivere-unibg/spazi-e-servizi/alloggi/accommodation-service)** è un'offerta di mediazione gratuita che ti aiuta a trovare una soluzione abitativa a Bergamo, Dalmine e dintorni, supportandoti per le pratiche di stipulazione di un regolare contratto di locazione. **[Cerco Alloggio](https://www.cercoalloggio.com/bergamo "Cerco Alloggio")**, gestore del servizio, mette a tua disposizione una piattaforma dove consultare tutte le possibilità di alloggio, con profili completi di fotografie, video tour, indirizzi e contatti dei proprietari.
+
+L'unico costo extra a tuo carico è il compenso per la registrazione del contratto e per le pulizie finali.
+
+**Chi sono i destinatari?**
+
+Puoi utilizzare il servizio se:
+
+* sei iscritto a una Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico o Corso di Dottorato in corso o fuori corso,
+* sei uno studente o studentessa Erasmus in ingresso da altri Atenei
+
+**Come richiederlo?**
+
+Accedi alla piattaforma **[Cerco Alloggio](https://www.cercoalloggio.com/bergamo "Cerco Alloggio")**con le credenziali di Ateneo.
+
+### Servizio Ristorazione
+
+**Di cosa si tratta?**
+
+Il **[Servizio Ristorazione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/mense-e-caffetterie)** ti dà accesso a sconstistiche per mangiare nelle mense universitarie di Caniana, Dalmine e Città Alta (San Lorenzo).
+
+**Chi sono i destinatari?**
+
+Se sei una studentessa o uno studente UniBg, Erasmus incoming inclusi, puoi sempre utilizzare il Servizio Ristorazione. Se hai determinati requisiti di merito o reddito puoi accedere auna speciale scontistica:
+
+* sconto del 20,50% garantito a tutti gli studenti anche in assenza di ISEE presentato;
+* sconto del 48,10% per chi è collocato in fascia C;
+* sconto del 56,60% per chi è collocato in fascia B;
+* sconto del 65,30% per chi è collocato in fascia A.
+
+Sei sei un borsista hai diritto al pasto gratuito, il cui costo è parzialmente coperto dalla Borsa di studio.
+
+Sei sei una studentessa o studente Erasmus incoming benefici di uno sconto del 48,10% a prescindere dalla fascia di reddito.
+
+**Come richiederlo?**
+
+Per ricevere lo sconto dedicato a tutti gli studenti, o personalizzato in base alla fascia di reddito assegnata considerando ISEE universitario acquisito dall’Ateneo per l’anno accademico in corso, dovrai scaricare la App Unibg.EAT e associare il tuo profilo studente seguendo le istruzioni pubblicate alla pagina dedicata alle [Mense e caffetterie](https://www.unibg.it/vivere-unibg/spazi-e-risorse/mense-e-caffetterie).
+
+L'app ti consentirà di creare un Qr code dinamico da presentare alla cassa al momento del pagamento.
+
+L'ISEE universitario acquisito entro il 31 dicembre di ogni anno garantisce lo sconto per l’anno solare successivo.
+
+### Convenzione trasporti
+
+**Di cosa si tratta?**
+
+Puoi viaggiare, beneficiando di sconti speciali per i seguenti abbonamenti:
+
+* annuale per pullman ATB, Bergamo Trasporti, la BiGi
+* mensile per treni Trenord
+
+L'Ateneo copre sia il costo dello sconto sia dell'emissione della tessera IoViaggio.
+
+**Chi sono i destinatari?**
+
+Puoi accedere agli **[sconti e alle convenzioni trasporti](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti "Convenzioni e sconti")** se sei una studentessa o studente iscritto a una Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico o Corso di Dottorato in corso o fuori corso.
+
+**Come richiederla?**
+
+* Treno: richiedi l’emissione di una tessera IoViaggio tramite lo Sportello internet studenti e ritirarla presso lo sportello del Diritto allo studio personalmente o tramite delegato. La tessera con la quale si usufruisce degli sconti vale 3 anni e deve essere riconsegnata in caso di laurea, rinuncia agli studi o mancato rinnovo dell’iscrizione presso UniBg.
+* Pullman: acquista direttamente l’abbonamento presso l'ATB point, mostrando la ricevuta di pagamento della tassa d’iscrizione.
+
+### Centro stampa e copie gratuite
+
+**Di cosa si tratta?**
+
+L’Ateneo ti offre un servizio di stampa e fotocopie di documenti, stampa e rilegatura tesi con invio dei file via email, gestito da una società esterna e a listino prezzi concordato. La stampa della tesi avviene in automatico seguendo le regole tipografiche e di impaginazione richieste dall’università.
+
+L’Ateneo garantisce alle studentesse e agli studenti 250 copie gratuite ogni anno.
+
+**Chi sono i destinatari?**
+
+Puoi usufruire del **[Centro stampa e copie gratuite](https://www.unibg.it/vivere-unibg/spazi-e-servizi/servizio-stampe)** se sei in possesso della tessera universitaria.
+
+**Come richiederlo?**
+
+Utilizza la tua tessera presso i centri stampa nelle sedi di Caniana, Sant'Agostino e Dalmine, le postazioni self service di tutte le sedi e dei laboratori indicati sul sito alla sezione **[Centro stampa e copie gratuite](https://www.unibg.it/vivere-unibg/spazi-e-servizi/servizio-stampe)**.
+
+### Vuoi maggiori info? Sfoglia la brochure!
+
+ 
+
+Fonte 4: Why choose UniBg? | Università di Bergamo
+URL: https://en.unibg.it/study/discover-unibg/why-choose-unibg
+Contenuto: [Skip to footer content](#footer)
+
+# Menu top
+
+* [eLearning](https://elearning15.unibg.it/?lang=en)
+* [Web Agenda](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=en)
+* [Help Desk](https://helpdesk.unibg.it/helpdesksegrestud/index.php?lang=en_US)
+* [Dashboard](https://sportello.unibg.it/Home.do;jsessionid=6FE185E1F5DCD2157F9638C908073054.jvm1a?cod_lingua=eng)
+* [Contacts](https://www.unibg.it/rubrica)
+* [Libraries](https://servizibibliotecari.unibg.it/en)
+
+* + ## Form di ricerca
+* [IT](/language-switcher?url=https%3A%2F%2Fwww.unibg.it%2Fnode%2F13865 "Italian version")
+
+* ## Form di ricerca
+
+* [University](/university)
+
+  + [About us](/university/about-us)
+  + [Organization and structure](/university/organization-and-structure)
+* [Study](/study)
+
+  + [Discover UniBg](/study/discover-unibg)
+  + [Courses](/study/courses)
+  + [Orientation](/study/orientation)
+  + [Enrollment](/study/enrollment)
+  + [Attendance](/study/attendance)
+  + [How to graduate](/study/how-graduate)
+  + [eLearning - Moodle](/study/elearning-moodle)
+  + [Forms](/study/forms)
+  + [Student Services Office](/study/student-services-office)
+* [Research](/research)
+
+  + [Working in Research](/research/working-research)
+  + [Research areas and projects](/research/research-areas-and-projects)
+  + [Researchers and products](/research/researchers-and-products)
+  + [Structures, Organization and Governance](/research/structures-organization-and-governance)
+* [International](/international)
+
+  + [Going abroad](/international/going-abroad)
+  + [Students Exchange](/international/students-exchange)
+  + [Cooperation and Development](/international/cooperation-and-development)
+* [Engagement](/engagement)
+
+  + [Knowledge valorisation](/engagement/knowledge-valorisation)
+  + [Business Services](/engagement/business-services)
+  + [Lifelong Learning](/engagement/lifelong-learning)
+  + [Culture and Society](/engagement/culture-and-society)
+* [Life at UniBg](/life-at-unibg)
+
+  + [Open Campus](/life-at-unibg/open-campus)
+  + [Services](/life-at-unibg/services)
+  + [Work-study Opportunities](/life-at-unibg/work-study-opportunities)
+
+Info for
+
+* [Prospective student](/prospective-student)
+* [International student](/international-student)
+
+# [University of Bergamo University of Bergamo](/ "Home")
+
+[IT](https://www.unibg.it "Italian version")
+
+* ## Form di ricerca
+
+* [University](/university)
+
+  + [About us](/university/about-us)
+  + [Organization and structure](/university/organization-and-structure)
+* [Study](/study)
+
+  + [Discover UniBg](/study/discover-unibg)
+  + [Courses](/study/courses)
+  + [Orientation](/study/orientation)
+  + [Enrollment](/study/enrollment)
+  + [Attendance](/study/attendance)
+  + [How to graduate](/study/how-graduate)
+  + [eLearning - Moodle](/study/elearning-moodle)
+  + [Forms](/study/forms)
+  + [Student Services Office](/study/student-services-office)
+* [Research](/research)
+
+  + [Working in Research](/research/working-research)
+  + [Research areas and projects](/research/research-areas-and-projects)
+  + [Researchers and products](/research/researchers-and-products)
+  + [Structures, Organization and Governance](/research/structures-organization-and-governance)
+* [International](/international)
+
+  + [Going abroad](/international/going-abroad)
+  + [Students Exchange](/international/students-exchange)
+  + [Cooperation and Development](/international/cooperation-and-development)
+* [Engagement](/engagement)
+
+  + [Knowledge valorisation](/engagement/knowledge-valorisation)
+  + [Business Services](/engagement/business-services)
+  + [Lifelong Learning](/engagement/lifelong-learning)
+  + [Culture and Society](/engagement/culture-and-society)
+* [Life at UniBg](/life-at-unibg)
+
+  + [Open Campus](/life-at-unibg/open-campus)
+  + [Services](/life-at-unibg/services)
+  + [Work-study Opportunities](/life-at-unibg/work-study-opportunities)
+
+Info for
+
+* [Prospective student](/prospective-student)
+* [International student](/international-student)
+
+# Why choose UniBg?
+
+There is a place where you can shape your future. It is the **University of Bergamo**. Here you will find many opportunities for international mobility, programs that reward merit, student-friendly services and spaces where you can cultivate your thinking.
+
+Choose your major and get ready for the future!
+
+Training excellence
+
+Image
+
+![Group of students](/sites/cen00/files/formazione_eccellenza.jpg "Training excellence")
+
+The University's educational offer is **broad, in step with the times and designed to facilitate your entry into the world of work once you have completed your studies.** According to the 25th AlmaLaurea Graduate Profile Report, 81,1% of UniBg graduates find employment one year after graduation and 91,1% within five years.
+
+Whatever degree course you choose, your classmates will be just some of the many young people who, like you, have decided to invest in their future. You will have the opportunity to network with international students who have chosen the university as their destination for Erasmus and short-term mobility programmes. You will be tutored by lecturers who make your progress the focus, both outside and inside the classroom.
+
+Discover the variety of training on offer:
+
+* [First cycle and single-cycle degrees](/node/7453)
+* [Second-cycle degrees](/node/7454)
+
+Meritocracy programmes
+
+UniBg believes in the talent of its students and rewards those who give their all to achieve their goals. To recognise their commitment, the University has set up a programme dedicated to the total or partial exemption of **up to 10% of the all-inclusive contribution for students** enrolled in three-year, five-year and single-cycle degree courses who meet certain merit requirements.
+
+Find out about scholarships and grants:
+
+* Top 10 student program
+* [Scholarships](/node/7688)
+
+International mobility
+
+Image
+
+![Love Nice](/sites/cen00/files/mobilita_internazionale.jpeg "Love Nice")
+
+The distance from UniBg to the world is shorter than you think.
+
+By participating in calls for applications and the many international mobility initiatives, you will be able to go abroad and put yourself to the test at one of UniBg's partner universities. Besides offering you the chance to grow, it will be an opportunity **to perfect your language skills, come into contact with other cultures and enrich your CV**.
+
+Discover the [destinations](/node/998) and the international mobility programmes:
+
+* [Double qualification agreements](/node/7624)
+* [Extra-EU Mobility](/node/7608)
+* [Erasmus+](/node/7598)
+* [Joint Programmes and Summer Schools](/node/7615)
+* [Short-term mobility](/node/8504)
+
+Student-friendly services
+
+In addition to numerous educational opportunities, UniBg provides students with many **useful services to meet a variety of needs**.
+
+Discover some examples of how the University can help you:
+
+* [Orientation Service](/node/7638)
+* [Services for people with disabilities and SLDs](/node/7670)
+* [Placements](/node/7063)
+* [Internships](/node/7040)
+* [Accommodation](/node/7054)
+* [150 hours](/node/7689)
+* [Regional and national civil service](/node/7690)
+* [Print service](/node/7057)
+
+Meditative and creative spaces
+
+Image
+
+![Students at a table](/sites/cen00/files/spazi_dove_coltivare_il_pensiero.jpg "Students at a table")
+
+The UniBg campuses are **the places where you can make the most of life at university**.
+
+Highly functional and well connected, they house classrooms, [3 libraries](https://servizibibliotecari.unibg.it/en), [canteens](/node/7075), study rooms, laboratories and relaxation areas. Some are of significant historical value, such as the Sant'Agostino complex, while others are more modern, such as the buildings in Via dei Caniana or Via di Dalmine (BG). All are easily accessible thanks to the public transport network or sustainable forms of mobility.
+
+Each location is characterised by the presence of green areas, indoor gardens or its proximity to parks.
+
+Discover the 3 campuses:
+
+* [Economics and Law](/node/7115)
+* [Humanities](/node/7121)
+* [Engineering](/node/7116)
+
+Open Campus
+
+Image
+
+![Group of students](/sites/cen00/files/open_campus.jpg "Group of students")
+
+Open Campus is the new initiative with which the University aims to make university spaces into places to be used for socialising with others and fostering psycho-physical well-being. The many projects carried out include the introduction of a **psychological counselling service** and the [Freshers’ Party](https://www.unibg.it/node/14144), which involved 1,500 students joining in a large embrace at the Città Alta Walls.
+
+CUS - University Sports Centre
+
+Image
+
+![Training at the University Sports Centre](/sites/cen00/files/cus.jpg "Training at the University Sports Centre")
+
+The [CUS](https://cusbergamo.it/) spans an area of over **13,000 square metres** and offers the opportunity to practise some 26 sports.  Entirely accessible and barrier-free, it houses:
+
+* **2 gyms** for team sports of 900 square metres
+* **1 weights and fitness room** with 90 exercise stations
+* **2 course rooms** of 200 square metres each
+* **1 outdoor training course** of 200 metres, covered and lit
+* **1 dedicated medical practice**
+* **2 saunas** and **2 steam baths**
+
+How to enrol
+
+For the next academic year choose to enrol at the University of Bergamo. It will be the start of a **journey that will change you for the better, help you get to know yourself and better understand the world around you.**
+
+The journey starts here: follow the [steps to enrol](/node/7653)!
+
+## Related Links
+
+* [Undergraduate](/study/courses/undergraduate)
+* [Graduate](/study/courses/graduate)
+* [Orientation](/study/orientation)
+* [Steps for enrollment](/study/enrollment/steps-enrollment)
+* [Student service office](/node/8500)
+
+ 
+
+Fonte 5: [PDF] Guida dello studente - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2025-03-03/Guida%20Moodle%20studenti%20-%20Ita%20DEFINITIVA.pdf
+Contenuto: Moodle - servizio e-learning 1GUIDA 
+
+# Moodle Guida dello studente 
+
+# Servizio e-learning UniBg Moodle - servizio e-learning 2INDICE 
+
+1_ Prerequisiti                                                         3
+
+2_ Accesso alla piattaforma                                              4
+
+3_ Come iscriversi a un corso Moodle                                      6
+
+4_ Come discriversi da un corso Moodle                                    8
+
+5_ La dashboard                                                       9
+
+5_ Recupero dati di accesso                                             10 
+
+6_  Richiesta di assistenza                                                11 Moodle - servizio e-learning 3Prerequisiti 
+
+L’accesso alla piattaforma è consentito a tutti gli  studenti regolarmente immatricolati all’Università di 
+
+Bergamo  In attesa del perfezionamento dell’immatricolazione, è possibile accedere anche con la sola 
+
+registrazione al sito Unibg 
+
+Per registrarsi, accedere allo  Sportello Internet  dal menu superiore del sito  http://www.unibg.it. 
+
+Al termine del processo di registrazione saranno consegnati un nome utente e un codice di accesso 
+
+temporaneo, che permetteranno di accedere allo sportello studenti e ai servizi correlati 
+
+Gli studenti già immatricolati accedono con  user id  e password personale. 
+
+Fare clic su  “registrazione” Moodle - servizio e-learning 4Accesso alla piattaforma 
+
+Andare alla pagina  https://www.unibg.it/  e cliccare su “eLearning” che si trova in alto a  sinistra 
+
+Cliccare sulla voce “ Login”  in alto a destra e clicca su  “IDP-Unibg” 
+
+Digitare il nome utente (user id) e la password 
+
+In caso di problemi di accesso, effettuare la procedura di reset della password. Moodle - servizio e-learning 51.  Menu laterale:  per raggiungere la propria dashboard (l’elenco dei corsi a cui si è iscritti), il calendario, i files personali 
+
+2.  Link:  area per accedere alla documentazione utile, FAQ, e alle video guide principali 
+
+3.  Menu superiore:  per accedere al proprio profilo, alla messaggistica e alla scelta della lingua 
+
+4.  Lingua:  per  selezionare la lingua preferita 
+
+5.  Assistenza:  pagine dedicate alle guide per studenti e docenti 
+
+6.  Categorie dei corsi:  tutti gli insegnamenti attivi, divisi per dipartimenti 
+
+## 1
+
+## 2
+
+## 3
+
+## 4
+
+## 6
+
+## 5
+
+Dopo aver eseguito l’accesso, si viene reindirizzati alla Home di Moodle, composta dalle sezioni sotto evidenziate Moodle - servizio e-learning 6Come iscriversi a un corso Moodle 
+
+Nella homep age sono presenti tutti i corsi suddivisi in dipartimenti 
+
+Ricercare il corso desiderato per titolo o codice usando il campo della ricerca in basso 
+
+In alternativa, è possibile navigare la sezione cliccando sul link del dipartimento Moodle - servizio e-learning 7Dopo aver trovato il corso, fare clic sul pulsante  “Iscrivimi”. 
+
+Alcuni corsi richiedono una chiave di iscrizione per accedere  Tali chiavi vengono comunicate dai 
+
+docenti ai corsi  I non frequentanti possono richiederle al docente tramite email o a ricevimento 
+
+Una volta iscritti ad un insegnamento, è possibile accedervi per consultare i materiali caricati dai docenti, 
+
+interagire con eventuali forum, svolgere esercitazioni, esami, ricevere comunicazioni e valutazioni 
+
+Se un corso che si sta cercando non risulta visibile in Moodle o non è possibile accedervi, è probabile 
+
+che il docente titolare non l’abbia attivato o che non abbia ancora aperto le iscrizioni. In questo 
+
+caso si consiglia di contattare il docente per avere tutte le informazioni relative alle modalità della 
+
+didattica a distanza del corso. Moodle - servizio e-learning 8NB In caso non fosse presente la voce “Disiscrivimi da …”,  contattare il docente del corso. 
+
+## 1
+
+## 2
+
+Come discriversi da un corso Moodle 
+
+Per disiscriversi da un corso, fare clic s ul menu ingranaggio in alto a destra nella pagina del 
+
+corso  (1) , e selezionare “Disiscrivimi da  Titolo corso ” (2) Moodle - servizio e-learning 9La dashboard 
+
+Facendo clic su  Dashboard  nel menu laterale, è possibile visual izzare i corsi a cui si è iscritti 
+
+La pagina consente di impostare filtri, ordinare i corsi, nasconderli, cambiare la visualizzazione, 
+
+accedere al calendario personale e impostare corsi preferiti 
+
+1.  Filtro:  visualizza tutti i corsi sottoscritti o in base ad altre preferenze 
+
+2.  Ordinamento:  mostra in ordine alfabetico o in base all’ultima visita 
+
+3.  Visualizzazione:  mostra come griglia, elenco o sommario 
+
+4.  Modifica visualizzazione corso:  per aggiungere un corso ai preferiti o nasconderlo dalla 
+
+visualizzazione 
+
+5.  Calendario e cronologia:  mostra  gli eventi dei tuoi corsi, le scadenze 
+
+## 1 2 3
+
+## 4 5Moodle - servizio e-learning 10 Recupero dati di accesso 
+
+Qualora si sia smarrita la pass word, è possibile effettuare una procedura di recupero accedendo allo 
+
+sportello internet dal portale Unibg 
+
+Fare clic sulla voce dal menu nella barra in alto  “Sportello internet”. 
+
+Espandere il menu 
+
+Fare clic su  Password dimenticata 
+
+Per recuperare i dati di accesso, è necessario digitare l’indirizzo email secondario, ovvero un indirizzo 
+
+personale indicato in fase di immatricolazione 
+
+Qualora non si ricordi la mail secondaria, è possibile visualizzarla cliccando su “ qui”. 
+
+Nel caso non sia stata registrata alcuna email di recupero, aprire un ticket presso l’assistenza 
+
+informatica  (no eLearning Studenti). Moodle - servizio e-learning 11 Richiesta di assistenza 
+
+In caso di difficoltà nell’uso della piattaforma Moodle, aprire un ticket all’assistenza eLearning 
+
+Apri un Nuovo Ticket 
+
+Nel campo di  selezione indirizzo  scegliere  eLearning Studenti. 
+
+Per informazioni di tipo didattico, programmi, materiali, chiavi di iscrizione ed esami,  rivolgersi ai 
+
+docenti titolari degli insegnamenti.
+
+
+>>> USER PROMPT:
+chi sono io
+
+>>> RESPONSE:
+Ciao Raphace!
+
+Sei uno studente dell'Università di Bergamo, iscritto al corso di laurea magistrale in Ingegneria (IGN), al primo anno di frequentazione. La tua matricola è 1086531.
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Domanda originale: chi sono io
+Categoria: altro
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Raphace!
+
+Sei uno studente dell'Università di Bergamo, iscritto al corso di laurea magistrale in Ingegneria (IGN), al primo anno di frequentazione. La tua matricola è 1086531.
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RESPONSE:
+Sei Raphace Prime, matricola 1086531, studente dell'Università di Bergamo. Sei iscritto al primo anno del corso di laurea magistrale in Ingegneria (IGN), presso il Dipartimento di Ingegneria.
+
+================================================================================
+FINAL RESPONSE
+================================================================================
+Sei Raphace Prime, matricola 1086531, studente dell'Università di Bergamo. Sei iscritto al primo anno del corso di laurea magistrale in Ingegneria (IGN), presso il Dipartimento di Ingegneria.
+
+================================================================================
+END OF LOG
+================================================================================

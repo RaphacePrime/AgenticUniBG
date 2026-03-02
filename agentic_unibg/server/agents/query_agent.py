@@ -27,25 +27,47 @@ REGOLE:
 - La query deve essere in italiano
 - Massimo 6-8 parole
 
-ESEMPIO:
-Conversazione: Lo studente chiede "Quali sono le tasse universitarie per il primo anno di ingegneria?"
-Query generata: tasse universitarie primo anno ingegneria unibg
+INFORMAZIONI STUDENTE E QUANDO USARLE:
+Ti verranno fornite le informazioni del profilo dello studente (corso di laurea, dipartimento, anno, tipologia).
+Devi decidere AUTONOMAMENTE se includerle nella query in base al tipo di domanda:
 
-ESEMPIO:
-Conversazione: Lo studente chiede "Come posso iscrivermi al test di ammissione?"
-Query generata: iscrizione test ammissione unibg
+INCLUDI le info studente quando la domanda riguarda:
+- Materie, insegnamenti, piano di studi (es. "che materie ho?" → aggiungi corso + anno + tipologia)
+- Orari delle lezioni del proprio corso
+- Piano di studi, crediti, curriculum del proprio corso
+- Qualsiasi domanda dove il corso/anno specifico cambia la risposta
 
-ESEMPIO:
-Conversazione: Lo studente chiede "Dove trovo gli orari delle lezioni di informatica?"
-Query generata: orari lezioni informatica unibg
+NON INCLUDERE le info studente quando la domanda riguarda:
+- Procedure generiche (iscrizioni, tasse, borse di studio)
+- Informazioni su docenti specifici
+- Servizi universitari (mensa, biblioteca, aule)
+- Informazioni generali sull'ateneo
+- Erasmus, tirocini, laurea
+- Qualsiasi domanda che ha la stessa risposta indipendentemente dal corso
 
-ESEMPIO:
-Conversazione: Lo studente chiede "Cos'è il top 10 student program?"
-Query generata: top 10 student program unibg
+ESEMPIO con info studente (corso: ingegneria informatica, anno: 1, tipologia: magistrale):
+Domanda: "che materie ho al secondo anno?"
+Query: materie secondo anno ingegneria informatica magistrale unibg
+
+ESEMPIO con info studente (corso: scienze della comunicazione, anno: 2, tipologia: triennale):
+Domanda: "quali esami devo dare quest'anno?"
+Query: piano studi secondo anno scienze comunicazione triennale unibg
+
+ESEMPIO senza info studente:
+Domanda: "come faccio a iscrivermi al test di ammissione?"
+Query: iscrizione test ammissione unibg
+
+ESEMPIO senza info studente:
+Domanda: "chi è il docente di algoritmi?"
+Query: docente algoritmi unibg
+
+ESEMPIO senza info studente:
+Domanda: "dove si trova la mensa?"
+Query: mensa universitaria unibg
 
 Rispondi SOLO con la query generata, nient'altro."""
 
-    async def generate_query(self, query: str, conversation_history: List[Dict] = None) -> Dict[str, str]:
+    async def generate_query(self, query: str, conversation_history: List[Dict] = None, user_context: str = "") -> Dict[str, str]:
         """
         Genera una query di ricerca web ottimizzata a partire dalla richiesta dell'utente
         e dalla cronologia della conversazione.
@@ -61,7 +83,12 @@ Rispondi SOLO con la query generata, nient'altro."""
                     ctx_lines.append(f"- {role}: {msg.get('content', '')[:200]}")
                 context_text = "\n".join(ctx_lines) + "\n\n"
 
-            prompt_text = f"""{context_text}Ultima richiesta dello studente: {query}
+            # Aggiungi informazioni utente se disponibili
+            user_info_text = ""
+            if user_context:
+                user_info_text = f"\nInformazioni studente:\n{user_context}\n\n"
+
+            prompt_text = f"""{context_text}{user_info_text}Ultima richiesta dello studente: {query}
 
 Genera la query di ricerca web:"""
 

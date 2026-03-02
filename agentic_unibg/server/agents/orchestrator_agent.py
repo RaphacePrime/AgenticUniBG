@@ -98,9 +98,11 @@ class OrchestratorAgent:
         Nodo per la generazione della query di ricerca web
         """
         try:
+            user_ctx = build_user_context(state)
             result = await self.query_agent.generate_query(
                 query=state["query"],
-                conversation_history=state.get("conversation_history")
+                conversation_history=state.get("conversation_history"),
+                user_context=user_ctx
             )
             
             state["search_query"] = result["search_query"]

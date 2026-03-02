@@ -1,0 +1,556 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-02 13:45:15
+Status    : success
+
+------------------------------------------------------------
+USER INFORMATION
+------------------------------------------------------------
+User type   : loggato
+Name        : Raphace Prime
+Matricola   : 1086531
+Department  : Ingegneria
+Course      : ign
+Typology    : Magistrale
+Year        : 3
+
+------------------------------------------------------------
+ORIGINAL USER QUERY
+------------------------------------------------------------
+chi è il professore di fondamenti di automatica?
+
+------------------------------------------------------------
+CONVERSATION HISTORY (recent)
+------------------------------------------------------------
+[User]: spiegami come iscrivermi ai corsi con accesso programmato con test selettivo
+
+
+[Assistant]: PER I CORSI DI LAUREA TRIENNALE:
+L'accesso programmato con test selettivo per i corsi di laurea triennale (come Scienze della Comunicazione, Scienze dell’Educazione, Scienze Motorie e Sportive, Scienze Psicologiche) prevede il sostenimento di un TOLC (Test Online CISIA) specifico (TOLC-SU o TOLC-PSI
+[User]: che materie ci sono al primo anno di ingegneria informatica triennale?
+[Assistant]: Per il primo anno del corso di Laurea Triennale in Ingegneria Informatica (anno accademico 2025-2026), le materie obbligatorie sono le seguenti:
+
+Primo Semestre:
+- ANALISI MATEMATICA I (9 crediti - 72 ore)
+- CHIMICA (6 crediti - 48 ore)
+- FISICA GENERALE (MODULO DI FISICA GENERALE I) (6 crediti)
+- I
+[User]: invece il secondo semestre di ingegneria informatica magistrale primo anno?
+[Assistant]: Per il Corso di Laurea Magistrale in Ingegneria Informatica, anno accademico 2025-2026, le materie previste per il primo anno, secondo semestre, variano a seconda del percorso di studi scelto.
+
+PERCORSO INFORMATICA INDUSTRIALE (IND)
+
+Insegnamenti obbligatori del secondo semestre:
+- ELETTRONICA E MIS
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: informazioni_corso
+Description: Richieste su corsi, programmi, docenti
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, esami, ricevimenti
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 3
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: che materie ci sono al primo anno di ingegneria informatica triennale?
+- Assistente: Per il primo anno del corso di Laurea Triennale in Ingegneria Informatica (anno accademico 2025-2026), le materie obbligatorie sono le seguenti:
+
+Prim
+- Studente: invece il secondo semestre di ingegneria informatica magistrale primo anno?
+- Assistente: Per il Corso di Laurea Magistrale in Ingegneria Informatica, anno accademico 2025-2026, le materie previste per il primo anno, secondo semestre, varia
+
+Nuova domanda: chi è il professore di fondamenti di automatica?
+
+>>> RESPONSE:
+informazioni_corso
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: professore fondamenti automatica unibg
+Original Query: chi è il professore di fondamenti di automatica?
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- Tieni conto del contesto della conversazione per capire cosa cerca lo studente
+- La query deve essere in italiano
+- Massimo 6-8 parole
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Quali sono le tasse universitarie per il primo anno di ingegneria?"
+Query generata: tasse universitarie primo anno ingegneria unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Come posso iscrivermi al test di ammissione?"
+Query generata: iscrizione test ammissione unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Dove trovo gli orari delle lezioni di informatica?"
+Query generata: orari lezioni informatica unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Cos'è il top 10 student program?"
+Query generata: top 10 student program unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: spiegami come iscrivermi ai corsi con accesso programmato con test selettivo
+
+
+- Assistente: PER I CORSI DI LAUREA TRIENNALE:
+L'accesso programmato con test selettivo per i corsi di laurea triennale (come Scienze della Comunicazione, Scienze dell’Educazione, Scienze Motorie e Sportive, Scienz
+- Studente: che materie ci sono al primo anno di ingegneria informatica triennale?
+- Assistente: Per il primo anno del corso di Laurea Triennale in Ingegneria Informatica (anno accademico 2025-2026), le materie obbligatorie sono le seguenti:
+
+Primo Semestre:
+- ANALISI MATEMATICA I (9 crediti - 72
+- Studente: invece il secondo semestre di ingegneria informatica magistrale primo anno?
+- Assistente: Per il Corso di Laurea Magistrale in Ingegneria Informatica, anno accademico 2025-2026, le materie previste per il primo anno, secondo semestre, variano a seconda del percorso di studi scelto.
+
+PERCOR
+
+Ultima richiesta dello studente: chi è il professore di fondamenti di automatica?
+
+Genera la query di ricerca web:
+
+>>> RESPONSE:
+professore fondamenti automatica unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status          : success
+Search query    : professore fondamenti automatica unibg
+Total results   : 22
+Top results used: 5
+
+>>> TOP RESULTS:
+  [1] Score: 0.9997
+      Title  : UNIBG - Course Catalogue
+      URL    : https://unibg.coursecatalogue.cineca.it/af/2025?corso=23-270&annoOrdinamento=2014&pds=PDS0-2014&coorte=2023&ad=23062&ud=23062-1
+      Content: Insegnamento [23062-1]. [23062-1] - MODULO DI FONDAMENTI DI AUTOMATICA. Modulo di [23062] - C.I. FONDAMENTI DI AUTOMATICA E LABORATORIO DI ELETTRONICA ... Docenti
+
+  [2] Score: 0.9995
+      Title  : Fondamenti di Automatica - Prof. F. Previdi
+      URL    : https://cs.unibg.it/previdi/programmafda.htm
+      Content: Programma
+===============
+
+![Image 1: Programma](https://cs.unibg.it/previdi/_derived/programmafda.htm_cmp_studio010_bnr.gif)
+
+### Fondamenti di Automatica - Prof. F. Previdi
+
+[![Image 2: Up](https://cs.unibg.it/previdi/_derived/up_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/FondamentiAutomatica.htm)
+
+![Image 3: Programma](https://cs.unibg.it/previdi/_derived/programmafda.htm_cmp_studio010_vbtn_p.gif)
+
+[![Image 4: Bibliografia](https://cs.unibg.it/previdi/_derived/bibliografia_fda.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/bibliografia_fda.htm)
+
+[![Image 5: Lucidi delle lezioni](https://cs.unibg.it/previdi/_derived/lucidifda.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/lucidifda.htm)
+
+[![Image 6: Materiale didattico](https://cs.unibg.it/previdi/_derived/materiale_fda.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/materiale_fda.htm)
+
+[![Image 7: Esercizi risolti](https://cs.unibg.it/previdi/_derived/esercizi_risolti_fda.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/esercizi_risolti_fda.htm)
+
+[![Image 8: Modalità d'esame](https://cs.unibg.it/previdi/_derived/modesame_fda.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/modesame_fda.htm)
+
+[![Image 9: Contatti](https://cs.unibg.it/previdi/_derived/contatti_fda.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/contatti_fda.htm)**Fra parentesi sono indicati i paragrafi
+
+ del libro _Fondamenti di Controlli Automatici_(3° edizione) che trattano l'argomento.**
+
+**1. PRIMA PARTE**
+
+Introduzione all’automatica. Formulazione di un problema di controllo. Variabili controllate, variabili manipolabili e disturbi. Controllo in anello aperto e controllo in anello chiuso.I ncertezza. (_Capitolo 1_: fino a 1.4 incluso).
+
+**1.1 Analisi Sistemi a Tempo Continuo in Variabili di Stato (State Space - SS)**
+
+Definizione di sistema dinamico. Concetti di ingresso, uscita e stato. Rappresentazione di sistemi dinamici mediante equazioni differenziali.Movimento, traiettorie, equilibrio. Formula di Lagrange. Movimento libero e movimento forzato. Principio di sovrapposizione degli effetti. Proprietà strutturali (cenni tramite esempi). Criterio degli autovalori. Criterio di Routh. Linearizzazione e stabilità dell'equilibrio per sistemi non lineari. (_Capitolo 2_: tutto tranne 2.4. _Capitolo 3_: fino a 3.5 incluso tranne 3.4.5).
+
+**1.2 Analisi Sistemi a Tempo Continuo Ingresso/Uscita (Input/Output - IO)**
+
+Trasformata di Laplace. Funzione di trasferimento: definizione, calcolo, proprietà. Poli, zeri e guadagno. Metodo di Heaviside per l’antitrasformazione. Schemi a blocchi. Connessioni in serie, parallelo e retroazione. Risposte canoniche di sistemi del primo e secondo ordine nel dominio del tempo. Costante di tempo. Pulsazione naturale e coefficiente di smorzamento. Costante di tempo dominante. Approssimazione a polo/i dominante/i. (_A ppendice B_: fino a B.3 incluso _,_ _Capitolo 4_: fino a 4.4 incluso tranne 4.2.5, 4.2.6 _,Capitolo 5_: fino a 5.4 incluso, _Capitolo 6_: 6.9).
+
+Teorema della risposta in frequenza. (_Capitolo 6_: 6.1, 6.2). Diagrammi cartesiani (di Bode). Diagrammi polari. (_Capitolo 6_: 6.6, 6.7). Interpretazione dei sistemi dinamici come filtri. (_Capitolo 6_: 6.8).
+
+Ritardo di tempo. (2.4, 4.2.6, 6.2.2, 6.6.3)
+
+**2. SECONDA PARTE**
+
+Introduzione ai sistemi di controllo in anello chiuso. . Schema generale del controllo in retroazione. Requisiti del sistema di controllo. (_Capitolo 1_: 1.5, _Capitolo 9_: fino a 9.4 incluso).
+
+**2.1 Analisi sistemi retroazionati**
+
+Stabilità. Criterio di Nyquist. Criterio di Bode. Stabilità robusta. Margine di fase e margine di guadagno. (_Capitolo 9_: 9.5, 9.6).
+
+Risposta in frequenza di sistemi retroazionati. Velocità di risposta. Banda passante. Precisione statica. Errore a transitorio esaurito dovuto al segnale di riferimento e ai disturbi. (_Capitolo 10_: tutto tranne 10.4.4, 10.6).
+
+**2.2 Progetto del controllore**
+
+Sintesi del controllore. Specifiche di progetto. Fasi del progetto. Esempi di progetto per sistemi a fase minima. (_Capitolo 11_: fino a 11.5 incluso tranne sistemi a fase non minima).
+
+Controllori lineari ad azione proporzionale-integrale-derivativa (PID). Implementazione dei controllori PID. Taratura dei parametri mediante regole di Ziegler e Nichols. (_Capitolo 14_: 14.1, 14.2, 14.3.1, 14.3.2, 14.4.1 tranne assegnamenti di margine di guadagno e di fase, 14.4.2 solo metodo della tangente e regola di Ziegler e Nichols)
+
+**2.3 Sistemi a tempo discreto**
+
+Introduzione ai sistemi a tempo discreto. Stabilità (criterio degli autovalori). Linearizzazione e stabilità dell'equilibrio per sistemi non lineari. Trasformata Z. Funzione di trasferimento. Poli, zeri e guadagno. Antitrasformazione per lunga divisione o ricorsione. Risposta all’impulso e allo scalino. (_Capitolo 7_: fino a 7.6 incluso tranne 7.5.4, 7.5.5, 7.5.6 e del 7.4.5 solo matrice diagonalizzabile. _Capitolo 8_: 8.1, 8.2, 8.3.5, 8.5._Appendice C:_ C.1, C.2, C.3)
+
+Schemi di controllo digitale. Campionatore e mantenitore. I problemi del campionamento. Criteri di progetto di controllori digitali mediante discretizzazione di controllori analogici. (_Capitolo 17_: 17.1, 17.2, Teorema 17.2, 17.6, 17.7)
+
+[Up](https://cs.unibg.it/previdi/FondamentiAutomatica.htm)|Programma|[Bibliografia](https://cs.unibg.it/previdi/bibliografia_fda.htm)|[Lucidi delle lezioni](https://cs.unibg.it/previdi/lucidifda.htm)|[Materiale didattico](https://cs.unibg.it/previdi/materiale_fda.htm)|[Esercizi risolti](https://cs.unibg.it/previdi/esercizi_risolti_fda.htm)|[Modalità d'esame](https://cs.unibg.it/previdi/modesame_fda.htm)|[Contatti](https://cs.unibg.it/previdi/contatti_fda.htm)
+
+  [3] Score: 0.9994
+      Title  : Fabio Previdi - UniBg
+      URL    : https://cs.unibg.it/previdi/index.html
+      Content: Fabio Previdi
+===============
+
+![Image 1: Fabio Previdi](https://cs.unibg.it/previdi/_derived/index.html_cmp_studio010_bnr.gif)
+
+[![Image 2: Note biografiche](https://cs.unibg.it/previdi/_derived/biografia.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/biografia.htm)
+
+[![Image 3: Didattica](https://cs.unibg.it/previdi/_derived/didattica.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/didattica.htm)
+
+[![Image 4: Attività di ricerca](https://cs.unibg.it/previdi/_derived/ricerca.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/ricerca.htm)
+
+[![Image 5: Pubblicazioni](https://cs.unibg.it/previdi/_derived/pubblicazioni.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/pubblicazioni.htm)
+
+[![Image 6: Collaborazioni industriali](https://cs.unibg.it/previdi/_derived/industrie.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/industrie.htm)
+
+[![Image 7: Links](https://cs.unibg.it/previdi/_derived/links.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/links.htm)### ![Image 8](https://cs.unibg.it/previdi/Image-04.jpg) Edificio B, terzo piano, ufficio 3 tel +39.035.2052357 fax +39.035.2052377 e-mail [previdi@unibg.it](mailto:previdi@unibg.it) **[Informazioni Essenziali CIRA](https://cs.unibg.it/previdi/varie/info_ess_previdi.pdf)** Nato a Milano il 22 agosto 1968. Laureato in Ingegneria Elettronica (indirizzo Automatica) nel 1993 al Politecnico di Milano. Dottorato di ricerca in Ingegneria Informatica e Automatica nel 1999 al Politecnico di Milano. Nel 1999-2000 research assistant presso il Department of Mechanical Engineering della University of Glasgow. Dal 2000 al 2002 assegnista di ricerca presso il Dipartimento di Elettronica e Informazione del Politecnico di Milano. Dal 2002 al 2006 ricercatore presso la Facoltà di Ingegneria dell'Università degli Studi di Bergamo. Dal 2006 professore associato presso la medesima Facoltà. Docente dei corsi: ![Image 9: bullet](https://cs.unibg.it/previdi/_themes/studio/astubul1.gif)[Automatica I](https://cs.unibg.it/previdi/Automatica1.htm) - Ing. Informatica D.M. 509 ![Image 10: bullet](https://cs.unibg.it/previdi/_themes/studio/astubul1.gif)[Automatica II](https://cs.unibg.it/previdi/Automatica2.htm) - Ing. Informatica D.M. 509 ![Image 11: bullet](https://cs.unibg.it/previdi/_themes/studio/astubul1.gif)[Controllo digitale](https://cs.unibg.it/previdi/ControlloDigitale.htm) - Ing. Informatica Laurea Specialistica D.M. 509 ![Image 12: bullet](https://cs.unibg.it/previdi/_themes/studio/astubul1.gif)[Fondamenti di Automatica](https://cs.unibg.it/previdi/FondamentiAutomatica.htm) - Ing. Informatica D.M. 270 ![Image 13: bullet](https://cs.unibg.it/previdi/_themes/studio/astubul1.gif)[Automazione Industriale](https://cs.unibg.it/previdi/automazione.htm) - Ing. Informatica, Politecnico di Milano D.M. 509
+
+![Image 14](https://cs.unibg.it/previdi/_themes/studio/asturule.gif)
+
+Home|[Note biografiche](https://cs.unibg.it/previdi/biografia.htm)|[Didattica](https://cs.unibg.it/previdi/didattica.htm)|[Attività di ricerca](https://cs.unibg.it/previdi/ricerca.htm)|[Pubblicazioni](https://cs.unibg.it/previdi/pubblicazioni.htm)|[Collaborazioni industriali](https://cs.unibg.it/previdi/industrie.htm)|[Links](https://cs.unibg.it/previdi/links.htm)
+
+[previdi@unibg.it](mailto:previdi@unibg.it)
+
+_Ultimo aggiornamento_ _17 settembre, 2009_
+
+  [4] Score: 0.9994
+      Title  : UNIBG - Course Catalogue
+      URL    : https://unibg.coursecatalogue.cineca.it/corsi/2023/74/insegnamenti/2025/5823_43337_11913/2014/5823?coorte=2023&schemaid=77466
+      Content: Docenti: RUSSO ANTONIO; Durata: 96 ore (96 ore Lezione); Frequenza: Non ... [23062-1] - MODULO DI FONDAMENTI DI AUTOMATICA Primo Semestre Convenzionale
+
+  [5] Score: 0.9988
+      Title  : [PDF] dipartimenti afferenti alla scuola di ingegneria - UniBg
+      URL    : https://www.unibg.it/sites/default/files/media/documents/2025-11-04/appelli25-26%20aprile.pdf
+      Content: C.I. FONDAMENTI DI AUTOMATICA E LABORATORIO DI ELETTRONICA -. Integrato [23062]. Previdi Fabio. Scritto. 15/04/2026. 14:30. DATA SCIENCE AND
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: informazioni_corso
+
+>>> SYSTEM PROMPT:
+Sei un esperto dei corsi dell'Università di Bergamo.
+Fornisci informazioni dettagliate e accurate sui corsi, programmi di studio e docenti.
+Se non hai informazioni specifiche, suggerisci dove lo studente può trovarle (sito del corso, segreteria, etc.).
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 3
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: UNIBG - Course Catalogue
+URL: https://unibg.coursecatalogue.cineca.it/af/2025?corso=23-270&annoOrdinamento=2014&pds=PDS0-2014&coorte=2023&ad=23062&ud=23062-1
+Contenuto: Insegnamento [23062-1]. [23062-1] - MODULO DI FONDAMENTI DI AUTOMATICA. Modulo di [23062] - C.I. FONDAMENTI DI AUTOMATICA E LABORATORIO DI ELETTRONICA ... Docenti
+
+Fonte 2: Fondamenti di Automatica - Prof. F. Previdi
+URL: https://cs.unibg.it/previdi/programmafda.htm
+Contenuto: Programma
+===============
+
+![Image 1: Programma](https://cs.unibg.it/previdi/_derived/programmafda.htm_cmp_studio010_bnr.gif)
+
+### Fondamenti di Automatica - Prof. F. Previdi
+
+[![Image 2: Up](https://cs.unibg.it/previdi/_derived/up_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/FondamentiAutomatica.htm)
+
+![Image 3: Programma](https://cs.unibg.it/previdi/_derived/programmafda.htm_cmp_studio010_vbtn_p.gif)
+
+[![Image 4: Bibliografia](https://cs.unibg.it/previdi/_derived/bibliografia_fda.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/bibliografia_fda.htm)
+
+[![Image 5: Lucidi delle lezioni](https://cs.unibg.it/previdi/_derived/lucidifda.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/lucidifda.htm)
+
+[![Image 6: Materiale didattico](https://cs.unibg.it/previdi/_derived/materiale_fda.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/materiale_fda.htm)
+
+[![Image 7: Esercizi risolti](https://cs.unibg.it/previdi/_derived/esercizi_risolti_fda.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/esercizi_risolti_fda.htm)
+
+[![Image 8: Modalità d'esame](https://cs.unibg.it/previdi/_derived/modesame_fda.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/modesame_fda.htm)
+
+[![Image 9: Contatti](https://cs.unibg.it/previdi/_derived/contatti_fda.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/contatti_fda.htm)**Fra parentesi sono indicati i paragrafi
+
+ del libro _Fondamenti di Controlli Automatici_(3° edizione) che trattano l'argomento.**
+
+**1. PRIMA PARTE**
+
+Introduzione all’automatica. Formulazione di un problema di controllo. Variabili controllate, variabili manipolabili e disturbi. Controllo in anello aperto e controllo in anello chiuso.I ncertezza. (_Capitolo 1_: fino a 1.4 incluso).
+
+**1.1 Analisi Sistemi a Tempo Continuo in Variabili di Stato (State Space - SS)**
+
+Definizione di sistema dinamico. Concetti di ingresso, uscita e stato. Rappresentazione di sistemi dinamici mediante equazioni differenziali.Movimento, traiettorie, equilibrio. Formula di Lagrange. Movimento libero e movimento forzato. Principio di sovrapposizione degli effetti. Proprietà strutturali (cenni tramite esempi). Criterio degli autovalori. Criterio di Routh. Linearizzazione e stabilità dell'equilibrio per sistemi non lineari. (_Capitolo 2_: tutto tranne 2.4. _Capitolo 3_: fino a 3.5 incluso tranne 3.4.5).
+
+**1.2 Analisi Sistemi a Tempo Continuo Ingresso/Uscita (Input/Output - IO)**
+
+Trasformata di Laplace. Funzione di trasferimento: definizione, calcolo, proprietà. Poli, zeri e guadagno. Metodo di Heaviside per l’antitrasformazione. Schemi a blocchi. Connessioni in serie, parallelo e retroazione. Risposte canoniche di sistemi del primo e secondo ordine nel dominio del tempo. Costante di tempo. Pulsazione naturale e coefficiente di smorzamento. Costante di tempo dominante. Approssimazione a polo/i dominante/i. (_A ppendice B_: fino a B.3 incluso _,_ _Capitolo 4_: fino a 4.4 incluso tranne 4.2.5, 4.2.6 _,Capitolo 5_: fino a 5.4 incluso, _Capitolo 6_: 6.9).
+
+Teorema della risposta in frequenza. (_Capitolo 6_: 6.1, 6.2). Diagrammi cartesiani (di Bode). Diagrammi polari. (_Capitolo 6_: 6.6, 6.7). Interpretazione dei sistemi dinamici come filtri. (_Capitolo 6_: 6.8).
+
+Ritardo di tempo. (2.4, 4.2.6, 6.2.2, 6.6.3)
+
+**2. SECONDA PARTE**
+
+Introduzione ai sistemi di controllo in anello chiuso. . Schema generale del controllo in retroazione. Requisiti del sistema di controllo. (_Capitolo 1_: 1.5, _Capitolo 9_: fino a 9.4 incluso).
+
+**2.1 Analisi sistemi retroazionati**
+
+Stabilità. Criterio di Nyquist. Criterio di Bode. Stabilità robusta. Margine di fase e margine di guadagno. (_Capitolo 9_: 9.5, 9.6).
+
+Risposta in frequenza di sistemi retroazionati. Velocità di risposta. Banda passante. Precisione statica. Errore a transitorio esaurito dovuto al segnale di riferimento e ai disturbi. (_Capitolo 10_: tutto tranne 10.4.4, 10.6).
+
+**2.2 Progetto del controllore**
+
+Sintesi del controllore. Specifiche di progetto. Fasi del progetto. Esempi di progetto per sistemi a fase minima. (_Capitolo 11_: fino a 11.5 incluso tranne sistemi a fase non minima).
+
+Controllori lineari ad azione proporzionale-integrale-derivativa (PID). Implementazione dei controllori PID. Taratura dei parametri mediante regole di Ziegler e Nichols. (_Capitolo 14_: 14.1, 14.2, 14.3.1, 14.3.2, 14.4.1 tranne assegnamenti di margine di guadagno e di fase, 14.4.2 solo metodo della tangente e regola di Ziegler e Nichols)
+
+**2.3 Sistemi a tempo discreto**
+
+Introduzione ai sistemi a tempo discreto. Stabilità (criterio degli autovalori). Linearizzazione e stabilità dell'equilibrio per sistemi non lineari. Trasformata Z. Funzione di trasferimento. Poli, zeri e guadagno. Antitrasformazione per lunga divisione o ricorsione. Risposta all’impulso e allo scalino. (_Capitolo 7_: fino a 7.6 incluso tranne 7.5.4, 7.5.5, 7.5.6 e del 7.4.5 solo matrice diagonalizzabile. _Capitolo 8_: 8.1, 8.2, 8.3.5, 8.5._Appendice C:_ C.1, C.2, C.3)
+
+Schemi di controllo digitale. Campionatore e mantenitore. I problemi del campionamento. Criteri di progetto di controllori digitali mediante discretizzazione di controllori analogici. (_Capitolo 17_: 17.1, 17.2, Teorema 17.2, 17.6, 17.7)
+
+[Up](https://cs.unibg.it/previdi/FondamentiAutomatica.htm)|Programma|[Bibliografia](https://cs.unibg.it/previdi/bibliografia_fda.htm)|[Lucidi delle lezioni](https://cs.unibg.it/previdi/lucidifda.htm)|[Materiale didattico](https://cs.unibg.it/previdi/materiale_fda.htm)|[Esercizi risolti](https://cs.unibg.it/previdi/esercizi_risolti_fda.htm)|[Modalità d'esame](https://cs.unibg.it/previdi/modesame_fda.htm)|[Contatti](https://cs.unibg.it/previdi/contatti_fda.htm)
+
+Fonte 3: Fabio Previdi - UniBg
+URL: https://cs.unibg.it/previdi/index.html
+Contenuto: Fabio Previdi
+===============
+
+![Image 1: Fabio Previdi](https://cs.unibg.it/previdi/_derived/index.html_cmp_studio010_bnr.gif)
+
+[![Image 2: Note biografiche](https://cs.unibg.it/previdi/_derived/biografia.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/biografia.htm)
+
+[![Image 3: Didattica](https://cs.unibg.it/previdi/_derived/didattica.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/didattica.htm)
+
+[![Image 4: Attività di ricerca](https://cs.unibg.it/previdi/_derived/ricerca.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/ricerca.htm)
+
+[![Image 5: Pubblicazioni](https://cs.unibg.it/previdi/_derived/pubblicazioni.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/pubblicazioni.htm)
+
+[![Image 6: Collaborazioni industriali](https://cs.unibg.it/previdi/_derived/industrie.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/industrie.htm)
+
+[![Image 7: Links](https://cs.unibg.it/previdi/_derived/links.htm_cmp_studio010_vbtn.gif)](https://cs.unibg.it/previdi/links.htm)### ![Image 8](https://cs.unibg.it/previdi/Image-04.jpg) Edificio B, terzo piano, ufficio 3 tel +39.035.2052357 fax +39.035.2052377 e-mail [previdi@unibg.it](mailto:previdi@unibg.it) **[Informazioni Essenziali CIRA](https://cs.unibg.it/previdi/varie/info_ess_previdi.pdf)** Nato a Milano il 22 agosto 1968. Laureato in Ingegneria Elettronica (indirizzo Automatica) nel 1993 al Politecnico di Milano. Dottorato di ricerca in Ingegneria Informatica e Automatica nel 1999 al Politecnico di Milano. Nel 1999-2000 research assistant presso il Department of Mechanical Engineering della University of Glasgow. Dal 2000 al 2002 assegnista di ricerca presso il Dipartimento di Elettronica e Informazione del Politecnico di Milano. Dal 2002 al 2006 ricercatore presso la Facoltà di Ingegneria dell'Università degli Studi di Bergamo. Dal 2006 professore associato presso la medesima Facoltà. Docente dei corsi: ![Image 9: bullet](https://cs.unibg.it/previdi/_themes/studio/astubul1.gif)[Automatica I](https://cs.unibg.it/previdi/Automatica1.htm) - Ing. Informatica D.M. 509 ![Image 10: bullet](https://cs.unibg.it/previdi/_themes/studio/astubul1.gif)[Automatica II](https://cs.unibg.it/previdi/Automatica2.htm) - Ing. Informatica D.M. 509 ![Image 11: bullet](https://cs.unibg.it/previdi/_themes/studio/astubul1.gif)[Controllo digitale](https://cs.unibg.it/previdi/ControlloDigitale.htm) - Ing. Informatica Laurea Specialistica D.M. 509 ![Image 12: bullet](https://cs.unibg.it/previdi/_themes/studio/astubul1.gif)[Fondamenti di Automatica](https://cs.unibg.it/previdi/FondamentiAutomatica.htm) - Ing. Informatica D.M. 270 ![Image 13: bullet](https://cs.unibg.it/previdi/_themes/studio/astubul1.gif)[Automazione Industriale](https://cs.unibg.it/previdi/automazione.htm) - Ing. Informatica, Politecnico di Milano D.M. 509
+
+![Image 14](https://cs.unibg.it/previdi/_themes/studio/asturule.gif)
+
+Home|[Note biografiche](https://cs.unibg.it/previdi/biografia.htm)|[Didattica](https://cs.unibg.it/previdi/didattica.htm)|[Attività di ricerca](https://cs.unibg.it/previdi/ricerca.htm)|[Pubblicazioni](https://cs.unibg.it/previdi/pubblicazioni.htm)|[Collaborazioni industriali](https://cs.unibg.it/previdi/industrie.htm)|[Links](https://cs.unibg.it/previdi/links.htm)
+
+[previdi@unibg.it](mailto:previdi@unibg.it)
+
+_Ultimo aggiornamento_ _17 settembre, 2009_
+
+Fonte 4: UNIBG - Course Catalogue
+URL: https://unibg.coursecatalogue.cineca.it/corsi/2023/74/insegnamenti/2025/5823_43337_11913/2014/5823?coorte=2023&schemaid=77466
+Contenuto: Docenti: RUSSO ANTONIO; Durata: 96 ore (96 ore Lezione); Frequenza: Non ... [23062-1] - MODULO DI FONDAMENTI DI AUTOMATICA Primo Semestre Convenzionale
+
+Fonte 5: [PDF] dipartimenti afferenti alla scuola di ingegneria - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2025-11-04/appelli25-26%20aprile.pdf
+Contenuto: C.I. FONDAMENTI DI AUTOMATICA E LABORATORIO DI ELETTRONICA -. Integrato [23062]. Previdi Fabio. Scritto. 15/04/2026. 14:30. DATA SCIENCE AND
+
+
+>>> USER PROMPT:
+chi è il professore di fondamenti di automatica?
+
+>>> RESPONSE:
+Ciao Raphace,
+
+Per il corso di **Fondamenti di Automatica**, il professore è il **Prof. Fabio Previdi**.
+
+Le fonti indicano che il Prof. Fabio Previdi è il docente del corso di Fondamenti di Automatica (come si evince dalla sua pagina personale e dalla pagina del programma del corso). È anche il docente del C.I. FONDAMENTI DI AUTOMATICA E LABORATORIO DI ELETTRONICA (codice 23062).
+
+Inoltre, per il MODULO DI FONDAMENTI DI AUTOMATICA (codice 23062-1), un altro docente indicato è Antonio Russo.
+
+Pagina di riferimento:
+https://cs.unibg.it/previdi/programmafda.htm
+https://cs.unibg.it/previdi/index.html
+https://unibg.coursecatalogue.cineca.it/corsi/2023/74/insegnamenti/2025/5823_43337_11913/2014/5823?coorte=2023&schemaid=77466
+https://www.unibg.it/sites/default/files/media/documents/2025-11-04/appelli25-26%20aprile.pdf
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Contesto conversazione:
+- Studente: che materie ci sono al primo anno di ingegneria informatica triennale?
+- Assistente: Per il primo anno del corso di Laurea Triennale in Ingegneria Informatica (anno accademico 2025-2026), le materie obbligatorie sono le seguenti:
+
+Prim
+- Studente: invece il secondo semestre di ingegneria informatica magistrale primo anno?
+- Assistente: Per il Corso di Laurea Magistrale in Ingegneria Informatica, anno accademico 2025-2026, le materie previste per il primo anno, secondo semestre, varia
+
+Domanda originale: chi è il professore di fondamenti di automatica?
+Categoria: informazioni_corso
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphace
+- Cognome: Prime
+- Matricola: 1086531
+- Dipartimento: Ingegneria
+- Corso di laurea: ign
+- Tipologia: Magistrale
+- Anno di frequentazione: 3
+
+Risposta generata: Ciao Raphace,
+
+Per il corso di **Fondamenti di Automatica**, il professore è il **Prof. Fabio Previdi**.
+
+Le fonti indicano che il Prof. Fabio Previdi è il docente del corso di Fondamenti di Automatica (come si evince dalla sua pagina personale e dalla pagina del programma del corso). È anche il docente del C.I. FONDAMENTI DI AUTOMATICA E LABORATORIO DI ELETTRONICA (codice 23062).
+
+Inoltre, per il MODULO DI FONDAMENTI DI AUTOMATICA (codice 23062-1), un altro docente indicato è Antonio Russo.
+
+Pagina di riferimento:
+https://cs.unibg.it/previdi/programmafda.htm
+https://cs.unibg.it/previdi/index.html
+https://unibg.coursecatalogue.cineca.it/corsi/2023/74/insegnamenti/2025/5823_43337_11913/2014/5823?coorte=2023&schemaid=77466
+https://www.unibg.it/sites/default/files/media/documents/2025-11-04/appelli25-26%20aprile.pdf
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RESPONSE:
+Il professore del corso FONDAMENTI DI AUTOMATICA è il Prof. Fabio Previdi.
+
+Il Prof. Fabio Previdi è anche docente del C.I. FONDAMENTI DI AUTOMATICA E LABORATORIO DI ELETTRONICA (codice 23062).
+
+Per il MODULO DI FONDAMENTI DI AUTOMATICA (codice 23062-1), un altro docente indicato è Antonio Russo.
+
+Pagina di riferimento:
+https://cs.unibg.it/previdi/programmafda.htm
+https://cs.unibg.it/previdi/index.html
+https://unibg.coursecatalogue.cineca.it/corsi/2023/74/insegnamenti/2025/5823_43337_11913/2014/5823?coorte=2023&schemaid=77466
+https://www.unibg.it/sites/default/files/media/documents/2025-11-04/appelli25-26%20aprile.pdf
+
+================================================================================
+FINAL RESPONSE
+================================================================================
+Il professore del corso FONDAMENTI DI AUTOMATICA è il Prof. Fabio Previdi.
+
+Il Prof. Fabio Previdi è anche docente del C.I. FONDAMENTI DI AUTOMATICA E LABORATORIO DI ELETTRONICA (codice 23062).
+
+Per il MODULO DI FONDAMENTI DI AUTOMATICA (codice 23062-1), un altro docente indicato è Antonio Russo.
+
+Pagina di riferimento:
+https://cs.unibg.it/previdi/programmafda.htm
+https://cs.unibg.it/previdi/index.html
+https://unibg.coursecatalogue.cineca.it/corsi/2023/74/insegnamenti/2025/5823_43337_11913/2014/5823?coorte=2023&schemaid=77466
+https://www.unibg.it/sites/default/files/media/documents/2025-11-04/appelli25-26%20aprile.pdf
+
+================================================================================
+END OF LOG
+================================================================================
