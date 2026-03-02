@@ -203,6 +203,40 @@ function App() {
     return labels[category] || category;
   };
 
+  // Renderizza una riga di testo trasformando link Markdown [testo](url) e URL bare in <a> cliccabili
+  const renderLineWithLinks = (line) => {
+    const regex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)|(https?:\/\/\S+)/g;
+    const parts = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = regex.exec(line)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push(line.slice(lastIndex, match.index));
+      }
+      if (match[1] && match[2]) {
+        // Link Markdown: [testo](url)
+        parts.push(
+          <a key={match.index} href={match[2]} target="_blank" rel="noopener noreferrer">
+            {match[1]}
+          </a>
+        );
+      } else if (match[3]) {
+        // URL nuda
+        parts.push(
+          <a key={match.index} href={match[3]} target="_blank" rel="noopener noreferrer">
+            {match[3]}
+          </a>
+        );
+      }
+      lastIndex = regex.lastIndex;
+    }
+    if (lastIndex < line.length) {
+      parts.push(line.slice(lastIndex));
+    }
+    return parts.length > 0 ? parts : line;
+  };
+
   // Show loading screen during initial token verification
   if (isInitialLoading) {
     return (
@@ -311,7 +345,7 @@ function App() {
                       </div>
                       <div className="message-text">
                         {msg.content.split("\n").map((line, i) => (
-                          <p key={i}>{line || "\u00A0"}</p>
+                          <p key={i}>{line ? renderLineWithLinks(line) : "\u00A0"}</p>
                         ))}
                       </div>
                       {msg.metadata && msg.metadata.workflow_steps && (

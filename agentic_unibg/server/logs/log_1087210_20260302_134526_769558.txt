@@ -1,0 +1,322 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-02 13:45:26
+Status    : success
+
+------------------------------------------------------------
+USER INFORMATION
+------------------------------------------------------------
+User type   : loggato
+Name        : Michele Caprinali
+Matricola   : 1087210
+Department  : Scuola di Ingegneria
+Course      : Ingegneria informatica
+Typology    : Magistrale
+Year        : 1
+
+------------------------------------------------------------
+ORIGINAL USER QUERY
+------------------------------------------------------------
+quali sono le materie che devo seguire nel secondo semestre?
+
+------------------------------------------------------------
+CONVERSATION HISTORY (recent)
+------------------------------------------------------------
+[User]: chi tiene il corso di fondamenti di automatics?
+[Assistant]: Il corso di "Fondamenti di Automatica" è tipicamente un insegnamento fondamentale erogato nei corsi di laurea triennale in Ingegneria, spesso presente in curricula come Ingegneria Gestionale, Ingegneria Elettrica o Ingegneria Informatica (a livello triennale).
+
+Dato che sei iscritto al primo anno de
+[User]: che professore tiene il corso di fondamenti di automatica?
+[Assistant]: "Fondamenti di Automatica" è tipicamente un corso del LIVELLO TRIENNALE in Ingegneria. Poiché tu, Michele Caprinali (matricola 1087210), sei iscritto al primo anno della Laurea Magistrale in Ingegneria Informatica, è importante verificare se questo corso rientra nel tuo piano di studi attuale.
+
+Per 
+[User]: chi è angelo gargantini
+[Assistant]: Angelo Gargantini è un professore associato presso il Dipartimento di Ingegneria Gestionale, dell'Informazione e della Produzione (DIGIP) della Scuola di Ingegneria dell'Università degli Studi di Bergamo. Le sue aree di ricerca e insegnamento sono strettamente correlate al tuo percorso di studi in I
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: informazioni_corso
+Description: Richieste su corsi, programmi, docenti
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, esami, ricevimenti
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Michele
+- Cognome: Caprinali
+- Matricola: 1087210
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: che professore tiene il corso di fondamenti di automatica?
+- Assistente: "Fondamenti di Automatica" è tipicamente un corso del LIVELLO TRIENNALE in Ingegneria. Poiché tu, Michele Caprinali (matricola 1087210), sei iscritto 
+- Studente: chi è angelo gargantini
+- Assistente: Angelo Gargantini è un professore associato presso il Dipartimento di Ingegneria Gestionale, dell'Informazione e della Produzione (DIGIP) della Scuola
+
+Nuova domanda: quali sono le materie che devo seguire nel secondo semestre?
+
+>>> RESPONSE:
+informazioni_corso
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: materie secondo semestre ingegneria magistrale unibg
+Original Query: quali sono le materie che devo seguire nel secondo semestre?
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- Tieni conto del contesto della conversazione per capire cosa cerca lo studente
+- La query deve essere in italiano
+- Massimo 6-8 parole
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Quali sono le tasse universitarie per il primo anno di ingegneria?"
+Query generata: tasse universitarie primo anno ingegneria unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Come posso iscrivermi al test di ammissione?"
+Query generata: iscrizione test ammissione unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Dove trovo gli orari delle lezioni di informatica?"
+Query generata: orari lezioni informatica unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Cos'è il top 10 student program?"
+Query generata: top 10 student program unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: chi tiene il corso di fondamenti di automatics?
+- Assistente: Il corso di "Fondamenti di Automatica" è tipicamente un insegnamento fondamentale erogato nei corsi di laurea triennale in Ingegneria, spesso presente in curricula come Ingegneria Gestionale, Ingegner
+- Studente: che professore tiene il corso di fondamenti di automatica?
+- Assistente: "Fondamenti di Automatica" è tipicamente un corso del LIVELLO TRIENNALE in Ingegneria. Poiché tu, Michele Caprinali (matricola 1087210), sei iscritto al primo anno della Laurea Magistrale in Ingegneri
+- Studente: chi è angelo gargantini
+- Assistente: Angelo Gargantini è un professore associato presso il Dipartimento di Ingegneria Gestionale, dell'Informazione e della Produzione (DIGIP) della Scuola di Ingegneria dell'Università degli Studi di Berg
+
+Ultima richiesta dello studente: quali sono le materie che devo seguire nel secondo semestre?
+
+Genera la query di ricerca web:
+
+>>> RESPONSE:
+materie secondo semestre ingegneria magistrale unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status          : error
+Search query    : materie secondo semestre ingegneria magistrale unibg
+Total results   : 0
+Top results used: 0
+
+>>> No web results retrieved.
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: informazioni_corso
+
+>>> SYSTEM PROMPT:
+Sei un esperto dei corsi dell'Università di Bergamo.
+Fornisci informazioni dettagliate e accurate sui corsi, programmi di studio e docenti.
+Se non hai informazioni specifiche, suggerisci dove lo studente può trovarle (sito del corso, segreteria, etc.).
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Michele
+- Cognome: Caprinali
+- Matricola: 1087210
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+>>> USER PROMPT:
+quali sono le materie che devo seguire nel secondo semestre?
+
+>>> RESPONSE:
+Ciao Michele Caprinali,
+
+Dato che sei uno studente del primo anno della Laurea Magistrale in Ingegneria Informatica presso la Scuola di Ingegneria, è fondamentale che tu consulti le fonti ufficiali per avere l'elenco esatto delle materie che devi seguire nel secondo semestre del tuo anno accademico.
+
+Non avendo accesso in tempo reale al tuo piano di studi individuale o al calendario accademico specifico per l'anno in corso, posso indicarti dove trovare queste informazioni in modo preciso e aggiornato:
+
+1.  **Piano di Studi Ufficiale del Corso di Laurea Magistrale in Ingegneria Informatica:**
+    *   Questo è il documento più importante. Sul sito della Scuola di Ingegneria, cerca la pagina dedicata al tuo corso di laurea (Laurea Magistrale in Ingegneria Informatica). Lì troverai il "Manifesto degli Studi" o "Ordinamento Didattico" che elenca tutti gli insegnamenti previsti per ogni anno e semestre.
+
+2.  **Orario delle Lezioni:**
+    *   Sempre sul sito della Scuola di Ingegneria, nella sezione dedicata agli orari, potrai trovare l'orario delle lezioni per il secondo semestre. Questo ti darà la conferma di quali corsi sono attivi e in quali fasce orarie.
+
+3.  **Piattaforma e-learning (Moodle/Blackboard):**
+    *   Una volta che ti sarai iscritto ai corsi del secondo semestre (o se l'iscrizione è automatica), le pagine dei corsi appariranno sulla tua dashboard personale della piattaforma e-learning dell'Università.
+
+4.  **Segreteria Didattica della Scuola di Ingegneria:**
+    *   Per qualsiasi dubbio o per una conferma personalizzata sul tuo piano di studi, la Segreteria Didattica è la risorsa più affidabile. Possono fornirti tutte le informazioni specifiche relative al tuo percorso.
+
+Ti consiglio vivamente di consultare il **Manifesto degli Studi** del tuo corso di laurea, in quanto è la fonte primaria per la definizione del tuo percorso formativo.
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Contesto conversazione:
+- Studente: che professore tiene il corso di fondamenti di automatica?
+- Assistente: "Fondamenti di Automatica" è tipicamente un corso del LIVELLO TRIENNALE in Ingegneria. Poiché tu, Michele Caprinali (matricola 1087210), sei iscritto 
+- Studente: chi è angelo gargantini
+- Assistente: Angelo Gargantini è un professore associato presso il Dipartimento di Ingegneria Gestionale, dell'Informazione e della Produzione (DIGIP) della Scuola
+
+Domanda originale: quali sono le materie che devo seguire nel secondo semestre?
+Categoria: informazioni_corso
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Michele
+- Cognome: Caprinali
+- Matricola: 1087210
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Michele Caprinali,
+
+Dato che sei uno studente del primo anno della Laurea Magistrale in Ingegneria Informatica presso la Scuola di Ingegneria, è fondamentale che tu consulti le fonti ufficiali per avere l'elenco esatto delle materie che devi seguire nel secondo semestre del tuo anno accademico.
+
+Non avendo accesso in tempo reale al tuo piano di studi individuale o al calendario accademico specifico per l'anno in corso, posso indicarti dove trovare queste informazioni in modo preciso e aggiornato:
+
+1.  **Piano di Studi Ufficiale del Corso di Laurea Magistrale in Ingegneria Informatica:**
+    *   Questo è il documento più importante. Sul sito della Scuola di Ingegneria, cerca la pagina dedicata al tuo corso di laurea (Laurea Magistrale in Ingegneria Informatica). Lì troverai il "Manifesto degli Studi" o "Ordinamento Didattico" che elenca tutti gli insegnamenti previsti per ogni anno e semestre.
+
+2.  **Orario delle Lezioni:**
+    *   Sempre sul sito della Scuola di Ingegneria, nella sezione dedicata agli orari, potrai trovare l'orario delle lezioni per il secondo semestre. Questo ti darà la conferma di quali corsi sono attivi e in quali fasce orarie.
+
+3.  **Piattaforma e-learning (Moodle/Blackboard):**
+    *   Una volta che ti sarai iscritto ai corsi del secondo semestre (o se l'iscrizione è automatica), le pagine dei corsi appariranno sulla tua dashboard personale della piattaforma e-learning dell'Università.
+
+4.  **Segreteria Didattica della Scuola di Ingegneria:**
+    *   Per qualsiasi dubbio o per una conferma personalizzata sul tuo piano di studi, la Segreteria Didattica è la risorsa più affidabile. Possono fornirti tutte le informazioni specifiche relative al tuo percorso.
+
+Ti consiglio vivamente di consultare il **Manifesto degli Studi** del tuo corso di laurea, in quanto è la fonte primaria per la definizione del tuo percorso formativo.
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RESPONSE:
+Per conoscere le materie del secondo semestre, consulta le seguenti fonti ufficiali:
+
+1.  PIANO DI STUDI UFFICIALE DEL CORSO DI LAUREA MAGISTRALE IN INGEGNERIA INFORMATICA:
+    *   Cerca il "Manifesto degli Studi" o "Ordinamento Didattico" sul sito della Scuola di Ingegneria, nella pagina dedicata al tuo corso di laurea. Questo documento elenca gli insegnamenti previsti per ogni anno e semestre.
+
+2.  ORARIO DELLE LEZIONI:
+    *   Sul sito della Scuola di Ingegneria, nella sezione orari, troverai l'orario delle lezioni per il secondo semestre, che conferma i corsi attivi.
+
+3.  PIATTAFORMA E-LEARNING (MOODLE/BLACKBOARD):
+    *   Le pagine dei corsi del secondo semestre appariranno sulla tua dashboard personale della piattaforma e-learning dopo l'iscrizione.
+
+4.  SEGRETERIA DIDATTICA DELLA SCUOLA DI INGEGNERIA:
+    *   Per dubbi o conferme personalizzate sul tuo piano di studi, contatta la Segreteria Didattica.
+
+Il MANIFESTO DEGLI STUDI è la fonte primaria per la definizione del tuo percorso formativo.
+
+================================================================================
+FINAL RESPONSE
+================================================================================
+Per conoscere le materie del secondo semestre, consulta le seguenti fonti ufficiali:
+
+1.  PIANO DI STUDI UFFICIALE DEL CORSO DI LAUREA MAGISTRALE IN INGEGNERIA INFORMATICA:
+    *   Cerca il "Manifesto degli Studi" o "Ordinamento Didattico" sul sito della Scuola di Ingegneria, nella pagina dedicata al tuo corso di laurea. Questo documento elenca gli insegnamenti previsti per ogni anno e semestre.
+
+2.  ORARIO DELLE LEZIONI:
+    *   Sul sito della Scuola di Ingegneria, nella sezione orari, troverai l'orario delle lezioni per il secondo semestre, che conferma i corsi attivi.
+
+3.  PIATTAFORMA E-LEARNING (MOODLE/BLACKBOARD):
+    *   Le pagine dei corsi del secondo semestre appariranno sulla tua dashboard personale della piattaforma e-learning dopo l'iscrizione.
+
+4.  SEGRETERIA DIDATTICA DELLA SCUOLA DI INGEGNERIA:
+    *   Per dubbi o conferme personalizzate sul tuo piano di studi, contatta la Segreteria Didattica.
+
+Il MANIFESTO DEGLI STUDI è la fonte primaria per la definizione del tuo percorso formativo.
+
+================================================================================
+END OF LOG
+================================================================================

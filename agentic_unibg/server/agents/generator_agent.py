@@ -44,7 +44,8 @@ REGOLE FONDAMENTALI:
 4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
 5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
 6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
-7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette."""
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+8. Alcune fonti sono documenti PDF: in quel caso vengono forniti anche i link ipertestuali estratti direttamente dal PDF con la pagina di provenienza. Se uno di questi link è rilevante per la risposta dello studente, includilo nella risposta in forma cliccabile (formato Markdown: [testo](url)) indicando anche da quale parte del documento proviene."""
     
     def __init__(self, llm: ChatGoogleGenerativeAI):
         self.llm = llm

@@ -294,6 +294,17 @@ body {
   word-wrap: break-word;
 }
 
+.message-text a {
+  color: var(--primary-color);
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.message-text a:hover {
+  color: var(--primary-dark);
+  text-decoration: none;
+}
+
 .error-message {
   background: #ffebee;
   border: 1px solid var(--error-color);

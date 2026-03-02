@@ -1,0 +1,400 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-02 15:22:03
+Status    : success
+
+------------------------------------------------------------
+USER INFORMATION
+------------------------------------------------------------
+User type   : loggato
+Name        : Michele Caprinali
+Matricola   : 1087210
+Department  : Scuola di Ingegneria
+Course      : Ingegneria informatica
+Typology    : Magistrale
+Year        : 1
+
+------------------------------------------------------------
+ORIGINAL USER QUERY
+------------------------------------------------------------
+come mi iscrivo all'erasmus?
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: procedure
+Description: Richieste su procedure amministrative, iscrizioni, tasse
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, esami, ricevimenti
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Michele
+- Cognome: Caprinali
+- Matricola: 1087210
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+
+
+>>> USER PROMPT:
+come mi iscrivo all'erasmus?
+
+>>> RESPONSE:
+procedure
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: iscrizione erasmus unibg
+Original Query: come mi iscrivo all'erasmus?
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- Tieni conto del contesto della conversazione per capire cosa cerca lo studente
+- La query deve essere in italiano
+- Massimo 6-8 parole
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Quali sono le tasse universitarie per il primo anno di ingegneria?"
+Query generata: tasse universitarie primo anno ingegneria unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Come posso iscrivermi al test di ammissione?"
+Query generata: iscrizione test ammissione unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Dove trovo gli orari delle lezioni di informatica?"
+Query generata: orari lezioni informatica unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Cos'è il top 10 student program?"
+Query generata: top 10 student program unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+Ultima richiesta dello studente: come mi iscrivo all'erasmus?
+
+Genera la query di ricerca web:
+
+>>> RESPONSE:
+iscrizione erasmus unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status          : error
+Search query    : iscrizione erasmus unibg
+Total results   : 0
+Top results used: 0
+
+>>> No web results retrieved.
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: procedure
+
+>>> SYSTEM PROMPT:
+Sei un esperto delle procedure amministrative dell'Università di Bergamo.
+Guida gli studenti attraverso procedure come iscrizioni, pagamento tasse, richieste documenti.
+Fornisci istruzioni chiare e passo-passo.
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Michele
+- Cognome: Caprinali
+- Matricola: 1087210
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+>>> USER PROMPT:
+come mi iscrivo all'erasmus?
+
+>>> RESPONSE:
+Ciao Michele, benvenuto! Sono qui per guidarti attraverso le procedure amministrative dell'Università di Bergamo. Vediamo come puoi iscriverti al programma Erasmus+ per la tua Magistrale in Ingegneria Informatica.
+
+Il programma Erasmus+ è un'opportunità fantastica per arricchire il tuo percorso di studi all'estero. Essendo tu uno studente del 1° anno della Magistrale in Ingegneria Informatica, hai tutto il tempo per pianificare al meglio questa esperienza.
+
+Ecco i passaggi fondamentali per candidarti al programma Erasmus+ per mobilità per studio:
+
+1.  **Consulta il Bando di Concorso Ufficiale**:
+    *   Questo è il punto di partenza cruciale. Ogni anno l'Università di Bergamo pubblica un "Bando di Concorso Erasmus+ per mobilità per studio" che definisce le regole, i requisiti, le scadenze, le destinazioni disponibili e le modalità di candidatura per l'anno accademico successivo.
+    *   **Dove trovarlo**: Lo trovi nella sezione "Mobilità Internazionale" del sito web dell'Università di Bergamo (solitamente sotto "Studenti" -> "Studiare all'estero").
+    *   **Quando**: I bandi vengono solitamente pubblicati tra la fine dell'anno solare e l'inizio di quello successivo (es. per partire nell'a.a. 2025/2026, il bando potrebbe uscire tra novembre 2024 e gennaio 2025). Ti consiglio di tenere d'occhio il sito per la pubblicazione del bando relativo all'anno accademico in cui intendi partire.
+
+2.  **Verifica i Requisiti di Ammissione**:
+    *   Nel bando troverai i requisiti specifici, che generalmente includono:
+        *   Essere regolarmente iscritto all'Università di Bergamo (come lo sei tu, Michele).
+        *   Aver maturato un numero minimo di crediti (per la Magistrale, spesso si richiede di averne maturati un certo numero nel corso di studi precedente o in quello attuale).
+        *   Avere una media voti minima.
+        *   Possedere una certificazione linguistica (o superare un test) per la lingua richiesta dall'università ospitante (spesso inglese, ma anche la lingua del paese di destinazione).
+
+3.  **Scegli le Destinazioni**:
+    *   Il bando elenca le università partner con cui la tua **Scuola di Ingegneria** ha accordi specifici per il tuo **Corso di Laurea Magistrale in Ingegneria Informatica**.
+    *   Valuta attentamente i piani di studio delle università partner per capire quali esami potresti sostenere all'estero e come potrebbero essere riconosciuti nel tuo piano di studi a Bergamo.
+
+4.  **Prepara la Domanda Online**:
+    *   La candidatura avviene solitamente tramite la piattaforma PICA (o Esse3, a seconda delle indicazioni del bando). Dovrai compilare un modulo online, indicare le tue preferenze di destinazione e caricare i documenti richiesti (es. certificazioni linguistiche, eventuali lettere motivazionali, ecc.).
+
+5.  **Processo di Selezione**:
+    *   Dopo la chiusura del bando, le domande vengono valutate. Potrebbe essere previsto un colloquio motivazionale o di verifica delle competenze linguistiche.
+    *   Viene stilata una graduatoria in base ai criteri definiti nel bando (media voti, crediti, motivazione, lingua, ecc.).
+
+6.  **Accettazione e Preparazione alla Partenza**:
+    *   Se vieni selezionato, dovrai accettare il posto.
+    *   Dovrai poi preparare il **Learning Agreement**, un documento fondamentale che elenca gli esami che intendi sostenere all'estero e come verranno riconosciuti al tuo rientro. Questo va concordato e approvato dal tuo **Referente Erasmus** per la Scuola di Ingegneria o per il tuo Corso di Laurea.
+    *   Seguiranno poi altre pratiche amministrative relative alla borsa di studio, all'assicurazione, ecc.
+
+---
+
+**Risorse Utili e Contatti Specifici per Te, Michele:**
+
+*   **Ufficio Mobilità Internazionale**: È il punto di riferimento amministrativo per tutte le procedure Erasmus+. Puoi trovare i loro contatti e orari di ricevimento sul sito UniBg.
+*   **Sito Web UniBg - Sezione Erasmus+**: Visita regolarmente la pagina ufficiale per le ultime notizie e il bando. Puoi trovarla cercando "Mobilità Internazionale" o "Erasmus+" sul sito dell'Università di Bergamo.
+*   **Referente Erasmus della Scuola di Ingegneria / Corso di Laurea**: Per questioni accademiche (scelta destinazioni, Learning Agreement, riconoscimento esami), è fondamentale confrontarsi con il docente referente per il tuo Corso di Laurea Magistrale in Ingegneria Informatica. Troverai i contatti sul sito della Scuola di Ingegneria.
+
+**Consiglio per Michele:**
+Essendo al primo anno di Magistrale, hai tutto il tempo per informarti bene e pianificare la tua esperienza. Ti suggerisco di:
+1.  Consultare il bando dell'anno precedente (se disponibile sul sito) per farti un'idea dei requisiti e delle destinazioni offerte per Ingegneria Informatica.
+2.  Iniziare a pensare a quali paesi/università ti interesserebbero e a verificare i requisiti linguistici richiesti.
+3.  Contattare il Referente Erasmus del tuo corso di laurea per una prima chiacchierata orientativa e per capire quali opportunità sono più allineate al tuo percorso di studi.
+
+Spero queste informazioni ti siano utili per iniziare il tuo percorso verso l'Erasmus! Se hai altre domande, non esitare a chiedere.
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Domanda originale: come mi iscrivo all'erasmus?
+Categoria: procedure
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Michele
+- Cognome: Caprinali
+- Matricola: 1087210
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Michele, benvenuto! Sono qui per guidarti attraverso le procedure amministrative dell'Università di Bergamo. Vediamo come puoi iscriverti al programma Erasmus+ per la tua Magistrale in Ingegneria Informatica.
+
+Il programma Erasmus+ è un'opportunità fantastica per arricchire il tuo percorso di studi all'estero. Essendo tu uno studente del 1° anno della Magistrale in Ingegneria Informatica, hai tutto il tempo per pianificare al meglio questa esperienza.
+
+Ecco i passaggi fondamentali per candidarti al programma Erasmus+ per mobilità per studio:
+
+1.  **Consulta il Bando di Concorso Ufficiale**:
+    *   Questo è il punto di partenza cruciale. Ogni anno l'Università di Bergamo pubblica un "Bando di Concorso Erasmus+ per mobilità per studio" che definisce le regole, i requisiti, le scadenze, le destinazioni disponibili e le modalità di candidatura per l'anno accademico successivo.
+    *   **Dove trovarlo**: Lo trovi nella sezione "Mobilità Internazionale" del sito web dell'Università di Bergamo (solitamente sotto "Studenti" -> "Studiare all'estero").
+    *   **Quando**: I bandi vengono solitamente pubblicati tra la fine dell'anno solare e l'inizio di quello successivo (es. per partire nell'a.a. 2025/2026, il bando potrebbe uscire tra novembre 2024 e gennaio 2025). Ti consiglio di tenere d'occhio il sito per la pubblicazione del bando relativo all'anno accademico in cui intendi partire.
+
+2.  **Verifica i Requisiti di Ammissione**:
+    *   Nel bando troverai i requisiti specifici, che generalmente includono:
+        *   Essere regolarmente iscritto all'Università di Bergamo (come lo sei tu, Michele).
+        *   Aver maturato un numero minimo di crediti (per la Magistrale, spesso si richiede di averne maturati un certo numero nel corso di studi precedente o in quello attuale).
+        *   Avere una media voti minima.
+        *   Possedere una certificazione linguistica (o superare un test) per la lingua richiesta dall'università ospitante (spesso inglese, ma anche la lingua del paese di destinazione).
+
+3.  **Scegli le Destinazioni**:
+    *   Il bando elenca le università partner con cui la tua **Scuola di Ingegneria** ha accordi specifici per il tuo **Corso di Laurea Magistrale in Ingegneria Informatica**.
+    *   Valuta attentamente i piani di studio delle università partner per capire quali esami potresti sostenere all'estero e come potrebbero essere riconosciuti nel tuo piano di studi a Bergamo.
+
+4.  **Prepara la Domanda Online**:
+    *   La candidatura avviene solitamente tramite la piattaforma PICA (o Esse3, a seconda delle indicazioni del bando). Dovrai compilare un modulo online, indicare le tue preferenze di destinazione e caricare i documenti richiesti (es. certificazioni linguistiche, eventuali lettere motivazionali, ecc.).
+
+5.  **Processo di Selezione**:
+    *   Dopo la chiusura del bando, le domande vengono valutate. Potrebbe essere previsto un colloquio motivazionale o di verifica delle competenze linguistiche.
+    *   Viene stilata una graduatoria in base ai criteri definiti nel bando (media voti, crediti, motivazione, lingua, ecc.).
+
+6.  **Accettazione e Preparazione alla Partenza**:
+    *   Se vieni selezionato, dovrai accettare il posto.
+    *   Dovrai poi preparare il **Learning Agreement**, un documento fondamentale che elenca gli esami che intendi sostenere all'estero e come verranno riconosciuti al tuo rientro. Questo va concordato e approvato dal tuo **Referente Erasmus** per la Scuola di Ingegneria o per il tuo Corso di Laurea.
+    *   Seguiranno poi altre pratiche amministrative relative alla borsa di studio, all'assicurazione, ecc.
+
+---
+
+**Risorse Utili e Contatti Specifici per Te, Michele:**
+
+*   **Ufficio Mobilità Internazionale**: È il punto di riferimento amministrativo per tutte le procedure Erasmus+. Puoi trovare i loro contatti e orari di ricevimento sul sito UniBg.
+*   **Sito Web UniBg - Sezione Erasmus+**: Visita regolarmente la pagina ufficiale per le ultime notizie e il bando. Puoi trovarla cercando "Mobilità Internazionale" o "Erasmus+" sul sito dell'Università di Bergamo.
+*   **Referente Erasmus della Scuola di Ingegneria / Corso di Laurea**: Per questioni accademiche (scelta destinazioni, Learning Agreement, riconoscimento esami), è fondamentale confrontarsi con il docente referente per il tuo Corso di Laurea Magistrale in Ingegneria Informatica. Troverai i contatti sul sito della Scuola di Ingegneria.
+
+**Consiglio per Michele:**
+Essendo al primo anno di Magistrale, hai tutto il tempo per informarti bene e pianificare la tua esperienza. Ti suggerisco di:
+1.  Consultare il bando dell'anno precedente (se disponibile sul sito) per farti un'idea dei requisiti e delle destinazioni offerte per Ingegneria Informatica.
+2.  Iniziare a pensare a quali paesi/università ti interesserebbero e a verificare i requisiti linguistici richiesti.
+3.  Contattare il Referente Erasmus del tuo corso di laurea per una prima chiacchierata orientativa e per capire quali opportunità sono più allineate al tuo percorso di studi.
+
+Spero queste informazioni ti siano utili per iniziare il tuo percorso verso l'Erasmus! Se hai altre domande, non esitare a chiedere.
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RESPONSE:
+Ecco i passaggi fondamentali per candidarti al programma Erasmus+ per mobilità per studio per la tua Magistrale in Ingegneria Informatica:
+
+1.  CONSULTA IL BANDO DI CONCORSO UFFICIALE:
+    - Ogni anno l'Università di Bergamo pubblica un "Bando di Concorso Erasmus+ per mobilità per studio" che definisce regole, requisiti, scadenze, destinazioni disponibili e modalità di candidatura per l'anno accademico successivo.
+    - DOVE TROVARLO: Lo trovi nella sezione "Mobilità Internazionale" del sito web dell'Università di Bergamo (solitamente sotto "Studenti" -> "Studiare all'estero").
+    - QUANDO: I bandi vengono solitamente pubblicati tra la fine dell'anno solare e l'inizio di quello successivo (es. per partire nell'a.a. 2025/2026, il bando potrebbe uscire tra novembre 2024 e gennaio 2025). Ti consiglio di tenere d'occhio il sito per la pubblicazione del bando relativo all'anno accademico in cui intendi partire.
+
+2.  VERIFICA I REQUISITI DI AMMISSIONE:
+    - Nel bando troverai i requisiti specifici, che generalmente includono:
+        - Essere regolarmente iscritto all'Università di Bergamo (come lo sei tu, Michele).
+        - Aver maturato un numero minimo di crediti (per la Magistrale, spesso si richiede di averne maturati un certo numero nel corso di studi precedente o in quello attuale).
+        - Avere una media voti minima.
+        - Possedere una certificazione linguistica (o superare un test) per la lingua richiesta dall'università ospitante (spesso inglese, ma anche la lingua del paese di destinazione).
+
+3.  SCEGLI LE DESTINAZIONI:
+    - Il bando elenca le università partner con cui la tua SCUOLA DI INGEGNERIA ha accordi specifici per il tuo CORSO DI LAUREA MAGISTRALE IN INGEGNERIA INFORMATICA.
+    - Valuta attentamente i piani di studio delle università partner per capire quali esami potresti sostenere all'estero e come potrebbero essere riconosciuti nel tuo piano di studi a Bergamo.
+
+4.  PREPARA LA DOMANDA ONLINE:
+    - La candidatura avviene solitamente tramite la piattaforma PICA (o Esse3, a seconda delle indicazioni del bando). Dovrai compilare un modulo online, indicare le tue preferenze di destinazione e caricare i documenti richiesti (es. certificazioni linguistiche, eventuali lettere motivazionali, ecc.).
+
+5.  PROCESSO DI SELEZIONE:
+    - Dopo la chiusura del bando, le domande vengono valutate. Potrebbe essere previsto un colloquio motivazionale o di verifica delle competenze linguistiche.
+    - Viene stilata una graduatoria in base ai criteri definiti nel bando (media voti, crediti, motivazione, lingua, ecc.).
+
+6.  ACCETTAZIONE E PREPARAZIONE ALLA PARTENZA:
+    - Se vieni selezionato, dovrai accettare il posto.
+    - Dovrai poi preparare il LEARNING AGREEMENT, un documento fondamentale che elenca gli esami che intendi sostenere all'estero e come verranno riconosciuti al tuo rientro. Questo va concordato e approvato dal tuo REFERENTE ERASMUS per la Scuola di Ingegneria o per il tuo Corso di Laurea.
+    - Seguiranno poi altre pratiche amministrative relative alla borsa di studio, all'assicurazione, ecc.
+
+RISORSE UTILI E CONTATTI SPECIFICI PER TE, MICHELE:
+
+- UFFICIO MOBILITÀ INTERNAZIONALE: È il punto di riferimento amministrativo per tutte le procedure Erasmus+. Puoi trovare i loro contatti e orari di ricevimento sul sito UniBg.
+- SITO WEB UNIBG - SEZIONE ERASMUS+: Visita regolarmente la pagina ufficiale per le ultime notizie e il bando. Puoi trovarla cercando "Mobilità Internazionale" o "Erasmus+" sul sito dell'Università di Bergamo.
+- REFERENTE ERASMUS DELLA SCUOLA DI INGEGNERIA / CORSO DI LAUREA: Per questioni accademiche (scelta destinazioni, Learning Agreement, riconoscimento esami), è fondamentale confrontarsi con il docente referente per il tuo Corso di Laurea Magistrale in Ingegneria Informatica. Troverai i contatti sul sito della Scuola di Ingegneria.
+
+CONSIGLIO PER MICHELE:
+Essendo al primo anno di Magistrale, hai tutto il tempo per informarti bene e pianificare la tua esperienza. Ti suggerisco di:
+1. Consultare il bando dell'anno precedente (se disponibile sul sito) per farti un'idea dei requisiti e delle destinazioni offerte per Ingegneria Informatica.
+2. Iniziare a pensare a quali paesi/università ti interesserebbero e a verificare i requisiti linguistici richiesti.
+3. Contattare il Referente Erasmus del tuo corso di laurea per una prima chiacchierata orientativa e per capire quali opportunità sono più allineate al tuo percorso di studi.
+
+================================================================================
+FINAL RESPONSE
+================================================================================
+Ecco i passaggi fondamentali per candidarti al programma Erasmus+ per mobilità per studio per la tua Magistrale in Ingegneria Informatica:
+
+1.  CONSULTA IL BANDO DI CONCORSO UFFICIALE:
+    - Ogni anno l'Università di Bergamo pubblica un "Bando di Concorso Erasmus+ per mobilità per studio" che definisce regole, requisiti, scadenze, destinazioni disponibili e modalità di candidatura per l'anno accademico successivo.
+    - DOVE TROVARLO: Lo trovi nella sezione "Mobilità Internazionale" del sito web dell'Università di Bergamo (solitamente sotto "Studenti" -> "Studiare all'estero").
+    - QUANDO: I bandi vengono solitamente pubblicati tra la fine dell'anno solare e l'inizio di quello successivo (es. per partire nell'a.a. 2025/2026, il bando potrebbe uscire tra novembre 2024 e gennaio 2025). Ti consiglio di tenere d'occhio il sito per la pubblicazione del bando relativo all'anno accademico in cui intendi partire.
+
+2.  VERIFICA I REQUISITI DI AMMISSIONE:
+    - Nel bando troverai i requisiti specifici, che generalmente includono:
+        - Essere regolarmente iscritto all'Università di Bergamo (come lo sei tu, Michele).
+        - Aver maturato un numero minimo di crediti (per la Magistrale, spesso si richiede di averne maturati un certo numero nel corso di studi precedente o in quello attuale).
+        - Avere una media voti minima.
+        - Possedere una certificazione linguistica (o superare un test) per la lingua richiesta dall'università ospitante (spesso inglese, ma anche la lingua del paese di destinazione).
+
+3.  SCEGLI LE DESTINAZIONI:
+    - Il bando elenca le università partner con cui la tua SCUOLA DI INGEGNERIA ha accordi specifici per il tuo CORSO DI LAUREA MAGISTRALE IN INGEGNERIA INFORMATICA.
+    - Valuta attentamente i piani di studio delle università partner per capire quali esami potresti sostenere all'estero e come potrebbero essere riconosciuti nel tuo piano di studi a Bergamo.
+
+4.  PREPARA LA DOMANDA ONLINE:
+    - La candidatura avviene solitamente tramite la piattaforma PICA (o Esse3, a seconda delle indicazioni del bando). Dovrai compilare un modulo online, indicare le tue preferenze di destinazione e caricare i documenti richiesti (es. certificazioni linguistiche, eventuali lettere motivazionali, ecc.).
+
+5.  PROCESSO DI SELEZIONE:
+    - Dopo la chiusura del bando, le domande vengono valutate. Potrebbe essere previsto un colloquio motivazionale o di verifica delle competenze linguistiche.
+    - Viene stilata una graduatoria in base ai criteri definiti nel bando (media voti, crediti, motivazione, lingua, ecc.).
+
+6.  ACCETTAZIONE E PREPARAZIONE ALLA PARTENZA:
+    - Se vieni selezionato, dovrai accettare il posto.
+    - Dovrai poi preparare il LEARNING AGREEMENT, un documento fondamentale che elenca gli esami che intendi sostenere all'estero e come verranno riconosciuti al tuo rientro. Questo va concordato e approvato dal tuo REFERENTE ERASMUS per la Scuola di Ingegneria o per il tuo Corso di Laurea.
+    - Seguiranno poi altre pratiche amministrative relative alla borsa di studio, all'assicurazione, ecc.
+
+RISORSE UTILI E CONTATTI SPECIFICI PER TE, MICHELE:
+
+- UFFICIO MOBILITÀ INTERNAZIONALE: È il punto di riferimento amministrativo per tutte le procedure Erasmus+. Puoi trovare i loro contatti e orari di ricevimento sul sito UniBg.
+- SITO WEB UNIBG - SEZIONE ERASMUS+: Visita regolarmente la pagina ufficiale per le ultime notizie e il bando. Puoi trovarla cercando "Mobilità Internazionale" o "Erasmus+" sul sito dell'Università di Bergamo.
+- REFERENTE ERASMUS DELLA SCUOLA DI INGEGNERIA / CORSO DI LAUREA: Per questioni accademiche (scelta destinazioni, Learning Agreement, riconoscimento esami), è fondamentale confrontarsi con il docente referente per il tuo Corso di Laurea Magistrale in Ingegneria Informatica. Troverai i contatti sul sito della Scuola di Ingegneria.
+
+CONSIGLIO PER MICHELE:
+Essendo al primo anno di Magistrale, hai tutto il tempo per informarti bene e pianificare la tua esperienza. Ti suggerisco di:
+1. Consultare il bando dell'anno precedente (se disponibile sul sito) per farti un'idea dei requisiti e delle destinazioni offerte per Ingegneria Informatica.
+2. Iniziare a pensare a quali paesi/università ti interesserebbero e a verificare i requisiti linguistici richiesti.
+3. Contattare il Referente Erasmus del tuo corso di laurea per una prima chiacchierata orientativa e per capire quali opportunità sono più allineate al tuo percorso di studi.
+
+================================================================================
+END OF LOG
+================================================================================

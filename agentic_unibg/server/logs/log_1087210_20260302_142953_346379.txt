@@ -1,0 +1,2451 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-02 14:29:53
+Status    : success
+
+------------------------------------------------------------
+USER INFORMATION
+------------------------------------------------------------
+User type   : loggato
+Name        : Michele Caprinali
+Matricola   : 1087210
+Department  : Scuola di Ingegneria
+Course      : Ingegneria informatica
+Typology    : Magistrale
+Year        : 1
+
+------------------------------------------------------------
+ORIGINAL USER QUERY
+------------------------------------------------------------
+cosa è la startup universitaria?
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: generale
+Description: Domande generiche sull'università
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, esami, ricevimenti
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Michele
+- Cognome: Caprinali
+- Matricola: 1087210
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+
+
+>>> USER PROMPT:
+cosa è la startup universitaria?
+
+>>> RESPONSE:
+generale
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: startup universitaria unibg
+Original Query: cosa è la startup universitaria?
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- Tieni conto del contesto della conversazione per capire cosa cerca lo studente
+- La query deve essere in italiano
+- Massimo 6-8 parole
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Quali sono le tasse universitarie per il primo anno di ingegneria?"
+Query generata: tasse universitarie primo anno ingegneria unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Come posso iscrivermi al test di ammissione?"
+Query generata: iscrizione test ammissione unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Dove trovo gli orari delle lezioni di informatica?"
+Query generata: orari lezioni informatica unibg
+
+ESEMPIO:
+Conversazione: Lo studente chiede "Cos'è il top 10 student program?"
+Query generata: top 10 student program unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+Ultima richiesta dello studente: cosa è la startup universitaria?
+
+Genera la query di ricerca web:
+
+>>> RESPONSE:
+startup universitaria unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status          : success
+Search query    : startup universitaria unibg
+Total results   : 15
+Top results used: 5
+
+>>> TOP RESULTS:
+  [1] Score: 0.9993
+      Title  : Start Cup 2024 | Università degli studi di Bergamo - UniBg
+      URL    : https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-2024
+      Content: Start Cup 2024 | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-2024#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-2024#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-2024#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Start Cup 2024
+==============
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+3.   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+4.   [Start Cup 2024](https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-2024)
+
+[](https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-2024)
+
+**Golazo vince il primo premio della XIV edizione****del percorso di formazione e sviluppo di idee di impresa UniBg**
+
+![Image 3: Premiati a Start Cup 2024](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-10-08/UniBg_slider-pagine%20interne-Start-cup-2024.png?itok=o6tvj7IP)
+
+Si è svolto lunedì 7 ottobre 2024, presso la sede di Caniana dell’Università degli studi di Bergamo, l’evento finale di **Start Cup Bergamo 2024**. Start Cup è l'iniziativa di formazione, accompagnamento imprenditoriale e di sviluppo di idee d'impresa ad alto contenuto innovativo dell'Università degli studi di Bergamo, giunta quest’anno alla **XIV edizione**. **Partner dell’iniziativa** sono Intesa Sanpaolo, Fondazione Pesenti, Vitali spa e Fondazione Lombardini.
+
+Start Cup Bergamo 2024 ha coinvolto **9 team** formati da studenti e ricercatori dell’Ateneo. Nel corso dell’estate si sono svolte le attività di selezione, formazione e mentoring. La fase finale ha l’obiettivo di far emergere e valorizzare i progetti d’impresa a maggior potenziale, volti a promuovere lo sviluppo economico, sociale e culturale del territorio. Durante la finale i team hanno avuto tre minuti per raccontare i propri progetti imprenditoriali, adottando lo stile dell'“elevator pitch”, una presentazione breve e persuasiva pensata per evidenziare i punti salienti del progetto. I progetti sono stati valutati da un panel di valutazione composto da accademici, imprenditori e investitori.
+
+La finale è stata anche l’occasione per celebrare le **14 edizioni****di Start Cup Bergamo.**Un traguardo importante che riflette l’impegno continuo dell’Ateneo nel promuovere innovazione e creatività e nel formare potenziali imprenditori, come raccontano i numeri dell’iniziativa: dal 2010 ad oggi Start Cup ha formato **376 team con idee iniziali d’impresa, che hanno sviluppato 186 business plan**per un totale di **1007 partecipanti**e il lancio di**34 start-up.**Tra queste, alcune si sono affermate notevolmente sul mercato:**MyCookingBox, FermoPoint, DazeTechnology, QuiclyPro, Sieve.**
+
+I **progetti vincitori** della XIV edizione di Start Cup Bergamo, che ricevono, nell’ordine, un premio di
+
+10.000, 5.000 e 2.500 euro, sono:
+
+*   Primo classificato: **Golazo**
+*   Secondo classificato: **BridgeSolution**
+*   Terzo classificato:**Oxymeter**
+
+### Premi e contributi speciali
+
+Come per la precedente edizione, anche quest’anno **Fondazione Pesenti** ha destinato un contributo speciale di 2.500 euro al **“Progetto con il più elevato impatto sociale”**tra tutti i finalisti, assegnato a **MentorAva.**
+
+Un premio speciale di 2.500 euro per il **“Progetto con maggiore contributo allo sviluppo e l’innovazione territoriale”** assegnato da **Vitali Spa** è stato vinto da **TAM**.
+
+Infine, un ulteriore riconoscimento a **Z-Over** da parte di Bergamo Sviluppo Azienda Speciale della Camera di Commercio di Bergamo che mette a disposizione del team un percorso per la redazione del business plan.
+
+### La commissione
+
+La commissione di valutazione è stata presieduta dal Prof. **Lucio Cassia**, presidente del Centro di Ricerca di Ateneo Center for Young and Family Enterprise (CYFE). Alla commissione hanno partecipato anche **Giovanna Dossena e Giuseppe Rosace**dell’Università degli studi di Bergamo, **Andrea G. Gorla**Innovation Specialist presso Intesa Sanpaolo Innovation Center,**Angelo Martinelli**Consigliere Gres Art 671 – Fondazione Pesenti, **Andrea Lombardini**Responsabile progetti Fondazione Lombardini,**Giuseppe Bonacina**Direttore marketing Vitali spa, **Paolo Carminati**Responsabile incubatore d’Impresa di Bergamo Sviluppo, **Fabio Malerba**Segretario Generale IBAN.
+
+### Le dichiarazioni
+
+**Sergio Cavalieri**, Rettore dell’Università degli studi di Bergamo: _“Siamo orgogliosi di accompagnare i nostri studenti in esperienze che integrano le attività di studio e formazione, permettendo loro di vivere appieno la vita universitaria e di mettersi alla prova. Con la Start Cup i nostri giovani talenti affrontano sfide concrete e acquisiscono competenze fondamentali come l’identificazione di soluzioni ai bisogni, la_ _realizzazione di un modello di business efficace e la tutela della proprietà intellettuale. L'Università degli studi di Bergamo crede fermamente nell'importanza di percorsi di apprendimento che includono attività pratico-sperimentali, interattive, che permettono di confrontarsi con la realtà e sviluppare un mindset imprenditoriale"._
+
+**Tommaso Minola**, Direttore del Centro di Ricerca di Ateneo Center for Young and Family Enterprise (CYFE):_"La Start Cup, giunta alla sua XIV edizione, è un'iniziativa di punta del nostro Ateneo, e siamo particolarmente orgogliosi di vederla quest'anno integrata nel programma CREO. Con CREO, l'Università degli studi di Bergamo propone più di quindici fra laboratori e corsi che stimolano la crescita personale e le competenze trasversali, promuovendo creatività, intraprendenza e innovazione. Il fenomeno delle start-up sta evolvendo rapidamente e richiede nuove competenze e approcci, in particolare la capacità di interagire con l’intero ecosistema accademico e imprenditoriale. Anche Start Cup, dunque, si sta trasformando per rispondere a queste sfide, fornendo agli studenti gli strumenti per lavorare da subito come motore di innovazione insieme alle imprese del territorio"._
+
+**Maria Rosa Scarlata,**docente dell’Ateneo e co-direttrice insieme a Davide Hahn del percorso Start Cup**:**_"In questi anni la School, che precede la competizione, si è rivelata fondamentale per Start Cup Bergamo, permettendo agli studenti di sperimentare e validare le proprie idee insieme a specialisti dell'innovazione e partner del territorio. La School è stata itinerante, visitando i luoghi chiave dell'ecosistema bergamasco. Da quest'anno, poiché la School non attribuisce crediti formativi universitari, abbiamo osservato una classe particolarmente attiva e motivata fin dall'inizio del percorso. Un'altra novità di questa edizione è il format dell’evento finale, che ha previsto prima della premiazione un'intera mattinata di interazione a porte chiuse tra i partecipanti e la commissione di valutazione che ha identificato i vincitori; un confronto che rappresenta per noi un contributo ad alto valore aggiunto del nostro ecosistema dell’innovazione e per il quale siamo molto grati."_
+
+**Sergio Crippa**, componente del CdA e Segretario Generale della Fondazione Pesenti: _“Il rapporto tra Università di Bergamo e Fondazione Pesenti rappresenta un elemento caratterizzante nella storia di entrambe le Istituzioni. Ci fa quindi particolarmente piacere -in questo 2024 per noi così significativo che segna i 20 anni dalla nascita della nostra Fondazione- sostenere un’iniziativa che guarda al futuro e mira alla crescita delle giovani generazioni, non solo attraverso la formazione, ma anche lo sviluppo di iniziative imprenditoriali che abbiano un rilevante impatto sociale, perfettamente in linea con la nostra mission”._
+
+Con la finale di Start Cup Bergamo, si chiude la prima edizione di CREO – Competencies and Resources for Entrepreneurial Orientation – il nuovo (a.a. 2023-2024) percorso di formazione accademica e imprenditoriale dell’Università degli studi di Bergamo, nato con l’obiettivo di promuovere la crescita personale, la creatività e la capacità di innovazione degli studenti, coinvolgendo docenti e ricercatori di tutti i saperi – dalle scienze umane al diritto all’ingegneria – e l’ecosistema territoriale dell’innovazione (investitori, aziende, organizzazioni).; la seconda edizione, per l’anno accademico 2024-2025 sarà presentata a tutti gli studenti UniBg mercoledì **9 ottobre alle 16.00 in Aula Magna**, in occasione dell’evento **Look4ward – Build Your Future**, in collaborazione con Intesa Sanpaolo (maggior info all’indirizzo: [https://ow.ly/jvVX50TCnVh](https://ow.ly/jvVX50TCnVh)).
+
+### Potrebbe interessarti
+
+*   [Start Cup 2023](https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-competition-2023)  
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-2024#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+  [2] Score: 0.9990
+      Title  : Start-up and Digital Transformation - UniBg
+      URL    : https://creo.unibg.it/opportunita/start-up-e-digital-transformation/
+      Content: Start-up and Digital Transformation - CREO
+===============
+
+[![Image 1: CREO - Dai forma alle tue idee](https://creo.unibg.it/wp-content/themes/creo/assets/logo-creo-mobile.svg)![Image 2: CREO - Dai forma alle tue idee](https://creo.unibg.it/wp-content/themes/creo/assets/logo-creo.svg)](https://creo.unibg.it/ "CREO - Home Page")[![Image 3: Università degli Studi di Bergamo - Logo](https://creo.unibg.it/wp-content/themes/creo/assets/logo-unibg.svg)](https://www.unibg.it/ "Università degli Studi di Bergamo")
+
+*   [Studenti](https://creo.unibg.it/studenti/)
+*   [Docenti e Ricercatori](https://creo.unibg.it/docenti-e-ricercatori/)
+*   [Ecosistema](https://creo.unibg.it/ecosistema/)
+*   [Cosa offriamo](https://creo.unibg.it/opportunita/)
+*   [Chi siamo](https://creo.unibg.it/chi-siamo/)
+
+*   [it](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/)
+*   [en](https://creo.unibg.it/en/opportunita/start-up-and-digital-transformation/)
+
+Start-up and Digital Transformation
+===================================
+
+Nuove imprese e globalizzazione
+-------------------------------
+
+![Image 4: Start up and Digital Transformation](https://creo.unibg.it/wp-content/uploads/2024/03/digital-transformation.png)
+
+Per chi Studenti UniBg
+
+Tipologia Corso curricolare
+
+Lingua Inglese
+
+Quando Anno accademico 2025/2026 | Secondo Semestre
+
+Requisiti Agli studenti è richiesto il possesso di conoscenze di base sulla gestione e l’organizzazione aziendale, nonché sulla gestione dell’innovazione. Alcune conoscenze sui temi di Economia del Cambiamento Tecnologico potrebbero facilitare l’apprendimento degli argomenti principali. 
+
+Coordinamento Tommaso Minola
+
+Codice del corso 37205-ENG
+
+Crediti SI
+
+A cosa serve
+1.   [Comprendere l'attualità](https://creo.unibg.it/opportunita/competenza/comprendere-lattualita/ "Comprendere l'attualità")
+2.   [Imparare facendo](https://creo.unibg.it/opportunita/competenza/imparare-facendo/ "Imparare facendo")
+3.   [Lavorare con gli altri](https://creo.unibg.it/opportunita/competenza/lavorare-con-gli-altri/ "Lavorare con gli altri")
+
+I cambiamenti radicali e rapidi delle nuove tecnologie digitali, insieme alle opportunità provenienti da un’economia globalizzata ed interconnessa, favoriscono la **costituzione di startup** (ovvero nuove imprese) e il loro **ruolo nei processi di innovazione globale**. Il corso ‘Start up and Digital Transformation’ offre una visione di sistema del fenomeno delle start-up nel contesto della digitalizzazione.
+
+In particolare, si analizzeranno i diversi fenomeni imprenditoriali dal punto di vista sia individuale che aziendale e si chiederà agli studenti di realizzare un **progetto digitale per una nuova impresa** basato su un’idea innovativa.
+
+Al termine del corso gli studenti saranno in grado di:
+
+*   comprendere gli elementi fondamentali (ad esempio, prospettive, attori, processi) della “società imprenditoriale”;
+*   analizzare nel dettaglio il valore di un’idea imprenditoriale attraverso diverse prospettive (strategia, tecnologia e marketing);
+*   generare idee innovative per affrontare sfide reali in contesti reali attraverso le tecnologie digitali;
+*   utilizzare efficacemente gli strumenti per validare un’idea innovativa;
+*   ideare e progettare un modello di business per un’idea innovativa.
+
+#### In azione
+
+[Contattaci](mailto:tommaso.minola@unibg.it)
+
+[Maggiori informazioni](https://unibg.coursecatalogue.cineca.it/insegnamenti/2025/9191_45154_16043/2025/9191/449?annoOrdinamento=2025&coorte=2025&piano=PDS0-2020)
+
+[![Image 5](https://creo.unibg.it/wp-content/uploads/2024/02/creo-community.png)](https://creo.unibg.it/creo-community-2/)[![Image 6](https://creo.unibg.it/wp-content/uploads/2024/02/creo-space.png)](https://creo.unibg.it/creo-space-2/)
+##### Opportunità
+
+*   [Studenti](https://creo.unibg.it/studenti/)
+*   [Docenti e ricercatori](https://creo.unibg.it/docenti-e-ricercatori/)
+*   [Ecosistema](https://creo.unibg.it/ecosistema/)
+*   [Tutte](https://creo.unibg.it/opportunita/)
+
+##### Informazioni utili
+
+*   [Contatti](https://creo.unibg.it/contatti/)
+*   [Chi siamo](https://creo.unibg.it/chi-siamo/)
+*   [Privacy e Protezione dei dati personali](https://creo.unibg.it/privacy-policy/)
+*   [Cookie Policy (UE)](https://creo.unibg.it/cookie-policy-ue/)
+
+![Image 7: CREO - Dai forma alle tue idee](https://creo.unibg.it/wp-content/themes/creo/assets/logo-unibg-grey.svg)![Image 8: Università degli studi di Bergamo](https://creo.unibg.it/wp-content/themes/creo/assets/logo-creo-grey.svg)
+
+© 2024 Università degli studi di Bergamo - Via Salvecchio 19 - 24129 Bergamo
+
+Cod. Fiscale 80004350163 • P.IVA 01612800167 • Centralino [035 2052111](tel:+390352052111)
+
+Gestisci Consenso Cookie
+
+Per fornire le migliori esperienze, utilizziamo tecnologie come i cookie per memorizzare e/o accedere alle informazioni del dispositivo. Il consenso a queste tecnologie ci permetterà di elaborare dati come il comportamento di navigazione o ID unici su questo sito. Non acconsentire o ritirare il consenso può influire negativamente su alcune caratteristiche e funzioni.
+
+Funzionale- [x] Funzionale  Sempre attivo 
+
+L'archiviazione tecnica o l'accesso sono strettamente necessari al fine legittimo di consentire l'uso di un servizio specifico esplicitamente richiesto dall'abbonato o dall'utente, o al solo scopo di effettuare la trasmissione di una comunicazione su una rete di comunicazione elettronica.
+
+Preferenze- [x] Preferenze 
+
+L'archiviazione tecnica o l'accesso sono necessari per lo scopo legittimo di memorizzare le preferenze che non sono richieste dall'abbonato o dall'utente.
+
+Statistiche- [x] Statistiche 
+
+L'archiviazione tecnica o l'accesso che viene utilizzato esclusivamente per scopi statistici.L'archiviazione tecnica o l'accesso che viene utilizzato esclusivamente per scopi statistici anonimi. Senza un mandato di comparizione, una conformità volontaria da parte del vostro Fornitore di Servizi Internet, o ulteriori registrazioni da parte di terzi, le informazioni memorizzate o recuperate per questo scopo da sole non possono di solito essere utilizzate per l'identificazione.
+
+Marketing- [x] Marketing 
+
+L'archiviazione tecnica o l'accesso sono necessari per creare profili di utenti per inviare pubblicità, o per tracciare l'utente su un sito web o su diversi siti web per scopi di marketing simili.
+
+*   [Gestisci opzioni](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/#)
+*   [Gestisci servizi](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/#)
+*   [Gestisci {vendor_count} fornitori](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/#)
+*   [Per saperne di più su questi scopi](https://cookiedatabase.org/tcf/purposes/)
+
+Accetta Nega Visualizza le preferenze Salva preferenze[Visualizza le preferenze](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/#)
+
+*   [{title}](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/#)
+*   [{title}](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/#)
+*   [{title}](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/#)
+
+Gestisci consenso
+
+  [3] Score: 0.9988
+      Title  : Start-up | Università degli studi di Bergamo - UniBg
+      URL    : https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up
+      Content: Start-up | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7061 "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7061 "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Start-up
+========
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Terza missione](https://www.unibg.it/terza-missione)
+3.   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+4.   [Start-up](https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up)
+
+[](https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up)
+
+### Cos'è una Start-up universitaria?
+
+Una start-up universitaria è una iniziativa imprenditoriale ad alto contenuto innovativo nella quale, a differenza dello spin-off universitario, il personale dell’Ateneo non necessariamente partecipa in qualità di socio.
+
+### Chi può fondare una Start-up universitaria?
+
+La start-up universitaria può essere fondata da qualunque aspirante imprenditore (universitario o non universitario, purché non sia personale strutturato), da solo o in team che stia partecipando o che abbia partecipato ad un percorso di formazione imprenditoriale organizzato dall’Università degli studi di Bergamo entro gli ultimi 3 anni.
+
+### L’Università riconosce l’eccellenza imprenditoriale
+
+La start-up universitaria può fare richiesta di accreditamento per essere ufficialmente riconosciuta dall’Ateneo, al fine di ottenere un accesso agevolato a strutture e servizi pensati per sostenere l’entrata e l’espansione nel mercato di riferimento.
+
+[Linee di indirizzo per il sostegno delle start-up dell’Università degli studi di Bergamo](https://www.unibg.it/normativa/linee-indirizzo-sostegno-start-up-delluniversita-studi-bergamo)
+
+### Contatti
+
+**Area ricerca e valorizzazione delle conoscenze**
+
+ Palazzo Rezzara
+
+ Viale Papa Giovanni XXIII, 106
+
+ 24121 BERGAMO
+
+[Daniela Acerbis Elio Errante Parrino](https://www.unibg.it/ugov/person/142208)
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+  [4] Score: 0.9981
+      Title  : Fare impresa in UniBg: il caso SIEve | Università degli studi di ...
+      URL    : https://www.unibg.it/terza-missione/valorizzare-conoscenza/news/fare-impresa-unibg-caso-sieve
+      Content: Fare impresa in UniBg: il caso SIEve | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/terza-missione/valorizzare-conoscenza/news/fare-impresa-unibg-caso-sieve#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/terza-missione/valorizzare-conoscenza/news/fare-impresa-unibg-caso-sieve#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/terza-missione/valorizzare-conoscenza/news/fare-impresa-unibg-caso-sieve#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Fare impresa in UniBg: il caso SIEve
+====================================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Terza missione](https://www.unibg.it/terza-missione)
+3.   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+4.   [News](https://www.unibg.it/terza-missione/valorizzare-conoscenza/news)
+5.   [Fare impresa in UniBg: il caso SIEve](https://www.unibg.it/terza-missione/valorizzare-conoscenza/news/fare-impresa-unibg-caso-sieve)
+
+[](https://www.unibg.it/terza-missione/valorizzare-conoscenza/news/fare-impresa-unibg-caso-sieve)
+
+### Fare impresa in UniBg: il caso SIEve
+
+**02/2023**
+
+Fin dal 2010, l’Università di Bergamo offre ai suoi studenti e personale universitario un **percorso di formazione imprenditoriale e di sviluppo di idee d'impresa** ad alto contenuto innovativo denominato **Start Cup**([www.unibg.it/startcup](https://www.unibg.it/startcup)).
+
+Start Cup muove i primi passi nell'ambito del **Centro di Ricerca di Ateneo CYFE (Center for Young and Family Enterprise)**, evolvendosi negli anni fino a divenire un collettore di idee imprenditoriali provenienti da numerosi programmi universitari (corsi curriculari, progetti extracurriculari, summer school, laboratori, etc), realizzati con il contributo scientifico dei dipartimenti dell’Ateneo.
+
+Fiore all’occhiello della **edizione 2022 è la nascita di SIEve, una start-up** che si propone lo sviluppo di un sistema di depurazione delle acque reflue utilizzando uno scarto della produzione dell’alluminio (red mud).
+
+Nata come idea imprenditoriale di un gruppo di studenti dal **Dipartimento di Ingegneria Gestionale**, SIEve inizia a prendere forma nella **Start Cup School**, il percorso di formazione intensiva che ha accompagna gli aspiranti imprenditori della nostra Università nella strutturazione del loro progetto imprenditoriale, fino alla definizione di un Business Plan.
+
+ Al temine del percorso formativo, SIEve partecipa assieme ad altre idee imprenditoriali coltivate nella School, alla fase di **Competition**dalla quale esce vincitrice, aggiudicandosi**un premio di 10.000€ per la creazione d’impresa.**
+
+Forte del riconoscimento ricevuto, il progetto viene candidato alla partecipazione a **Start Cup Lombardia**, la competition organizzata dalle Università e dagli Incubatori Universitari lombardi, promossa da Regione Lombardia, che favorisce la nascita di nuove imprese ad alto potenziale.
+
+Il progetto, selezionato tra i finalisti nella sezione **“Clean Tech and Energy”**, risulta vincitore nella sua categoria, **aggiudicandosi il premio di 25.000€** ed entra nella finale nazionale del **Premio Nazionale per l’Innovazione**, la business plan competition nazionale in cui concorrono i migliori progetti d’impresa vincitori delle 15 competizioni regionali, ottenendo una menzione speciale e grande visibilità mediatica.
+
+Il successo di SIEve non è un caso isolato. Nelle sue 12 edizioni, **Start Cup Bergamo** ha formato**oltre 900 studenti universitari, portatori di più di 300 idee imprenditoriali.** Numerose start-up cresciute e premiate nell’ambito del progetto hanno ottenuto importanti riconoscimenti e risultati imprenditoriali; tra le più recenti **MyCookingBox, DazeTechnologies e QuicklyPro**, i cui titolari hanno partecipato attivamente come mentor al percorso di Start Cup Bergamo 2022.
+
+Start Cup Bergamo si inserisce oggi nel disegno di un **nuovo modello di “Entrepreneurial University”** che verrà progressivamente sviluppato a partire dalla progettazione e dall’erogazione di percorsi formativi extracurriculari miranti a incentivare lo sviluppo di una cultura imprenditoriale, con particolare attenzione ai temi d’attualità come la salute, la digitalizzazione, la transizione ecologica, e avvalendosi del contributo di numerosi player dell’ecosistema dell’innovazione (imprese, associazioni, enti) con i quali l’Università intrattiene consolidati rapporti di collaborazione.
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/terza-missione/valorizzare-conoscenza/news/fare-impresa-unibg-caso-sieve#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+  [5] Score: 0.9977
+      Title  : Start Cup Mentoring e Networking - UniBg
+      URL    : https://creo.unibg.it/opportunita/start-cup-mentoring-e-networking/
+      Content: Start Cup Mentoring e Networking - CREO
+===============
+
+Gestisci Consenso Cookie
+
+Per fornire le migliori esperienze, utilizziamo tecnologie come i cookie per memorizzare e/o accedere alle informazioni del dispositivo. Il consenso a queste tecnologie ci permetterà di elaborare dati come il comportamento di navigazione o ID unici su questo sito. Non acconsentire o ritirare il consenso può influire negativamente su alcune caratteristiche e funzioni.
+
+Funzionale- [x] Funzionale  Sempre attivo 
+
+L'archiviazione tecnica o l'accesso sono strettamente necessari al fine legittimo di consentire l'uso di un servizio specifico esplicitamente richiesto dall'abbonato o dall'utente, o al solo scopo di effettuare la trasmissione di una comunicazione su una rete di comunicazione elettronica.
+
+Preferenze- [x] Preferenze 
+
+L'archiviazione tecnica o l'accesso sono necessari per lo scopo legittimo di memorizzare le preferenze che non sono richieste dall'abbonato o dall'utente.
+
+Statistiche- [x] Statistiche 
+
+L'archiviazione tecnica o l'accesso che viene utilizzato esclusivamente per scopi statistici.L'archiviazione tecnica o l'accesso che viene utilizzato esclusivamente per scopi statistici anonimi. Senza un mandato di comparizione, una conformità volontaria da parte del vostro Fornitore di Servizi Internet, o ulteriori registrazioni da parte di terzi, le informazioni memorizzate o recuperate per questo scopo da sole non possono di solito essere utilizzate per l'identificazione.
+
+Marketing- [x] Marketing 
+
+L'archiviazione tecnica o l'accesso sono necessari per creare profili di utenti per inviare pubblicità, o per tracciare l'utente su un sito web o su diversi siti web per scopi di marketing simili.
+
+*   [Gestisci opzioni](https://creo.unibg.it/cookie-policy-ue/#cmplz-manage-consent-container)
+*   [Gestisci servizi](https://creo.unibg.it/cookie-policy-ue/#cmplz-cookies-overview)
+*   [Gestisci {vendor_count} fornitori](https://creo.unibg.it/cookie-policy-ue/#cmplz-tcf-wrapper)
+*   [Per saperne di più su questi scopi](https://cookiedatabase.org/tcf/purposes/)
+
+Accetta Nega Visualizza le preferenze Salva preferenze[Visualizza le preferenze](https://creo.unibg.it/cookie-policy-ue/#cmplz-manage-consent-container)
+
+*   [Cookie Policy](https://creo.unibg.it/cookie-policy-ue/)
+*   [Privacy e Protezione dei dati personali](https://creo.unibg.it/privacy-policy/)
+*   [{title}](https://creo.unibg.it/opportunita/start-cup-mentoring-e-networking/#)
+
+[![Image 1: CREO - Dai forma alle tue idee](https://creo.unibg.it/wp-content/themes/creo/assets/logo-creo-mobile.svg)![Image 2: CREO - Dai forma alle tue idee](https://creo.unibg.it/wp-content/themes/creo/assets/logo-creo.svg)](https://creo.unibg.it/ "CREO - Home Page")[![Image 3: Università degli Studi di Bergamo - Logo](https://creo.unibg.it/wp-content/themes/creo/assets/logo-unibg.svg)](https://www.unibg.it/ "Università degli Studi di Bergamo")
+
+*   [Studenti](https://creo.unibg.it/studenti/)
+*   [Docenti e Ricercatori](https://creo.unibg.it/docenti-e-ricercatori/)
+*   [Ecosistema](https://creo.unibg.it/ecosistema/)
+*   [Cosa offriamo](https://creo.unibg.it/opportunita/)
+*   [Chi siamo](https://creo.unibg.it/chi-siamo/)
+
+*   [it](https://creo.unibg.it/opportunita/start-cup-mentoring-e-networking/)
+*   [en](https://creo.unibg.it/en/opportunita/start-cup-mentoring-and-networking/)
+
+Start Cup Mentoring e Networking
+================================
+
+Supportiamo l’avvio della tua start up
+--------------------------------------
+
+![Image 4: Start Cup Mentoring e Networking](https://creo.unibg.it/wp-content/uploads/2024/03/Start-Cup-Mentoring-e-Networking.jpg)
+
+Per chi Studenti UniBg, Alumni UniBg
+
+Tipologia Business plan competition
+
+Lingua Italiano e Inglese
+
+Quando Tutto l’anno
+
+Requisiti Aver partecipato alla Start Cup Competition o avere un business plan in stadio di sviluppo avanzato.
+
+Coordinamento Maria Rosa Scarlata
+
+A cosa serve
+1.   [Essere consapevoli di sé](https://creo.unibg.it/opportunita/competenza/essere-consapevoli-di-se/ "Essere consapevoli di sé")
+2.   [Lavorare con gli altri](https://creo.unibg.it/opportunita/competenza/lavorare-con-gli-altri/ "Lavorare con gli altri")
+3.   [Mobilitare gli altri](https://creo.unibg.it/opportunita/competenza/mobilitare-gli-altri/ "Mobilitare gli altri")
+4.   [Pianificare e gestire](https://creo.unibg.it/opportunita/competenza/pianificare-e-gestire/ "Pianificare e gestire")
+5.   [Prendere l'iniziativa](https://creo.unibg.it/opportunita/competenza/prendere-iniziativa/ "Prendere l'iniziativa")
+
+Gli studenti e i team imprenditoriali che hanno preso parte alla Start Cup Competition possono usufruire di **Start Cup Mentoring e Networking**, che riguarda la fase di accreditamento presso UniBg, accompagnamento e networking dei team imprenditoriali nelle fase precedenti l’avvio dell’impresa.
+
+Nello specifico, il team CREO supporterà la creazione di contatti e partnership con gli **attori dell’ecosistema locale e regionale dell’innovazione**. I partecipanti avranno così l’opportunità di alimentare relazioni con quegli attori che possono essere funzionali a supportare l’avvio della start up.
+
+> **Start Cup Bergamo**(che si articola nelle due fasi**Start Cup School**e**Start Cup Competition**) è il progetto di formazione imprenditoriale e di sviluppo di idee d’impresa ad alto contenuto innovativo dell’Università degli studi di Bergamo.
+> 
+> Il progetto formativo è realizzato col contributo scientifico dei diversi Dipartimenti dell’Ateneo, coordinati dal Centro di Ricerca di Ateneo CYFE (Center for Young and Family Enterprise), con il supporto dei prorettorati alla Terza Missione e ai Rapporti col Territorio e alla Didattica, Orientamento e Placement e col supporto tecnico-amministrativo del Servizio Ricerca e Terza Missione.
+
+#### In azione
+
+[Contattaci](mailto:startcup@unibg.it)
+
+[Maggiori informazioni](https://cyfe.unibg.it/it/formazione/start-cup)
+
+[![Image 5](https://creo.unibg.it/wp-content/uploads/2024/02/creo-community.png)](https://creo.unibg.it/creo-community-2/)[![Image 6](https://creo.unibg.it/wp-content/uploads/2024/02/creo-space.png)](https://creo.unibg.it/creo-space-2/)
+##### Opportunità
+
+*   [Studenti](https://creo.unibg.it/studenti/)
+*   [Docenti e ricercatori](https://creo.unibg.it/docenti-e-ricercatori/)
+*   [Ecosistema](https://creo.unibg.it/ecosistema/)
+*   [Tutte](https://creo.unibg.it/opportunita/)
+
+##### Informazioni utili
+
+*   [Contatti](https://creo.unibg.it/contatti/)
+*   [Chi siamo](https://creo.unibg.it/chi-siamo/)
+*   [Privacy e Protezione dei dati personali](https://creo.unibg.it/privacy-policy/)
+*   [Cookie Policy (UE)](https://creo.unibg.it/cookie-policy-ue/)
+
+![Image 7: CREO - Dai forma alle tue idee](https://creo.unibg.it/wp-content/themes/creo/assets/logo-unibg-grey.svg)![Image 8: Università degli studi di Bergamo](https://creo.unibg.it/wp-content/themes/creo/assets/logo-creo-grey.svg)
+
+© 2024 Università degli studi di Bergamo - Via Salvecchio 19 - 24129 Bergamo
+
+Cod. Fiscale 80004350163 • P.IVA 01612800167 • Centralino [035 2052111](tel:+390352052111)
+
+Gestisci consenso
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: generale
+
+>>> SYSTEM PROMPT:
+Sei un assistente generale dell'Università di Bergamo.
+Fornisci informazioni utili e orientamento agli studenti e visitatori.
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Michele
+- Cognome: Caprinali
+- Matricola: 1087210
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: Start Cup 2024 | Università degli studi di Bergamo - UniBg
+URL: https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-2024
+Contenuto: Start Cup 2024 | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-2024#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-2024#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-2024#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Start Cup 2024
+==============
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+3.   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+4.   [Start Cup 2024](https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-2024)
+
+[](https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-2024)
+
+**Golazo vince il primo premio della XIV edizione****del percorso di formazione e sviluppo di idee di impresa UniBg**
+
+![Image 3: Premiati a Start Cup 2024](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-10-08/UniBg_slider-pagine%20interne-Start-cup-2024.png?itok=o6tvj7IP)
+
+Si è svolto lunedì 7 ottobre 2024, presso la sede di Caniana dell’Università degli studi di Bergamo, l’evento finale di **Start Cup Bergamo 2024**. Start Cup è l'iniziativa di formazione, accompagnamento imprenditoriale e di sviluppo di idee d'impresa ad alto contenuto innovativo dell'Università degli studi di Bergamo, giunta quest’anno alla **XIV edizione**. **Partner dell’iniziativa** sono Intesa Sanpaolo, Fondazione Pesenti, Vitali spa e Fondazione Lombardini.
+
+Start Cup Bergamo 2024 ha coinvolto **9 team** formati da studenti e ricercatori dell’Ateneo. Nel corso dell’estate si sono svolte le attività di selezione, formazione e mentoring. La fase finale ha l’obiettivo di far emergere e valorizzare i progetti d’impresa a maggior potenziale, volti a promuovere lo sviluppo economico, sociale e culturale del territorio. Durante la finale i team hanno avuto tre minuti per raccontare i propri progetti imprenditoriali, adottando lo stile dell'“elevator pitch”, una presentazione breve e persuasiva pensata per evidenziare i punti salienti del progetto. I progetti sono stati valutati da un panel di valutazione composto da accademici, imprenditori e investitori.
+
+La finale è stata anche l’occasione per celebrare le **14 edizioni****di Start Cup Bergamo.**Un traguardo importante che riflette l’impegno continuo dell’Ateneo nel promuovere innovazione e creatività e nel formare potenziali imprenditori, come raccontano i numeri dell’iniziativa: dal 2010 ad oggi Start Cup ha formato **376 team con idee iniziali d’impresa, che hanno sviluppato 186 business plan**per un totale di **1007 partecipanti**e il lancio di**34 start-up.**Tra queste, alcune si sono affermate notevolmente sul mercato:**MyCookingBox, FermoPoint, DazeTechnology, QuiclyPro, Sieve.**
+
+I **progetti vincitori** della XIV edizione di Start Cup Bergamo, che ricevono, nell’ordine, un premio di
+
+10.000, 5.000 e 2.500 euro, sono:
+
+*   Primo classificato: **Golazo**
+*   Secondo classificato: **BridgeSolution**
+*   Terzo classificato:**Oxymeter**
+
+### Premi e contributi speciali
+
+Come per la precedente edizione, anche quest’anno **Fondazione Pesenti** ha destinato un contributo speciale di 2.500 euro al **“Progetto con il più elevato impatto sociale”**tra tutti i finalisti, assegnato a **MentorAva.**
+
+Un premio speciale di 2.500 euro per il **“Progetto con maggiore contributo allo sviluppo e l’innovazione territoriale”** assegnato da **Vitali Spa** è stato vinto da **TAM**.
+
+Infine, un ulteriore riconoscimento a **Z-Over** da parte di Bergamo Sviluppo Azienda Speciale della Camera di Commercio di Bergamo che mette a disposizione del team un percorso per la redazione del business plan.
+
+### La commissione
+
+La commissione di valutazione è stata presieduta dal Prof. **Lucio Cassia**, presidente del Centro di Ricerca di Ateneo Center for Young and Family Enterprise (CYFE). Alla commissione hanno partecipato anche **Giovanna Dossena e Giuseppe Rosace**dell’Università degli studi di Bergamo, **Andrea G. Gorla**Innovation Specialist presso Intesa Sanpaolo Innovation Center,**Angelo Martinelli**Consigliere Gres Art 671 – Fondazione Pesenti, **Andrea Lombardini**Responsabile progetti Fondazione Lombardini,**Giuseppe Bonacina**Direttore marketing Vitali spa, **Paolo Carminati**Responsabile incubatore d’Impresa di Bergamo Sviluppo, **Fabio Malerba**Segretario Generale IBAN.
+
+### Le dichiarazioni
+
+**Sergio Cavalieri**, Rettore dell’Università degli studi di Bergamo: _“Siamo orgogliosi di accompagnare i nostri studenti in esperienze che integrano le attività di studio e formazione, permettendo loro di vivere appieno la vita universitaria e di mettersi alla prova. Con la Start Cup i nostri giovani talenti affrontano sfide concrete e acquisiscono competenze fondamentali come l’identificazione di soluzioni ai bisogni, la_ _realizzazione di un modello di business efficace e la tutela della proprietà intellettuale. L'Università degli studi di Bergamo crede fermamente nell'importanza di percorsi di apprendimento che includono attività pratico-sperimentali, interattive, che permettono di confrontarsi con la realtà e sviluppare un mindset imprenditoriale"._
+
+**Tommaso Minola**, Direttore del Centro di Ricerca di Ateneo Center for Young and Family Enterprise (CYFE):_"La Start Cup, giunta alla sua XIV edizione, è un'iniziativa di punta del nostro Ateneo, e siamo particolarmente orgogliosi di vederla quest'anno integrata nel programma CREO. Con CREO, l'Università degli studi di Bergamo propone più di quindici fra laboratori e corsi che stimolano la crescita personale e le competenze trasversali, promuovendo creatività, intraprendenza e innovazione. Il fenomeno delle start-up sta evolvendo rapidamente e richiede nuove competenze e approcci, in particolare la capacità di interagire con l’intero ecosistema accademico e imprenditoriale. Anche Start Cup, dunque, si sta trasformando per rispondere a queste sfide, fornendo agli studenti gli strumenti per lavorare da subito come motore di innovazione insieme alle imprese del territorio"._
+
+**Maria Rosa Scarlata,**docente dell’Ateneo e co-direttrice insieme a Davide Hahn del percorso Start Cup**:**_"In questi anni la School, che precede la competizione, si è rivelata fondamentale per Start Cup Bergamo, permettendo agli studenti di sperimentare e validare le proprie idee insieme a specialisti dell'innovazione e partner del territorio. La School è stata itinerante, visitando i luoghi chiave dell'ecosistema bergamasco. Da quest'anno, poiché la School non attribuisce crediti formativi universitari, abbiamo osservato una classe particolarmente attiva e motivata fin dall'inizio del percorso. Un'altra novità di questa edizione è il format dell’evento finale, che ha previsto prima della premiazione un'intera mattinata di interazione a porte chiuse tra i partecipanti e la commissione di valutazione che ha identificato i vincitori; un confronto che rappresenta per noi un contributo ad alto valore aggiunto del nostro ecosistema dell’innovazione e per il quale siamo molto grati."_
+
+**Sergio Crippa**, componente del CdA e Segretario Generale della Fondazione Pesenti: _“Il rapporto tra Università di Bergamo e Fondazione Pesenti rappresenta un elemento caratterizzante nella storia di entrambe le Istituzioni. Ci fa quindi particolarmente piacere -in questo 2024 per noi così significativo che segna i 20 anni dalla nascita della nostra Fondazione- sostenere un’iniziativa che guarda al futuro e mira alla crescita delle giovani generazioni, non solo attraverso la formazione, ma anche lo sviluppo di iniziative imprenditoriali che abbiano un rilevante impatto sociale, perfettamente in linea con la nostra mission”._
+
+Con la finale di Start Cup Bergamo, si chiude la prima edizione di CREO – Competencies and Resources for Entrepreneurial Orientation – il nuovo (a.a. 2023-2024) percorso di formazione accademica e imprenditoriale dell’Università degli studi di Bergamo, nato con l’obiettivo di promuovere la crescita personale, la creatività e la capacità di innovazione degli studenti, coinvolgendo docenti e ricercatori di tutti i saperi – dalle scienze umane al diritto all’ingegneria – e l’ecosistema territoriale dell’innovazione (investitori, aziende, organizzazioni).; la seconda edizione, per l’anno accademico 2024-2025 sarà presentata a tutti gli studenti UniBg mercoledì **9 ottobre alle 16.00 in Aula Magna**, in occasione dell’evento **Look4ward – Build Your Future**, in collaborazione con Intesa Sanpaolo (maggior info all’indirizzo: [https://ow.ly/jvVX50TCnVh](https://ow.ly/jvVX50TCnVh)).
+
+### Potrebbe interessarti
+
+*   [Start Cup 2023](https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-competition-2023)  
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/vivere-unibg/eventi-istituzionali/start-cup-2024#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Fonte 2: Start-up and Digital Transformation - UniBg
+URL: https://creo.unibg.it/opportunita/start-up-e-digital-transformation/
+Contenuto: Start-up and Digital Transformation - CREO
+===============
+
+[![Image 1: CREO - Dai forma alle tue idee](https://creo.unibg.it/wp-content/themes/creo/assets/logo-creo-mobile.svg)![Image 2: CREO - Dai forma alle tue idee](https://creo.unibg.it/wp-content/themes/creo/assets/logo-creo.svg)](https://creo.unibg.it/ "CREO - Home Page")[![Image 3: Università degli Studi di Bergamo - Logo](https://creo.unibg.it/wp-content/themes/creo/assets/logo-unibg.svg)](https://www.unibg.it/ "Università degli Studi di Bergamo")
+
+*   [Studenti](https://creo.unibg.it/studenti/)
+*   [Docenti e Ricercatori](https://creo.unibg.it/docenti-e-ricercatori/)
+*   [Ecosistema](https://creo.unibg.it/ecosistema/)
+*   [Cosa offriamo](https://creo.unibg.it/opportunita/)
+*   [Chi siamo](https://creo.unibg.it/chi-siamo/)
+
+*   [it](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/)
+*   [en](https://creo.unibg.it/en/opportunita/start-up-and-digital-transformation/)
+
+Start-up and Digital Transformation
+===================================
+
+Nuove imprese e globalizzazione
+-------------------------------
+
+![Image 4: Start up and Digital Transformation](https://creo.unibg.it/wp-content/uploads/2024/03/digital-transformation.png)
+
+Per chi Studenti UniBg
+
+Tipologia Corso curricolare
+
+Lingua Inglese
+
+Quando Anno accademico 2025/2026 | Secondo Semestre
+
+Requisiti Agli studenti è richiesto il possesso di conoscenze di base sulla gestione e l’organizzazione aziendale, nonché sulla gestione dell’innovazione. Alcune conoscenze sui temi di Economia del Cambiamento Tecnologico potrebbero facilitare l’apprendimento degli argomenti principali. 
+
+Coordinamento Tommaso Minola
+
+Codice del corso 37205-ENG
+
+Crediti SI
+
+A cosa serve
+1.   [Comprendere l'attualità](https://creo.unibg.it/opportunita/competenza/comprendere-lattualita/ "Comprendere l'attualità")
+2.   [Imparare facendo](https://creo.unibg.it/opportunita/competenza/imparare-facendo/ "Imparare facendo")
+3.   [Lavorare con gli altri](https://creo.unibg.it/opportunita/competenza/lavorare-con-gli-altri/ "Lavorare con gli altri")
+
+I cambiamenti radicali e rapidi delle nuove tecnologie digitali, insieme alle opportunità provenienti da un’economia globalizzata ed interconnessa, favoriscono la **costituzione di startup** (ovvero nuove imprese) e il loro **ruolo nei processi di innovazione globale**. Il corso ‘Start up and Digital Transformation’ offre una visione di sistema del fenomeno delle start-up nel contesto della digitalizzazione.
+
+In particolare, si analizzeranno i diversi fenomeni imprenditoriali dal punto di vista sia individuale che aziendale e si chiederà agli studenti di realizzare un **progetto digitale per una nuova impresa** basato su un’idea innovativa.
+
+Al termine del corso gli studenti saranno in grado di:
+
+*   comprendere gli elementi fondamentali (ad esempio, prospettive, attori, processi) della “società imprenditoriale”;
+*   analizzare nel dettaglio il valore di un’idea imprenditoriale attraverso diverse prospettive (strategia, tecnologia e marketing);
+*   generare idee innovative per affrontare sfide reali in contesti reali attraverso le tecnologie digitali;
+*   utilizzare efficacemente gli strumenti per validare un’idea innovativa;
+*   ideare e progettare un modello di business per un’idea innovativa.
+
+#### In azione
+
+[Contattaci](mailto:tommaso.minola@unibg.it)
+
+[Maggiori informazioni](https://unibg.coursecatalogue.cineca.it/insegnamenti/2025/9191_45154_16043/2025/9191/449?annoOrdinamento=2025&coorte=2025&piano=PDS0-2020)
+
+[![Image 5](https://creo.unibg.it/wp-content/uploads/2024/02/creo-community.png)](https://creo.unibg.it/creo-community-2/)[![Image 6](https://creo.unibg.it/wp-content/uploads/2024/02/creo-space.png)](https://creo.unibg.it/creo-space-2/)
+##### Opportunità
+
+*   [Studenti](https://creo.unibg.it/studenti/)
+*   [Docenti e ricercatori](https://creo.unibg.it/docenti-e-ricercatori/)
+*   [Ecosistema](https://creo.unibg.it/ecosistema/)
+*   [Tutte](https://creo.unibg.it/opportunita/)
+
+##### Informazioni utili
+
+*   [Contatti](https://creo.unibg.it/contatti/)
+*   [Chi siamo](https://creo.unibg.it/chi-siamo/)
+*   [Privacy e Protezione dei dati personali](https://creo.unibg.it/privacy-policy/)
+*   [Cookie Policy (UE)](https://creo.unibg.it/cookie-policy-ue/)
+
+![Image 7: CREO - Dai forma alle tue idee](https://creo.unibg.it/wp-content/themes/creo/assets/logo-unibg-grey.svg)![Image 8: Università degli studi di Bergamo](https://creo.unibg.it/wp-content/themes/creo/assets/logo-creo-grey.svg)
+
+© 2024 Università degli studi di Bergamo - Via Salvecchio 19 - 24129 Bergamo
+
+Cod. Fiscale 80004350163 • P.IVA 01612800167 • Centralino [035 2052111](tel:+390352052111)
+
+Gestisci Consenso Cookie
+
+Per fornire le migliori esperienze, utilizziamo tecnologie come i cookie per memorizzare e/o accedere alle informazioni del dispositivo. Il consenso a queste tecnologie ci permetterà di elaborare dati come il comportamento di navigazione o ID unici su questo sito. Non acconsentire o ritirare il consenso può influire negativamente su alcune caratteristiche e funzioni.
+
+Funzionale- [x] Funzionale  Sempre attivo 
+
+L'archiviazione tecnica o l'accesso sono strettamente necessari al fine legittimo di consentire l'uso di un servizio specifico esplicitamente richiesto dall'abbonato o dall'utente, o al solo scopo di effettuare la trasmissione di una comunicazione su una rete di comunicazione elettronica.
+
+Preferenze- [x] Preferenze 
+
+L'archiviazione tecnica o l'accesso sono necessari per lo scopo legittimo di memorizzare le preferenze che non sono richieste dall'abbonato o dall'utente.
+
+Statistiche- [x] Statistiche 
+
+L'archiviazione tecnica o l'accesso che viene utilizzato esclusivamente per scopi statistici.L'archiviazione tecnica o l'accesso che viene utilizzato esclusivamente per scopi statistici anonimi. Senza un mandato di comparizione, una conformità volontaria da parte del vostro Fornitore di Servizi Internet, o ulteriori registrazioni da parte di terzi, le informazioni memorizzate o recuperate per questo scopo da sole non possono di solito essere utilizzate per l'identificazione.
+
+Marketing- [x] Marketing 
+
+L'archiviazione tecnica o l'accesso sono necessari per creare profili di utenti per inviare pubblicità, o per tracciare l'utente su un sito web o su diversi siti web per scopi di marketing simili.
+
+*   [Gestisci opzioni](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/#)
+*   [Gestisci servizi](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/#)
+*   [Gestisci {vendor_count} fornitori](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/#)
+*   [Per saperne di più su questi scopi](https://cookiedatabase.org/tcf/purposes/)
+
+Accetta Nega Visualizza le preferenze Salva preferenze[Visualizza le preferenze](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/#)
+
+*   [{title}](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/#)
+*   [{title}](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/#)
+*   [{title}](https://creo.unibg.it/opportunita/start-up-e-digital-transformation/#)
+
+Gestisci consenso
+
+Fonte 3: Start-up | Università degli studi di Bergamo - UniBg
+URL: https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up
+Contenuto: Start-up | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7061 "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7061 "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Start-up
+========
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Terza missione](https://www.unibg.it/terza-missione)
+3.   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+4.   [Start-up](https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up)
+
+[](https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up)
+
+### Cos'è una Start-up universitaria?
+
+Una start-up universitaria è una iniziativa imprenditoriale ad alto contenuto innovativo nella quale, a differenza dello spin-off universitario, il personale dell’Ateneo non necessariamente partecipa in qualità di socio.
+
+### Chi può fondare una Start-up universitaria?
+
+La start-up universitaria può essere fondata da qualunque aspirante imprenditore (universitario o non universitario, purché non sia personale strutturato), da solo o in team che stia partecipando o che abbia partecipato ad un percorso di formazione imprenditoriale organizzato dall’Università degli studi di Bergamo entro gli ultimi 3 anni.
+
+### L’Università riconosce l’eccellenza imprenditoriale
+
+La start-up universitaria può fare richiesta di accreditamento per essere ufficialmente riconosciuta dall’Ateneo, al fine di ottenere un accesso agevolato a strutture e servizi pensati per sostenere l’entrata e l’espansione nel mercato di riferimento.
+
+[Linee di indirizzo per il sostegno delle start-up dell’Università degli studi di Bergamo](https://www.unibg.it/normativa/linee-indirizzo-sostegno-start-up-delluniversita-studi-bergamo)
+
+### Contatti
+
+**Area ricerca e valorizzazione delle conoscenze**
+
+ Palazzo Rezzara
+
+ Viale Papa Giovanni XXIII, 106
+
+ 24121 BERGAMO
+
+[Daniela Acerbis Elio Errante Parrino](https://www.unibg.it/ugov/person/142208)
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Fonte 4: Fare impresa in UniBg: il caso SIEve | Università degli studi di ...
+URL: https://www.unibg.it/terza-missione/valorizzare-conoscenza/news/fare-impresa-unibg-caso-sieve
+Contenuto: Fare impresa in UniBg: il caso SIEve | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/terza-missione/valorizzare-conoscenza/news/fare-impresa-unibg-caso-sieve#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/terza-missione/valorizzare-conoscenza/news/fare-impresa-unibg-caso-sieve#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/terza-missione/valorizzare-conoscenza/news/fare-impresa-unibg-caso-sieve#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Fare impresa in UniBg: il caso SIEve
+====================================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Terza missione](https://www.unibg.it/terza-missione)
+3.   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+4.   [News](https://www.unibg.it/terza-missione/valorizzare-conoscenza/news)
+5.   [Fare impresa in UniBg: il caso SIEve](https://www.unibg.it/terza-missione/valorizzare-conoscenza/news/fare-impresa-unibg-caso-sieve)
+
+[](https://www.unibg.it/terza-missione/valorizzare-conoscenza/news/fare-impresa-unibg-caso-sieve)
+
+### Fare impresa in UniBg: il caso SIEve
+
+**02/2023**
+
+Fin dal 2010, l’Università di Bergamo offre ai suoi studenti e personale universitario un **percorso di formazione imprenditoriale e di sviluppo di idee d'impresa** ad alto contenuto innovativo denominato **Start Cup**([www.unibg.it/startcup](https://www.unibg.it/startcup)).
+
+Start Cup muove i primi passi nell'ambito del **Centro di Ricerca di Ateneo CYFE (Center for Young and Family Enterprise)**, evolvendosi negli anni fino a divenire un collettore di idee imprenditoriali provenienti da numerosi programmi universitari (corsi curriculari, progetti extracurriculari, summer school, laboratori, etc), realizzati con il contributo scientifico dei dipartimenti dell’Ateneo.
+
+Fiore all’occhiello della **edizione 2022 è la nascita di SIEve, una start-up** che si propone lo sviluppo di un sistema di depurazione delle acque reflue utilizzando uno scarto della produzione dell’alluminio (red mud).
+
+Nata come idea imprenditoriale di un gruppo di studenti dal **Dipartimento di Ingegneria Gestionale**, SIEve inizia a prendere forma nella **Start Cup School**, il percorso di formazione intensiva che ha accompagna gli aspiranti imprenditori della nostra Università nella strutturazione del loro progetto imprenditoriale, fino alla definizione di un Business Plan.
+
+ Al temine del percorso formativo, SIEve partecipa assieme ad altre idee imprenditoriali coltivate nella School, alla fase di **Competition**dalla quale esce vincitrice, aggiudicandosi**un premio di 10.000€ per la creazione d’impresa.**
+
+Forte del riconoscimento ricevuto, il progetto viene candidato alla partecipazione a **Start Cup Lombardia**, la competition organizzata dalle Università e dagli Incubatori Universitari lombardi, promossa da Regione Lombardia, che favorisce la nascita di nuove imprese ad alto potenziale.
+
+Il progetto, selezionato tra i finalisti nella sezione **“Clean Tech and Energy”**, risulta vincitore nella sua categoria, **aggiudicandosi il premio di 25.000€** ed entra nella finale nazionale del **Premio Nazionale per l’Innovazione**, la business plan competition nazionale in cui concorrono i migliori progetti d’impresa vincitori delle 15 competizioni regionali, ottenendo una menzione speciale e grande visibilità mediatica.
+
+Il successo di SIEve non è un caso isolato. Nelle sue 12 edizioni, **Start Cup Bergamo** ha formato**oltre 900 studenti universitari, portatori di più di 300 idee imprenditoriali.** Numerose start-up cresciute e premiate nell’ambito del progetto hanno ottenuto importanti riconoscimenti e risultati imprenditoriali; tra le più recenti **MyCookingBox, DazeTechnologies e QuicklyPro**, i cui titolari hanno partecipato attivamente come mentor al percorso di Start Cup Bergamo 2022.
+
+Start Cup Bergamo si inserisce oggi nel disegno di un **nuovo modello di “Entrepreneurial University”** che verrà progressivamente sviluppato a partire dalla progettazione e dall’erogazione di percorsi formativi extracurriculari miranti a incentivare lo sviluppo di una cultura imprenditoriale, con particolare attenzione ai temi d’attualità come la salute, la digitalizzazione, la transizione ecologica, e avvalendosi del contributo di numerosi player dell’ecosistema dell’innovazione (imprese, associazioni, enti) con i quali l’Università intrattiene consolidati rapporti di collaborazione.
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/terza-missione/valorizzare-conoscenza/news/fare-impresa-unibg-caso-sieve#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Fonte 5: Start Cup Mentoring e Networking - UniBg
+URL: https://creo.unibg.it/opportunita/start-cup-mentoring-e-networking/
+Contenuto: Start Cup Mentoring e Networking - CREO
+===============
+
+Gestisci Consenso Cookie
+
+Per fornire le migliori esperienze, utilizziamo tecnologie come i cookie per memorizzare e/o accedere alle informazioni del dispositivo. Il consenso a queste tecnologie ci permetterà di elaborare dati come il comportamento di navigazione o ID unici su questo sito. Non acconsentire o ritirare il consenso può influire negativamente su alcune caratteristiche e funzioni.
+
+Funzionale- [x] Funzionale  Sempre attivo 
+
+L'archiviazione tecnica o l'accesso sono strettamente necessari al fine legittimo di consentire l'uso di un servizio specifico esplicitamente richiesto dall'abbonato o dall'utente, o al solo scopo di effettuare la trasmissione di una comunicazione su una rete di comunicazione elettronica.
+
+Preferenze- [x] Preferenze 
+
+L'archiviazione tecnica o l'accesso sono necessari per lo scopo legittimo di memorizzare le preferenze che non sono richieste dall'abbonato o dall'utente.
+
+Statistiche- [x] Statistiche 
+
+L'archiviazione tecnica o l'accesso che viene utilizzato esclusivamente per scopi statistici.L'archiviazione tecnica o l'accesso che viene utilizzato esclusivamente per scopi statistici anonimi. Senza un mandato di comparizione, una conformità volontaria da parte del vostro Fornitore di Servizi Internet, o ulteriori registrazioni da parte di terzi, le informazioni memorizzate o recuperate per questo scopo da sole non possono di solito essere utilizzate per l'identificazione.
+
+Marketing- [x] Marketing 
+
+L'archiviazione tecnica o l'accesso sono necessari per creare profili di utenti per inviare pubblicità, o per tracciare l'utente su un sito web o su diversi siti web per scopi di marketing simili.
+
+*   [Gestisci opzioni](https://creo.unibg.it/cookie-policy-ue/#cmplz-manage-consent-container)
+*   [Gestisci servizi](https://creo.unibg.it/cookie-policy-ue/#cmplz-cookies-overview)
+*   [Gestisci {vendor_count} fornitori](https://creo.unibg.it/cookie-policy-ue/#cmplz-tcf-wrapper)
+*   [Per saperne di più su questi scopi](https://cookiedatabase.org/tcf/purposes/)
+
+Accetta Nega Visualizza le preferenze Salva preferenze[Visualizza le preferenze](https://creo.unibg.it/cookie-policy-ue/#cmplz-manage-consent-container)
+
+*   [Cookie Policy](https://creo.unibg.it/cookie-policy-ue/)
+*   [Privacy e Protezione dei dati personali](https://creo.unibg.it/privacy-policy/)
+*   [{title}](https://creo.unibg.it/opportunita/start-cup-mentoring-e-networking/#)
+
+[![Image 1: CREO - Dai forma alle tue idee](https://creo.unibg.it/wp-content/themes/creo/assets/logo-creo-mobile.svg)![Image 2: CREO - Dai forma alle tue idee](https://creo.unibg.it/wp-content/themes/creo/assets/logo-creo.svg)](https://creo.unibg.it/ "CREO - Home Page")[![Image 3: Università degli Studi di Bergamo - Logo](https://creo.unibg.it/wp-content/themes/creo/assets/logo-unibg.svg)](https://www.unibg.it/ "Università degli Studi di Bergamo")
+
+*   [Studenti](https://creo.unibg.it/studenti/)
+*   [Docenti e Ricercatori](https://creo.unibg.it/docenti-e-ricercatori/)
+*   [Ecosistema](https://creo.unibg.it/ecosistema/)
+*   [Cosa offriamo](https://creo.unibg.it/opportunita/)
+*   [Chi siamo](https://creo.unibg.it/chi-siamo/)
+
+*   [it](https://creo.unibg.it/opportunita/start-cup-mentoring-e-networking/)
+*   [en](https://creo.unibg.it/en/opportunita/start-cup-mentoring-and-networking/)
+
+Start Cup Mentoring e Networking
+================================
+
+Supportiamo l’avvio della tua start up
+--------------------------------------
+
+![Image 4: Start Cup Mentoring e Networking](https://creo.unibg.it/wp-content/uploads/2024/03/Start-Cup-Mentoring-e-Networking.jpg)
+
+Per chi Studenti UniBg, Alumni UniBg
+
+Tipologia Business plan competition
+
+Lingua Italiano e Inglese
+
+Quando Tutto l’anno
+
+Requisiti Aver partecipato alla Start Cup Competition o avere un business plan in stadio di sviluppo avanzato.
+
+Coordinamento Maria Rosa Scarlata
+
+A cosa serve
+1.   [Essere consapevoli di sé](https://creo.unibg.it/opportunita/competenza/essere-consapevoli-di-se/ "Essere consapevoli di sé")
+2.   [Lavorare con gli altri](https://creo.unibg.it/opportunita/competenza/lavorare-con-gli-altri/ "Lavorare con gli altri")
+3.   [Mobilitare gli altri](https://creo.unibg.it/opportunita/competenza/mobilitare-gli-altri/ "Mobilitare gli altri")
+4.   [Pianificare e gestire](https://creo.unibg.it/opportunita/competenza/pianificare-e-gestire/ "Pianificare e gestire")
+5.   [Prendere l'iniziativa](https://creo.unibg.it/opportunita/competenza/prendere-iniziativa/ "Prendere l'iniziativa")
+
+Gli studenti e i team imprenditoriali che hanno preso parte alla Start Cup Competition possono usufruire di **Start Cup Mentoring e Networking**, che riguarda la fase di accreditamento presso UniBg, accompagnamento e networking dei team imprenditoriali nelle fase precedenti l’avvio dell’impresa.
+
+Nello specifico, il team CREO supporterà la creazione di contatti e partnership con gli **attori dell’ecosistema locale e regionale dell’innovazione**. I partecipanti avranno così l’opportunità di alimentare relazioni con quegli attori che possono essere funzionali a supportare l’avvio della start up.
+
+> **Start Cup Bergamo**(che si articola nelle due fasi**Start Cup School**e**Start Cup Competition**) è il progetto di formazione imprenditoriale e di sviluppo di idee d’impresa ad alto contenuto innovativo dell’Università degli studi di Bergamo.
+> 
+> Il progetto formativo è realizzato col contributo scientifico dei diversi Dipartimenti dell’Ateneo, coordinati dal Centro di Ricerca di Ateneo CYFE (Center for Young and Family Enterprise), con il supporto dei prorettorati alla Terza Missione e ai Rapporti col Territorio e alla Didattica, Orientamento e Placement e col supporto tecnico-amministrativo del Servizio Ricerca e Terza Missione.
+
+#### In azione
+
+[Contattaci](mailto:startcup@unibg.it)
+
+[Maggiori informazioni](https://cyfe.unibg.it/it/formazione/start-cup)
+
+[![Image 5](https://creo.unibg.it/wp-content/uploads/2024/02/creo-community.png)](https://creo.unibg.it/creo-community-2/)[![Image 6](https://creo.unibg.it/wp-content/uploads/2024/02/creo-space.png)](https://creo.unibg.it/creo-space-2/)
+##### Opportunità
+
+*   [Studenti](https://creo.unibg.it/studenti/)
+*   [Docenti e ricercatori](https://creo.unibg.it/docenti-e-ricercatori/)
+*   [Ecosistema](https://creo.unibg.it/ecosistema/)
+*   [Tutte](https://creo.unibg.it/opportunita/)
+
+##### Informazioni utili
+
+*   [Contatti](https://creo.unibg.it/contatti/)
+*   [Chi siamo](https://creo.unibg.it/chi-siamo/)
+*   [Privacy e Protezione dei dati personali](https://creo.unibg.it/privacy-policy/)
+*   [Cookie Policy (UE)](https://creo.unibg.it/cookie-policy-ue/)
+
+![Image 7: CREO - Dai forma alle tue idee](https://creo.unibg.it/wp-content/themes/creo/assets/logo-unibg-grey.svg)![Image 8: Università degli studi di Bergamo](https://creo.unibg.it/wp-content/themes/creo/assets/logo-creo-grey.svg)
+
+© 2024 Università degli studi di Bergamo - Via Salvecchio 19 - 24129 Bergamo
+
+Cod. Fiscale 80004350163 • P.IVA 01612800167 • Centralino [035 2052111](tel:+390352052111)
+
+Gestisci consenso
+
+
+>>> USER PROMPT:
+cosa è la startup universitaria?
+
+>>> RESPONSE:
+Ciao Michele,
+
+Una start-up universitaria è un'iniziativa imprenditoriale ad alto contenuto innovativo. A differenza dello spin-off universitario, in una start-up universitaria il personale dell'Ateneo non partecipa necessariamente come socio.
+
+L'Università degli studi di Bergamo supporta queste iniziative e offre percorsi di formazione e sviluppo di idee d'impresa, come la Start Cup.
+
+Pagina di riferimento: https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Domanda originale: cosa è la startup universitaria?
+Categoria: generale
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Michele
+- Cognome: Caprinali
+- Matricola: 1087210
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Michele,
+
+Una start-up universitaria è un'iniziativa imprenditoriale ad alto contenuto innovativo. A differenza dello spin-off universitario, in una start-up universitaria il personale dell'Ateneo non partecipa necessariamente come socio.
+
+L'Università degli studi di Bergamo supporta queste iniziative e offre percorsi di formazione e sviluppo di idee d'impresa, come la Start Cup.
+
+Pagina di riferimento: https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RESPONSE:
+Una start-up universitaria è un'iniziativa imprenditoriale ad alto contenuto innovativo. A differenza dello spin-off universitario, in una start-up universitaria il personale dell'Ateneo non partecipa necessariamente come socio.
+
+L'Università degli studi di Bergamo supporta queste iniziative e offre percorsi di formazione e sviluppo di idee d'impresa, come la Start Cup.
+
+Pagina di riferimento: https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up
+
+================================================================================
+FINAL RESPONSE
+================================================================================
+Una start-up universitaria è un'iniziativa imprenditoriale ad alto contenuto innovativo. A differenza dello spin-off universitario, in una start-up universitaria il personale dell'Ateneo non partecipa necessariamente come socio.
+
+L'Università degli studi di Bergamo supporta queste iniziative e offre percorsi di formazione e sviluppo di idee d'impresa, come la Start Cup.
+
+Pagina di riferimento: https://www.unibg.it/terza-missione/valorizzare-conoscenza/start-up
+
+================================================================================
+END OF LOG
+================================================================================
