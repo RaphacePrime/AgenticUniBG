@@ -250,15 +250,6 @@ body {
   word-wrap: break-word;
 }
 
-.message-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
 .user-message {
   background: var(--primary-color);
   color: white;
@@ -266,10 +257,13 @@ body {
   margin-left: auto;
 }
 
-.user-icon,
-.agent-icon,
-.error-icon {
-  font-size: 1.25rem;
+.user-message p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.user-message .msg-sender {
+  opacity: 0.85;
 }
 
 .agent-message {
@@ -279,14 +273,19 @@ body {
   box-shadow: var(--shadow);
 }
 
-.agent-message .message-header {
-  color: var(--primary-color);
-}
-
 .agent-message p {
   color: var(--text-primary);
   line-height: 1.6;
   margin: 0.15rem 0;
+}
+
+.msg-sender {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.agent-message .msg-sender {
+  color: var(--primary-color);
 }
 
 .message-text {
@@ -314,12 +313,14 @@ body {
 }
 
 .category-badge {
+  display: inline-block;
   background: var(--primary-light);
   color: var(--primary-color);
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  margin-left: auto;
+  padding: 0.15rem 0.6rem;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
 /* Workflow Details */

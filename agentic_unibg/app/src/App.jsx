@@ -243,7 +243,7 @@ function App() {
       <div className="loading-screen">
         <div className="loading-content">
           <div className="loading-spinner"></div>
-          <h2>🎓 Agentic UniBG</h2>
+          <h2>Agentic UniBG</h2>
           <p>Caricamento in corso...</p>
         </div>
       </div>
@@ -259,26 +259,18 @@ function App() {
     <div className="App">
       <header className="app-header">
         <div className="header-content">
-          <h1>🎓 Agentic UniBG</h1>
+          <h1>Agentic UniBG</h1>
           <p className="subtitle">
             Assistente Intelligente per l'Università di Bergamo
           </p>
         </div>
         <div className="header-right">
           <div className="user-badge">
-            {userInfo?.status === "loggato" ? (
-              <>
-                <span className="user-badge-icon">🎓</span>
-                <span className="user-badge-text">
-                  {userInfo.name} {userInfo.surname}
-                </span>
-              </>
-            ) : (
-              <>
-                <span className="user-badge-icon">👤</span>
-                <span className="user-badge-text">Ospite</span>
-              </>
-            )}
+            <span className="user-badge-text">
+              {userInfo?.status === "loggato"
+                ? `${userInfo.name} ${userInfo.surname}`
+                : "Ospite"}
+            </span>
           </div>
           <div className="connection-status">
             <span className={`status-indicator ${connectionStatus}`}></span>
@@ -300,23 +292,10 @@ function App() {
             <div className="welcome-message">
               <h2>
                 {userInfo?.status === "loggato"
-                  ? `Benvenuto, ${userInfo.name}! 👋`
-                  : "Benvenuto! 👋"}
+                  ? `Benvenuto, ${userInfo.name}!`
+                  : "Benvenuto!"}
               </h2>
               <p>Sono il tuo assistente per l'Università di Bergamo.</p>
-              {userInfo?.status === "loggato" && (
-                <p className="welcome-user-info">
-                  📋 {userInfo.course} &bull; {userInfo.tipology} &bull;{" "}
-                  {userInfo.year}° Anno &bull; {userInfo.department}
-                </p>
-              )}
-              <p>Puoi chiedermi informazioni su:</p>
-              <ul>
-                <li>📚 Corsi e programmi di studio</li>
-                <li>🕐 Orari delle lezioni e degli esami</li>
-                <li>📋 Procedure amministrative</li>
-                <li>🏛️ Servizi universitari</li>
-              </ul>
             </div>
           ) : (
             <div className="messages">
@@ -324,35 +303,35 @@ function App() {
                 <div key={idx} className={`message ${msg.type}`}>
                   {msg.type === "user" && (
                     <div className="message-content user-message">
-                      <div className="message-header">
-                        <span className="user-icon">👤</span>
-                        <span className="message-label">Tu</span>
-                      </div>
-                      <p>{msg.content}</p>
+                      <p>
+                        <strong className="msg-sender">&nbsp;</strong>
+                        {msg.content}
+                      </p>
                     </div>
                   )}
                   {msg.type === "agent" && (
                     <div className="message-content agent-message">
-                      <div className="message-header">
-                        <span className="agent-icon">🤖</span>
-                        <span className="message-label">Assistente</span>
-                        {msg.category && (
-                          <span className="category-badge">
-                            {getCategoryIcon(msg.category)}{" "}
-                            {getCategoryLabel(msg.category)}
-                          </span>
-                        )}
-                      </div>
+                      {msg.category && (
+                        <span className="category-badge">
+                          {getCategoryLabel(msg.category)}
+                        </span>
+                      )}
                       <div className="message-text">
                         {msg.content.split("\n").map((line, i) => (
-                          <p key={i}>{line ? renderLineWithLinks(line) : "\u00A0"}</p>
+                          i === 0 ? (
+                            <p key={i}>
+                              <strong className="msg-sender">&nbsp;&nbsp;</strong>
+                              {line ? renderLineWithLinks(line) : "\u00A0"}
+                            </p>
+                          ) : (
+                            <p key={i}>{line ? renderLineWithLinks(line) : "\u00A0"}</p>
+                          )
                         ))}
                       </div>
                       {msg.metadata && msg.metadata.workflow_steps && (
                         <details className="workflow-details">
                           <summary>
-                            Mostra workflow (
-                            {msg.metadata.workflow_steps.length} steps)
+                            Mostra workflow ({msg.metadata.workflow_steps.length} steps)
                           </summary>
                           <div className="workflow-steps">
                             {msg.metadata.workflow_steps.map((step, i) => (
@@ -367,7 +346,6 @@ function App() {
                   )}
                   {msg.type === "error" && (
                     <div className="message-content error-message">
-                      <span className="error-icon">⚠️</span>
                       <p>{msg.content}</p>
                     </div>
                   )}
@@ -392,7 +370,7 @@ function App() {
         <div className="input-container">
           {conversation.length > 0 && (
             <button className="clear-btn" onClick={clearConversation}>
-              🗑️ Pulisci conversazione
+              Pulisci conversazione
             </button>
           )}
           <form onSubmit={handleSubmit} className="input-form">
@@ -410,7 +388,7 @@ function App() {
               }}
             />
             <button type="submit" disabled={loading || !message.trim()}>
-              {loading ? "⏳ Elaborazione..." : "📤 Invia"}
+              {loading ? "Elaborazione..." : "Invia"}
             </button>
           </form>
           <p className="input-hint">
