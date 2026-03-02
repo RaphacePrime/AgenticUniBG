@@ -20,9 +20,9 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -59,7 +59,9 @@ body {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-content h2 {
@@ -171,8 +173,13 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* Main Content */
@@ -259,7 +266,9 @@ body {
   margin-left: auto;
 }
 
-.user-icon, .agent-icon, .error-icon {
+.user-icon,
+.agent-icon,
+.error-icon {
   font-size: 1.25rem;
 }
 
@@ -277,6 +286,12 @@ body {
 .agent-message p {
   color: var(--text-primary);
   line-height: 1.6;
+  margin: 0.15rem 0;
+}
+
+.message-text {
+  white-space: pre-line;
+  word-wrap: break-word;
 }
 
 .error-message {
@@ -354,8 +369,14 @@ body {
 }
 
 @keyframes typing {
-  0%, 60%, 100% { transform: translateY(0); }
-  30% { transform: translateY(-10px); }
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-10px);
+  }
 }
 
 /* Input Container */

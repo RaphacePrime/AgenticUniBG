@@ -1,31 +1,43 @@
 from typing import Dict, List, Optional
-from langchain_groq import ChatGroq
+# from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI
 import os
 
 from langgraph.graph import StateGraph, END
 from .agent_state import AgentState, build_user_context
 from .classifier_agent import ClassifierAgent
+from .query_agent import QueryAgent
+from .web_agent import WebAgent
 from .generator_agent import GeneratorAgent
 from .revision_agent import RevisionAgent
+from .pipeline_logger import PipelineLogger
 
 
 class OrchestratorAgent:
     """
     Orchestrator che coordina il flusso tra gli agenti usando LangGraph:
-    Classifier → Generator → Reviser
+    Classifier → QueryAgent → WebAgent → Generator → Reviser
     """
     
     def __init__(self):
-        self.llm = ChatGroq(
-            model="llama-3.3-70b-versatile",
+        # self.llm = ChatGroq(
+        #     model="llama-3.3-70b-versatile",
+        #     temperature=0.3,
+        #     api_key=os.getenv("GROQ_API_KEY")
+        # )
+        self.llm = ChatGoogleGenerativeAI(
+            model="gemini-2.5-flash",
             temperature=0.3,
-            api_key=os.getenv("GROQ_API_KEY")
+            google_api_key=os.getenv("GOOGLE_API_KEY")
         )
         
         # Inizializza gli agenti specializzati
         self.classifier = ClassifierAgent(self.llm)
+        self.query_agent = QueryAgent(self.llm)
+        self.web_agent = WebAgent()
         self.generator = GeneratorAgent(self.llm)
         self.reviser = RevisionAgent(self.llm)
+        self.logger = PipelineLogger()
 
         # Costruisci il grafo
         self.workflow = self._build_workflow()
@@ -39,12 +51,16 @@ class OrchestratorAgent:
         
         # Aggiungi i nodi (agenti)
         workflow.add_node("classify", self._classify_node)
+        workflow.add_node("query", self._query_node)
+        workflow.add_node("web_search", self._web_search_node)
         workflow.add_node("generate", self._generate_node)
         workflow.add_node("revise", self._revise_node)
         
         # Definisci il flusso
         workflow.set_entry_point("classify")
-        workflow.add_edge("classify", "generate")
+        workflow.add_edge("classify", "query")
+        workflow.add_edge("query", "web_search")
+        workflow.add_edge("web_search", "generate")
         workflow.add_edge("generate", "revise")
         workflow.add_edge("revise", END)
         
@@ -77,16 +93,80 @@ class OrchestratorAgent:
         
         return state
     
+    async def _query_node(self, state: AgentState) -> AgentState:
+        """
+        Nodo per la generazione della query di ricerca web
+        """
+        try:
+            result = await self.query_agent.generate_query(
+                query=state["query"],
+                conversation_history=state.get("conversation_history")
+            )
+            
+            state["search_query"] = result["search_query"]
+            state["current_step"] = "query_generation"
+            
+            # Aggiungi al workflow tracking
+            state["workflow_steps"].append({
+                "step": "query_generation",
+                "agent": "QueryAgent",
+                "result": result
+            })
+            
+        except Exception as e:
+            state["search_query"] = state["query"]  # Fallback alla query originale
+            state["error"] = f"Query generation error: {str(e)}"
+        
+        return state
+    
+    async def _web_search_node(self, state: AgentState) -> AgentState:
+        """
+        Nodo per la ricerca web tramite Tavily
+        """
+        try:
+            search_query = state.get("search_query", state["query"])
+            result = await self.web_agent.search(search_query)
+            
+            state["web_results"] = result.get("web_results", [])
+            state["web_context"] = result.get("formatted_context", "")
+            state["current_step"] = "web_search"
+            
+            # Aggiungi al workflow tracking
+            state["workflow_steps"].append({
+                "step": "web_search",
+                "agent": "WebAgent",
+                "result": {
+                    "search_query": search_query,
+                    "total_results": result.get("total_results", 0),
+                    "top_results_count": result.get("top_results_count", 0),
+                    "status": result.get("status", "unknown")
+                }
+            })
+            
+        except Exception as e:
+            state["web_results"] = []
+            state["web_context"] = ""
+            state["error"] = f"Web search error: {str(e)}"
+        
+        return state
+    
     async def _generate_node(self, state: AgentState) -> AgentState:
         """
         Nodo per la generazione della risposta
         """
         try:
             user_ctx = build_user_context(state)
+            
+            # Arricchisci il contesto con i risultati web
+            context = state.get("context") or {}
+            web_context = state.get("web_context", "")
+            if web_context:
+                context["additional_info"] = web_context
+            
             generation = await self.generator.generate(
                 query=state["query"],
                 category=state["category"],
-                context=state.get("context"),
+                context=context,
                 user_context=user_ctx,
                 conversation_history=state.get("conversation_history")
             )
@@ -174,6 +254,9 @@ class OrchestratorAgent:
                 "category": None,
                 "category_description": None,
                 "confidence": None,
+                "search_query": None,
+                "web_results": None,
+                "web_context": None,
                 "generated_response": None,
                 "generation_status": None,
                 "final_response": None,
@@ -186,6 +269,12 @@ class OrchestratorAgent:
             
             # Esegui il workflow
             final_state = await self.workflow.ainvoke(initial_state)
+            
+            # Write pipeline log
+            try:
+                self.logger.write_log(final_state, final_state.get("workflow_steps", []))
+            except Exception:
+                pass  # Logging should never break the pipeline
             
             # Restituisci il risultato
             return {
@@ -214,6 +303,8 @@ class OrchestratorAgent:
         """
         return [
             {"name": "classifier", "description": "Classifica le query in categorie"},
+            {"name": "query_agent", "description": "Genera query di ricerca web ottimizzate"},
+            {"name": "web_agent", "description": "Cerca informazioni sul sito UniBG tramite Tavily"},
             {"name": "generator", "description": "Genera risposte basate sulla categoria"},
             {"name": "reviser", "description": "Rivede e migliora le risposte"},
         ]

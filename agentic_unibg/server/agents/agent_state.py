@@ -25,6 +25,13 @@ class AgentState(TypedDict):
     category_description: Optional[str]
     confidence: Optional[str]
     
+    # Risultati query agent
+    search_query: Optional[str]
+    
+    # Risultati web agent
+    web_results: Optional[List[Dict]]
+    web_context: Optional[str]
+    
     # Risultati generazione
     generated_response: Optional[str]
     generation_status: Optional[str]

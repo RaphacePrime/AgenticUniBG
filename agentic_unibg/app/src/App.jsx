@@ -1,80 +1,82 @@
-import { useState, useEffect, useRef } from 'react'
-import './App.css'
-import LoginPage from './LoginPage'
+import { useState, useEffect, useRef } from "react";
+import "./App.css";
+import LoginPage from "./LoginPage";
 
 function App() {
-  const [message, setMessage] = useState('')
-  const [conversation, setConversation] = useState([])
-  const [loading, setLoading] = useState(false)
-  const conversationEndRef = useRef(null)
-  const [connectionStatus, setConnectionStatus] = useState('checking')
-  const [showWorkflow, setShowWorkflow] = useState(false)
+  const [message, setMessage] = useState("");
+  const [conversation, setConversation] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const conversationEndRef = useRef(null);
+  const [connectionStatus, setConnectionStatus] = useState("checking");
+  const [showWorkflow, setShowWorkflow] = useState(false);
 
   // Auth state
-  const [userInfo, setUserInfo] = useState(null) // null = not logged in, show login page
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isInitialLoading, setIsInitialLoading] = useState(true)
+  const [userInfo, setUserInfo] = useState(null); // null = not logged in, show login page
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   useEffect(() => {
     // Test connection to backend
-    fetch('/api/health')
-      .then(res => res.json())
-      .then(data => {
-        console.log('Backend status:', data)
-        setConnectionStatus('connected')
+    fetch("/api/health")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Backend status:", data);
+        setConnectionStatus("connected");
       })
-      .catch(err => {
-        console.error('Backend connection error:', err)
-        setConnectionStatus('error')
-      })
-    
+      .catch((err) => {
+        console.error("Backend connection error:", err);
+        setConnectionStatus("error");
+      });
+
     // Verifica token dal cookie
-    fetch('/api/auth/verify', {
-      credentials: 'include'
+    fetch("/api/auth/verify", {
+      credentials: "include",
     })
-      .then(res => {
-        if (!res.ok) throw new Error('Token invalido')
-        return res.json()
+      .then((res) => {
+        if (!res.ok) throw new Error("Token invalido");
+        return res.json();
       })
-      .then(userData => {
-        setUserInfo(userData)
-        setIsAuthenticated(true)
-        const key = `conversation_${userData.matricola || 'ospite'}`
-        const saved = localStorage.getItem(key)
+      .then((userData) => {
+        setUserInfo(userData);
+        setIsAuthenticated(true);
+        const key = `conversation_${userData.matricola || "ospite"}`;
+        const saved = localStorage.getItem(key);
         if (saved) {
-          try { setConversation(JSON.parse(saved)) } catch (e) {}
+          try {
+            setConversation(JSON.parse(saved));
+          } catch (e) {}
         }
       })
-      .catch(err => {
-        console.error('Token verification failed:', err)
+      .catch((err) => {
+        console.error("Token verification failed:", err);
       })
       .finally(() => {
-        setIsInitialLoading(false)
-      })
-  }, [])
+        setIsInitialLoading(false);
+      });
+  }, []);
 
   // Auto-scroll al fondo quando arriva un nuovo messaggio
   useEffect(() => {
-    conversationEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [conversation, loading])
+    conversationEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [conversation, loading]);
 
   // Salva conversazione in localStorage ad ogni aggiornamento
   useEffect(() => {
     if (isAuthenticated && userInfo) {
-      const key = `conversation_${userInfo.matricola || 'ospite'}`
-      localStorage.setItem(key, JSON.stringify(conversation))
+      const key = `conversation_${userInfo.matricola || "ospite"}`;
+      localStorage.setItem(key, JSON.stringify(conversation));
     }
-  }, [conversation, isAuthenticated, userInfo])
+  }, [conversation, isAuthenticated, userInfo]);
 
   // Auth handlers
   const handleLogin = (userData) => {
-    setUserInfo(userData)
-    setIsAuthenticated(true)
-  }
+    setUserInfo(userData);
+    setIsAuthenticated(true);
+  };
 
   const handleGuest = () => {
     setUserInfo({
-      status: 'ospite',
+      status: "ospite",
       name: null,
       surname: null,
       department: null,
@@ -82,116 +84,124 @@ function App() {
       tipology: null,
       year: null,
       matricola: null,
-    })
-    setIsAuthenticated(true)
-  }
+    });
+    setIsAuthenticated(true);
+  };
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include'
-      })
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
     } catch (err) {
-      console.error('Logout error:', err)
+      console.error("Logout error:", err);
     } finally {
       if (userInfo) {
-        const key = `conversation_${userInfo.matricola || 'ospite'}`
-        localStorage.removeItem(key)
+        const key = `conversation_${userInfo.matricola || "ospite"}`;
+        localStorage.removeItem(key);
       }
-      setUserInfo(null)
-      setIsAuthenticated(false)
-      setConversation([])
+      setUserInfo(null);
+      setIsAuthenticated(false);
+      setConversation([]);
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!message.trim()) return
-    
-    setLoading(true)
-    
+    e.preventDefault();
+    if (!message.trim()) return;
+
+    setLoading(true);
+
     // Aggiungi la domanda alla conversazione
-    const userMessage = { type: 'user', content: message, timestamp: new Date() }
-    setConversation(prev => [...prev, userMessage])
-    
-    const currentQuery = message
-    setMessage('') // Pulisci l'input subito
+    const userMessage = {
+      type: "user",
+      content: message,
+      timestamp: new Date(),
+    };
+    setConversation((prev) => [...prev, userMessage]);
+
+    const currentQuery = message;
+    setMessage(""); // Pulisci l'input subito
 
     // Ultimi 5 turni (10 messaggi) come contesto conversazionale
     const conversationHistory = conversation
-      .filter(msg => msg.type === 'user' || msg.type === 'agent')
+      .filter((msg) => msg.type === "user" || msg.type === "agent")
       .slice(-10)
-      .map(msg => ({
-        role: msg.type === 'user' ? 'user' : 'assistant',
-        content: msg.content
-      }))
+      .map((msg) => ({
+        role: msg.type === "user" ? "user" : "assistant",
+        content: msg.content,
+      }));
 
     try {
-      const res = await fetch('/api/agent/query', {
-        method: 'POST',
+      const res = await fetch("/api/agent/query", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        credentials: 'include',
-        body: JSON.stringify({ query: currentQuery, user_info: userInfo, conversation_history: conversationHistory })
-      })
-      
-      const data = await res.json()
-      
+        credentials: "include",
+        body: JSON.stringify({
+          query: currentQuery,
+          user_info: userInfo,
+          conversation_history: conversationHistory,
+        }),
+      });
+
+      const data = await res.json();
+
       // Aggiungi la risposta alla conversazione
       const agentMessage = {
-        type: 'agent',
+        type: "agent",
         content: data.response,
         category: data.category,
         metadata: data.metadata,
-        timestamp: new Date()
-      }
-      setConversation(prev => [...prev, agentMessage])
+        timestamp: new Date(),
+      };
+      setConversation((prev) => [...prev, agentMessage]);
     } catch (error) {
-      console.error('Error:', error)
+      console.error("Error:", error);
       const errorMessage = {
-        type: 'error',
-        content: 'Errore nella comunicazione con il backend',
-        timestamp: new Date()
-      }
-      setConversation(prev => [...prev, errorMessage])
+        type: "error",
+        content: "Errore nella comunicazione con il backend",
+        timestamp: new Date(),
+      };
+      setConversation((prev) => [...prev, errorMessage]);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const clearConversation = () => {
-    setConversation([])
+    setConversation([]);
     if (userInfo) {
-      const key = `conversation_${userInfo.matricola || 'ospite'}`
-      localStorage.removeItem(key)
+      const key = `conversation_${userInfo.matricola || "ospite"}`;
+      localStorage.removeItem(key);
     }
-  }
+  };
 
   const getCategoryIcon = (category) => {
     const icons = {
-      'informazioni_corso': '📚',
-      'orari': '🕐',
-      'procedure': '📋',
-      'servizi': '🏛️',
-      'generale': '💬',
-      'altro': '❓'
-    }
-    return icons[category] || '💬'
-  }
+      informazioni_corso: "📚",
+      orari: "🕐",
+      procedure: "📋",
+      servizi: "🏛️",
+      generale: "💬",
+      altro: "❓",
+    };
+    return icons[category] || "💬";
+  };
 
   const getCategoryLabel = (category) => {
     const labels = {
-      'informazioni_corso': 'Informazioni Corso',
-      'orari': 'Orari',
-      'procedure': 'Procedure',
-      'servizi': 'Servizi',
-      'generale': 'Generale',
-      'altro': 'Altro'
-    }
-    return labels[category] || category
-  }
+      informazioni_corso: "Informazioni Corso",
+      orari: "Orari",
+      procedure: "Procedure",
+      servizi: "Servizi",
+      generale: "Generale",
+      altro: "Altro",
+    };
+    return labels[category] || category;
+  };
 
   // Show loading screen during initial token verification
   if (isInitialLoading) {
@@ -203,12 +213,12 @@ function App() {
           <p>Caricamento in corso...</p>
         </div>
       </div>
-    )
+    );
   }
 
   // Show login page if not authenticated
   if (!isAuthenticated) {
-    return <LoginPage onLogin={handleLogin} onGuest={handleGuest} />
+    return <LoginPage onLogin={handleLogin} onGuest={handleGuest} />;
   }
 
   return (
@@ -216,14 +226,18 @@ function App() {
       <header className="app-header">
         <div className="header-content">
           <h1>🎓 Agentic UniBG</h1>
-          <p className="subtitle">Assistente Intelligente per l'Università di Bergamo</p>
+          <p className="subtitle">
+            Assistente Intelligente per l'Università di Bergamo
+          </p>
         </div>
         <div className="header-right">
           <div className="user-badge">
-            {userInfo?.status === 'loggato' ? (
+            {userInfo?.status === "loggato" ? (
               <>
                 <span className="user-badge-icon">🎓</span>
-                <span className="user-badge-text">{userInfo.name} {userInfo.surname}</span>
+                <span className="user-badge-text">
+                  {userInfo.name} {userInfo.surname}
+                </span>
               </>
             ) : (
               <>
@@ -234,9 +248,15 @@ function App() {
           </div>
           <div className="connection-status">
             <span className={`status-indicator ${connectionStatus}`}></span>
-            {connectionStatus === 'connected' ? 'Connesso' : connectionStatus === 'error' ? 'Disconnesso' : 'Connessione...'}
+            {connectionStatus === "connected"
+              ? "Connesso"
+              : connectionStatus === "error"
+                ? "Disconnesso"
+                : "Connessione..."}
           </div>
-          <button className="logout-btn" onClick={handleLogout}>Esci</button>
+          <button className="logout-btn" onClick={handleLogout}>
+            Esci
+          </button>
         </div>
       </header>
 
@@ -245,14 +265,15 @@ function App() {
           {conversation.length === 0 ? (
             <div className="welcome-message">
               <h2>
-                {userInfo?.status === 'loggato'
+                {userInfo?.status === "loggato"
                   ? `Benvenuto, ${userInfo.name}! 👋`
-                  : 'Benvenuto! 👋'}
+                  : "Benvenuto! 👋"}
               </h2>
               <p>Sono il tuo assistente per l'Università di Bergamo.</p>
-              {userInfo?.status === 'loggato' && (
+              {userInfo?.status === "loggato" && (
                 <p className="welcome-user-info">
-                  📋 {userInfo.course} &bull; {userInfo.tipology} &bull; {userInfo.year}° Anno &bull; {userInfo.department}
+                  📋 {userInfo.course} &bull; {userInfo.tipology} &bull;{" "}
+                  {userInfo.year}° Anno &bull; {userInfo.department}
                 </p>
               )}
               <p>Puoi chiedermi informazioni su:</p>
@@ -267,7 +288,7 @@ function App() {
             <div className="messages">
               {conversation.map((msg, idx) => (
                 <div key={idx} className={`message ${msg.type}`}>
-                  {msg.type === 'user' && (
+                  {msg.type === "user" && (
                     <div className="message-content user-message">
                       <div className="message-header">
                         <span className="user-icon">👤</span>
@@ -276,21 +297,29 @@ function App() {
                       <p>{msg.content}</p>
                     </div>
                   )}
-                  {msg.type === 'agent' && (
+                  {msg.type === "agent" && (
                     <div className="message-content agent-message">
                       <div className="message-header">
                         <span className="agent-icon">🤖</span>
                         <span className="message-label">Assistente</span>
                         {msg.category && (
                           <span className="category-badge">
-                            {getCategoryIcon(msg.category)} {getCategoryLabel(msg.category)}
+                            {getCategoryIcon(msg.category)}{" "}
+                            {getCategoryLabel(msg.category)}
                           </span>
                         )}
                       </div>
-                      <p>{msg.content}</p>
+                      <div className="message-text">
+                        {msg.content.split("\n").map((line, i) => (
+                          <p key={i}>{line || "\u00A0"}</p>
+                        ))}
+                      </div>
                       {msg.metadata && msg.metadata.workflow_steps && (
                         <details className="workflow-details">
-                          <summary>Mostra workflow ({msg.metadata.workflow_steps.length} steps)</summary>
+                          <summary>
+                            Mostra workflow (
+                            {msg.metadata.workflow_steps.length} steps)
+                          </summary>
                           <div className="workflow-steps">
                             {msg.metadata.workflow_steps.map((step, i) => (
                               <div key={i} className="workflow-step">
@@ -302,7 +331,7 @@ function App() {
                       )}
                     </div>
                   )}
-                  {msg.type === 'error' && (
+                  {msg.type === "error" && (
                     <div className="message-content error-message">
                       <span className="error-icon">⚠️</span>
                       <p>{msg.content}</p>
@@ -340,21 +369,23 @@ function App() {
               rows="2"
               disabled={loading}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault()
-                  handleSubmit(e)
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSubmit(e);
                 }
               }}
             />
             <button type="submit" disabled={loading || !message.trim()}>
-              {loading ? '⏳ Elaborazione...' : '📤 Invia'}
+              {loading ? "⏳ Elaborazione..." : "📤 Invia"}
             </button>
           </form>
-          <p className="input-hint">Premi Enter per inviare, Shift+Enter per andare a capo</p>
+          <p className="input-hint">
+            Premi Enter per inviare, Shift+Enter per andare a capo
+          </p>
         </div>
       </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

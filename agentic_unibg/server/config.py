@@ -8,7 +8,9 @@ class Settings(BaseSettings):
     Impostazioni dell'applicazione
     """
     # API Keys
-    groq_api_key: str
+    # groq_api_key: str
+    google_api_key: str
+    tavily_api_key: str
     
     # App settings
     environment: str = "development"

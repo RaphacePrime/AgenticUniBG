@@ -1,5 +1,6 @@
 from typing import Dict, List, Optional
-from langchain_groq import ChatGroq
+# from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, SystemMessage
 
 
@@ -8,18 +9,19 @@ class RevisionAgent:
     Agente che rivede e migliora le risposte generate
     """
     
-    def __init__(self, llm: ChatGroq):
+    def __init__(self, llm: ChatGoogleGenerativeAI):
         self.llm = llm
         self.system_prompt = self._build_system_prompt()
     
     def _build_system_prompt(self) -> str:
-        return """Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo principale è produrre risposte BREVI, DIRETTE e SCHEMATICHE.
+        return """Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
 
-PRIORITÀ ASSOLUTE:
-1. BREVITÀ: elimina tutto il superfluo. Se una frase non aggiunge valore, toglila.
-2. CHIAREZZA: una sola idea per frase. Evita subordinate lunghe e perifrasi.
-3. SCHEMA: quando la risposta elenca più elementi, usa sempre un elenco puntato invece di un paragrafo.
-4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti, no ripetizioni del concetto già espresso.
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
 
 REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
 - NON usare markdown (no **, *, #, ecc.)
@@ -30,14 +32,15 @@ REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
 
 LUNGHEZZA TARGET:
 - Risposta semplice (un fatto, un'informazione): 1-3 frasi
-- Risposta articolata (procedura, elenco): max 6-8 punti brevi
-- NON superare mai le 150 parole salvo casi eccezionali
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
 
 PROCESSO DI REVISIONE:
 - Se la risposta è già concisa e corretta, restituiscila invariata
-- Se è troppo lunga, elimina le parti ridondanti e le introduzioni inutili
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
 - Se è un paragrafo con più elementi, convertila in elenco puntato
 - Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
 
 Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi."""
     
@@ -79,7 +82,10 @@ Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, 
                 "revised_response": revised_response,
                 "original_response": generated_response,
                 "has_changes": has_changes,
-                "status": "success"
+                "status": "success",
+                "system_prompt": self.system_prompt,
+                "user_prompt": revision_prompt,
+                "raw_response": revised_response
             }
         except Exception as e:
             # In caso di errore, restituisci la risposta originale

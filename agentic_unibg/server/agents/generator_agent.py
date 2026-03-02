@@ -1,5 +1,6 @@
 from typing import Dict, List, Optional
-from langchain_groq import ChatGroq
+# from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
 
@@ -31,8 +32,21 @@ Fornisci informazioni utili e orientamento agli studenti e visitatori.""",
         "altro": """Sei un assistente dell'Università di Bergamo.
 Cerca di comprendere la richiesta e fornire una risposta utile o indirizzare l'utente verso la risorsa giusta."""
     }
+
+    # Istruzioni comuni per l'uso delle fonti web
+    SOURCE_INSTRUCTIONS = """\n\nISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette."""
     
-    def __init__(self, llm: ChatGroq):
+    def __init__(self, llm: ChatGoogleGenerativeAI):
         self.llm = llm
     
     def _build_system_prompt(self, category: str, context: Dict = None, user_context: str = "") -> str:
@@ -55,10 +69,12 @@ Usa queste informazioni per personalizzare la risposta. Se lo studente è autent
 puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
 Se è un ospite, fornisci risposte generiche e orientative."""
         
+        source_instructions = self.SOURCE_INSTRUCTIONS if additional_context else ""
+
         return f"""{base_prompt}
 {user_section}
 Rispondi in italiano in modo chiaro, conciso e professionale.
-Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.{additional_context}"""
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.{source_instructions}{additional_context}"""
     
     async def generate(self, query: str, category: str, context: Dict = None, user_context: str = "", conversation_history: List[Dict] = None) -> Dict[str, str]:
         """
@@ -84,7 +100,10 @@ Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la 
             return {
                 "response": response.content,
                 "category_used": category,
-                "status": "success"
+                "status": "success",
+                "system_prompt": system_prompt,
+                "user_prompt": query,
+                "raw_response": response.content
             }
         except Exception as e:
             return {

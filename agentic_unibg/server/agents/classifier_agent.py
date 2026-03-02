@@ -1,5 +1,6 @@
 from typing import Dict, List, Optional
-from langchain_groq import ChatGroq
+# from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, SystemMessage
 
 
@@ -17,7 +18,7 @@ class ClassifierAgent:
         "altro": "Altre richieste non classificabili"
     }
     
-    def __init__(self, llm: ChatGroq):
+    def __init__(self, llm: ChatGoogleGenerativeAI):
         self.llm = llm
     
     def _build_system_prompt(self, user_context: str = "") -> str:
@@ -56,8 +57,9 @@ Esempi:
                     ctx_lines.append(f"- {role}: {msg.get('content', '')[:150]}")
                 query_text = "\n".join(ctx_lines) + f"\n\nNuova domanda: {query}"
 
+            system_prompt = self._build_system_prompt(user_context)
             messages = [
-                SystemMessage(content=self._build_system_prompt(user_context)),
+                SystemMessage(content=system_prompt),
                 HumanMessage(content=query_text)
             ]
             
@@ -71,7 +73,10 @@ Esempi:
             return {
                 "category": category,
                 "description": self.CATEGORIES.get(category, "Non classificata"),
-                "confidence": "high"
+                "confidence": "high",
+                "system_prompt": system_prompt,
+                "user_prompt": query_text,
+                "raw_response": response.content.strip()
             }
         except Exception as e:
             return {
