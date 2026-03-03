@@ -1,0 +1,93 @@
+@startuml
+title Activity Diagram - Iterazione 4
+
+|Browser|
+start
+:Caricamento applicazione React;
+
+|API Gateway|
+:Verifica cookie JWT\n(GET /api/auth/verify);
+
+if (Cookie valido?) then (Sì)
+  :Recupera profilo da MongoDB;
+  |Browser|
+  :Ripristina sessione e\nconversazione da localStorage;
+else (No)
+  |Browser|
+  :Mostra pagina di Login;
+  :Utente si autentica / registra;
+endif
+
+|Browser|
+:Mostra interfaccia chat;
+:Utente inserisce domanda;
+:Costruisce conversation_history\n(ultimi 10 messaggi);
+
+|API Gateway|
+:Riceve POST /api/agent/query\n(cookie + query + user_info + history);
+
+|Orchestrator Agent|
+:Inizializza AgentState\n(profilo + query + history);
+
+|Classifier Agent|
+:Classifica intento della query\n(con history e profilo);
+:Restituisce categoria e confidence;
+
+|Query Agent|
+:Analizza query + history + profilo\nutente;
+:Genera search query ottimizzata\n(max 6-8 parole chiave);
+
+note right
+  Decide autonomamente se includere
+  le info del profilo studente
+  nella query in base al tipo di domanda
+end note
+
+|Web Agent|
+:Esegue ricerca su Tavily API\n(domini: unibg.it, coursecatalogue);
+:Recupera fino a 30 risultati;
+:Ordina per score e seleziona top 5;
+
+if (Risultato è PDF?) then (Sì)
+  :Estrae link ipertestuali\ndal PDF (PyMuPDF);
+else (No)
+  :Estrae contenuto testuale;
+endif
+
+:Formatta risultati per il Generator;
+
+|Generator Agent|
+:Genera risposta contestualizzata\n(query + categoria + web context\n+ profilo + history);
+
+|Revision Agent|
+:Revisiona risposta\n(con history e contesto);
+:Restituisce risposta finale;
+
+|Orchestrator Agent|
+:Raccoglie workflow_steps;
+
+|Pipeline Logger|
+:Scrive log file (txt) nella cartella logs/\ncon tutti i dettagli della pipeline;
+
+note right
+  Nome file:
+  log_{matricola}_{timestamp}.txt
+  Contiene: query, history, classificazione,
+  search query, risultati web,
+  risposta generata, revisione
+end note
+
+|Orchestrator Agent|
+:Restituisce risposta all'API Gateway;
+
+|API Gateway|
+:Invia risposta al browser;
+
+|Browser|
+:Aggiunge messaggio alla conversazione;
+:Salva conversazione aggiornata\nin localStorage;
+:Visualizza risposta all'utente;
+
+stop
+
+@enduml

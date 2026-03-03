@@ -1,0 +1,96 @@
+@startuml
+title Activity Diagram - Iterazione 3
+
+|Browser|
+start
+:Caricamento applicazione React;
+
+|API Gateway|
+:Riceve GET /api/auth/verify\n(con httpOnly cookie);
+
+if (Cookie presente e JWT valido?) then (Sì)
+  :Recupera profilo studente da MongoDB;
+  :Restituisce profilo utente;
+
+  |Browser|
+  :Ripristina sessione utente;
+  :Carica conversazione salvata\nda localStorage;
+else (No / Cookie assente)
+  |Browser|
+  :Mostra pagina di Login;
+
+  if (Azione utente?) then (Login)
+    |API Gateway|
+    :POST /api/auth/login\nverifica credenziali;
+    :Genera JWT e imposta\nhttpOnly cookie;
+    :Restituisce profilo;
+
+    |Browser|
+    :Salva profilo in memoria;
+    :Carica conversazione da\nlocalStorage (se presente);
+  else (Registrazione)
+    |API Gateway|
+    :POST /api/auth/register\ncrea account;
+    :Genera JWT e imposta\nhttpOnly cookie;
+    :Restituisce profilo;
+
+    |Browser|
+    :Salva profilo in memoria;
+  endif
+endif
+
+|Browser|
+:Mostra interfaccia chat;
+:Utente inserisce domanda;
+:Costruisce conversation_history\n(ultimi 10 messaggi);
+
+|API Gateway|
+:Riceve POST /api/agent/query\n(cookie + query + history);
+
+|Orchestrator Agent|
+:Inizializza AgentState\n(profilo + query + history);
+
+|Classifier Agent|
+:Classifica intento;
+:Restituisce categoria;
+
+|Orchestrator Agent|
+:Invia query + profilo + history\nal Generator;
+
+|Generator Agent|
+:Genera risposta contestualizzata\n(con history conversazione);
+:Restituisce bozza;
+
+|Orchestrator Agent|
+:Invia bozza + history\nal Revision;
+
+|Revision Agent|
+:Revisiona risposta;
+:Restituisce risposta finale;
+
+|Orchestrator Agent|
+:Restituisce risposta all'API;
+
+|API Gateway|
+:Invia risposta al browser;
+
+|Browser|
+:Aggiunge messaggio alla conversazione;
+:Salva conversazione aggiornata\nin localStorage;
+
+if (Logout?) then (Sì)
+  |API Gateway|
+  :POST /api/auth/logout\nElimina httpOnly cookie;
+
+  |Browser|
+  :Cancella profilo dalla memoria;
+  :Cancella conversazione\nda localStorage;
+  :Reindirizza a Login;
+else (No)
+  |Browser|
+  :Attende prossima domanda;
+endif
+
+stop
+
+@enduml

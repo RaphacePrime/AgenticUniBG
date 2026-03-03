@@ -1,0 +1,90 @@
+@startuml
+title Sequence Diagram (Pipeline Completa con Web Search) - Iterazione 4
+
+actor Utente                         as U
+participant "Browser\n(React App)"   as FE
+participant "API Gateway\n(FastAPI)"  as GW
+participant "Orchestrator Agent"      as Orch
+participant "Classifier Agent"        as Cls
+participant "Query Agent"             as QA
+participant "Web Agent\n(Tavily)"     as WA
+participant "Generator Agent"         as Gen
+participant "Revision Agent"          as Rev
+participant "Pipeline Logger"         as Log
+participant "File System\n(logs/)"    as FS
+
+' ─── 1. Invio query con history ──────────────────────────────
+U   -> FE   : Inserisce domanda
+FE  -> FE   : Costruisce conversation_history\n(ultimi 10 messaggi)
+FE  -> GW   : POST /api/agent/query\n[Cookie: access_token=<JWT>]\n{ query, user_info, conversation_history }
+
+' ─── 2. Inizializzazione stato ────────────────────────────────
+GW  -> Orch : process_query(query, user_info, conversation_history)
+Orch -> Orch : Inizializza AgentState\n(query + profilo + history)
+
+' ─── 3. Classificazione ───────────────────────────────────────
+Orch -> Cls  : classify(query, user_context, conversation_history)
+note right of Cls
+  Usa Gemini 2.5 Flash
+  per classificare l'intento
+end note
+Cls  --> Orch : { category, description, confidence }
+
+' ─── 4. Generazione search query ──────────────────────────────
+Orch -> QA   : generate_query(query, conversation_history, user_context)
+note right of QA
+  Usa Gemini 2.5 Flash.
+  Decide autonomamente se inserire
+  info profilo nella query.
+  Restituisce max 6-8 keywords.
+end note
+QA   --> Orch : { search_query: "parole chiave ottimizzate" }
+
+' ─── 5. Ricerca web ───────────────────────────────────────────
+Orch -> WA   : search(search_query)
+WA   -> WA   : Tavily.search(query,\ninclude_domains=[unibg.it,\ncoursecatalogue],\nmax_results=30)
+WA   -> WA   : Ordina per score, seleziona top 5
+
+alt Risultato è PDF
+  WA -> WA   : _extract_pdf_links(url)\ntramite PyMuPDF
+end
+
+WA   -> WA   : _format_results(top_results)
+WA   --> Orch : { web_results, formatted_context, total_results, status }
+
+' ─── 6. Generazione risposta ─────────────────────────────────
+Orch -> Gen  : generate(query, category,\ncontext+web_context,\nuser_context, conversation_history)
+note right of Gen
+  web_context iniettato in
+  context["additional_info"]
+  come fonte per la risposta
+end note
+Gen  --> Orch : { response, status }
+
+' ─── 7. Revisione ────────────────────────────────────────────
+Orch -> Rev  : revise(query, draft, category,\nuser_context, conversation_history)
+Rev  --> Orch : { revised_response, has_changes }
+
+' ─── 8. Logging pipeline ─────────────────────────────────────
+Orch -> Log  : write_log(state, workflow_steps)
+Log  -> Log  : _build_filename(matricola, timestamp)
+note right of Log
+  Nome: log_{matricola}_{timestamp}.txt
+  Contiene: header, user info,
+  query originale, history,
+  step classificatore, query agent,
+  web agent, generator, reviser
+end note
+Log  -> FS   : scrive file log txt
+FS   --> Log : filepath
+Log  --> Orch : filepath
+
+' ─── 9. Risposta finale ───────────────────────────────────────
+Orch --> GW  : { response, category, metadata }
+GW   --> FE  : { response, category, metadata }
+
+FE   -> FE   : Aggiunge messaggio alla UI
+FE   -> FE   : Salva conversazione in localStorage
+FE   --> U   : Visualizza risposta
+
+@enduml

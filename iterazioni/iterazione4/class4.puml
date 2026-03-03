@@ -1,0 +1,188 @@
+@startuml
+title Class Diagram - Iteration 4
+
+' ─── Domain Model ─────────────────────────────────────────────
+class User {
+  +id: String
+  +name: String
+  +surname: String
+  +email: String
+  +course: String
+  +department: String
+  +tipology: String
+  +year: int
+  +matricola: String
+  -passwordHash: String
+}
+
+' ─── Authentication Layer ─────────────────────────────────────
+class AuthController {
+  -service: AuthService
+  -cookieMaxAge: int
+  +login(matricola, password, response): dict
+  +register(name, surname, matricola, password, department, course, tipology, year, response): dict
+  -_set_auth_cookie(response: Response, token: String): void
+  -_public_profile(student: dict): dict
+}
+
+class AuthService {
+  -repo: ProfileRepository
+  -jwt: JWTManager
+  +authenticate(matricola: String, password: String): dict
+  +createUser(...): dict
+}
+
+class JWTManager {
+  -secretKey: String
+  -algorithm: String
+  -expireMinutes: int
+  +generateToken(data: dict): String
+  +validateToken(token: String): dict
+  +validateFromRequest(request: Request): dict
+}
+
+class ProfileRepository {
+  -collection: AsyncIOMotorCollection
+  +findById(matricola: String): User
+  +findByEmail(email: String): User
+  +save(userDoc: dict): dict
+  +exists(matricola: String): bool
+}
+
+' ─── Conversation Store (Frontend) ────────────────────────────
+class ConversationStore <<boundary>> {
+  -storageKey: String
+  +load(matricola: String): List<Message>
+  +save(matricola: String, history: List<Message>): void
+  +clear(matricola: String): void
+}
+
+class Message {
+  +type: String
+  +content: String
+  +timestamp: Date
+  +category: String
+  +metadata: dict
+}
+
+' ─── Agent State ──────────────────────────────────────────────
+class AgentState {
+  +query: String
+  +context: dict
+  +conversation_history: List<dict>
+  +user_status: String
+  +user_name: String
+  +user_surname: String
+  +user_department: String
+  +user_course: String
+  +user_tipology: String
+  +user_year: int
+  +user_matricola: String
+  +category: String
+  +category_description: String
+  +confidence: String
+  +search_query: String
+  +web_results: List<dict>
+  +web_context: String
+  +generated_response: String
+  +generation_status: String
+  +final_response: String
+  +has_revisions: bool
+  +workflow_steps: List<dict>
+  +current_step: String
+  +error: String
+  +status: String
+}
+
+' ─── Agent Layer ──────────────────────────────────────────────
+abstract class Agent {
+  +{abstract} execute(state: AgentState): AgentState
+}
+
+class OrchestratorAgent {
+  -classifier: ClassifierAgent
+  -queryAgent: QueryAgent
+  -webAgent: WebAgent
+  -generator: GeneratorAgent
+  -reviser: RevisionAgent
+  -logger: PipelineLogger
+  -workflow: StateGraph
+  +process_query(query, context, user_info, conversation_history): dict
+  +get_available_agents(): List<dict>
+  +analyze_query(query: String): dict
+  -_build_workflow(): StateGraph
+  -_classify_node(state): AgentState
+  -_query_node(state): AgentState
+  -_web_search_node(state): AgentState
+  -_generate_node(state): AgentState
+  -_revise_node(state): AgentState
+}
+
+class ClassifierAgent {
+  +classify(query, user_context, conversation_history): dict
+  +execute(state: AgentState): AgentState
+}
+
+class QueryAgent {
+  -llm: ChatGoogleGenerativeAI
+  +generate_query(query, conversation_history, user_context): dict
+  -_build_system_prompt(): String
+}
+
+class WebAgent {
+  -client: TavilyClient
+  +search(search_query: String): dict
+  -_is_pdf_url(url: String): bool
+  -_extract_pdf_links(pdf_url: String): List<dict>
+  -_format_results(results: List<dict>): String
+}
+
+class GeneratorAgent {
+  +generate(query, category, context, user_context, conversation_history): dict
+  +execute(state: AgentState): AgentState
+}
+
+class RevisionAgent {
+  +revise(original_query, generated_response, category, user_context, conversation_history): dict
+  +execute(state: AgentState): AgentState
+}
+
+class PipelineLogger {
+  -LOGS_DIR: String
+  +write_log(state, workflow_steps, timestamp): String
+  -_build_filename(matricola, timestamp): String
+  -_build_log_content(state, workflow_steps, timestamp): List<String>
+  -_format_agent_section(title, step, extra_fields): List<String>
+  -_format_web_agent_section(step, web_results): List<String>
+}
+
+' ─── Ereditarietà agenti ──────────────────────────────────────
+Agent <|-- ClassifierAgent
+Agent <|-- GeneratorAgent
+Agent <|-- RevisionAgent
+
+' ─── Relazioni Authentication Layer ──────────────────────────
+AuthController --> AuthService          : delega
+AuthService    --> JWTManager           : genera/valida token
+AuthService    --> ProfileRepository    : gestisce profilo
+ProfileRepository "1" --> "0..1" User   : persiste
+
+' ─── Relazioni Agent Layer ────────────────────────────────────
+OrchestratorAgent "1" *--> "1" ClassifierAgent : classifier
+OrchestratorAgent "1" *--> "1" QueryAgent      : queryAgent
+OrchestratorAgent "1" *--> "1" WebAgent        : webAgent
+OrchestratorAgent "1" *--> "1" GeneratorAgent  : generator
+OrchestratorAgent "1" *--> "1" RevisionAgent   : reviser
+OrchestratorAgent "1" *--> "1" PipelineLogger  : logger
+OrchestratorAgent --> AgentState               : crea/aggiorna
+
+AgentState "1" o--> "0..*" Message : conversation_history
+
+' ─── Frontend ─────────────────────────────────────────────────
+ConversationStore "1" o--> "*" Message  : memorizza
+
+' ─── Dipendenze cross-layer ───────────────────────────────────
+OrchestratorAgent --> ProfileRepository : recupera profilo
+OrchestratorAgent --> PipelineLogger    : scrive log dopo ogni query
+
+@enduml

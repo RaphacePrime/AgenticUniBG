@@ -1,15 +1,14 @@
-# Iterazione 3 – Autenticazione JWT, Refactoring Architetturale e Analisi della Memoria Conversazionale
+# Iterazione 3 – JWT Authentication, Gestione Sessione e Memoria Conversazionale
 
 ---
 
 ## 1. Obiettivo dell'Iterazione
 
-L'obiettivo dell'Iterazione 3 è consolidare e raffinare l'architettura del server introdotta nell'Iterazione 2, completando le funzionalità rimaste in sospeso e analizzando in profondità la gestione della memoria conversazionale:
+L'obiettivo dell'Iterazione 3 è consolidare e potenziare il sistema introdotto nell'Iterazione 2 con tre macro-funzionalità distinte:
 
-- **Implementazione del JWT stateless** con cookie httpOnly (rimandato dall'Iterazione 2)
-- **Refactoring del server** in package separati (`auth/`, `models/`) seguendo i principi di separazione delle responsabilità
-- **Progettazione della memoria conversazionale** del sistema attuale
-- **Progettazione di architetture alternative** per la persistenza della memoria conversazionale (Redis e MongoDB)
+- **JWT Authentication via httpOnly Cookie**: il token di sessione viene ora generato lato server e trasmesso esclusivamente tramite cookie httpOnly, eliminando la gestione manuale del token lato frontend e aumentando la sicurezza.
+- **Gestione della Sessione Browser**: l'applicazione è in grado di ripristinare automaticamente la sessione utente al ricaricamento della pagina, verificando la validità del cookie JWT senza richiedere un nuovo login.
+- **Memoria Conversazionale**: la cronologia delle conversazioni viene mantenuta nel `localStorage` del browser (persistenza tra sessioni) e trasmessa ad ogni query come `conversation_history`, consentendo agli agenti di generare risposte coerenti con il contesto dei messaggi precedenti.
 
 ---
 
@@ -17,298 +16,209 @@ L'obiettivo dell'Iterazione 3 è consolidare e raffinare l'architettura del serv
 
 | ID | Descrizione | Ruolo |
 |----|-------------|-------|
-| US-06 | Come studente, voglio che la mia sessione venga mantenuta tramite un token sicuro nel browser, senza dover reinserire le credenziali ad ogni riavvio | Studente |
-| US-07 | Come studente, voglio che il sistema ricordi le domande e le risposte precedenti durante la sessione, così le risposte tengano conto del contesto | Studente |
-| US-08 | Come amministratore, voglio che la logica di autenticazione sia separata dal routing HTTP, così il codice sia più manutenibile e testabile | Sviluppatore |
+| US-06 | Come studente, voglio che il sistema ricordi la mia sessione dopo il ricaricamento della pagina, così non devo autenticarmi nuovamente | Studente |
+| US-07 | Come utente, voglio che le risposte del sistema tengano conto delle domande precedenti della sessione corrente, così posso avere una conversazione fluida | Utente |
+| US-08 | Come studente, voglio che le mie conversazioni precedenti siano ripristinate quando riapro l'applicazione | Studente |
+| US-09 | Come utente, voglio poter fare logout in modo sicuro cancellando la sessione, così i miei dati restano protetti | Utente |
 
 ---
 
-## 3. Modifiche Incrementali rispetto all'Iterazione 2
+## 3. Architettura Implementata
 
-### 3.1 JWT – da "rimandato" a implementato
+### 3.1 Novità Rispetto all'Iterazione 2
 
-Nell'Iterazione 2 il sistema restituiva direttamente i dati del profilo al login e il frontend li manteneva in memoria. Non era presente alcun token di sessione.
-
-Nell'Iterazione 3 viene implementato il **JWT stateless** con le seguenti caratteristiche:
-
-| Parametro | Valore |
-|---|---|
-| Algoritmo | `HS256` |
-| Scadenza | 7 giorni  |
-| Trasporto | Cookie `httpOnly` (`access_token`) |
-| Verifica | `GET /api/auth/verify` al caricamento dell'app |
-| Revoca | `POST /api/auth/logout` (cancella il cookie) |
-
-Il token è firmato con una chiave segreta configurabile via variabile d'ambiente (`JWT_SECRET_KEY`). Il cookie httpOnly impedisce al JavaScript del browser di leggere il token, riducendo la superficie di attacco XSS.
-
-### 3.2 Refactoring del server
-
-**Struttura (Iterazione 3):**
-```
-server/
-├── main.py          ← solo route e wiring delle dipendenze (191 righe)
-├── db.py
-├── config.py
-├── models/
-│   ├── __init__.py
-│   └── user.py      ← tutti i modelli Pydantic
-├── auth/
-│   ├── __init__.py
-│   ├── jwt_manager.py        ← JWTManager
-│   ├── profile_repository.py ← ProfileRepository
-│   ├── service.py            ← AuthService
-│   └── controller.py         ← AuthController
-└── agents/
-```
-
-### 3.3 Nuovi endpoint di autenticazione
-
-| Metodo | Path | Descrizione | Novità |
-|--------|------|-------------|--------|
-| `POST` | `/api/auth/login` | Login → imposta cookie JWT httpOnly | Cookie JWT (nuovo) |
-| `POST` | `/api/auth/register` | Registrazione → imposta cookie JWT httpOnly | Cookie JWT (nuovo) |
-| `GET` | `/api/auth/verify` | Verifica il cookie JWT, restituisce profilo | Nuovo endpoint |
-| `POST` | `/api/auth/logout` | Cancella il cookie JWT | Nuovo endpoint |
-| `POST` | `/api/agent/query` | Query con protezione JWT (cookie) | Era non protetto |
-| `GET` | `/api/agents` | Lista agenti | Invariato |
-| `GET` | `/api/conversation/history` | Cronologia | Invariato |
-| `DELETE` | `/api/conversation/history` | Cancella cronologia | Invariato |
-| `POST` | `/api/agent/analyze` | Analisi query (debug) | Invariato |
-
----
-
-## 4. Analisi Statica – Nuove Classi
-
-### 4.1 `JWTManager` (`auth/jwt_manager.py`)
-
-Responsabile della generazione e validazione dei token JWT. Centralizza tutta la logica crittografica.
-
-| Attributo / Metodo | Tipo | Descrizione |
+| Funzionalità | Iterazione 2 | Iterazione 3 |
 |---|---|---|
-| `secret_key: str` | attributo | Chiave di firma (da env `JWT_SECRET_KEY`) |
-| `algorithm: str` | attributo | `"HS256"` |
-| `expire_minutes: int` | attributo | `60 * 24 * 7` (7 giorni) |
-| `generateToken(data)` | metodo | Genera JWT con campo `exp` |
-| `validateToken(token)` | metodo | Decodifica e valida, solleva `HTTPException(401)` se non valido |
-| `validateFromRequest(request)` | metodo | Estrae il token dal cookie `access_token` e lo valida |
+| JWT | Assente (token non implementato) | httpOnly Cookie con firma HMAC-SHA256 |
+| Ripristino sessione | Assente | `GET /api/auth/verify` con cookie |
+| Logout | Assente | `POST /api/auth/logout` + delete cookie |
+| Memoria conversazionale | Assente | `localStorage` + `conversation_history` in ogni query |
+| Auth Layer | Logica in `main.py` | Pacchetto `auth/` con 4 classi separate |
+| CORS | `allow_origins=["*"]` | Origini ristrette a localhost |
 
-### 4.2 `ProfileRepository` (`auth/profile_repository.py`)
+### 3.2 Struttura a Tier Aggiornata
 
-Astrae le operazioni CRUD su MongoDB per la collezione `users`, eliminando le query MongoDB inline da `main.py`.
+```
+Client Tier         →   React App + localStorage (Conversation Store)
+Backend Tier        →   FastAPI + Auth Layer (JWT Cookie) + Agent Layer
+Data Tier           →   MongoDB Atlas (Motor async)
+```
 
-| Metodo | Descrizione |
-|---|---|
-| `findById(matricola)` | Cerca utente per matricola (chiave primaria) |
-| `findByEmail(email)` | Cerca utente per email |
-| `save(user_doc)` | Inserisce nuovo documento utente |
-| `exists(matricola)` | Verifica esistenza senza restituire il documento |
+---
 
-### 4.3 `AuthService` (`auth/service.py`)
+## 4. Pacchetto `auth/` – Refactoring del Layer di Autenticazione
 
-Contiene la logica di business dell'autenticazione. Coordina `ProfileRepository` e `JWTManager`.
+Il codice di autenticazione, precedentemente concentrato in `main.py`, è stato estratto in un pacchetto dedicato con responsabilità ben separate.
 
-| Metodo | Descrizione |
-|---|---|
-| `authenticate(matricola, password)` | Verifica credenziali con `bcrypt`, genera JWT. Restituisce `{ "student": ..., "token": ... }` |
-| `createUser(name, surname, matricola, password, ...)` | Hasha la password con `bcrypt`, salva via `ProfileRepository`, genera JWT |
+### 4.1 `JWTManager`
+Gestisce la generazione e la validazione dei token JWT:
+- `generateToken(data: dict)` — codifica il payload (matricola + status) con scadenza configurabile (default 7 giorni), firma HMAC-SHA256
+- `validateToken(token: str)` — decodifica e verifica la firma; solleva `HTTPException 401` se il token è invalido o scaduto
+- `validateFromRequest(request: Request)` — estrae il JWT dall'httpOnly cookie `access_token` della request e lo valida; usato come dipendenza FastAPI (`Depends`)
 
-### 4.4 `AuthController` (`auth/controller.py`)
+### 4.2 `AuthService`
+Contiene la logica applicativa:
+- `authenticate(matricola, password)` — verifica le credenziali via `bcrypt.checkpw`, genera JWT e restituisce `{student, token}`
+- `createUser(...)` — verifica unicità matricola, hasha la password, inserisce in MongoDB, genera JWT
 
-Strato HTTP: riceve i dati dalla request, delega ad `AuthService`, imposta/elimina il cookie.
+### 4.3 `AuthController`
+Fa da ponte tra i route handler FastAPI e `AuthService`:
+- `login(...)` / `register(...)` — delega ad `AuthService` e poi chiama `_set_auth_cookie` per depositare il JWT nel cookie httpOnly
+- `_set_auth_cookie(response, token)` — imposta il cookie con attributi `httponly=True`, `samesite="lax"`, `max_age` dal config; `secure=True` in produzione
+- `_public_profile(student)` — filtra il documento restituendo solo i campi pubblici (omette `passwordHash`)
 
-| Metodo | Descrizione |
-|---|---|
-| `login(matricola, password, response)` | Chiama `AuthService.authenticate`, imposta cookie JWT |
-| `register(..., response)` | Chiama `AuthService.createUser`, imposta cookie JWT |
-| `_set_auth_cookie(response, token)` | Imposta il cookie `access_token` httpOnly |
-| `_public_profile(student)` | Filtra il documento MongoDB rimuovendo `passwordHash` prima di rispondere |
+### 4.4 `ProfileRepository`
+Incapsula le operazioni MongoDB sulla collection `users`:
+- `findById(matricola)` — ricerca per chiave applicativa primaria
+- `findByEmail(email)` — ricerca alternativa per email
+- `save(user_doc)` — inserisce e restituisce il documento senza `_id`
+- `exists(matricola)` — verifica unicità prima della registrazione
 
-### 4.5 Modelli Pydantic (`models/user.py`)
+---
 
-Estratti da `main.py` e centralizzati in un modulo dedicato.
+## 5. Gestione della Sessione Browser
 
-| Classe | Campi principali | Utilizzo |
+### 5.1 Ripristino Automatico della Sessione
+
+Al caricamento dell'applicazione React, viene effettuata una chiamata `GET /api/auth/verify` con `credentials: "include"`. Il backend:
+1. Estrae il JWT dall'httpOnly cookie tramite `JWTManager.validateFromRequest`
+2. Decodifica il payload e recupera la matricola
+3. Interroga `ProfileRepository.findById` su MongoDB
+4. Restituisce il profilo completo al frontend
+
+Se il cookie è assente, scaduto o invalido, il frontend mostra la pagina di login senza esporre dettagli dell'errore.
+
+### 5.2 Logout Sicuro
+
+`POST /api/auth/logout` chiama `response.delete_cookie("access_token")`, rendendo il JWT non più trasmesso nelle request successive. Lato frontend, il logout:
+- Cancella il profilo dallo stato React
+- Cancella la conversazione dal `localStorage`
+- Reimposta `isAuthenticated = false`
+
+---
+
+## 6. Memoria Conversazionale
+
+### 6.1 Persistenza in `localStorage`
+
+La cronologia viene salvata nel `localStorage` del browser con chiave `conversation_{matricola}`:
+- **Salvataggio**: ad ogni aggiornamento del conversation state (React `useEffect`)
+- **Ripristino**: dopo il verify token con successo, il frontend carica la conversazione salvata
+- **Cancellazione**: al logout o su richiesta esplicita dell'utente
+
+### 6.2 Trasmissione agli Agenti
+
+Ad ogni query, il frontend costruisce un array `conversation_history` con gli ultimi **10 messaggi** (5 turni domanda/risposta):
+
+```javascript
+const conversationHistory = conversation
+  .filter(msg => msg.type === "user" || msg.type === "agent")
+  .slice(-10)
+  .map(msg => ({
+    role: msg.type === "user" ? "user" : "assistant",
+    content: msg.content,
+  }));
+```
+
+L'array viene inviato nel body di `POST /api/agent/query` insieme a `query` e `user_info`.
+
+### 6.3 Utilizzo da Parte degli Agenti
+
+`AgentState` ora include il campo `conversation_history: Optional[List[Dict]]`. L'`OrchestratorAgent` lo popola dallo stato iniziale e lo passa a:
+- **GeneratorAgent**: inietta la history nel prompt per generare risposte coerenti con la conversazione in corso
+- **RevisionAgent**: considera la history nella revisione per evitare contraddizioni con risposte precedenti
+
+---
+
+## 7. Analisi Dinamica
+
+### 7.1 Flusso di Ripristino Sessione
+1. Il browser carica l'app React e invia automaticamente `GET /api/auth/verify` con il cookie.
+2. FastAPI usa `Depends(verify_token)` per validare il JWT.
+3. `ProfileRepository.findById` recupera il profilo da MongoDB.
+4. Il frontend imposta `userInfo` e `isAuthenticated`, poi carica la conversazione da `localStorage`.
+
+### 7.2 Flusso di Query con Contesto Conversazionale
+1. L'utente digita una domanda; il frontend estrae gli ultimi 10 messaggi come history.
+2. `POST /api/agent/query` invia query + user_info + conversation_history (cookie allegato automaticamente).
+3. L'orchestratore inizializza `AgentState` con tutti i campi inclusa la history.
+4. **Classify** → **Generate** (con history) → **Revise** (con history).
+5. La risposta viene restituita, aggiunta alla UI e salvata in `localStorage`.
+
+### 7.3 Flusso di Logout
+1. L'utente clicca logout; il frontend invia `POST /api/auth/logout`.
+2. Il backend cancella il cookie `access_token`.
+3. Il frontend pulisce `localStorage`, resetta lo stato e reindirizza al login.
+
+---
+
+## 8. Analisi Statica – Aggiornamenti alle Classi
+
+### 8.1 `AgentState` (aggiornato)
+Aggiunto il campo:
+- `conversation_history: Optional[List[Dict]]` — lista di `{role: "user"|"assistant", content: String}` trasmessa dal frontend
+
+### 8.2 `OrchestratorAgent.process_query()` (aggiornato)
+La firma passa da:
+```python
+process_query(query, context, user_info)
+```
+a:
+```python
+process_query(query, context, user_info, conversation_history)
+```
+e popola `initial_state["conversation_history"]`.
+
+### 8.3 Dipendenze FastAPI
+`verify_token` è registrata come dipendenza (`Depends`) utilizzata sull'endpoint `/api/auth/verify`. Usa `JWTManager.validateFromRequest` per estrarre e validare il cookie.
+
+---
+
+## 9. Endpoint API – Aggiornamenti
+
+| Metodo | Path | Novità | Descrizione |
+|--------|------|--------|-------------|
+| `POST` | `/api/auth/login` | Imposta httpOnly cookie | Login — ora restituisce JWT in cookie |
+| `POST` | `/api/auth/register` | Imposta httpOnly cookie | Registrazione — ora restituisce JWT in cookie |
+| `GET` | `/api/auth/verify` | **Nuovo** | Verifica cookie e ripristina profilo |
+| `POST` | `/api/auth/logout` | **Nuovo** | Cancella il cookie JWT |
+| `POST` | `/api/agent/query` | Aggiornato | Accetta `conversation_history` nel body |
+
+---
+
+## 10. Sicurezza
+
+| Aspetto | Iterazione 2 | Iterazione 3 |
 |---|---|---|
-| `User` | `name, surname, matricola, department, course, tipology, year, passwordHash` | Documento MongoDB |
-| `LoginRequest` | `matricola, password` | Body `POST /api/auth/login` |
-| `RegisterRequest` | `name, surname, matricola, password, department, course, tipology, year` | Body `POST /api/auth/register` |
-| `QueryRequest` | `query, user_info?, context?` | Body `POST /api/agent/query` |
-| `QueryResponse` | `response, agent_used?, metadata?` | Risposta agente |
-
-> **Nota**: il campo `context: Optional[dict]` in `QueryRequest` è presente per estensibilità futura ma non è attualmente inviato dal frontend né utilizzato dagli agenti.
+| Token JWT | Non implementato | httpOnly cookie (inaccessibile da JS) |
+| CORS | `allow_origins=["*"]` | Origini esplicite (localhost dev) |
+| Password | bcrypt | bcrypt (invariato) |
+| Scadenza token | — | 7 giorni (configurabile) |
+| SameSite | — | `lax` (protezione CSRF base) |
 
 ---
 
-## 5. Analisi Dinamica
+## 11. Limitazioni dell'Iterazione 3
 
-### 5.1 Flusso di Login aggiornato
-
-```
-1. Utente inserisce matricola e password nel frontend React
-2. Frontend → POST /api/auth/login { matricola, password }
-3. AuthController.login() → AuthService.authenticate()
-4. AuthService: ProfileRepository.findById(matricola) da MongoDB
-5. AuthService: bcrypt.checkpw(password, hash)
-6. AuthService: JWTManager.generateToken({ matricola, ... })
-7. AuthController._set_auth_cookie(response, token)   ← NUOVO
-8. Risposta: Set-Cookie: access_token=<JWT>; HttpOnly; Max-Age=604800
-9. Frontend → GET /api/auth/verify (con cookie automatico)
-10. Backend: JWTManager.validateFromRequest(request) → profilo utente
-11. Frontend salva profilo in stato React, abilita la chat
-```
-
-### 5.2 Flusso di Verifica Token (ricarica pagina)
-
-All'avvio di `App.jsx`, prima di mostrare qualsiasi pagina:
-
-```
-1. Frontend → GET /api/auth/verify (cookie inviato automaticamente dal browser)
-2. verify_token(request) → JWTManager.validateFromRequest()  
-3. Se valido: ProfileRepository.findById(matricola) → restituisce profilo
-4. Frontend: setUserInfo(userData), setIsAuthenticated(true)
-5. Frontend carica conversazione da localStorage (se presente)
-6. Se invalido/assente: mostra LoginPage
-```
-
-### 5.3 Flusso di Query (invariato nella logica, protetto da JWT)
-
-```
-1. Frontend → POST /api/agent/query { query, user_info, conversation_history }
-   (cookie JWT inviato automaticamente)
-2. Dipendenza FastAPI verify_token() → JWTManager.validateFromRequest()
-3. OrchestratorAgent.process_query(query, user_info, conversation_history)
-4. classify → generate → revise (LangGraph, invariato)
-5. Risposta al frontend
-```
+- **`secure=False`**: il cookie non è marcato `Secure` perché il deploy locale non usa HTTPS; da abilitare in produzione.
+- **Conversazione solo lato client**: la history è memorizzata in `localStorage` e non è persistita su MongoDB; cambiando browser o dispositivo la cronologia è persa.
+- **Nessun refresh token**: il JWT ha scadenza fissa a 7 giorni senza meccanismo di rinnovo; alla scadenza l'utente deve riautenticarsi.
+- **Nessun accesso a dati reali UniBG**: le risposte restano generate dall'LLM senza recupero da fonti strutturate (web, documenti).
 
 ---
 
-## 6. Gestione della Memoria Conversazionale (Analisi)
+## 12. Obiettivi Raggiunti
 
-Nell'Iterazione 3 viene analizzato e documentato il meccanismo di gestione della memoria conversazionale del sistema attuale, basato interamente sul **client (frontend)**.
-
-### 6.1 Approccio attuale – Client-side (localStorage)
-
-| Aspetto | Comportamento |
+| Obiettivo | Stato |
 |---|---|
-| **Storage** | `localStorage` del browser, chiave `conversation_{matricola}` |
-| **Caricamento** | Al login/verifica token, la conversazione viene ripristinata |
-| **Cancellazione** | Al logout, `localStorage.removeItem(key)` |
-| **Payload inviato** | Ultimi 10 messaggi (5 scambi) via `.slice(-10)` |
-| **AgentState** | Effimero, creato nuovo ad ogni query |
-| **Persistenza server** | Nessuna — il server è completamente stateless |
-
-### 6.2 Utilizzo della `conversation_history` negli agenti
-
-| Agente | Porzione usata | Modalità |
-|---|---|---|
-| `ClassifierAgent` | `conversation_history[-4:]` (2 scambi) | Testo anteposto al prompt |
-| `GeneratorAgent` | Tutti i 10 messaggi | Messaggi LLM nativi (`HumanMessage` / `AIMessage`) |
-| `RevisionAgent` | `conversation_history[-4:]` (2 scambi) | Testo inserito nel prompt di revisione |
-
-Il `GeneratorAgent` è l'unico a passare la history come messaggi LLM nativi, garantendo vera continuità conversazionale all'LLM.
-
-Vedere il diagramma [sequence_memory.puml](sequence_memory.puml) per il flusso dettagliato.
-
----
-
-## 7. Architetture Alternative – Proposte Progettuali
-
-Nell'Iterazione 3 vengono progettate due architetture alternative per la persistenza della memoria conversazionale, da implementare nelle iterazioni successive. Entrambe spostano la responsabilità della history dal client al server.
-
-### 7.1 Opzione A – Redis (cache + flush su MongoDB)
-
-La conversazione attiva è mantenuta in un elenco Redis con TTL. Al logout viene persistita su MongoDB.
-
-**Componente centrale**: `ConversationRepository` (Redis)
-
-| Caratteristica | Dettaglio |
-|---|---|
-| Struttura Redis | `LIST chat:{matricola}` |
-| Dimensione massima | 20 elementi (`LTRIM`) |
-| TTL | 86400s (reset ad ogni messaggio) |
-| Payload dal client | Solo `{ query, user_info }` — niente history |
-| Persistenza permanente | Flush su MongoDB al logout |
-| Conversazioni multiple | No — una sessione attiva per utente |
-
-**Vantaggi**: latenza bassissima (Redis in-memory), zero modifiche agli agenti, payload client ridotto.  
-**Svantaggi**: dati persi se TTL scade prima del logout, architettura più complessa (2 databse).
-
-Diagrammi: [sequence_redis.puml](sequence_redis.puml) · [component_redis.puml](component_redis.puml) · [class_redis.puml](class_redis.puml)
-
-### 7.2 Opzione B – MongoDB (persistenza diretta, multi-conversazione)
-
-Ogni messaggio viene scritto direttamente su MongoDB. Il frontend gestisce un `conv_id` per identificare la conversazione attiva. Supporta una sidebar con la lista delle conversazioni precedenti.
-
-**Componente centrale**: `ConversationRepository` (MongoDB)  
-**Nuovo modello**: `Conversation { id, matricola, title, messages[], createdAt, updatedAt }`
-
-| Caratteristica | Dettaglio |
-|---|---|
-| Struttura MongoDB | Collection `conversations`, documenti con array `messages` |
-| Scrittura | Ad ogni messaggio (`updateOne $push`) |
-| Payload dal client | `{ query, user_info, conv_id }` |
-| Persistenza permanente | Sì — nessuna scadenza |
-| Conversazioni multiple | Sì — gestite tramite `conv_id` |
-| Nuovi endpoint | `GET/POST /api/conversations`, `GET /api/conversations/{conv_id}` |
-
-**Vantaggi**: storico permanente, multi-conversazione, nessun rischio perdita dati.  
-**Svantaggi**: latenza maggiore rispetto a Redis, ogni query richiede una lettura MongoDB.
-
-Diagrammi: [sequence_mongodb.puml](sequence_mongodb.puml) · [component_mongodb.puml](component_mongodb.puml) · [class_mongodb.puml](class_mongodb.puml)
-
----
-
-## 8. Diagrammi UML dell'Iterazione 3
-
-| File | Tipo | Contenuto |
-|---|---|---|
-| [sequence_memory.puml](sequence_memory.puml) | Sequence | Flusso completo della memoria conversazionale nel sistema attuale |
-| [sequence_redis.puml](sequence_redis.puml) | Sequence | Flusso con Redis: login → LRANGE/RPUSH/LTRIM → logout+flush MongoDB |
-| [sequence_mongodb.puml](sequence_mongodb.puml) | Sequence | Flusso con MongoDB: carica conversazioni precedenti → query → updateOne |
-| [component_redis.puml](component_redis.puml) | Componenti | Architettura con Redis come cache e MongoDB come archivio permanente |
-| [component_mongodb.puml](component_mongodb.puml) | Componenti | Architettura con sola MongoDB e sidebar multi-conversazione |
-| [class_redis.puml](class_redis.puml) | Classi | `ConversationRepository` Redis, modifiche a `OrchestratorAgent` e `QueryRequest` |
-| [class_mongodb.puml](class_mongodb.puml) | Classi | `ConversationRepository`, `Conversation`, `Message`, `ConversationAPI` MongoDB |
-
----
-
-## 9. Deployment – Docker (invariato)
-
-La configurazione Docker Compose dell'Iterazione 2 rimane invariata. I nuovi package `models/` e `auth/` sono contenuti nella cartella `server/` usata come working directory dal container, quindi non richiedono modifiche al `Dockerfile`.
-
-| Servizio | Immagine base | Porta esposta |
-|---|---|---|
-| `frontend` | node + nginx | 80 |
-| `backend` | python:3.11-slim | 8000 |
-
----
-
-## 10. Limitazioni dell'Iterazione 3
-
-- **Memoria conversazionale ancora client-side**: la storia della conversazione è mantenuta nel `localStorage` del browser; se l'utente cambia dispositivo o cancella il browser, la history viene persa.
-- **Singola conversazione attiva**: il sistema non supporta la gestione di più conversazioni parallele per lo stesso utente.
-- **Nessun accesso a dati reali UniBG**: le risposte rimangono generate dall'LLM senza recupero da fonti strutturate.
-- **Il campo `context` in `QueryRequest` è dead code**: è presente nel modello ma non viene mai inviato dal frontend né utilizzato concretamente dagli agenti.
-
----
-
-## 11. Obiettivi Raggiunti
-
-| Obiettivo | Iterazione | Stato |
-|---|---|---|
-| Registrazione studente con hashing password | 2 | ✅ Completato |
-| Login con verifica credenziali | 2 | ✅ Completato |
-| Personalizzazione risposta agenti tramite profilo | 2 | ✅ Completato |
-| Pipeline classify → generate → revise (LangGraph) | 2 | ✅ Completato |
-| Persistenza su MongoDB Atlas | 2 | ✅ Completato |
-| Frontend React con login e chat | 2 | ✅ Completato |
-| Containerizzazione Docker + Docker Compose | 2 | ✅ Completato |
-| JWT stateless con cookie httpOnly | **3** | ✅ Completato |
-| Refactoring server in `auth/` e `models/` | **3** | ✅ Completato |
-| Separazione `JWTManager`, `AuthService`, `AuthController`, `ProfileRepository` | **3** | ✅ Completato |
-| Analisi e documentazione memoria conversazionale | **3** | ✅ Completato |
-| Progettazione architetture alternative (Redis / MongoDB) | **3** | ✅ Completato (design) |
-| Persistenza server-side della memoria conversazionale | 4 | ⏳ Rimandato |
-| Accesso a dati reali UniBG | 4 | ⏳ Rimandato |
-| Supporto multi-conversazione | 4 | ⏳ Rimandato |
+| JWT generato e inviato via httpOnly cookie | ✅ Completato |
+| Ripristino automatico sessione (`/api/auth/verify`) | ✅ Completato |
+| Logout con cancellazione cookie | ✅ Completato |
+| Memoria conversazionale in localStorage | ✅ Completato |
+| Conversazione persistente tra ricaricamenti | ✅ Completato |
+| Trasmissione `conversation_history` agli agenti | ✅ Completato |
+| Refactoring Auth Layer in pacchetto dedicato | ✅ Completato |
+| Restrizione CORS per origini autorizzate | ✅ Completato |
+| Refresh token | ⏳ Rimandato |
+| Persistenza conversazione su MongoDB | ⏳ Rimandato |
+| Accesso a dati reali UniBG | ⏳ Rimandato (Iterazione 4) |

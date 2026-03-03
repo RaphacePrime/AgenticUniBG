@@ -1,0 +1,53 @@
+@startuml
+title Use Case Diagram - Iterazione 4
+
+' Attore base in alto, specializzazione sotto
+actor "Utente" as User
+actor "Studente" as Student
+actor "Ospite" as Guest
+
+Student --|> User
+Guest  --|> User
+
+rectangle "Agentic UniBG System" {
+
+  usecase "Registrazione" as UC1
+  usecase "Login" as UC2
+  usecase "Inviare Richiesta" as UC4
+  usecase "Ricevere Risposta" as UC5
+  usecase "Recupero Profilo" as UC6
+  usecase "Risposta Personalizzata" as UC7
+  usecase "Ripristino Sessione\nAutomatica" as UC8
+  usecase "Logout" as UC9
+  usecase "Richiesta Contestuale\n(con History)" as UC10
+  usecase "Risposta con Dati\nReali da UniBG" as UC11
+}
+
+' --- Associazioni dirette ---
+Student --> UC1
+Student --> UC2
+Student --> UC9
+User    --> UC4
+User    --> UC8
+
+' --- Include ---
+UC2  ..> UC6  : <<include>>
+UC4  ..> UC5  : <<include>>
+UC4  ..> UC10 : <<include>>
+UC6  ..> UC7  : <<include>>
+UC8  ..> UC6  : <<include>>
+UC5  ..> UC11 : <<include>>
+
+' --- Extend ---
+UC7  ..> UC5  : <<extend>>\ncondizione: utente autenticato
+UC9  ..> UC8  : <<extend>>\ncondizione: sessione attiva
+
+note right of UC11
+  La risposta è arricchita con
+  contenuti recuperati da unibg.it
+  tramite WebAgent + Tavily.
+  Il QueryAgent ottimizza la ricerca
+  in base al profilo dello studente.
+end note
+
+@enduml
