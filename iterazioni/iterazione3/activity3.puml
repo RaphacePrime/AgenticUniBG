@@ -3,34 +3,32 @@ title Activity Diagram - Iterazione 3
 
 |Browser|
 start
-:Caricamento applicazione React;
+:Applicazione React;
 
 |API Gateway|
-:Riceve GET /api/auth/verify\n(con httpOnly cookie);
+:Riceve GET\n(con httpOnly cookie);
 
 if (Cookie presente e JWT valido?) then (Sì)
-  :Recupera profilo studente da MongoDB;
-  :Restituisce profilo utente;
+  :Recupera profilo da MongoDB;
 
   |Browser|
-  :Ripristina sessione utente;
-  :Carica conversazione salvata\nda localStorage;
-else (No / Cookie assente)
+  :Carica conversazione salvata;
+else (No)
   |Browser|
-  :Mostra pagina di Login;
+  :Pagina Login;
 
   if (Azione utente?) then (Login)
     |API Gateway|
-    :POST /api/auth/login\nverifica credenziali;
+    :POST verifica credenziali;
     :Genera JWT e imposta\nhttpOnly cookie;
     :Restituisce profilo;
 
     |Browser|
     :Salva profilo in memoria;
-    :Carica conversazione da\nlocalStorage (se presente);
+    :Carica conversazione (se presente);
   else (Registrazione)
     |API Gateway|
-    :POST /api/auth/register\ncrea account;
+    :POST crea account;
     :Genera JWT e imposta\nhttpOnly cookie;
     :Restituisce profilo;
 
@@ -45,7 +43,7 @@ endif
 :Costruisce conversation_history\n(ultimi 10 messaggi);
 
 |API Gateway|
-:Riceve POST /api/agent/query\n(cookie + query + history);
+:Riceve POST \n(cookie + query + history);
 
 |Orchestrator Agent|
 :Inizializza AgentState\n(profilo + query + history);
@@ -58,7 +56,7 @@ endif
 :Invia query + profilo + history\nal Generator;
 
 |Generator Agent|
-:Genera risposta contestualizzata\n(con history conversazione);
+:Genera risposta contestualizzata;
 :Restituisce bozza;
 
 |Orchestrator Agent|
@@ -76,16 +74,15 @@ endif
 
 |Browser|
 :Aggiunge messaggio alla conversazione;
-:Salva conversazione aggiornata\nin localStorage;
+:Salva conversazione;
 
 if (Logout?) then (Sì)
   |API Gateway|
-  :POST /api/auth/logout\nElimina httpOnly cookie;
+  :POST Elimina httpOnly cookie;
 
   |Browser|
   :Cancella profilo dalla memoria;
-  :Cancella conversazione\nda localStorage;
-  :Reindirizza a Login;
+  :Cancella conversazione;
 else (No)
   |Browser|
   :Attende prossima domanda;

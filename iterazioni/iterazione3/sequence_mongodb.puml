@@ -1,0 +1,85 @@
+@startuml
+title Memoria Conversazionale - Opzione MongoDB (Sequence)
+
+actor       Studente         as S
+participant "Frontend\n(App.jsx)"             as FE
+participant "POST /api/agent/query\n(main.py)" as API
+participant "OrchestratorAgent"               as ORC
+participant "ConversationRepository\n(MongoDB)" as REPO
+database    "MongoDB\nconversations"          as MDB
+
+' ─── Login + carica chat precedenti ──────────────────────────
+S -> FE : login
+FE -> API : POST /api/auth/login
+API --> FE : JWT cookie + userInfo
+
+FE -> API : GET /api/conversations
+API -> REPO : getConversations(matricola)
+REPO -> MDB : find({ matricola })\nsorted by updatedAt desc
+MDB --> REPO : lista conversazioni
+REPO --> API : [{ id, title, updatedAt }, ...]
+API --> FE : lista conversazioni
+
+FE --> S : mostra sidebar con chat precedenti
+
+' ─── Studente apre/crea una chat ─────────────────────────────
+alt nuova conversazione
+  S -> FE : click "Nuova chat"
+  FE -> API : POST /api/conversations\n{ matricola }
+  API -> REPO : createConversation(matricola)
+  REPO -> MDB : insertOne\n{ matricola, messages:[], createdAt }
+  MDB --> REPO : { conv_id }
+  REPO --> API : { conv_id }
+  API --> FE : { conv_id }
+else riapre conversazione esistente
+  S -> FE : click su chat precedente
+  FE -> API : GET /api/conversations/{conv_id}
+  API -> REPO : getMessages(conv_id)
+  REPO -> MDB : findOne({ _id: conv_id })
+  MDB --> REPO : { messages[] }
+  REPO --> API : messages[]
+  API --> FE : messages[]
+  FE --> S : mostra storico conversazione
+end
+
+' ─── Turno N ─────────────────────────────────────────────────
+S -> FE : invia messaggio
+
+FE -> API : POST /api/agent/query\n{ query, user_info, conv_id }
+
+API -> REPO : getRecentHistory(conv_id, limit=10)
+REPO -> MDB : findOne({ _id: conv_id })\nslice messages -10
+MDB --> REPO : ultimi 10 msg
+REPO --> API : conversation_history[]
+
+API -> ORC : process_query(query, user_info, conv_repo, conv_id)
+
+ORC -> ORC : crea AgentState\n{ query, conversation_history, user_info, ... }
+ORC -> ORC : Classifier → Generator → Revisor\n(invariati)
+ORC -> ORC : final_response pronto
+
+ORC -> REPO : appendMessages(conv_id, user_msg, assistant_msg)
+REPO -> MDB : updateOne({ _id: conv_id })\n$push messages user_msg\n$push messages assistant_msg\n$set updatedAt = now()
+
+note over REPO, MDB
+  Ogni messaggio viene scritto
+  direttamente su MongoDB —
+  nessun rischio di perdita dati
+  in caso di crash o chiusura browser.
+end note
+
+ORC --> API : { response, metadata }
+API --> FE : { response, metadata }
+FE --> S : mostra risposta
+
+legend bottom
+  | Aspetto              | Comportamento                              |
+  | Fonte della history  | MongoDB (lato server)                     |
+  | Payload dal client   | query + user_info + conv_id               |
+  | Scadenza sessione    | nessuna — storico permanente              |
+  | Persistenza storico  | scrittura ad ogni messaggio               |
+  | Conversazioni multi  | sì — gestite tramite conv_id              |
+  | AgentState           | invariato, riceve history da MongoDB      |
+endlegend
+
+@enduml

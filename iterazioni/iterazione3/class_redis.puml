@@ -1,5 +1,5 @@
 @startuml
-title Component Diagram - Iterazione 3
+title Component Diagram - Iteration 3
 
 skinparam componentStyle uml2
 
@@ -19,14 +19,14 @@ skinparam componentStyle uml2
 
 ' ─── Client Tier ─────────────────────────────────────────────
 package "Client Tier" {
-  [Web App] as Client
-  [Conversation Store]  as LS
+  [Web App\n(React + Vite)] as Client
+  [Conversation Store\n(localStorage)]  as LS
 }
 
 ' ─── Backend Tier ────────────────────────────────────────────
 package "Backend Tier" {
 
-  [API Gateway] as Gateway
+  [API Gateway\n(FastAPI)] as Gateway
 
   package "Authentication Layer" {
     [Auth Controller]    as AuthCtrl
@@ -65,15 +65,13 @@ LS          - ILS
 
 ' ─── Required interfaces ──────────────────────────────────────
 Client       ..> IHTTP    : richieste REST
-Client       ..> ICookie  : invia cookie
-Client       ..> ILS      : conversazione persistente
-Client       ..> IAuthAPI : login/logout
-Client       ..> IOrch    : query + conversation_history
-Gateway      ..> IOrch    : delega query
-Gateway      ..> IAuthAPI : delega autenticazione
+Client       ..> ICookie  : invia cookie con ogni request
+Client       ..> ILS      : persiste conversazione per matricola
+Gateway      ..> IAuthAPI : login / register / verify / logout
+Gateway      ..> IOrch    : invia query + conversation_history
 AuthCtrl     ..> IAuthSvc : delega logica di business
 AuthSvc      ..> IJWT     : genera e valida JWT
-AuthSvc      ..> IProfile : recupera profilo
+AuthSvc      ..> IProfile : recupera / salva profilo
 ProfileRepo  ..> IMongo   : persistenza
 Orch         ..> IClassif : classifica intento
 Orch         ..> IGen     : genera risposta con history
