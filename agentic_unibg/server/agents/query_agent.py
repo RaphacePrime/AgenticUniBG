@@ -25,7 +25,7 @@ REGOLE:
 - Non formulare domande, solo parole chiave
 - Tieni conto del contesto della conversazione per capire cosa cerca lo studente
 - La query deve essere in italiano
-- Massimo 6-8 parole
+- Massimo 12 parole
 
 INFORMAZIONI STUDENTE E QUANDO USARLE:
 Ti verranno fornite le informazioni del profilo dello studente (corso di laurea, dipartimento, anno, tipologia).

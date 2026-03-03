@@ -1,0 +1,1029 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-03 15:23:33
+Status    : success
+
+------------------------------------------------------------
+INFORMAZIONI UTENTE
+------------------------------------------------------------
+Tipo utente   : loggato
+Nome          : Raphael Mazzoleni
+Matricola     : 1086531
+Dipartimento  : Scuola di Ingegneria
+Corso         : Ingegneria informatica
+Tipologia     : Magistrale
+Anno          : 1
+
+------------------------------------------------------------
+QUERY ORIGINALE DELL'UTENTE
+------------------------------------------------------------
+dimmi le date degli esami nella sessione di aprile che devo svolgere
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: orari
+Description: Richieste su orari delle lezioni, esami, ricevimenti
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, esami, ricevimenti
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+
+
+>>> USER PROMPT:
+dimmi le date degli esami nella sessione di aprile che devo svolgere
+
+>>> RISPOSTA:
+orari
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: date esami sessione aprile ingegneria informatica magistrale primo anno unibg
+Original Query: dimmi le date degli esami nella sessione di aprile che devo svolgere
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- Tieni conto del contesto della conversazione per capire cosa cerca lo studente
+- La query deve essere in italiano
+- Massimo 12 parole
+
+INFORMAZIONI STUDENTE E QUANDO USARLE:
+Ti verranno fornite le informazioni del profilo dello studente (corso di laurea, dipartimento, anno, tipologia).
+Devi decidere AUTONOMAMENTE se includerle nella query in base al tipo di domanda:
+
+INCLUDI le info studente quando la domanda riguarda:
+- Materie, insegnamenti, piano di studi (es. "che materie ho?" → aggiungi corso + anno + tipologia)
+- Orari delle lezioni del proprio corso
+- Piano di studi, crediti, curriculum del proprio corso
+- Qualsiasi domanda dove il corso/anno specifico cambia la risposta
+
+NON INCLUDERE le info studente quando la domanda riguarda:
+- Procedure generiche (iscrizioni, tasse, borse di studio)
+- Informazioni su docenti specifici
+- Servizi universitari (mensa, biblioteca, aule)
+- Informazioni generali sull'ateneo
+- Erasmus, tirocini, laurea
+- Qualsiasi domanda che ha la stessa risposta indipendentemente dal corso
+
+ESEMPIO con info studente (corso: ingegneria informatica, anno: 1, tipologia: magistrale):
+Domanda: "che materie ho al secondo anno?"
+Query: materie secondo anno ingegneria informatica magistrale unibg
+
+ESEMPIO con info studente (corso: scienze della comunicazione, anno: 2, tipologia: triennale):
+Domanda: "quali esami devo dare quest'anno?"
+Query: piano studi secondo anno scienze comunicazione triennale unibg
+
+ESEMPIO senza info studente:
+Domanda: "come faccio a iscrivermi al test di ammissione?"
+Query: iscrizione test ammissione unibg
+
+ESEMPIO senza info studente:
+Domanda: "chi è il docente di algoritmi?"
+Query: docente algoritmi unibg
+
+ESEMPIO senza info studente:
+Domanda: "dove si trova la mensa?"
+Query: mensa universitaria unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+
+Informazioni studente:
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Ultima richiesta dello studente: dimmi le date degli esami nella sessione di aprile che devo svolgere
+
+Genera la query di ricerca web:
+
+>>> RISPOSTA:
+date esami sessione aprile ingegneria informatica magistrale primo anno unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status              : success
+Query di ricerca    : date esami sessione aprile ingegneria informatica magistrale primo anno unibg
+Totale risultati    : 18
+Risultati usati     : 5
+
+>>> RISULTATI PRINCIPALI:
+  [1] Score: 0.7779
+      Titolo   : Calendario didattico - Scuola di Ingegneria - UniBg
+      URL      : https://www.unibg.it/studiare/frequentare/orari-dei-corsi-ed-esami/calendario-didattico-scuola-ingegneria
+      Contenuto:  [Salta al contenuto principale](#main-content) 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e risorse](/vivere-unibg/spazi-e-risorse)
+  + [Opportunità e servizi](/vivere-unibg/opportunita-e-servizi)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. [Studiare](/studiare)
+3. [Frequentare](/studiare/frequentare)
+4. [Orari dei corsi ed esami](/studiare/frequentare/orari-dei-corsi-ed-esami)
+5. [Calendario didattico - Scuola di Ingegneria](/studiare/frequentare/orari-dei-corsi-ed-esami/calendario-didattico-scuola-ingegneria)
+
+### Calendario didattico Scuola di Ingegneria
+
+[Calendario didattico a.a. 2025-2026 (agg. 9.4.2025)](/sites/default/files/media/documents/2025-04-04/Calendario%20accademico%202025-2026_def.pdf "Calendario accademico 2025-2026_def.pdf")
+
+[Calendario didattico a.a. 2024-2025 (agg. 9.4.2025)](/sites/default/files/media/documents/2025-04-04/Calendario%20accademico%202024-25%20def..pdf "Calendario accademico 2024-25 def..pdf")
+
+[Calendario didattico a.a. 2023-2024](/sites/default/files/media/documents/2023-06-07/Calendario%20accademico%202023-2024deliberato%20in%20Giunta.pdf "Calendario accademico 2023-2024deliberato in Giunta.pdf")
+
+[Calendario didattico - Scuola di Ingegneria a.a. 2022-2023 (agg. 30.3.2023)](/sites/default/files/media/documents/2023-03-30/Calendario%20didattico%202022-2023.pdf "Calendario didattico 2022-2023.pdf")
+
+[Calendario didattico - Scuola di Ingegneria a.a. 2021-2022 (agg. 21.3.2022)](/sites/default/files/media/documents/2022-03-21/Calendario%20accademico%202021-22%20con%20proroga%20sessione%20esami%20e%20laurea.pdf "Calendario accademico 2021-22 con proroga sessione esami e laurea.pdf")
+
+[Calendario didattico - Scuola di Ingegneria a.a. 2021-2022 excel](/sites/default/files/calendario_accademico_2021-22_definitivo_excel.pdf "calendario_accademico_2021-22_definitivo_excel.pdf")
+
+### Informazioni per gli appelli d'esame
+
+[Calendario collocazione esami - aule](https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it&empty_box=0&col_cells=0)
+
+[Come prenotarsi agli appelli d'esame](https://www.unibg.it/node/6979)
+
+### ESCLUSIONE ESAMI PRIMO ANNO TRIENNALE SESSIONI STRAORDINARIE
+
+**Si ricorda** che gli esami del primo anno (Laurea triennale) sono esclusi nell'ambito delle Sessioni straordinarie di Aprile e Novembre come deliberato dal Consiglio di Facoltà (17.6.2009).
+
+### CALENDARIO APPELLI SESSIONE INVERNALE (AGG AL 09/02)
+
+[CALENDARIO APPELLI SESSIONE INVERNALE (AGG AL 09/02)](/sites/default/files/media/documents/2026-02-09/appelli25-26_gennfebbr.pdf "appelli25-26_gennfebbr.pdf")
+
+### CALENDARIO APPELLI SESSIONE APRILE (AGG. AL 09/02)
+
+[CALENDARIO APPELLI SESSIONE APRILE (AGG. AL 09/02)](/sites/default/files/media/documents/2026-02-09/appelli25-26_aprile.pdf "appelli25-26_aprile.pdf")
+
+### CALENDARIO APPELLI SESSIONE ESTIVA (AGG. AL 23/02)
+
+[CALENDARIO APPELLI SESSIONE ESTIVA (AGG. AL 23/02)](/sites/default/files/media/documents/2026-02-23/estiva%202026.pdf "estiva 2026.pdf")
+
+### CALENDARIO APPELLI SESSIONE AUTUNNALE (AGG. AL 23/02)
+
+[CALENDARIO APPELLI SESSIONE AUTUNNALE (AGG. AL 23/02)](/sites/default/files/media/documents/2026-02-23/autunno%2026.pdf "autunno 26.pdf")
+
+ 
+
+  [2] Score: 0.7335
+      Titolo   : [PDF] Corso di Laurea Magistrale in INGEGNERIA INFORMATICA - UniBg
+      URL      : https://www.unibg.it/sites/default/files/normativa/14-05-2015/52573.pdf
+      Contenuto: 1 Università degli Studi di Bergamo Facoltà di INGEGNERIA Corso di Laurea Magistrale in INGEGNERIA INFORMATICA Classe di appartenenza: LM-32 INGEGNERIA INFORMATICA COMPUTER SCIENCE AND ENGINEERING REGOLAMENTO DIDATTICO (modificato con D.R. 18341/I/003 del 26.9.2011) Presentazione E’ istituito il Corso di Laurea Magistrale in Ingegneria Informatica nella classe delle lauree magistrali LM-23 Ingegneria Informatica. La durata del corso di Laurea Magistrale è di norma di due anni per gli studenti a tempo pieno e prevede l’acquisizione di 120 crediti formativi universitari (CFU). Nel corso di Laurea Magistrale sono previsti: n. 12 esami, altre conoscenze utili per l’inserimento nel mondo del lavoro e la prova finale. Il titolo di studio rilasciato è la Laurea Magistrale in Ingegneria Informatica. Il conseguimento della Laurea Magistrale in Ingegneria Informatica consente l’accesso ai Corsi di dottorato di ricerca e ai Master di II livello. Obiettivi formativi specifici e descrizione del percorso formativo Il Corso di Laurea Magistrale in Ingegneria Informatica ha lo scopo di assicurare allo studente una formazione professionale polivalente in grado di affrontare i molteplici aspetti tecnici, metodologici ed economici che caratterizzano l'attività di sviluppo della tecnologia dell'informazione e della sua applicazione alla costruzione di sistemi informatici complessi. Caratteristica dell'Ingegnere Informatico sarà quella di possedere, oltre ad una solida base di competenze tecniche proprie dell'ingegneria dell'informazione, garantite dalle attività formative caratterizzanti la classe, approfondite conoscenze sui temi inerenti: i principi matematici alla base della costruzione di algoritmi e di soluzioni informatiche efficienti, la costruzione di modelli per l'analisi di sistemi ai fini di efficace monitoraggio e controllo del sistema, i principi di progettazione di dispositivi ai diversi livelli di integrazione, la definizione di strategie per la gestione di progetti di grandi dimensioni. Il profilo professionale di questa figura possiede, oltre ad una solida conoscenza della tecnologia, la necessaria competenze per partecipare all'innovazione della tecnologia e per assumere la responsabilità di trasferire in modo continuo le soluzioni emergenti verso nuovi scenari applicativi. La frazione dell' impegno orario che deve essere riservata allo studio personale o ad altre attività formative di tipo individuale è determinata in misura non inferiore al 60% dell'impegno orario complessivo. Il corso di laurea offre agli studenti un solo curriculum di studio, all’interno del quale si offre la possibilità di costruire percorsi di studio in grado di coprire una ampia fascia di contenuti. Sono previsti contenuti formativi in riferimento alle discipline: (indicare gli ambiti) Ingegneria informatica Ingegneria automatica Ingegneria delle telecomunicazioni Ingegneria elettronica Il corso di laurea forma alle professioni che richiedono di: - sviluppare, innovare e ottimizzare il sistema informatico; - analizzare e gestire l'uso della tecnologia dell'informazione in ambito industriale; - disegnare nuove soluzioni per l'applicazione delle tecnologie dell'informazione, anche in ambito meccatronico e biomedico; - sviluppare nuovi prodotti che integrino le tecnologie dell'informazione con altre tecnologie complesse; - monitorare e valutare le prestazioni dei sistemi e individuarne opportunità di miglioramento, dialogando con i responsabili gestionali. Gli ambiti in cui il profilo fornito trova maggiore applicazione sono sia imprese finanziarie e di servizi, sia imprese manifatturiere e pubblica amministrazione. Il profilo professionale fornito consente di: - risolvere problemi di sviluppo e applicazione delle tecnologie dell'informazione; 2 - valutare adeguatamente gli aspetti relativi alle opportunità e ai rischi delle diverse alternative di sviluppo della tecnologia; - promuovere l'innovazione della tecnologia dell'informazione, nei diversi ambiti di applicazione; - gestire progetti di innovazione della tecnologia e dei processi; - operare nell'ambito del disegno dell'architettura di sistemi informatici complessi; - contribuire al disegno di prodotti e strumenti nell'ambito dell'informatica, delle reti, dell'automatica e dell'elettronica. I risultati di apprendimento attesi, espressi tramite criteri europei del titolo di studio (DM 16/03/2007, art. 3, comma 7), sono così delineati: Conoscenza e capacità di comprensione L'attività formativa è volta a fornire le competenze necessarie affinché i laureati siano in grado di: - valutare le complesse relazioni tra i diversi componenti di un sistema informatico, nei diversi scenari di utilizzo della tecnologia. - comprendere i problemi relativi allo sviluppo di nuove tecnologie, partendo da una solida conoscenza rispetto ai principi di base dell'informatica, delle reti, dell'automatica e dell'elettronica. I laureati del Corso di Laurea in Ingegneria Informatica sono anche tenuti a: - conoscere gli aspetti metodologico-operativi delle altre discipline ingegneristiche, con particolare riferimento agli ambiti con una stretta relazione con il contesto dell'ingegneria dell'informazione; - conoscere i principi dell'economia e dell'organizzazione; - comprendere il funzionamento di sistemi tecnologici complessi e l'impatto che può essere prodotto da modifiche ai singoli componenti del sistema; Capacità di applicare conoscenza e comprensione L'impostazione didattica degli insegnamenti prevede che la formazione teorica sia accompagnata da esempi, applicazioni, lavori individuali e di gruppo e verifiche che sollecitino la partecipazione attiva, l'attitudine propositiva, la capacità di elaborazione autonoma e di comunicazione dei risultati del lavoro svolto. Riveste un'importanza cruciale il fatto che il corpo docente sia costituito da ricercatori impegnati attivamente nello sviluppo delle tecnologie. Inoltre, molti degli insegnamenti prevedono un'attività sperimentale autonoma, sfruttando per quanto riguarda le discipline dell'elettronica e dell'automatica la disponibilità di strumentazione presente nei laboratori dell'università. La parte di approfondimento ed elaborazione delle conoscenze demandata allo studio personale dello studente assume una rilevanza notevole, ma accanto allo studio personale assumono notevole importanza anche le attività di laboratorio eseguite in gruppo e le esercitazioni svolte in aula. A complemento degli strumenti già citati, lo studente può usufruire di visite guidate, tirocini e stage, sfruttando la presenza sul territorio di diverse aziende e centri di ricerca, con cui sono in corso da anni collaborazioni. In questo modo l'attività formativa è volta a garantire che i laureati siano in possesso di tutte le competenze necessarie per: - affrontare e risolvere problemi tecnologici nei diversi ambiti della tecnologia dell'informazione, con particolare riferimento agli ambiti di approfondimento specifico previsti dal corso di laurea; - valutare gli aspetti innovativi, prestazionali, economici e strategici delle scelte di sviluppo tecnologico; - favorire e promuovere l'innovazione tecnologica. Oltretutto il percorso formativo consentirà di: - sviluppare capacità di tipo organizzativo, che si concretizzano nella pianificazione della propria attività lavorativa, o nel rispetto di un piano di lavoro impostato; - sviluppare capacità di coordinare piccoli gruppi di lavoro, nel rispetto della gestione cooperativa di attività di innovazione; - saper far uso di appropriate tecniche di valutazione; - essere in grado di redigere rapporti sulla propria attività lavorativa. Autonomia di giudizio Il corso di Laurea Magistrale contribuirà allo sviluppo di una opportuna autonomia di giudizio con riferimento alla valutazione critica del funzionamento delle tecnologie e della loro applicazione alla risoluzione di problemi concreti, all'interpretazione dei risultati di esperimenti spesso con grandi quantità di dati da gestire, alla valutazione di opportunità relative all'adozione e sviluppo di una certa tecnologia per la risoluzione di un dato problema. 3 Abilità comunicative Il laureato magistrale in ingegneria informatica deve saper comunicare con tecnici ed esperti con proprietà di linguaggio. La conoscenza della lingua inglese è prerequisito indispensabile per il conseguimento della laurea per cui il laureato deve essere in grado di comunicare anche in inglese su problematiche di carattere tecnico; deve essere altresì in grado di comprendere ed elaborare testi in lingua inglese. Tutto ciò viene garantito dal fatto che il materiale di studio fornito è spesso disponibile nella sola lingua inglese, così come la documentazione relativa a qualsiasi tecnologia innovativa presentata nell'ambito del corso. A tale scopo i laureati acquisiranno adeguate competenze e strumenti per la comunicazione personale con riferimento a: - comunicazione in lingua italiana e inglese, scritta e orale; - capacità di lavorare in gruppo; - trasmissione e divulgazione dei risultati del proprio lavoro. Le attività di laboratorio e tutorato che vengono svolte dai docenti durante i corsi stimolano l'allievo ad interagire con essi e con i suoi colleghi; la prova d'esame, generalmente svolta secondo la modalità della prova scritta, consente di verificare le abilità comunicative maturate dall'allievo. Inoltre nel corso di alcuni degli insegnamenti maggiormente caratterizzanti il corso di studi, sono previste delle attività seminariali svolte da gruppi di studenti su argomenti specifici di ciascun insegnamento. Capacità di apprendimento Il corso di laurea fornirà le capacità necessarie per lo sviluppo e l'approfondimento di ulteriori competenze, con riferimento a: - consultazione in rete della descrizione estesa delle tecnologie presentate durante le lezioni - consultazione di materiale bibliografico; - sviluppo di indagini sul campo; - coinvolgimento in un'attività estesa di sviluppo della tecnologia svolta nell'ambito della tesi di laurea. La suddivisione delle ore di lavoro complessive previste per lo studente dà un forte rilievo alle ore di lavoro personale per offrire allo studente la possibilità di verificare e migliorare la propria capacità di apprendimento. Analogo obiettivo persegue l'impostazione di rigore metodologico degli insegnamenti che porta lo studente a sviluppare un ragionamento logico che, a seguito di precise ipotesi, porti alla conseguente dimostrazione di una tesi. Per ciascuno di questi risultati attesi di apprendimento si prevedono prove di accertamento mediante colloqui d’esame, elaborati scritti, osservazioni ridiscusse in aula o realizzate presso i servizi in cui si presta tirocinio, ecc.. Profili professionali e sbocchi occupazionali I laureati del Corso di Laurea Magistrale, in relazione alle attuali e ricorrenti domande occupazionali e alle più recenti linee di tendenza classificate dall’ISTAT oltre che dagli osservatori regionali sull’evoluzione delle professioni, risultano inseribili nei settori - Informatici e telematici; - Specialisti nella ricerca informatica di base; - Analisti e progettisti di software applicativi e di sistema; - Analisti di sistema; - Specialisti in sicurezza informatica; - Specialisti in reti e comunicazioni informatiche. Norme relative all’accesso L’ammissione alla Laurea Magistrale è soggetta a un processo di valutazione atto ad attestare l’idoneità del candidato; tale processo, a norma della regolamentazione esistentei, si basa su requisiti curriculari e sulla verifica della adeguata preparazione dello studente. L’ammissione alla Laurea Magistrale sarà deliberata in forma insindacabile da una Commissione di Valutazione istituita a tale scopo dal Consiglio di Corso di Studio, che si baserà sull’analisi della carriera accademica. In caso di ammissione, eventuali vincoli nelle scelte curriculari, saranno esplicitati contemporaneamente al giudizio positivo e prima dell’immatricolazione, così da fornire le informazioni necessarie per una scelta trasparente e razionale dei piani di studio. Per quanto riguarda la conoscenza della lingua Inglese, viene richiesto, come prerequisito all’ammissione, un livello certificato B1 o equivalente. In caso tale prerequisito non sia soddisfatto, il candidato viene ammesso sotto condizione. Il livello di conoscenza richiesto deve essere dimostrato 4 prima della data ultima fissata per finalizzare l’iscrizione. Fino a quando non sarà soddisfatto il prerequisito, il candidato potrà acquisire la frequenza ai corsi ma non potrà sostenere i relativi esami. Per accedere alla Laurea Magistrale in Ingegneria Informatica il candidato deve possedere conoscenze coerenti con il progetto formativo della suddetta Laurea. Il curriculum studiorum del candidato sarà di norma valutato “coerente” con il progetto formativo quando siano stati acquisiti almeno 30 CFU nelle attività formative di base e 45 CFU nelle attività formative caratterizzanti previste per la Classe di Laurea L-8 “Ingegneria dell’Informazione” di cui almeno 30 CFU negli ambiti disciplinari dell’Ingegneria Informatica. Quando non esistano queste precondizioni al candidato saranno richieste delle integrazioni curriculari che saranno indicate dalla Commissione e dovranno essere necessariamente conseguite prima di procedere all’effettiva domanda di immatricolazione alla Laurea Magistrale. Le possibili equivalenze tra gli insegnamenti seguiti con profitto e quelli dei SSD di ingegneria saranno stabilite a giudizio insindacabile della Commissione di Valutazione sulla base dei programmi ufficialiii degli insegnamenti. Sulla base dei criteri enunciati è diretta l’ammissione alla Laurea Magistrale per i: • Laureati di primo livello in Ingegneria Informatica presso l'Università degli Studi di Bergamo che abbiano seguito un piano degli studi secondo ordinamento DM.509; • Laureati di primo livello in Ingegneria Informatica presso l'Università degli Studi di Bergamo che abbiano seguito un piano degli studi secondo ordinamento DM.270, purché nei 180 cfu del titolo di I livello non siano presenti cfu derivanti da attività di tirocinio; • Laureati di primo livello in Ingegneria Informatica presso l'Università degli Studi di Bergamo che abbiano seguito un piano degli studi secondo ordinamento DM.270 con cfu derivanti da attività di tirocinio nei 180 cfu del percorso di I livello; la Commissione di Valutazione si riserva di convocare il candidato per un colloquio di ammissione, allo scopo di assegnare vincoli curriculari in relazione alle caratteristiche del curriculum studiorum. • Laureati di primo livello in Ingegneria Informatica di altri atenei; la Commissione di Valutazione si riserva di convocare il candidato per un colloquio di ammissione, allo scopo di assegnare vincoli curriculari in relazione alle caratteristiche del curriculum studiorum. Sulla base dei criteri enunciati, verranno esaminati da parte della Commissione di Valutazione: • Candidati in possesso di altri titoli di Laurea di primo livello. • Candidati in possesso di Diplomi di Laurea. • Candidati in possesso di “Lauree Vecchio Ordinamento” o “Seconde Lauree” (per candidati già in possesso di Lauree Magistrali o equipollenti di precedenti Ordinamenti). • Candidati non ancora in possesso di titolo di studio di I livello, ma che prevedono di conseguire tale titolo nell’anno accademico in corso In tutti questi casi, la Commissione di Valutazione condurrà una analisi specifica sulla base del curriculum studiorum presentato dal candidato. Le equivalenze tra gli insegnamenti seguiti con profitto e quelli dei SSD di Ingegneria verranno stabilite a giudizio insindacabile della Commissione di Valutazione. Si potranno riconoscere come CFU già acquisiti, eventuali esami già sostenuti dal candidato se ritenuti coerenti con il corso di Laurea Magistrale. Di norma non saranno previste convalide di insegnamenti sulla base di esperienze lavorative o attività di formazione in ambiti non universitari. Master universitari, dottorati potranno essere riconosciuti come CFU acquisiti a discrezione della Commissione di Valutazione. La verifica dei requisiti curriculari e l’attribuzione di integrazioni curriculari e vincoli formativi è deliberata con giudizio insindacabile della Commissione di Valutazione. Agli studenti che non abbiano conseguito la Laurea di primo livello è concessa l’iscrizione sotto condizione alla Laurea Magistrale purché all’atto dell’iscrizione non manchino più di 30 CFU al conseguimento della laurea, oltre ai CFU richiesti per eventuali tirocini e per la prova finale. L’iscrizione sarà convalidata solo se la Laurea sarà conseguita entro il termine dell’anno accademico precedente all’anno di iscrizione alla Laurea Magistrale. Organizzazione del Corso di Laurea Magistrale Il corso di Laurea Magistrale è di norma di due anni per gli studenti a tempo pieno. La Laurea Magistrale si consegue con l’acquisizione di 120 crediti, ripartiti negli anni di corso, in ciascuno dei quali è prevista l'acquisizione di 60 crediti per gli studenti a tempo pieno. Gli studenti impegnati a tempo parziale sono tenuti ad acquisire annualmente da 30 a 36 cfu. Per tali studenti la durata del corso risulta pertanto ridefinita in base alla modalità di iscrizione (Studente impegnato a tempo pieno o a tempo parziale). Lo studente, che sceglie la modalità di iscrizione all’atto dell’immatricolazione, può effettuare successivamente una sola variazione. 5 Il corso di laurea si articola in un singolo curriculum le cui attività formative prevedono discipline caratterizzanti e discipline affini e integrative, come indicato nelle tabelle allegate. Aggiornamenti agli elenchi degli insegnamenti dei corsi di studio possono essere disposti nel manifesto degli studi, previa approvazione dei competenti organi accademici. Sono inoltre previste le seguenti altre attività formative: - a scelta dello studente Sono previsti complessivamente 12 crediti per attività a scelta dello studente. Tali crediti potranno essere acquisiti seguendo insegnamenti ufficiali dei Corsi di laurea/Laurea Magistrale attivati nell’Ateneo. - Per la prova finale 12 crediti. Abilità informatiche e telematiche Gli studenti sono tenuti ad acquisire al I o al II anno 1 credito di abilità informatiche. Tale credito si acquisisce come attività supplementare nell’ambito dell’insegnamento di Teoria dell’informazione e della trasmissione oppure nell’ambito dell’insegnamento di Elettronica e misure industriali. Tirocini formativi e di orientamento Non viene imposto l’obbligo di acquisire CFU relativi ad attività di tirocinio, ma viene offerta la possibilità d svolgere questa attività per ottenere fino a 12 CFU in sovrannumero. Per svolgere tale attività gli studenti iscritti al II anno dovranno presentare un’apposita domanda, nei termini e secondo le modalità indicate nei Regolamenti dei tirocini della Facoltà. I tirocini prevedono la frequenza obbligatoria. Al termine del tirocinio è prevista la presentazione di una relazione finale. Forme didattiche L’impianto del corso prevede lezioni frontali ed esercitazioni, anche in modalità e-learning, laboratori e attività di tirocinio. Il numero di ore necessarie per 1 CFU è di 25 ore complessive, di cui, di norma, 8 per le lezioni frontali, 2 per il tutoraggio in aula, e 15 come studio individuale. La lingua di insegnamento è di norma l’italiano. Il Corso di Laurea Magistrale prevede anche, di anno in anno, l’erogazione di corsi in lingua inglese. Modalità di verifica della preparazione Le modalità di verifica del profitto, disciplinate nel Regolamento di Facoltà, sono indicate nel programma ufficiale dell’insegnamento e possono consistere in esami orali e/o scritti che danno luogo ad una votazione o ad un semplice giudizio di approvazione o riprovazione. Frequenza I corsi non prevedono, di norma, l’obbligo di frequenza. I laboratori e i tirocini richiedono invece la frequenza obbligatoria, con le modalità indicate nel sito della Facoltà. Piano di studio Il Corso di laurea offre piani di studio che comprendono insegnamenti obbligatori, insegnamenti a scelta vincolata e insegnamenti a scelta libera, differenziati in base agli obiettivi formativi, come riportati in allegato. All’inizio di ogni anno accademico lo studente è tenuto a presentare, o eventualmente modificare, il proprio piano di studio individuale. Il piano di studi potrà essere variato nei tempi e nei modi stabiliti dall’Ateneo. Aggiornamenti ai piani di studio possono essere disposti nel manifesto degli studi, previa approvazione dei competenti organi accademici. Attività di orientamento e tutorato Verranno proposte attività di orientamento finalizzate alla compilazione del piano di studio, alla scelta delle attività formative in opzione, allo svolgimento delle attività di tirocinio, alla scelta e alla predisposizione dell’elaborato per la prova finale. Verranno altresì proposte attività didattiche propedeutiche ai corsi e, nel corso dell’anno, di tutorato e di sostegno. Scansione delle attività formative e degli appelli d'esame Le attività formative si svolgono nel periodo settembre-gennaio (I semestre) e nel periodo febbraio-giugno (II semestre). L’anno accademico avrà inizio il 1° ottobre di ciascun anno: il calendario delle attività formative sarà disponibile alla pagina internet della Facoltà. 6 Sono previsti cinque appelli per gli esami di profitto la cui distribuzione nell’anno è stabilita dal Regolamento di Facoltà come segue: almeno due appelli orali per ciascuna sessione ordinaria invernale e estiva, un appello per la sessione autunnale. Sono inoltre previsti due appelli aggiuntivi nelle sessioni straordinarie di aprile e novembre riservati agli studenti fuori corso. Prova finale La prova finale consiste nella presentazione di una relazione scritta individuale o a due nomi sull'attività svolta, discussa in seduta pubblica davanti ad una commissione di docenti, che esprimerà in centodecimi la valutazione complessiva. Le attività relative alla preparazione della prova finale per il conseguimento della laurea saranno svolte dallo studente, sotto la supervisione di un docente-tutore, con modalità quali l'osservazione, la ricerca, interventi sperimentali in situazioni di laboratorio o sul campo. E' possibile redigere e discutere la prova finale in lingua inglese, previo accordo con il docente preposto. In generale, il corso di laurea seguirà nella gestione dell'esame di laurea l'impostazione definita nel regolamento di Facoltà e comune a tutti i corsi di Laurea Magistrale di Ingegneria. Per il conseguimento della Laurea Magistrale è prevista la predisposizione e presentazione di una tesi elaborata in modo originale dallo studente: tale elaborato potrà essere o una rielaborazione e puntualizzazione individuale delle riflessioni teoriche sull’argomento o una riflessione empirica, saldamente ancorata alle teorie di riferimento, che nasca dalle attività svolte dal candidato. Le attività relative alla preparazione della prova finale per il conseguimento della Laurea Magistrale sono svolte dallo studente sotto la supervisione di un docente relatore. L’argomento potrà essere assegnato dal relatore agli studenti che abbiano acquisito 60 crediti, secondo le modalità definite dal Regolamento di Facoltà. La discussione della prova finale avrà luogo di fronte a una commissione di docenti. Le attività relative alla prova finale comportano l’acquisizione di 12 CFU. Riconoscimento di CFU e modalità di trasferimento Su istanza degli interessati, il Collegio didattico del Corso di Studio, procederà alla valutazione e all’eventuale riconoscimento dei crediti formativi universitari precedentemente acquisiti. Con riferimento alle conoscenze e abilità professionali certificate ai sensi della normativa vigente in materia, nonché altre conoscenze e abilità maturate in attività formative di livello post-secondario alla cui progettazione e realizzazione l'università abbia concorso (art. 4 DM 16/03/2007) il numero massimo di crediti riconoscibili è 12 complessivamente tra corsi di I livello e di II livello (laurea e laurea magistrale). Il riconoscimento deve essere effettuato esclusivamente sulla base delle competenze dimostrate da ciascuno studente. Sono escluse forme di riconoscimento attribuite collettivamente. Verifica dei crediti acquisiti Qualora il Collegio didattico del Corso di studi rilevi l’obsolescenza dei contenuti culturali e professionali dei crediti acquisiti, procederà alla definizione degli esami integrativi da sostenere sui singoli insegnamenti. IL RETTORE (Prof. Stefano Paleari) i D.M. 22/10/2004 n. 270 art. 6 comma 2 (“per essere ammessi ad un corso di Laurea Magistrale occorre essere in possesso della laurea o del diploma universitario di durata triennale, ovvero di altro titolo di studio conseguito all'estero, riconosciuto idoneo. Nel caso di corsi di Laurea Magistrale per i quali non sia previsto il numero programmato dalla normativa vigente in materia di accessi ai corsi universitari, l'università stabilisce per ogni corso di Laurea Magistrale, specifici criteri di accesso che prevedono, comunque, il possesso di requisiti curriculari e l'adeguatezza della personale preparazione verificata dagli atenei, con modalità definite nei regolamenti didattici.”) e il D.M. del 16/3/2007, art.6 comma 1. ii I programmi ufficiali possono essere sostituiti da programmi anche non controfirmati dalla segreteria presentati dal candidato; il candidato allegherà contestualmente alla loro presentazione una dichiarazione di “conformità al documento originale”. La non corrispondenza dei documenti, accertata anche successivamente, sarà motivo sufficiente per invalidare l’iscrizione (e gli esami sostenuti, compreso quello di laurea) nonché di denuncia alle autorità competenti per “falso in atto pubblico”. A.A. 2011/2012 INFORMATICA - MAGISTRALE Attività formative caratterizzanti ambito disciplinare settore CFU INSEGNAMENT O CFU SETTORE DISCIPLINARE ING-INF/04 Automatica C.I. Controlli automatici e Identificazione dei modelli e analisi dei dati (modulo di Identificazione dei modelli e analisi dei dati) 6 C.I. Controlli automatici e Identificazione dei modelli e analisi dei dati (modulo di controlli automatici) 6 ING-INF/05 Sistemi di elaborazione delle informazioni Linguaggi e compilatori 9 Informatica III 12 Impianti informatici 6 informatica teorica 6 45 Attività affini ed integrative ambito disciplinare Settore CFU CFU ING-INF/03 Telecomunicazioni Teoria dell'informazione e della trasmissione (TIT) 6 6 ING-INF/03 Telecomunicazioni Reti Internet multimediali 6 Reti di telecomunicazione 6 ING-IND/10 Fisica tecnica industriale Fisica tecnica 6 ING-IND/13 Meccanica applicata alle macchine Ingegneria dei sistemi meccanici 9 Sistemi meccatronici 9 ING-IND/34 Bioingegneria industriale Fenomeni di trasporto nei sistemi biologici 6 ING-IND/35 Ingegneria economico-gestionale Gestione aziendale 6 ING-INF/01 Elettronica Elettronica e misure industriali 12 Elettronica industriale 6 Progettazione di sistemi elettronici 6 Microelettronica 6 ING-INF/05 Sistemi di elaborazione delle informazioni 7 Robotica 9 Sicurezza dei sistemi informatici 6 Sistemi real-time 6 Basi di dati II 6 MAT/08 Analisi numerica calcolo numerico 6 MAT/09 Ricerca operativa Modelli e algoritmi di ottimizzazione 9 SECS-S/02 Statistica per la ricerca sperimentale e tecnologica 51 Altre attività formative (D.M. 270 art.10 §5) ambito disciplinare CFU A scelta dello studente 11 Per la prova finale 12 Ulteriori conoscenze linguistiche 0 Abilità informatiche e telematiche 1 Tirocini formativi e di orientamento 0 Altre conoscenze utili per l'inserimento nel mondo del lavoro 0 TOTALE 24 CFU totali per il conseguimento del titolo 120 45 ingegneria informatica Totale Attività formative affini o integrative totale 12 33
+
+  [3] Score: 0.7281
+      Titolo   : a.a. 2025-2026 GUIDA DELLO STUDENTE - e-learning Unibg
+      URL      : https://elearning15.unibg.it/mod/book/view.php?id=592&chapterid=1350&lang=de
+      Contenuto: # Guida studenti Unibg
+
+## a.a. 2025-2026 GUIDA DELLO STUDENTE - FUTURI STUDENTI
+
+A.A. 2025-2026 GUIDA DELLO STUDENTE - FUTURI STUDENTI
+
+### 4. L'ABC DELLA PROCEDURA DI IMMATRICOLAZIONE
+
+#### Corsi di laurea magistrale ad accesso libero
+
+#### 
+
+I corsi di **laurea magistrale ad accesso libero** per il 2025-2026 sono i seguenti:
+
+Puoi pre-iscriverti ad un **massimo di 2 corsi di laurea magistrale**, versando il previsto contributo di pre-iscrizione di € 52,00 per ogni corso di interesse.
+
+**I periodi per effettuare la pre-iscrizione sono i seguenti:**
+
+È possibile presentare **domanda di pre-iscrizione tardiva,** con addebito della **quota aggiuntiva per istanza fuori termine** da applicare all'atto dell'immatricolazione, nei seguenti periodi:
+
+Consulta il Calendario pubblicato alla pagina [**Corsi di laurea magistrale ad accesso libero**](https://www.unibg.it/studiare/iscriversi/corsi-laurea-magistrale-ad-accesso-libero) e verifica nella pagina del corso di **[laurea magistrale](https://www.unibg.it/studiare/corsi/lauree-magistrali)**di tuo interesse le date fissate dai Dipartimenti per i colloqui/test.
+
+Se risulterai in**possesso di adeguata preparazione**, dovrai compilare la **domanda di immatricolazione online** sullo[**Sportello internet**](https://sportello.unibg.it/Home.do) e versare entro la prevista scadenza la tassa regionale per il Diritto allo Studio Universitario e l'imposta di bollo assolta in modo virtuale per un totale di 156,00 euro.
+
+Per ogni informazione consulta la Guida alla procedura online di pre-iscrizione alla laurea magistrale presente alla pagina **[Segreteria Studenti](http://www.unibg.it/node/6977)**al paragrafo "Guide alle procedure online".
+
+Si potranno immatricolare:
+
+**Se ti sarai pre-immatricolato pur non possedendo i requisiti** di cui sopra relativi agli esami mancanti, la Segreteria studenti provvederà ad annullare d'ufficio la tua domanda di pre-immatricolazione.
+
+**Se non hai ancora conseguito la laurea** sarai pre-immatricolato con **clausola sospensiva**relativa al conseguimento del titolo entro la sessione straordinaria di **marzo/aprile 2026.**NB: Gli studenti **pre-immatricolati con riserva** possono partecipare alle lezioni del corso di laurea magistrale ma **non possono né sostenere esami, né partecipare ad attività che implichino la valutazione in itinere prima dello scioglimento della riserva.**  
+  
+Se non conseguirai la laurea di primo livello entro la sessione di laurea di marzo/aprile 2026, ma avrai nel frattempo frequentato gli insegnamenti della laurea magistrale, potrai sostenere i relativi esami dopo il conseguimento della laurea, previa iscrizione ai corsi singoli (senza oneri aggiuntivi per i laureati UniBg).  
+**Se, pur essendo laureato, non possiedi i requisiti curriculari richiesti,** potrai iscriverti ai corsi singoli nell'anno accademico 2025-2026 e immatricolarti al corso di laurea magistrale nell'anno accademico successivo, chiedendo la convalida degli eventuali crediti formativi acquisiti in aggiunta a quelli necessari per integrare il requisito mancante.
+
+**Se intendi richiedere** il trasferimento da altra Università, il passaggio da altro corso di laurea specialistica/magistrale, il conseguimento di seconda laurea magistrale, l'abbreviazione di corso o la re-immatricolazione a seguito di rinuncia/decadenza, **sei tenuto ad effettuare prima la pre-iscrizione** e, in caso di ammissione, potrai presentare la successiva istanza.
+
+Le singole strutture didattiche indicano i requisiti curriculari necessari per l'iscrizione al corso e disciplinano le modalità di verifica dell'adeguata preparazione iniziale: fai riferimento al [Dipartimento di afferenza](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti) per tutte le informazioni utili.
+
+Per approfondimenti consulta la pagina
+
+<https://www.unibg.it/studiare/iscriversi/passi-iscriversi/corsi-laurea-magistrale-pre-iscrizioni-e-immatricolazioni>
+
+## Blöcke
+
+### Inhaltsverzeichnis
+
+### Administration
+
+Buch-Administration
+
+[![](https://elearning15.unibg.it/theme/image.php/classic/booktool_print/1772480802/book)Buch drucken (In neuem Fenster öffnen)](https://elearning15.unibg.it/mod/book/tool/print/index.php?id=592)
+
+![](https://elearning15.unibg.it/theme/image.php/classic/booktool_print/1772480802/book)
+
+[![](https://elearning15.unibg.it/theme/image.php/classic/booktool_print/1772480802/chapter)Kapitel drucken (In neuem Fenster öffnen)](https://elearning15.unibg.it/mod/book/tool/print/index.php?id=592&chapterid=1350)
+
+![](https://elearning15.unibg.it/theme/image.php/classic/booktool_print/1772480802/chapter)
+
+## Ergänzungsblöcke
+
+  [4] Score: 0.7185
+      Titolo   : Corsi di laurea magistrale ad accesso libero - Bergamo - UniBg
+      URL      : https://www.unibg.it/studiare/iscriversi/corsi-laurea-magistrale-ad-accesso-libero
+      Contenuto: ![](https://www.facebook.com/tr?id=981134568621857&ev=PageView&noscript=1)
+
+## Info
+
+## Link utili utente
+
+## Navigazione principale - desktop
+
+## Informazioni per
+
+![Home](/themes/custom/unibg/logo.svg)
+
+## Link utili utente
+
+## Navigazione principale
+
+## Servizi on line
+
+## Navigazione principale
+
+# Corsi di laurea magistrale ad accesso libero
+
+## Breadcrumb
+
+### Anno accademico 2026-2027
+
+Questa modalità di accesso è prevista per i corsi di laurea magistrale in:
+
+*Per iscriversi completa i passi elencati di seguito*
+
+### 1. Registrazione al portale di Ateneo
+
+[Registrati sullo Sportello Internet UniBg](https://sportello.unibg.it/Home.do), se non ti sei ancora registrato (per es. provieni da un altro Ateneo).
+
+### 2. Pre-iscrizione
+
+Procedi alla pre-iscrizione sullo [Sportello Internet UniBg](https://sportello.unibg.it/Home.do) con pagamento del contributo di pre-iscrizione entro la scadenza prevista.
+
+### 3. Sostenimento del colloquio/test
+
+A seguito della valutazione dei requisiti di accesso, bisognerà sostenere un colloquio/test con la Commissione Esaminatrice del corso di laurea magistrale scelto che verificherà la preparazione iniziale.  
+Eventuali casi di esonero dalla verifica della preparazione iniziale per i corsi di laurea magistrale ad accesso libero sono indicati sui siti dei singoli corsi di laurea alla pagina *Il Corso / Requisiti di accesso.*
+
+### Le scadenze per iscriverti
+
+È possibile pre-iscriversi a un massimo di 2 corsi di laurea magistrale, versando il previsto contributo di pre-iscrizione di € 52,00 per ogni corso di interesse.
+
+Le domande di pre-iscrizione potranno essere presentate (domanda online + pagamento contributo) secondo il seguente calendario.
+
+**Pre-iscrizione dal 1° aprile al 29 maggio 2026**
+
+Colloquio/test\* dal 22 al 26 giugno 2026
+
+Immatricolazione dal 3 giugno al 28 agosto 2026
+
+**Pre-iscrizione dal 3 giugno al 28 agosto 2026**
+
+Colloquio/test\* dal 10 al 18 settembre 2026
+
+Immatricolazione dal 1° settembre al 15 ottobre 2026
+
+**Pre-iscrizione dal 1° al 30 settembre 2026**
+
+Colloquio/test\* dal 14 al 20 ottobre 2026
+
+Immatricolazione dal 1° ottobre al 13 novembre 2026
+
+Sono ammesse **pre-iscrizioni tardive** (con addebito della mora) secondo il seguente calendario:
+
+**Pre-iscrizione tardiva dal 1° al 30 ottobre 2026**
+
+Colloquio/test dal 12 al 18 novembre 2026
+
+Immatricolazione dal 2 novembre al 4 dicembre 2026
+
+**Pre-iscrizione tardiva dal 2 al 13 novembre 2026**
+
+Colloquio/test dal 26 al 30 novembre 2026
+
+Immatricolazione dal 16 novembre all'11 dicembre 2026
+
+(\*) ad esclusione degli studenti non-UE che hanno già sostenuto il colloquio in fase di pre-valutazione.
+
+**Indicazioni**
+
+Gli studenti pre-iscritti che risulteranno ammessi dovranno presentare domanda di immatricolazione unitamente al versamento della quota della tassa regionale per il Diritto allo Studio Universitario e dell’imposta di bollo assolta in modo virtuale.
+
+Gli studenti che chiedono il trasferimento da altre Università, il passaggio da altro corso di laurea specialistica/magistrale, il conseguimento di seconda laurea, l’abbreviazione di corso o la re-immatricolazione a seguito rinuncia/decadenza sono tenuti ad effettuare prima la pre-iscrizione e, in caso di ammissione, presentare la successiva istanza.
+
+A seguito di ammissione, potranno:
+
+a) immatricolarsi gli studenti già laureati;  
+b) pre-immatricolarsi ‘con riserva’ coloro che non sono ancora laureati e conseguiranno il titolo entro e non oltre la sessione di marzo/aprile 2027, purché all’atto della pre-immatricolazione debbano ancora sostenere non più di 3 esami per un massimo di n. 24 cfu (eventuale tirocinio compreso) oltre alla prova finale. Con riferimento al tirocinio il requisito si intende assolto purché lo stesso sia stato già avviato;  
+c) pre-immatricolarsi ‘con riserva’ gli studenti laureati che sono iscritti a corsi singoli per l’a.a. 2025/2026 al fine di integrare i requisiti necessari per l’ammissione, purché all’atto della pre-immatricolazione debbano ancora sostenere esami per un massimo di 24 cfu da superare entro la sessione di gennaio/febbraio 2027.
+
+Agli studenti che si saranno pre-immatricolati ‘con riserva’ pur non possedendo i requisiti di cui sopra relativi agli esami mancanti, la domanda verrà annullata d’ufficio dalla Segreteria.
+
+Gli studenti saranno pre-immatricolati ‘con riserva’ ovvero con clausola sospensiva e, quindi, non potranno sostenere esami del corso di laurea magistrale fino al conseguimento del titolo oppure fino al superamento di tutti i corsi singoli.
+
+Nel caso in cui lo studente pre-immatricolato “con riserva” non consegua la laurea di I livello entro la sessione di laurea di marzo/aprile 2027 oppure non superi tutti i corsi singoli entro la sessione di appelli di gennaio/febbraio 2027, ma abbia nel frattempo frequentato gli insegnamenti della laurea magistrale, potrà sostenere i relativi esami dopo il conseguimento della laurea oppure dopo il superamento dei corsi singoli, previa iscrizione a singoli insegnamenti  per l’a.a. 2026/2027 (senza oneri aggiuntivi se si tratta di laureati UniBg).
+
+### 4. Immatricolazione
+
+I candidati ritenuti idonei possono procedere ad immatricolarsi.
+
+### Potrebbe interessarti
+
+## Seguici su
+
+## Footer - 1
+
+## Footer - 2
+
+## Footer - 3
+
+**Università degli studi di Bergamo**  
+via Salvecchio 19  
+24129 Bergamo  
+Cod. Fiscale 80004350163  
+P.IVA 01612800167  
+Centralino 035 2052111
+
+## Piè di pagina
+
+  [5] Score: 0.7185
+      Titolo   : [PDF] Lauree magistrali ad accesso libero e programmato - UniBg
+      URL      : https://www.unibg.it/sites/default/files/media/documents/2022-03-22/Presentazione_open%20week%2021%20marzo%202022_LM.pdf
+      Contenuto: Open Week Lauree Magistrali 2022 21 marzo 2022 Lauree magistrali ad accesso libero e programmato Presentazione a cura del Servizio Studenti Titoli necessari per l’immatricolazione a un corso di laurea magistrale Per essere ammessi a un corso di laurea magistrale, occorre essere in possesso di:  Idoneo titolo di accesso (Laurea, Diploma universitario di durata triennale oppure titolo di studio conseguito all’estero, riconosciuto idoneo)  requisiti curriculari previsti dall’ordinamento del corso di studio  adeguata preparazione personale.
+Coloro che ritengono di laurearsi entro la sessione straordinaria di marzo-aprile 2023 possono presentare domanda di pre-iscrizione «con riserva» entro le scadenze previste a condizione che a quella data risultino in possesso dei requisiti curriculari richiesti (esami sostenuti o comunque già presenti nel piano di studio dello studente).
+Tali studenti, se in possesso di adeguata preparazione personale e ammessi al corso, potranno pre-immatricolarsi entro la scadenza prevista a condizione che all’atto della pre-immatricolazione debbano ancora sostenere non più di 3 esami per un massimo di n. 24 cfu (eventuale tirocinio compreso) oltre alla prova finale.
+Allo stesso modo, coloro che, già laureati, risultino iscritti a corsi singoli per l’anno accademico 2021-2022 al fine di integrare i requisiti necessari per l’iscrizione al corso di laurea magistrale, potranno presentare domanda di pre-iscrizione «con riserva» nel caso in cui alla data di scadenza delle pre-iscrizioni non abbiano ancora completato gli esami. Tali studenti, se in possesso di adeguata preparazione personale e ammessi al corso, potranno pre-immatricolarsi entro la scadenza prevista a condizione che, all’atto della pre-immatricolazione, debbano ancora sostenere esami per un massimo di n. 24 cfu da superare entro la sessione di gennaio/febbraio 2023.
+Coloro che, pur essendo laureati, non posseggano i requisiti curriculari richiesti, potranno iscriversi a corsi singoli nell’anno accademico 2022-2023 e immatricolarsi al corso di laurea magistrale nell’anno accademico successivo, chiedendo la convalida degli eventuali crediti formativi acquisiti in aggiunta a quelli necessari per integrare il requisito mancante.
+Lauree magistrali ad accesso libero: i corsi di studio -DIRITTI UMANI, MIGRAZIONI E COOPERAZIONE INTERNAZIONALE -INGEGNERIA DELLE COSTRUZIONI EDILI -INGEGNERIA MECCANICA -MECCATRONICA E SMART TECHNOLOGY ENGINEERING -ENGINEERING AND MANAGEMENT FOR HEALTH -INGEGNERIA GESTIONALE -MANAGEMENT ENGINEERING -INGEGNERIA INFORMATICA -COMUNICAZIONE, INFORMAZIONE, EDITORIA -CULTURE MODERNE COMPARATE -FILOSOFIA E STORIA DELLE SCIENZE NATURALI E UMANE Lauree magistrali ad accesso libero: i corsi di studio -GEOURBANISTICA. ANALISI E PIANIFICAZIONE TERRITORIALE, URBANA, AMBIENTALE E VALORIZZAZIONE DEL PAESAGGIO -INTERCULTURAL STUDIES IN LANGUAGES AND LITERATURES -LINGUE MODERNE PER LA COMUNICAZIONE E LA COOPERAZIONE INTERNAZIONALE -PLANNING AND MANAGEMENT OF TOURISM SYSTEMS -ECONOMIA AZIENDALE, DIREZIONE AMMINISTRATIVA E PROFESSIONE (COMPRESO IL CURRICULUM BUSINESS ADMINISTRATION, PROFESSIONAL AND MANAGERIAL ACCOUNTING) -MANAGEMENT, MARKETING & FINANCE -MANAGEMENT, INNOVAZIONE E FINANZA -ECONOMICS AND DATA ANALYSIS -ECONOMICS & FINANCE È necessaria la pre-iscrizione dal 12 aprile al 9 settembre 2022 Gli studenti che chiedono il trasferimento da altra Università, il passaggio da altro corso di laurea specialistica/magistrale, il conseguimento di seconda laurea magistrale, l’abbreviazione di corso o la re-immatricolazione a seguito rinuncia/decadenza devono effettuare prima la pre-iscrizione e poi, in caso di ammissione, presentare l’istanza per il riconoscimento degli esami già sostenuti nella precedente carriera.
+È possibile pre-iscriversi a un massimo di due corsi di laurea magistrale, versando il previsto contributo di pre-iscrizione di € 52,00 per ogni corso di interesse.
+Verifica requisiti curriculari e adeguata preparazione personale – corsi ad accesso libero Gli ordinamenti didattici dei singoli corsi di studio indicano i requisiti curriculari necessari per l’iscrizione al corso: costituiscono requisiti curriculari il titolo di laurea conseguito in determinate classi e le competenze e conoscenze che lo studente deve aver acquisito nel percorso formativo pregresso, espresse sotto forma di crediti riferiti a specifici settori scientifico-disciplinari.
+I regolamenti didattici dei corsi di studio disciplinano inoltre le modalità di verifica dell’adeguata preparazione iniziale degli studenti; se previsto, potrà non essere richiesta la verifica a coloro che siano in possesso di un voto di laurea non inferiore ad un minimo stabilito. Per i laureandi potrà essere previsto l’esonero dalla verifica della preparazione personale in caso di media ponderata dei voti degli esami sostenuti non inferiore ad una determinata soglia.
+Verifica preparazione iniziale e immatricolazioni: tutte le date (corsi ad accesso libero) VERIFICA PREPARAZIONE INIZIALE -Dal 20 giugno al 24 giugno 2022 (per coloro che si sono pre-iscritti entro il 31 maggio 2022) -Dal 22 settembre al 28 settembre 2022 (per coloro che si sono pre-iscritti entro il 9 settembre 2022).
+IMMATRICOLAZIONI -Dal 12 luglio al 31 agosto 2022 (per coloro che si sono pre-iscritti entro il 31 maggio 2022) -Dal 26 settembre al 28 ottobre 2022 (per coloro che si sono pre-iscritti entro il 9 settembre 2022).
+Gli studenti pre-iscritti in possesso dei requisiti curriculari e di adeguata preparazione dovranno presentare domanda di immatricolazione e versare la tassa regionale per il Diritto allo Studio Universitario e l’imposta di bollo assolta in modo virtuale, per un totale di 156,00 euro.
+Corsi di laurea ad accesso libero: immatricolazioni Potranno immatricolarsi: -gli studenti già laureati; -coloro che all’atto dell’immatricolazione debbano ancora sostenere non più di tre esami per un massimo di n. 24 cfu (eventuale tirocinio compreso) oltre alla prova finale. Il requisito si intende assolto purché il tirocinio risulti già avviato.
+Gli studenti che non hanno ancora conseguito la laurea saranno pre-immatricolati con clausola sospensiva relativa al conseguimento del titolo entro la sessione straordinaria di marzo/aprile 2023.
+Se lo studente pre-immatricolato «con riserva» non riesce a conseguire la laurea di I livello entro la sessione di laurea di marzo/aprile 2023 ma nel frattempo ha frequentato gli insegnamenti della laurea magistrale, potrà sostenere i relativi esami dopo il conseguimento della laurea, iscrivendosi ai corsi singoli (senza oneri aggiuntivi se si tratta di laureati UniBg).
+Lauree magistrali ad accesso programmato: i corsi di studio -PSICOLOGIA CLINICA – 150 posti (di cui 50 per il CURRICULUM CLINICAL PSYCHOLOGY FOR INDIVIDUALS, FAMILIES AND ORGANIZATIONS); -SCIENZE PEDAGOGICHE – 150 posti Gli ordinamenti didattici dei singoli corsi di studio indicano i requisiti curriculari necessari per l’iscrizione al corso: costituiscono requisiti curriculari il titolo di laurea conseguito in determinate classi e le competenze e conoscenze che lo studente deve aver acquisito nel percorso formativo pregresso, espresse sotto forma di crediti riferiti a specifici settori scientifico-disciplinari.
+Per le modalità di verifica della preparazione personale e i criteri di selezione dei candidati da ammettere al corso si deve fare riferimento ai bandi di ammissione che verranno pubblicati entro fine marzo/inizio aprile 2022.
+Corsi di laurea magistrale ad accesso programmato: prima finestra di selezione Pre-iscrizione: -Dal 12 aprile al 31 maggio 2022 Verifica preparazione iniziale: -Dal 15 giugno al 21 giugno 2022 Pubblicazione graduatoria ammessi al corso: -Entro il 30 giugno 2022 Immatricolazioni: – Entro il 6 luglio 2022 – Pubblicazione posti disponibili entro il 13 luglio 2022 – Immatricolazioni primo scorrimento entro il 19 luglio 2022, a seguire ulteriori scorrimenti della graduatoria destinati a coloro che hanno presentato domanda di ripescaggio (=manifestazione di interesse) Corsi di laurea magistrale ad accesso programmato: seconda finestra di selezione Pre-iscrizione: -Dal 1° luglio al 22 agosto 2022 Verifica preparazione iniziale: -Dal 1° settembre al 7 settembre 2022 Pubblicazione graduatoria ammessi al corso: -Entro il 15 settembre 2022 Immatricolazioni: – Entro il 20 settembre 2022 – Pubblicazione posti disponibili entro il 26 settembre 2022 – Immatricolazioni primo scorrimento entro il 30 settembre 2022, a seguire ulteriori scorrimenti della graduatoria destinati a coloro che hanno presentato domanda di ripescaggio (=manifestazione di interesse) Corsi di laurea ad accesso programmato: immatricolazioni In caso di ammissione, sulla base della posizione occupata in graduatoria, potranno immatricolarsi: -gli studenti già laureati; -coloro che al momento dell’immatricolazione debbano ancora sostenere non più di tre esami per un massimo di 24 cfu (eventuale tirocinio compreso) oltre alla prova finale. Il requisito si intende assolto purché il tirocinio risulti già avviato.
+Gli studenti che non hanno ancora conseguito la laurea saranno pre-immatricolati con clausola sospensiva relativa al conseguimento del titolo entro la sessione straordinaria di marzo/aprile 2023.
+Allo studente laureando ammesso al corso «sotto condizione» che effettuerà la pre-immatricolazione pur essendo in debito di un numero di crediti superiore a 24 cfu verrà annullata la domanda di pre-immatricolazione e si procederà ad assegnare il suo posto al candidato che segue in graduatoria.
+Gli studenti che chiedono il trasferimento da altra Università, il passaggio da altro corso di laurea specialistica/magistrale, il conseguimento di seconda laurea magistrale, l’abbreviazione di corso o la re-immatricolazione a seguito rinuncia/decadenza devono effettuare la pre-iscrizione (= iscrizione al concorso) e, soltanto in caso di ammissione, presentare la successiva istanza di riconoscimento degli esami superati nella precedente carriera.
+Vi ringraziamo per l’attenzione Servizio Studenti
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: orari
+
+>>> SYSTEM PROMPT:
+Sei un assistente per gli orari dell'Università di Bergamo.
+Aiuta gli studenti a trovare informazioni su orari delle lezioni, date degli esami e ricevimenti docenti.
+Se non hai l'informazione esatta, indica dove possono consultare gli orari ufficiali.
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+8. Alcune fonti sono documenti PDF: in quel caso vengono forniti anche i link ipertestuali estratti direttamente dal PDF con la pagina di provenienza. Se uno di questi link è rilevante per la risposta dello studente, includilo nella risposta in forma cliccabile (formato Markdown: [testo](url)) indicando anche da quale parte del documento proviene.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: Calendario didattico - Scuola di Ingegneria - UniBg
+URL: https://www.unibg.it/studiare/frequentare/orari-dei-corsi-ed-esami/calendario-didattico-scuola-ingegneria
+Contenuto:  [Salta al contenuto principale](#main-content) 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e risorse](/vivere-unibg/spazi-e-risorse)
+  + [Opportunità e servizi](/vivere-unibg/opportunita-e-servizi)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. [Studiare](/studiare)
+3. [Frequentare](/studiare/frequentare)
+4. [Orari dei corsi ed esami](/studiare/frequentare/orari-dei-corsi-ed-esami)
+5. [Calendario didattico - Scuola di Ingegneria](/studiare/frequentare/orari-dei-corsi-ed-esami/calendario-didattico-scuola-ingegneria)
+
+### Calendario didattico Scuola di Ingegneria
+
+[Calendario didattico a.a. 2025-2026 (agg. 9.4.2025)](/sites/default/files/media/documents/2025-04-04/Calendario%20accademico%202025-2026_def.pdf "Calendario accademico 2025-2026_def.pdf")
+
+[Calendario didattico a.a. 2024-2025 (agg. 9.4.2025)](/sites/default/files/media/documents/2025-04-04/Calendario%20accademico%202024-25%20def..pdf "Calendario accademico 2024-25 def..pdf")
+
+[Calendario didattico a.a. 2023-2024](/sites/default/files/media/documents/2023-06-07/Calendario%20accademico%202023-2024deliberato%20in%20Giunta.pdf "Calendario accademico 2023-2024deliberato in Giunta.pdf")
+
+[Calendario didattico - Scuola di Ingegneria a.a. 2022-2023 (agg. 30.3.2023)](/sites/default/files/media/documents/2023-03-30/Calendario%20didattico%202022-2023.pdf "Calendario didattico 2022-2023.pdf")
+
+[Calendario didattico - Scuola di Ingegneria a.a. 2021-2022 (agg. 21.3.2022)](/sites/default/files/media/documents/2022-03-21/Calendario%20accademico%202021-22%20con%20proroga%20sessione%20esami%20e%20laurea.pdf "Calendario accademico 2021-22 con proroga sessione esami e laurea.pdf")
+
+[Calendario didattico - Scuola di Ingegneria a.a. 2021-2022 excel](/sites/default/files/calendario_accademico_2021-22_definitivo_excel.pdf "calendario_accademico_2021-22_definitivo_excel.pdf")
+
+### Informazioni per gli appelli d'esame
+
+[Calendario collocazione esami - aule](https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it&empty_box=0&col_cells=0)
+
+[Come prenotarsi agli appelli d'esame](https://www.unibg.it/node/6979)
+
+### ESCLUSIONE ESAMI PRIMO ANNO TRIENNALE SESSIONI STRAORDINARIE
+
+**Si ricorda** che gli esami del primo anno (Laurea triennale) sono esclusi nell'ambito delle Sessioni straordinarie di Aprile e Novembre come deliberato dal Consiglio di Facoltà (17.6.2009).
+
+### CALENDARIO APPELLI SESSIONE INVERNALE (AGG AL 09/02)
+
+[CALENDARIO APPELLI SESSIONE INVERNALE (AGG AL 09/02)](/sites/default/files/media/documents/2026-02-09/appelli25-26_gennfebbr.pdf "appelli25-26_gennfebbr.pdf")
+
+### CALENDARIO APPELLI SESSIONE APRILE (AGG. AL 09/02)
+
+[CALENDARIO APPELLI SESSIONE APRILE (AGG. AL 09/02)](/sites/default/files/media/documents/2026-02-09/appelli25-26_aprile.pdf "appelli25-26_aprile.pdf")
+
+### CALENDARIO APPELLI SESSIONE ESTIVA (AGG. AL 23/02)
+
+[CALENDARIO APPELLI SESSIONE ESTIVA (AGG. AL 23/02)](/sites/default/files/media/documents/2026-02-23/estiva%202026.pdf "estiva 2026.pdf")
+
+### CALENDARIO APPELLI SESSIONE AUTUNNALE (AGG. AL 23/02)
+
+[CALENDARIO APPELLI SESSIONE AUTUNNALE (AGG. AL 23/02)](/sites/default/files/media/documents/2026-02-23/autunno%2026.pdf "autunno 26.pdf")
+
+ 
+
+Fonte 2: [PDF] Corso di Laurea Magistrale in INGEGNERIA INFORMATICA - UniBg
+URL: https://www.unibg.it/sites/default/files/normativa/14-05-2015/52573.pdf
+Contenuto: 1 Università degli Studi di Bergamo Facoltà di INGEGNERIA Corso di Laurea Magistrale in INGEGNERIA INFORMATICA Classe di appartenenza: LM-32 INGEGNERIA INFORMATICA COMPUTER SCIENCE AND ENGINEERING REGOLAMENTO DIDATTICO (modificato con D.R. 18341/I/003 del 26.9.2011) Presentazione E’ istituito il Corso di Laurea Magistrale in Ingegneria Informatica nella classe delle lauree magistrali LM-23 Ingegneria Informatica. La durata del corso di Laurea Magistrale è di norma di due anni per gli studenti a tempo pieno e prevede l’acquisizione di 120 crediti formativi universitari (CFU). Nel corso di Laurea Magistrale sono previsti: n. 12 esami, altre conoscenze utili per l’inserimento nel mondo del lavoro e la prova finale. Il titolo di studio rilasciato è la Laurea Magistrale in Ingegneria Informatica. Il conseguimento della Laurea Magistrale in Ingegneria Informatica consente l’accesso ai Corsi di dottorato di ricerca e ai Master di II livello. Obiettivi formativi specifici e descrizione del percorso formativo Il Corso di Laurea Magistrale in Ingegneria Informatica ha lo scopo di assicurare allo studente una formazione professionale polivalente in grado di affrontare i molteplici aspetti tecnici, metodologici ed economici che caratterizzano l'attività di sviluppo della tecnologia dell'informazione e della sua applicazione alla costruzione di sistemi informatici complessi. Caratteristica dell'Ingegnere Informatico sarà quella di possedere, oltre ad una solida base di competenze tecniche proprie dell'ingegneria dell'informazione, garantite dalle attività formative caratterizzanti la classe, approfondite conoscenze sui temi inerenti: i principi matematici alla base della costruzione di algoritmi e di soluzioni informatiche efficienti, la costruzione di modelli per l'analisi di sistemi ai fini di efficace monitoraggio e controllo del sistema, i principi di progettazione di dispositivi ai diversi livelli di integrazione, la definizione di strategie per la gestione di progetti di grandi dimensioni. Il profilo professionale di questa figura possiede, oltre ad una solida conoscenza della tecnologia, la necessaria competenze per partecipare all'innovazione della tecnologia e per assumere la responsabilità di trasferire in modo continuo le soluzioni emergenti verso nuovi scenari applicativi. La frazione dell' impegno orario che deve essere riservata allo studio personale o ad altre attività formative di tipo individuale è determinata in misura non inferiore al 60% dell'impegno orario complessivo. Il corso di laurea offre agli studenti un solo curriculum di studio, all’interno del quale si offre la possibilità di costruire percorsi di studio in grado di coprire una ampia fascia di contenuti. Sono previsti contenuti formativi in riferimento alle discipline: (indicare gli ambiti) Ingegneria informatica Ingegneria automatica Ingegneria delle telecomunicazioni Ingegneria elettronica Il corso di laurea forma alle professioni che richiedono di: - sviluppare, innovare e ottimizzare il sistema informatico; - analizzare e gestire l'uso della tecnologia dell'informazione in ambito industriale; - disegnare nuove soluzioni per l'applicazione delle tecnologie dell'informazione, anche in ambito meccatronico e biomedico; - sviluppare nuovi prodotti che integrino le tecnologie dell'informazione con altre tecnologie complesse; - monitorare e valutare le prestazioni dei sistemi e individuarne opportunità di miglioramento, dialogando con i responsabili gestionali. Gli ambiti in cui il profilo fornito trova maggiore applicazione sono sia imprese finanziarie e di servizi, sia imprese manifatturiere e pubblica amministrazione. Il profilo professionale fornito consente di: - risolvere problemi di sviluppo e applicazione delle tecnologie dell'informazione; 2 - valutare adeguatamente gli aspetti relativi alle opportunità e ai rischi delle diverse alternative di sviluppo della tecnologia; - promuovere l'innovazione della tecnologia dell'informazione, nei diversi ambiti di applicazione; - gestire progetti di innovazione della tecnologia e dei processi; - operare nell'ambito del disegno dell'architettura di sistemi informatici complessi; - contribuire al disegno di prodotti e strumenti nell'ambito dell'informatica, delle reti, dell'automatica e dell'elettronica. I risultati di apprendimento attesi, espressi tramite criteri europei del titolo di studio (DM 16/03/2007, art. 3, comma 7), sono così delineati: Conoscenza e capacità di comprensione L'attività formativa è volta a fornire le competenze necessarie affinché i laureati siano in grado di: - valutare le complesse relazioni tra i diversi componenti di un sistema informatico, nei diversi scenari di utilizzo della tecnologia. - comprendere i problemi relativi allo sviluppo di nuove tecnologie, partendo da una solida conoscenza rispetto ai principi di base dell'informatica, delle reti, dell'automatica e dell'elettronica. I laureati del Corso di Laurea in Ingegneria Informatica sono anche tenuti a: - conoscere gli aspetti metodologico-operativi delle altre discipline ingegneristiche, con particolare riferimento agli ambiti con una stretta relazione con il contesto dell'ingegneria dell'informazione; - conoscere i principi dell'economia e dell'organizzazione; - comprendere il funzionamento di sistemi tecnologici complessi e l'impatto che può essere prodotto da modifiche ai singoli componenti del sistema; Capacità di applicare conoscenza e comprensione L'impostazione didattica degli insegnamenti prevede che la formazione teorica sia accompagnata da esempi, applicazioni, lavori individuali e di gruppo e verifiche che sollecitino la partecipazione attiva, l'attitudine propositiva, la capacità di elaborazione autonoma e di comunicazione dei risultati del lavoro svolto. Riveste un'importanza cruciale il fatto che il corpo docente sia costituito da ricercatori impegnati attivamente nello sviluppo delle tecnologie. Inoltre, molti degli insegnamenti prevedono un'attività sperimentale autonoma, sfruttando per quanto riguarda le discipline dell'elettronica e dell'automatica la disponibilità di strumentazione presente nei laboratori dell'università. La parte di approfondimento ed elaborazione delle conoscenze demandata allo studio personale dello studente assume una rilevanza notevole, ma accanto allo studio personale assumono notevole importanza anche le attività di laboratorio eseguite in gruppo e le esercitazioni svolte in aula. A complemento degli strumenti già citati, lo studente può usufruire di visite guidate, tirocini e stage, sfruttando la presenza sul territorio di diverse aziende e centri di ricerca, con cui sono in corso da anni collaborazioni. In questo modo l'attività formativa è volta a garantire che i laureati siano in possesso di tutte le competenze necessarie per: - affrontare e risolvere problemi tecnologici nei diversi ambiti della tecnologia dell'informazione, con particolare riferimento agli ambiti di approfondimento specifico previsti dal corso di laurea; - valutare gli aspetti innovativi, prestazionali, economici e strategici delle scelte di sviluppo tecnologico; - favorire e promuovere l'innovazione tecnologica. Oltretutto il percorso formativo consentirà di: - sviluppare capacità di tipo organizzativo, che si concretizzano nella pianificazione della propria attività lavorativa, o nel rispetto di un piano di lavoro impostato; - sviluppare capacità di coordinare piccoli gruppi di lavoro, nel rispetto della gestione cooperativa di attività di innovazione; - saper far uso di appropriate tecniche di valutazione; - essere in grado di redigere rapporti sulla propria attività lavorativa. Autonomia di giudizio Il corso di Laurea Magistrale contribuirà allo sviluppo di una opportuna autonomia di giudizio con riferimento alla valutazione critica del funzionamento delle tecnologie e della loro applicazione alla risoluzione di problemi concreti, all'interpretazione dei risultati di esperimenti spesso con grandi quantità di dati da gestire, alla valutazione di opportunità relative all'adozione e sviluppo di una certa tecnologia per la risoluzione di un dato problema. 3 Abilità comunicative Il laureato magistrale in ingegneria informatica deve saper comunicare con tecnici ed esperti con proprietà di linguaggio. La conoscenza della lingua inglese è prerequisito indispensabile per il conseguimento della laurea per cui il laureato deve essere in grado di comunicare anche in inglese su problematiche di carattere tecnico; deve essere altresì in grado di comprendere ed elaborare testi in lingua inglese. Tutto ciò viene garantito dal fatto che il materiale di studio fornito è spesso disponibile nella sola lingua inglese, così come la documentazione relativa a qualsiasi tecnologia innovativa presentata nell'ambito del corso. A tale scopo i laureati acquisiranno adeguate competenze e strumenti per la comunicazione personale con riferimento a: - comunicazione in lingua italiana e inglese, scritta e orale; - capacità di lavorare in gruppo; - trasmissione e divulgazione dei risultati del proprio lavoro. Le attività di laboratorio e tutorato che vengono svolte dai docenti durante i corsi stimolano l'allievo ad interagire con essi e con i suoi colleghi; la prova d'esame, generalmente svolta secondo la modalità della prova scritta, consente di verificare le abilità comunicative maturate dall'allievo. Inoltre nel corso di alcuni degli insegnamenti maggiormente caratterizzanti il corso di studi, sono previste delle attività seminariali svolte da gruppi di studenti su argomenti specifici di ciascun insegnamento. Capacità di apprendimento Il corso di laurea fornirà le capacità necessarie per lo sviluppo e l'approfondimento di ulteriori competenze, con riferimento a: - consultazione in rete della descrizione estesa delle tecnologie presentate durante le lezioni - consultazione di materiale bibliografico; - sviluppo di indagini sul campo; - coinvolgimento in un'attività estesa di sviluppo della tecnologia svolta nell'ambito della tesi di laurea. La suddivisione delle ore di lavoro complessive previste per lo studente dà un forte rilievo alle ore di lavoro personale per offrire allo studente la possibilità di verificare e migliorare la propria capacità di apprendimento. Analogo obiettivo persegue l'impostazione di rigore metodologico degli insegnamenti che porta lo studente a sviluppare un ragionamento logico che, a seguito di precise ipotesi, porti alla conseguente dimostrazione di una tesi. Per ciascuno di questi risultati attesi di apprendimento si prevedono prove di accertamento mediante colloqui d’esame, elaborati scritti, osservazioni ridiscusse in aula o realizzate presso i servizi in cui si presta tirocinio, ecc.. Profili professionali e sbocchi occupazionali I laureati del Corso di Laurea Magistrale, in relazione alle attuali e ricorrenti domande occupazionali e alle più recenti linee di tendenza classificate dall’ISTAT oltre che dagli osservatori regionali sull’evoluzione delle professioni, risultano inseribili nei settori - Informatici e telematici; - Specialisti nella ricerca informatica di base; - Analisti e progettisti di software applicativi e di sistema; - Analisti di sistema; - Specialisti in sicurezza informatica; - Specialisti in reti e comunicazioni informatiche. Norme relative all’accesso L’ammissione alla Laurea Magistrale è soggetta a un processo di valutazione atto ad attestare l’idoneità del candidato; tale processo, a norma della regolamentazione esistentei, si basa su requisiti curriculari e sulla verifica della adeguata preparazione dello studente. L’ammissione alla Laurea Magistrale sarà deliberata in forma insindacabile da una Commissione di Valutazione istituita a tale scopo dal Consiglio di Corso di Studio, che si baserà sull’analisi della carriera accademica. In caso di ammissione, eventuali vincoli nelle scelte curriculari, saranno esplicitati contemporaneamente al giudizio positivo e prima dell’immatricolazione, così da fornire le informazioni necessarie per una scelta trasparente e razionale dei piani di studio. Per quanto riguarda la conoscenza della lingua Inglese, viene richiesto, come prerequisito all’ammissione, un livello certificato B1 o equivalente. In caso tale prerequisito non sia soddisfatto, il candidato viene ammesso sotto condizione. Il livello di conoscenza richiesto deve essere dimostrato 4 prima della data ultima fissata per finalizzare l’iscrizione. Fino a quando non sarà soddisfatto il prerequisito, il candidato potrà acquisire la frequenza ai corsi ma non potrà sostenere i relativi esami. Per accedere alla Laurea Magistrale in Ingegneria Informatica il candidato deve possedere conoscenze coerenti con il progetto formativo della suddetta Laurea. Il curriculum studiorum del candidato sarà di norma valutato “coerente” con il progetto formativo quando siano stati acquisiti almeno 30 CFU nelle attività formative di base e 45 CFU nelle attività formative caratterizzanti previste per la Classe di Laurea L-8 “Ingegneria dell’Informazione” di cui almeno 30 CFU negli ambiti disciplinari dell’Ingegneria Informatica. Quando non esistano queste precondizioni al candidato saranno richieste delle integrazioni curriculari che saranno indicate dalla Commissione e dovranno essere necessariamente conseguite prima di procedere all’effettiva domanda di immatricolazione alla Laurea Magistrale. Le possibili equivalenze tra gli insegnamenti seguiti con profitto e quelli dei SSD di ingegneria saranno stabilite a giudizio insindacabile della Commissione di Valutazione sulla base dei programmi ufficialiii degli insegnamenti. Sulla base dei criteri enunciati è diretta l’ammissione alla Laurea Magistrale per i: • Laureati di primo livello in Ingegneria Informatica presso l'Università degli Studi di Bergamo che abbiano seguito un piano degli studi secondo ordinamento DM.509; • Laureati di primo livello in Ingegneria Informatica presso l'Università degli Studi di Bergamo che abbiano seguito un piano degli studi secondo ordinamento DM.270, purché nei 180 cfu del titolo di I livello non siano presenti cfu derivanti da attività di tirocinio; • Laureati di primo livello in Ingegneria Informatica presso l'Università degli Studi di Bergamo che abbiano seguito un piano degli studi secondo ordinamento DM.270 con cfu derivanti da attività di tirocinio nei 180 cfu del percorso di I livello; la Commissione di Valutazione si riserva di convocare il candidato per un colloquio di ammissione, allo scopo di assegnare vincoli curriculari in relazione alle caratteristiche del curriculum studiorum. • Laureati di primo livello in Ingegneria Informatica di altri atenei; la Commissione di Valutazione si riserva di convocare il candidato per un colloquio di ammissione, allo scopo di assegnare vincoli curriculari in relazione alle caratteristiche del curriculum studiorum. Sulla base dei criteri enunciati, verranno esaminati da parte della Commissione di Valutazione: • Candidati in possesso di altri titoli di Laurea di primo livello. • Candidati in possesso di Diplomi di Laurea. • Candidati in possesso di “Lauree Vecchio Ordinamento” o “Seconde Lauree” (per candidati già in possesso di Lauree Magistrali o equipollenti di precedenti Ordinamenti). • Candidati non ancora in possesso di titolo di studio di I livello, ma che prevedono di conseguire tale titolo nell’anno accademico in corso In tutti questi casi, la Commissione di Valutazione condurrà una analisi specifica sulla base del curriculum studiorum presentato dal candidato. Le equivalenze tra gli insegnamenti seguiti con profitto e quelli dei SSD di Ingegneria verranno stabilite a giudizio insindacabile della Commissione di Valutazione. Si potranno riconoscere come CFU già acquisiti, eventuali esami già sostenuti dal candidato se ritenuti coerenti con il corso di Laurea Magistrale. Di norma non saranno previste convalide di insegnamenti sulla base di esperienze lavorative o attività di formazione in ambiti non universitari. Master universitari, dottorati potranno essere riconosciuti come CFU acquisiti a discrezione della Commissione di Valutazione. La verifica dei requisiti curriculari e l’attribuzione di integrazioni curriculari e vincoli formativi è deliberata con giudizio insindacabile della Commissione di Valutazione. Agli studenti che non abbiano conseguito la Laurea di primo livello è concessa l’iscrizione sotto condizione alla Laurea Magistrale purché all’atto dell’iscrizione non manchino più di 30 CFU al conseguimento della laurea, oltre ai CFU richiesti per eventuali tirocini e per la prova finale. L’iscrizione sarà convalidata solo se la Laurea sarà conseguita entro il termine dell’anno accademico precedente all’anno di iscrizione alla Laurea Magistrale. Organizzazione del Corso di Laurea Magistrale Il corso di Laurea Magistrale è di norma di due anni per gli studenti a tempo pieno. La Laurea Magistrale si consegue con l’acquisizione di 120 crediti, ripartiti negli anni di corso, in ciascuno dei quali è prevista l'acquisizione di 60 crediti per gli studenti a tempo pieno. Gli studenti impegnati a tempo parziale sono tenuti ad acquisire annualmente da 30 a 36 cfu. Per tali studenti la durata del corso risulta pertanto ridefinita in base alla modalità di iscrizione (Studente impegnato a tempo pieno o a tempo parziale). Lo studente, che sceglie la modalità di iscrizione all’atto dell’immatricolazione, può effettuare successivamente una sola variazione. 5 Il corso di laurea si articola in un singolo curriculum le cui attività formative prevedono discipline caratterizzanti e discipline affini e integrative, come indicato nelle tabelle allegate. Aggiornamenti agli elenchi degli insegnamenti dei corsi di studio possono essere disposti nel manifesto degli studi, previa approvazione dei competenti organi accademici. Sono inoltre previste le seguenti altre attività formative: - a scelta dello studente Sono previsti complessivamente 12 crediti per attività a scelta dello studente. Tali crediti potranno essere acquisiti seguendo insegnamenti ufficiali dei Corsi di laurea/Laurea Magistrale attivati nell’Ateneo. - Per la prova finale 12 crediti. Abilità informatiche e telematiche Gli studenti sono tenuti ad acquisire al I o al II anno 1 credito di abilità informatiche. Tale credito si acquisisce come attività supplementare nell’ambito dell’insegnamento di Teoria dell’informazione e della trasmissione oppure nell’ambito dell’insegnamento di Elettronica e misure industriali. Tirocini formativi e di orientamento Non viene imposto l’obbligo di acquisire CFU relativi ad attività di tirocinio, ma viene offerta la possibilità d svolgere questa attività per ottenere fino a 12 CFU in sovrannumero. Per svolgere tale attività gli studenti iscritti al II anno dovranno presentare un’apposita domanda, nei termini e secondo le modalità indicate nei Regolamenti dei tirocini della Facoltà. I tirocini prevedono la frequenza obbligatoria. Al termine del tirocinio è prevista la presentazione di una relazione finale. Forme didattiche L’impianto del corso prevede lezioni frontali ed esercitazioni, anche in modalità e-learning, laboratori e attività di tirocinio. Il numero di ore necessarie per 1 CFU è di 25 ore complessive, di cui, di norma, 8 per le lezioni frontali, 2 per il tutoraggio in aula, e 15 come studio individuale. La lingua di insegnamento è di norma l’italiano. Il Corso di Laurea Magistrale prevede anche, di anno in anno, l’erogazione di corsi in lingua inglese. Modalità di verifica della preparazione Le modalità di verifica del profitto, disciplinate nel Regolamento di Facoltà, sono indicate nel programma ufficiale dell’insegnamento e possono consistere in esami orali e/o scritti che danno luogo ad una votazione o ad un semplice giudizio di approvazione o riprovazione. Frequenza I corsi non prevedono, di norma, l’obbligo di frequenza. I laboratori e i tirocini richiedono invece la frequenza obbligatoria, con le modalità indicate nel sito della Facoltà. Piano di studio Il Corso di laurea offre piani di studio che comprendono insegnamenti obbligatori, insegnamenti a scelta vincolata e insegnamenti a scelta libera, differenziati in base agli obiettivi formativi, come riportati in allegato. All’inizio di ogni anno accademico lo studente è tenuto a presentare, o eventualmente modificare, il proprio piano di studio individuale. Il piano di studi potrà essere variato nei tempi e nei modi stabiliti dall’Ateneo. Aggiornamenti ai piani di studio possono essere disposti nel manifesto degli studi, previa approvazione dei competenti organi accademici. Attività di orientamento e tutorato Verranno proposte attività di orientamento finalizzate alla compilazione del piano di studio, alla scelta delle attività formative in opzione, allo svolgimento delle attività di tirocinio, alla scelta e alla predisposizione dell’elaborato per la prova finale. Verranno altresì proposte attività didattiche propedeutiche ai corsi e, nel corso dell’anno, di tutorato e di sostegno. Scansione delle attività formative e degli appelli d'esame Le attività formative si svolgono nel periodo settembre-gennaio (I semestre) e nel periodo febbraio-giugno (II semestre). L’anno accademico avrà inizio il 1° ottobre di ciascun anno: il calendario delle attività formative sarà disponibile alla pagina internet della Facoltà. 6 Sono previsti cinque appelli per gli esami di profitto la cui distribuzione nell’anno è stabilita dal Regolamento di Facoltà come segue: almeno due appelli orali per ciascuna sessione ordinaria invernale e estiva, un appello per la sessione autunnale. Sono inoltre previsti due appelli aggiuntivi nelle sessioni straordinarie di aprile e novembre riservati agli studenti fuori corso. Prova finale La prova finale consiste nella presentazione di una relazione scritta individuale o a due nomi sull'attività svolta, discussa in seduta pubblica davanti ad una commissione di docenti, che esprimerà in centodecimi la valutazione complessiva. Le attività relative alla preparazione della prova finale per il conseguimento della laurea saranno svolte dallo studente, sotto la supervisione di un docente-tutore, con modalità quali l'osservazione, la ricerca, interventi sperimentali in situazioni di laboratorio o sul campo. E' possibile redigere e discutere la prova finale in lingua inglese, previo accordo con il docente preposto. In generale, il corso di laurea seguirà nella gestione dell'esame di laurea l'impostazione definita nel regolamento di Facoltà e comune a tutti i corsi di Laurea Magistrale di Ingegneria. Per il conseguimento della Laurea Magistrale è prevista la predisposizione e presentazione di una tesi elaborata in modo originale dallo studente: tale elaborato potrà essere o una rielaborazione e puntualizzazione individuale delle riflessioni teoriche sull’argomento o una riflessione empirica, saldamente ancorata alle teorie di riferimento, che nasca dalle attività svolte dal candidato. Le attività relative alla preparazione della prova finale per il conseguimento della Laurea Magistrale sono svolte dallo studente sotto la supervisione di un docente relatore. L’argomento potrà essere assegnato dal relatore agli studenti che abbiano acquisito 60 crediti, secondo le modalità definite dal Regolamento di Facoltà. La discussione della prova finale avrà luogo di fronte a una commissione di docenti. Le attività relative alla prova finale comportano l’acquisizione di 12 CFU. Riconoscimento di CFU e modalità di trasferimento Su istanza degli interessati, il Collegio didattico del Corso di Studio, procederà alla valutazione e all’eventuale riconoscimento dei crediti formativi universitari precedentemente acquisiti. Con riferimento alle conoscenze e abilità professionali certificate ai sensi della normativa vigente in materia, nonché altre conoscenze e abilità maturate in attività formative di livello post-secondario alla cui progettazione e realizzazione l'università abbia concorso (art. 4 DM 16/03/2007) il numero massimo di crediti riconoscibili è 12 complessivamente tra corsi di I livello e di II livello (laurea e laurea magistrale). Il riconoscimento deve essere effettuato esclusivamente sulla base delle competenze dimostrate da ciascuno studente. Sono escluse forme di riconoscimento attribuite collettivamente. Verifica dei crediti acquisiti Qualora il Collegio didattico del Corso di studi rilevi l’obsolescenza dei contenuti culturali e professionali dei crediti acquisiti, procederà alla definizione degli esami integrativi da sostenere sui singoli insegnamenti. IL RETTORE (Prof. Stefano Paleari) i D.M. 22/10/2004 n. 270 art. 6 comma 2 (“per essere ammessi ad un corso di Laurea Magistrale occorre essere in possesso della laurea o del diploma universitario di durata triennale, ovvero di altro titolo di studio conseguito all'estero, riconosciuto idoneo. Nel caso di corsi di Laurea Magistrale per i quali non sia previsto il numero programmato dalla normativa vigente in materia di accessi ai corsi universitari, l'università stabilisce per ogni corso di Laurea Magistrale, specifici criteri di accesso che prevedono, comunque, il possesso di requisiti curriculari e l'adeguatezza della personale preparazione verificata dagli atenei, con modalità definite nei regolamenti didattici.”) e il D.M. del 16/3/2007, art.6 comma 1. ii I programmi ufficiali possono essere sostituiti da programmi anche non controfirmati dalla segreteria presentati dal candidato; il candidato allegherà contestualmente alla loro presentazione una dichiarazione di “conformità al documento originale”. La non corrispondenza dei documenti, accertata anche successivamente, sarà motivo sufficiente per invalidare l’iscrizione (e gli esami sostenuti, compreso quello di laurea) nonché di denuncia alle autorità competenti per “falso in atto pubblico”. A.A. 2011/2012 INFORMATICA - MAGISTRALE Attività formative caratterizzanti ambito disciplinare settore CFU INSEGNAMENT O CFU SETTORE DISCIPLINARE ING-INF/04 Automatica C.I. Controlli automatici e Identificazione dei modelli e analisi dei dati (modulo di Identificazione dei modelli e analisi dei dati) 6 C.I. Controlli automatici e Identificazione dei modelli e analisi dei dati (modulo di controlli automatici) 6 ING-INF/05 Sistemi di elaborazione delle informazioni Linguaggi e compilatori 9 Informatica III 12 Impianti informatici 6 informatica teorica 6 45 Attività affini ed integrative ambito disciplinare Settore CFU CFU ING-INF/03 Telecomunicazioni Teoria dell'informazione e della trasmissione (TIT) 6 6 ING-INF/03 Telecomunicazioni Reti Internet multimediali 6 Reti di telecomunicazione 6 ING-IND/10 Fisica tecnica industriale Fisica tecnica 6 ING-IND/13 Meccanica applicata alle macchine Ingegneria dei sistemi meccanici 9 Sistemi meccatronici 9 ING-IND/34 Bioingegneria industriale Fenomeni di trasporto nei sistemi biologici 6 ING-IND/35 Ingegneria economico-gestionale Gestione aziendale 6 ING-INF/01 Elettronica Elettronica e misure industriali 12 Elettronica industriale 6 Progettazione di sistemi elettronici 6 Microelettronica 6 ING-INF/05 Sistemi di elaborazione delle informazioni 7 Robotica 9 Sicurezza dei sistemi informatici 6 Sistemi real-time 6 Basi di dati II 6 MAT/08 Analisi numerica calcolo numerico 6 MAT/09 Ricerca operativa Modelli e algoritmi di ottimizzazione 9 SECS-S/02 Statistica per la ricerca sperimentale e tecnologica 51 Altre attività formative (D.M. 270 art.10 §5) ambito disciplinare CFU A scelta dello studente 11 Per la prova finale 12 Ulteriori conoscenze linguistiche 0 Abilità informatiche e telematiche 1 Tirocini formativi e di orientamento 0 Altre conoscenze utili per l'inserimento nel mondo del lavoro 0 TOTALE 24 CFU totali per il conseguimento del titolo 120 45 ingegneria informatica Totale Attività formative affini o integrative totale 12 33
+
+Fonte 3: a.a. 2025-2026 GUIDA DELLO STUDENTE - e-learning Unibg
+URL: https://elearning15.unibg.it/mod/book/view.php?id=592&chapterid=1350&lang=de
+Contenuto: # Guida studenti Unibg
+
+## a.a. 2025-2026 GUIDA DELLO STUDENTE - FUTURI STUDENTI
+
+A.A. 2025-2026 GUIDA DELLO STUDENTE - FUTURI STUDENTI
+
+### 4. L'ABC DELLA PROCEDURA DI IMMATRICOLAZIONE
+
+#### Corsi di laurea magistrale ad accesso libero
+
+#### 
+
+I corsi di **laurea magistrale ad accesso libero** per il 2025-2026 sono i seguenti:
+
+Puoi pre-iscriverti ad un **massimo di 2 corsi di laurea magistrale**, versando il previsto contributo di pre-iscrizione di € 52,00 per ogni corso di interesse.
+
+**I periodi per effettuare la pre-iscrizione sono i seguenti:**
+
+È possibile presentare **domanda di pre-iscrizione tardiva,** con addebito della **quota aggiuntiva per istanza fuori termine** da applicare all'atto dell'immatricolazione, nei seguenti periodi:
+
+Consulta il Calendario pubblicato alla pagina [**Corsi di laurea magistrale ad accesso libero**](https://www.unibg.it/studiare/iscriversi/corsi-laurea-magistrale-ad-accesso-libero) e verifica nella pagina del corso di **[laurea magistrale](https://www.unibg.it/studiare/corsi/lauree-magistrali)**di tuo interesse le date fissate dai Dipartimenti per i colloqui/test.
+
+Se risulterai in**possesso di adeguata preparazione**, dovrai compilare la **domanda di immatricolazione online** sullo[**Sportello internet**](https://sportello.unibg.it/Home.do) e versare entro la prevista scadenza la tassa regionale per il Diritto allo Studio Universitario e l'imposta di bollo assolta in modo virtuale per un totale di 156,00 euro.
+
+Per ogni informazione consulta la Guida alla procedura online di pre-iscrizione alla laurea magistrale presente alla pagina **[Segreteria Studenti](http://www.unibg.it/node/6977)**al paragrafo "Guide alle procedure online".
+
+Si potranno immatricolare:
+
+**Se ti sarai pre-immatricolato pur non possedendo i requisiti** di cui sopra relativi agli esami mancanti, la Segreteria studenti provvederà ad annullare d'ufficio la tua domanda di pre-immatricolazione.
+
+**Se non hai ancora conseguito la laurea** sarai pre-immatricolato con **clausola sospensiva**relativa al conseguimento del titolo entro la sessione straordinaria di **marzo/aprile 2026.**NB: Gli studenti **pre-immatricolati con riserva** possono partecipare alle lezioni del corso di laurea magistrale ma **non possono né sostenere esami, né partecipare ad attività che implichino la valutazione in itinere prima dello scioglimento della riserva.**  
+  
+Se non conseguirai la laurea di primo livello entro la sessione di laurea di marzo/aprile 2026, ma avrai nel frattempo frequentato gli insegnamenti della laurea magistrale, potrai sostenere i relativi esami dopo il conseguimento della laurea, previa iscrizione ai corsi singoli (senza oneri aggiuntivi per i laureati UniBg).  
+**Se, pur essendo laureato, non possiedi i requisiti curriculari richiesti,** potrai iscriverti ai corsi singoli nell'anno accademico 2025-2026 e immatricolarti al corso di laurea magistrale nell'anno accademico successivo, chiedendo la convalida degli eventuali crediti formativi acquisiti in aggiunta a quelli necessari per integrare il requisito mancante.
+
+**Se intendi richiedere** il trasferimento da altra Università, il passaggio da altro corso di laurea specialistica/magistrale, il conseguimento di seconda laurea magistrale, l'abbreviazione di corso o la re-immatricolazione a seguito di rinuncia/decadenza, **sei tenuto ad effettuare prima la pre-iscrizione** e, in caso di ammissione, potrai presentare la successiva istanza.
+
+Le singole strutture didattiche indicano i requisiti curriculari necessari per l'iscrizione al corso e disciplinano le modalità di verifica dell'adeguata preparazione iniziale: fai riferimento al [Dipartimento di afferenza](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti) per tutte le informazioni utili.
+
+Per approfondimenti consulta la pagina
+
+<https://www.unibg.it/studiare/iscriversi/passi-iscriversi/corsi-laurea-magistrale-pre-iscrizioni-e-immatricolazioni>
+
+## Blöcke
+
+### Inhaltsverzeichnis
+
+### Administration
+
+Buch-Administration
+
+[![](https://elearning15.unibg.it/theme/image.php/classic/booktool_print/1772480802/book)Buch drucken (In neuem Fenster öffnen)](https://elearning15.unibg.it/mod/book/tool/print/index.php?id=592)
+
+![](https://elearning15.unibg.it/theme/image.php/classic/booktool_print/1772480802/book)
+
+[![](https://elearning15.unibg.it/theme/image.php/classic/booktool_print/1772480802/chapter)Kapitel drucken (In neuem Fenster öffnen)](https://elearning15.unibg.it/mod/book/tool/print/index.php?id=592&chapterid=1350)
+
+![](https://elearning15.unibg.it/theme/image.php/classic/booktool_print/1772480802/chapter)
+
+## Ergänzungsblöcke
+
+Fonte 4: Corsi di laurea magistrale ad accesso libero - Bergamo - UniBg
+URL: https://www.unibg.it/studiare/iscriversi/corsi-laurea-magistrale-ad-accesso-libero
+Contenuto: ![](https://www.facebook.com/tr?id=981134568621857&ev=PageView&noscript=1)
+
+## Info
+
+## Link utili utente
+
+## Navigazione principale - desktop
+
+## Informazioni per
+
+![Home](/themes/custom/unibg/logo.svg)
+
+## Link utili utente
+
+## Navigazione principale
+
+## Servizi on line
+
+## Navigazione principale
+
+# Corsi di laurea magistrale ad accesso libero
+
+## Breadcrumb
+
+### Anno accademico 2026-2027
+
+Questa modalità di accesso è prevista per i corsi di laurea magistrale in:
+
+*Per iscriversi completa i passi elencati di seguito*
+
+### 1. Registrazione al portale di Ateneo
+
+[Registrati sullo Sportello Internet UniBg](https://sportello.unibg.it/Home.do), se non ti sei ancora registrato (per es. provieni da un altro Ateneo).
+
+### 2. Pre-iscrizione
+
+Procedi alla pre-iscrizione sullo [Sportello Internet UniBg](https://sportello.unibg.it/Home.do) con pagamento del contributo di pre-iscrizione entro la scadenza prevista.
+
+### 3. Sostenimento del colloquio/test
+
+A seguito della valutazione dei requisiti di accesso, bisognerà sostenere un colloquio/test con la Commissione Esaminatrice del corso di laurea magistrale scelto che verificherà la preparazione iniziale.  
+Eventuali casi di esonero dalla verifica della preparazione iniziale per i corsi di laurea magistrale ad accesso libero sono indicati sui siti dei singoli corsi di laurea alla pagina *Il Corso / Requisiti di accesso.*
+
+### Le scadenze per iscriverti
+
+È possibile pre-iscriversi a un massimo di 2 corsi di laurea magistrale, versando il previsto contributo di pre-iscrizione di € 52,00 per ogni corso di interesse.
+
+Le domande di pre-iscrizione potranno essere presentate (domanda online + pagamento contributo) secondo il seguente calendario.
+
+**Pre-iscrizione dal 1° aprile al 29 maggio 2026**
+
+Colloquio/test\* dal 22 al 26 giugno 2026
+
+Immatricolazione dal 3 giugno al 28 agosto 2026
+
+**Pre-iscrizione dal 3 giugno al 28 agosto 2026**
+
+Colloquio/test\* dal 10 al 18 settembre 2026
+
+Immatricolazione dal 1° settembre al 15 ottobre 2026
+
+**Pre-iscrizione dal 1° al 30 settembre 2026**
+
+Colloquio/test\* dal 14 al 20 ottobre 2026
+
+Immatricolazione dal 1° ottobre al 13 novembre 2026
+
+Sono ammesse **pre-iscrizioni tardive** (con addebito della mora) secondo il seguente calendario:
+
+**Pre-iscrizione tardiva dal 1° al 30 ottobre 2026**
+
+Colloquio/test dal 12 al 18 novembre 2026
+
+Immatricolazione dal 2 novembre al 4 dicembre 2026
+
+**Pre-iscrizione tardiva dal 2 al 13 novembre 2026**
+
+Colloquio/test dal 26 al 30 novembre 2026
+
+Immatricolazione dal 16 novembre all'11 dicembre 2026
+
+(\*) ad esclusione degli studenti non-UE che hanno già sostenuto il colloquio in fase di pre-valutazione.
+
+**Indicazioni**
+
+Gli studenti pre-iscritti che risulteranno ammessi dovranno presentare domanda di immatricolazione unitamente al versamento della quota della tassa regionale per il Diritto allo Studio Universitario e dell’imposta di bollo assolta in modo virtuale.
+
+Gli studenti che chiedono il trasferimento da altre Università, il passaggio da altro corso di laurea specialistica/magistrale, il conseguimento di seconda laurea, l’abbreviazione di corso o la re-immatricolazione a seguito rinuncia/decadenza sono tenuti ad effettuare prima la pre-iscrizione e, in caso di ammissione, presentare la successiva istanza.
+
+A seguito di ammissione, potranno:
+
+a) immatricolarsi gli studenti già laureati;  
+b) pre-immatricolarsi ‘con riserva’ coloro che non sono ancora laureati e conseguiranno il titolo entro e non oltre la sessione di marzo/aprile 2027, purché all’atto della pre-immatricolazione debbano ancora sostenere non più di 3 esami per un massimo di n. 24 cfu (eventuale tirocinio compreso) oltre alla prova finale. Con riferimento al tirocinio il requisito si intende assolto purché lo stesso sia stato già avviato;  
+c) pre-immatricolarsi ‘con riserva’ gli studenti laureati che sono iscritti a corsi singoli per l’a.a. 2025/2026 al fine di integrare i requisiti necessari per l’ammissione, purché all’atto della pre-immatricolazione debbano ancora sostenere esami per un massimo di 24 cfu da superare entro la sessione di gennaio/febbraio 2027.
+
+Agli studenti che si saranno pre-immatricolati ‘con riserva’ pur non possedendo i requisiti di cui sopra relativi agli esami mancanti, la domanda verrà annullata d’ufficio dalla Segreteria.
+
+Gli studenti saranno pre-immatricolati ‘con riserva’ ovvero con clausola sospensiva e, quindi, non potranno sostenere esami del corso di laurea magistrale fino al conseguimento del titolo oppure fino al superamento di tutti i corsi singoli.
+
+Nel caso in cui lo studente pre-immatricolato “con riserva” non consegua la laurea di I livello entro la sessione di laurea di marzo/aprile 2027 oppure non superi tutti i corsi singoli entro la sessione di appelli di gennaio/febbraio 2027, ma abbia nel frattempo frequentato gli insegnamenti della laurea magistrale, potrà sostenere i relativi esami dopo il conseguimento della laurea oppure dopo il superamento dei corsi singoli, previa iscrizione a singoli insegnamenti  per l’a.a. 2026/2027 (senza oneri aggiuntivi se si tratta di laureati UniBg).
+
+### 4. Immatricolazione
+
+I candidati ritenuti idonei possono procedere ad immatricolarsi.
+
+### Potrebbe interessarti
+
+## Seguici su
+
+## Footer - 1
+
+## Footer - 2
+
+## Footer - 3
+
+**Università degli studi di Bergamo**  
+via Salvecchio 19  
+24129 Bergamo  
+Cod. Fiscale 80004350163  
+P.IVA 01612800167  
+Centralino 035 2052111
+
+## Piè di pagina
+
+Fonte 5: [PDF] Lauree magistrali ad accesso libero e programmato - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2022-03-22/Presentazione_open%20week%2021%20marzo%202022_LM.pdf
+Contenuto: Open Week Lauree Magistrali 2022 21 marzo 2022 Lauree magistrali ad accesso libero e programmato Presentazione a cura del Servizio Studenti Titoli necessari per l’immatricolazione a un corso di laurea magistrale Per essere ammessi a un corso di laurea magistrale, occorre essere in possesso di:  Idoneo titolo di accesso (Laurea, Diploma universitario di durata triennale oppure titolo di studio conseguito all’estero, riconosciuto idoneo)  requisiti curriculari previsti dall’ordinamento del corso di studio  adeguata preparazione personale.
+Coloro che ritengono di laurearsi entro la sessione straordinaria di marzo-aprile 2023 possono presentare domanda di pre-iscrizione «con riserva» entro le scadenze previste a condizione che a quella data risultino in possesso dei requisiti curriculari richiesti (esami sostenuti o comunque già presenti nel piano di studio dello studente).
+Tali studenti, se in possesso di adeguata preparazione personale e ammessi al corso, potranno pre-immatricolarsi entro la scadenza prevista a condizione che all’atto della pre-immatricolazione debbano ancora sostenere non più di 3 esami per un massimo di n. 24 cfu (eventuale tirocinio compreso) oltre alla prova finale.
+Allo stesso modo, coloro che, già laureati, risultino iscritti a corsi singoli per l’anno accademico 2021-2022 al fine di integrare i requisiti necessari per l’iscrizione al corso di laurea magistrale, potranno presentare domanda di pre-iscrizione «con riserva» nel caso in cui alla data di scadenza delle pre-iscrizioni non abbiano ancora completato gli esami. Tali studenti, se in possesso di adeguata preparazione personale e ammessi al corso, potranno pre-immatricolarsi entro la scadenza prevista a condizione che, all’atto della pre-immatricolazione, debbano ancora sostenere esami per un massimo di n. 24 cfu da superare entro la sessione di gennaio/febbraio 2023.
+Coloro che, pur essendo laureati, non posseggano i requisiti curriculari richiesti, potranno iscriversi a corsi singoli nell’anno accademico 2022-2023 e immatricolarsi al corso di laurea magistrale nell’anno accademico successivo, chiedendo la convalida degli eventuali crediti formativi acquisiti in aggiunta a quelli necessari per integrare il requisito mancante.
+Lauree magistrali ad accesso libero: i corsi di studio -DIRITTI UMANI, MIGRAZIONI E COOPERAZIONE INTERNAZIONALE -INGEGNERIA DELLE COSTRUZIONI EDILI -INGEGNERIA MECCANICA -MECCATRONICA E SMART TECHNOLOGY ENGINEERING -ENGINEERING AND MANAGEMENT FOR HEALTH -INGEGNERIA GESTIONALE -MANAGEMENT ENGINEERING -INGEGNERIA INFORMATICA -COMUNICAZIONE, INFORMAZIONE, EDITORIA -CULTURE MODERNE COMPARATE -FILOSOFIA E STORIA DELLE SCIENZE NATURALI E UMANE Lauree magistrali ad accesso libero: i corsi di studio -GEOURBANISTICA. ANALISI E PIANIFICAZIONE TERRITORIALE, URBANA, AMBIENTALE E VALORIZZAZIONE DEL PAESAGGIO -INTERCULTURAL STUDIES IN LANGUAGES AND LITERATURES -LINGUE MODERNE PER LA COMUNICAZIONE E LA COOPERAZIONE INTERNAZIONALE -PLANNING AND MANAGEMENT OF TOURISM SYSTEMS -ECONOMIA AZIENDALE, DIREZIONE AMMINISTRATIVA E PROFESSIONE (COMPRESO IL CURRICULUM BUSINESS ADMINISTRATION, PROFESSIONAL AND MANAGERIAL ACCOUNTING) -MANAGEMENT, MARKETING & FINANCE -MANAGEMENT, INNOVAZIONE E FINANZA -ECONOMICS AND DATA ANALYSIS -ECONOMICS & FINANCE È necessaria la pre-iscrizione dal 12 aprile al 9 settembre 2022 Gli studenti che chiedono il trasferimento da altra Università, il passaggio da altro corso di laurea specialistica/magistrale, il conseguimento di seconda laurea magistrale, l’abbreviazione di corso o la re-immatricolazione a seguito rinuncia/decadenza devono effettuare prima la pre-iscrizione e poi, in caso di ammissione, presentare l’istanza per il riconoscimento degli esami già sostenuti nella precedente carriera.
+È possibile pre-iscriversi a un massimo di due corsi di laurea magistrale, versando il previsto contributo di pre-iscrizione di € 52,00 per ogni corso di interesse.
+Verifica requisiti curriculari e adeguata preparazione personale – corsi ad accesso libero Gli ordinamenti didattici dei singoli corsi di studio indicano i requisiti curriculari necessari per l’iscrizione al corso: costituiscono requisiti curriculari il titolo di laurea conseguito in determinate classi e le competenze e conoscenze che lo studente deve aver acquisito nel percorso formativo pregresso, espresse sotto forma di crediti riferiti a specifici settori scientifico-disciplinari.
+I regolamenti didattici dei corsi di studio disciplinano inoltre le modalità di verifica dell’adeguata preparazione iniziale degli studenti; se previsto, potrà non essere richiesta la verifica a coloro che siano in possesso di un voto di laurea non inferiore ad un minimo stabilito. Per i laureandi potrà essere previsto l’esonero dalla verifica della preparazione personale in caso di media ponderata dei voti degli esami sostenuti non inferiore ad una determinata soglia.
+Verifica preparazione iniziale e immatricolazioni: tutte le date (corsi ad accesso libero) VERIFICA PREPARAZIONE INIZIALE -Dal 20 giugno al 24 giugno 2022 (per coloro che si sono pre-iscritti entro il 31 maggio 2022) -Dal 22 settembre al 28 settembre 2022 (per coloro che si sono pre-iscritti entro il 9 settembre 2022).
+IMMATRICOLAZIONI -Dal 12 luglio al 31 agosto 2022 (per coloro che si sono pre-iscritti entro il 31 maggio 2022) -Dal 26 settembre al 28 ottobre 2022 (per coloro che si sono pre-iscritti entro il 9 settembre 2022).
+Gli studenti pre-iscritti in possesso dei requisiti curriculari e di adeguata preparazione dovranno presentare domanda di immatricolazione e versare la tassa regionale per il Diritto allo Studio Universitario e l’imposta di bollo assolta in modo virtuale, per un totale di 156,00 euro.
+Corsi di laurea ad accesso libero: immatricolazioni Potranno immatricolarsi: -gli studenti già laureati; -coloro che all’atto dell’immatricolazione debbano ancora sostenere non più di tre esami per un massimo di n. 24 cfu (eventuale tirocinio compreso) oltre alla prova finale. Il requisito si intende assolto purché il tirocinio risulti già avviato.
+Gli studenti che non hanno ancora conseguito la laurea saranno pre-immatricolati con clausola sospensiva relativa al conseguimento del titolo entro la sessione straordinaria di marzo/aprile 2023.
+Se lo studente pre-immatricolato «con riserva» non riesce a conseguire la laurea di I livello entro la sessione di laurea di marzo/aprile 2023 ma nel frattempo ha frequentato gli insegnamenti della laurea magistrale, potrà sostenere i relativi esami dopo il conseguimento della laurea, iscrivendosi ai corsi singoli (senza oneri aggiuntivi se si tratta di laureati UniBg).
+Lauree magistrali ad accesso programmato: i corsi di studio -PSICOLOGIA CLINICA – 150 posti (di cui 50 per il CURRICULUM CLINICAL PSYCHOLOGY FOR INDIVIDUALS, FAMILIES AND ORGANIZATIONS); -SCIENZE PEDAGOGICHE – 150 posti Gli ordinamenti didattici dei singoli corsi di studio indicano i requisiti curriculari necessari per l’iscrizione al corso: costituiscono requisiti curriculari il titolo di laurea conseguito in determinate classi e le competenze e conoscenze che lo studente deve aver acquisito nel percorso formativo pregresso, espresse sotto forma di crediti riferiti a specifici settori scientifico-disciplinari.
+Per le modalità di verifica della preparazione personale e i criteri di selezione dei candidati da ammettere al corso si deve fare riferimento ai bandi di ammissione che verranno pubblicati entro fine marzo/inizio aprile 2022.
+Corsi di laurea magistrale ad accesso programmato: prima finestra di selezione Pre-iscrizione: -Dal 12 aprile al 31 maggio 2022 Verifica preparazione iniziale: -Dal 15 giugno al 21 giugno 2022 Pubblicazione graduatoria ammessi al corso: -Entro il 30 giugno 2022 Immatricolazioni: – Entro il 6 luglio 2022 – Pubblicazione posti disponibili entro il 13 luglio 2022 – Immatricolazioni primo scorrimento entro il 19 luglio 2022, a seguire ulteriori scorrimenti della graduatoria destinati a coloro che hanno presentato domanda di ripescaggio (=manifestazione di interesse) Corsi di laurea magistrale ad accesso programmato: seconda finestra di selezione Pre-iscrizione: -Dal 1° luglio al 22 agosto 2022 Verifica preparazione iniziale: -Dal 1° settembre al 7 settembre 2022 Pubblicazione graduatoria ammessi al corso: -Entro il 15 settembre 2022 Immatricolazioni: – Entro il 20 settembre 2022 – Pubblicazione posti disponibili entro il 26 settembre 2022 – Immatricolazioni primo scorrimento entro il 30 settembre 2022, a seguire ulteriori scorrimenti della graduatoria destinati a coloro che hanno presentato domanda di ripescaggio (=manifestazione di interesse) Corsi di laurea ad accesso programmato: immatricolazioni In caso di ammissione, sulla base della posizione occupata in graduatoria, potranno immatricolarsi: -gli studenti già laureati; -coloro che al momento dell’immatricolazione debbano ancora sostenere non più di tre esami per un massimo di 24 cfu (eventuale tirocinio compreso) oltre alla prova finale. Il requisito si intende assolto purché il tirocinio risulti già avviato.
+Gli studenti che non hanno ancora conseguito la laurea saranno pre-immatricolati con clausola sospensiva relativa al conseguimento del titolo entro la sessione straordinaria di marzo/aprile 2023.
+Allo studente laureando ammesso al corso «sotto condizione» che effettuerà la pre-immatricolazione pur essendo in debito di un numero di crediti superiore a 24 cfu verrà annullata la domanda di pre-immatricolazione e si procederà ad assegnare il suo posto al candidato che segue in graduatoria.
+Gli studenti che chiedono il trasferimento da altra Università, il passaggio da altro corso di laurea specialistica/magistrale, il conseguimento di seconda laurea magistrale, l’abbreviazione di corso o la re-immatricolazione a seguito rinuncia/decadenza devono effettuare la pre-iscrizione (= iscrizione al concorso) e, soltanto in caso di ammissione, presentare la successiva istanza di riconoscimento degli esami superati nella precedente carriera.
+Vi ringraziamo per l’attenzione Servizio Studenti
+
+
+>>> USER PROMPT:
+dimmi le date degli esami nella sessione di aprile che devo svolgere
+
+>>> RISPOSTA:
+Ciao Raphael,
+
+Riguardo alla tua richiesta sulle date degli esami nella sessione di aprile, è importante sapere che, come studente del 1° anno della Laurea Magistrale in Ingegneria Informatica, la sessione straordinaria di aprile è generalmente riservata agli studenti "fuori corso".
+
+Il Regolamento Didattico del tuo Corso di Laurea Magistrale in Ingegneria Informatica, così come il Calendario didattico della Scuola di Ingegneria, stabilisce che: "Sono inoltre previsti due appelli aggiuntivi nelle sessioni straordinarie di aprile e novembre riservati agli studenti fuori corso."
+
+Essendo tu al 1° anno di frequentazione, non rientri nella categoria degli studenti fuori corso e, di conseguenza, non dovresti avere appelli d'esame previsti per te nella sessione di aprile.
+
+Ti consiglio di consultare il calendario ufficiale degli appelli d'esame per l'Anno Accademico 2025-2026, che puoi trovare alla pagina della Scuola di Ingegneria, per verificare le date delle sessioni ordinarie (invernale, estiva e autunnale) a cui sei ammesso.
+
+Se desideri comunque consultare il calendario degli appelli di aprile (che, come detto, è per fuori corso), puoi trovarlo qui:
+[CALENDARIO APPELLI SESSIONE APRILE (AGG. AL 09/02)](/sites/default/files/media/documents/2026-02-09/appelli25-26_aprile.pdf)
+
+Per gli orari delle lezioni e gli appelli d'esame delle sessioni ordinarie, puoi sempre consultare il portale generale degli orari:
+[Orari UniBg](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+
+Pagina di riferimento: https://www.unibg.it/studiare/frequentare/orari-dei-corsi-ed-esami/calendario-didattico-scuola-ingegneria
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Domanda originale: dimmi le date degli esami nella sessione di aprile che devo svolgere
+Categoria: orari
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Raphael,
+
+Riguardo alla tua richiesta sulle date degli esami nella sessione di aprile, è importante sapere che, come studente del 1° anno della Laurea Magistrale in Ingegneria Informatica, la sessione straordinaria di aprile è generalmente riservata agli studenti "fuori corso".
+
+Il Regolamento Didattico del tuo Corso di Laurea Magistrale in Ingegneria Informatica, così come il Calendario didattico della Scuola di Ingegneria, stabilisce che: "Sono inoltre previsti due appelli aggiuntivi nelle sessioni straordinarie di aprile e novembre riservati agli studenti fuori corso."
+
+Essendo tu al 1° anno di frequentazione, non rientri nella categoria degli studenti fuori corso e, di conseguenza, non dovresti avere appelli d'esame previsti per te nella sessione di aprile.
+
+Ti consiglio di consultare il calendario ufficiale degli appelli d'esame per l'Anno Accademico 2025-2026, che puoi trovare alla pagina della Scuola di Ingegneria, per verificare le date delle sessioni ordinarie (invernale, estiva e autunnale) a cui sei ammesso.
+
+Se desideri comunque consultare il calendario degli appelli di aprile (che, come detto, è per fuori corso), puoi trovarlo qui:
+[CALENDARIO APPELLI SESSIONE APRILE (AGG. AL 09/02)](/sites/default/files/media/documents/2026-02-09/appelli25-26_aprile.pdf)
+
+Per gli orari delle lezioni e gli appelli d'esame delle sessioni ordinarie, puoi sempre consultare il portale generale degli orari:
+[Orari UniBg](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+
+Pagina di riferimento: https://www.unibg.it/studiare/frequentare/orari-dei-corsi-ed-esami/calendario-didattico-scuola-ingegneria
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RISPOSTA:
+Raphael, come studente del 1° anno della Laurea Magistrale in Ingegneria Informatica, la sessione straordinaria di aprile è generalmente riservata agli studenti FUORI CORSO.
+
+Il Regolamento Didattico del tuo Corso di Laurea Magistrale in Ingegneria Informatica e il Calendario Didattico della Scuola di Ingegneria stabiliscono che: "Sono inoltre previsti due appelli aggiuntivi nelle sessioni straordinarie di aprile e novembre riservati agli studenti fuori corso."
+
+Essendo tu al 1° anno, non rientri nella categoria degli studenti fuori corso e non hai appelli d'esame previsti nella sessione di aprile.
+
+Per le date delle sessioni ordinarie (invernale, estiva e autunnale) a cui sei ammesso, consulta il calendario ufficiale degli appelli d'esame per l'Anno Accademico 2025-2026 alla pagina della Scuola di Ingegneria.
+
+Risorse utili:
+- Se desideri consultare il calendario degli appelli di aprile (riservato ai fuori corso):
+  [CALENDARIO APPELLI SESSIONE APRILE (AGG. AL 09/02)](/sites/default/files/media/documents/2026-02-09/appelli25-26_aprile.pdf)
+- Per gli orari delle lezioni e gli appelli d'esame delle sessioni ordinarie, consulta il portale generale degli orari:
+  [Orari UniBg](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+
+Pagina di riferimento: https://www.unibg.it/studiare/frequentare/orari-dei-corsi-ed-esami/calendario-didattico-scuola-ingegneria
+
+================================================================================
+RISPOSTA FINALE
+================================================================================
+Raphael, come studente del 1° anno della Laurea Magistrale in Ingegneria Informatica, la sessione straordinaria di aprile è generalmente riservata agli studenti FUORI CORSO.
+
+Il Regolamento Didattico del tuo Corso di Laurea Magistrale in Ingegneria Informatica e il Calendario Didattico della Scuola di Ingegneria stabiliscono che: "Sono inoltre previsti due appelli aggiuntivi nelle sessioni straordinarie di aprile e novembre riservati agli studenti fuori corso."
+
+Essendo tu al 1° anno, non rientri nella categoria degli studenti fuori corso e non hai appelli d'esame previsti nella sessione di aprile.
+
+Per le date delle sessioni ordinarie (invernale, estiva e autunnale) a cui sei ammesso, consulta il calendario ufficiale degli appelli d'esame per l'Anno Accademico 2025-2026 alla pagina della Scuola di Ingegneria.
+
+Risorse utili:
+- Se desideri consultare il calendario degli appelli di aprile (riservato ai fuori corso):
+  [CALENDARIO APPELLI SESSIONE APRILE (AGG. AL 09/02)](/sites/default/files/media/documents/2026-02-09/appelli25-26_aprile.pdf)
+- Per gli orari delle lezioni e gli appelli d'esame delle sessioni ordinarie, consulta il portale generale degli orari:
+  [Orari UniBg](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+
+Pagina di riferimento: https://www.unibg.it/studiare/frequentare/orari-dei-corsi-ed-esami/calendario-didattico-scuola-ingegneria
+
+------------------------------------------------------------
+TEMPI DI ESECUZIONE
+------------------------------------------------------------
+  Classifier Agent         : 1.174s
+  Query Agent              : 1.874s
+  Web Agent                : 4.652s
+  Generator Agent          : 11.294s
+  Revision Agent           : 9.673s
+
+  TEMPO TOTALE             : 28.677s
+
+================================================================================
+FINE DEL LOG
+================================================================================
