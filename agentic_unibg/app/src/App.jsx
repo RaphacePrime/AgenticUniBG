@@ -236,17 +236,21 @@ function App() {
           </a>,
         );
       } else if (match[3]) {
-        // URL nuda
+        // URL nuda — rimuove punteggiatura finale (es. ), ., ,)
+        const bareUrl = match[3].replace(/[).,;!?]+$/, "");
         parts.push(
           <a
             key={match.index}
-            href={match[3]}
+            href={bareUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {match[3]}
+            {bareUrl}
           </a>,
         );
+        // Rimette nel testo la punteggiatura rimossa
+        const trailing = match[3].slice(bareUrl.length);
+        if (trailing) parts.push(trailing);
       }
       lastIndex = regex.lastIndex;
     }

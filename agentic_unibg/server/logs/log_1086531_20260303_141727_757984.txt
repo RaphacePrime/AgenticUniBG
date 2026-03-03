@@ -1,0 +1,1449 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-03 14:17:27
+Status    : success
+
+------------------------------------------------------------
+INFORMAZIONI UTENTE
+------------------------------------------------------------
+Tipo utente   : loggato
+Nome          : Raphael Mazzoleni
+Matricola     : 1086531
+Dipartimento  : Scuola di Ingegneria
+Corso         : Ingegneria informatica
+Tipologia     : Magistrale
+Anno          : 1
+
+------------------------------------------------------------
+QUERY ORIGINALE DELL'UTENTE
+------------------------------------------------------------
+dove trovo il bando per l'erasmus
+
+------------------------------------------------------------
+STORICO CONVERSAZIONE (recente)
+------------------------------------------------------------
+[Utente]: ciao chi sono? cosa mi consigli di fare dopo la magistrale?
+[Assistente]: Sei Raphael Mazzoleni, matricola 1086531, iscritto al 1° anno della Laurea Magistrale in Ingegneria Informatica presso la Scuola di Ingegneria.
+
+Dopo la Laurea Magistrale in Ingegneria Informatica, il tuo percorso ti preparerà per diverse opportunità professionali. Il profilo di ingegnere informatic
+[Utente]: chi è brugnetti luca?
+[Assistente]: Sono stati identificati due studenti di nome Luca Brugnetti:
+
+1.  LUCA BRUGNETTI (matricola 1086670) è uno studente del Corso di Laurea in Ingegneria Informatica (DM 270/04). Il titolo della sua tesi è "Consumo Energetico di Stazioni Radio-Base LTE Basato su Dati Reali: Analisi Statistica di Paramet
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: procedure
+Description: Richieste su procedure amministrative, iscrizioni, tasse
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, esami, ricevimenti
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: ciao chi sono? cosa mi consigli di fare dopo la magistrale?
+- Assistente: Sei Raphael Mazzoleni, matricola 1086531, iscritto al 1° anno della Laurea Magistrale in Ingegneria Informatica presso la Scuola di Ingegneria.
+
+Dopo 
+- Studente: chi è brugnetti luca?
+- Assistente: Sono stati identificati due studenti di nome Luca Brugnetti:
+
+1.  LUCA BRUGNETTI (matricola 1086670) è uno studente del Corso di Laurea in Ingegneria 
+
+Nuova domanda: dove trovo il bando per l'erasmus
+
+>>> RISPOSTA:
+procedure
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: bando erasmus unibg
+Original Query: dove trovo il bando per l'erasmus
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- Tieni conto del contesto della conversazione per capire cosa cerca lo studente
+- La query deve essere in italiano
+- Massimo 6-8 parole
+
+INFORMAZIONI STUDENTE E QUANDO USARLE:
+Ti verranno fornite le informazioni del profilo dello studente (corso di laurea, dipartimento, anno, tipologia).
+Devi decidere AUTONOMAMENTE se includerle nella query in base al tipo di domanda:
+
+INCLUDI le info studente quando la domanda riguarda:
+- Materie, insegnamenti, piano di studi (es. "che materie ho?" → aggiungi corso + anno + tipologia)
+- Orari delle lezioni del proprio corso
+- Piano di studi, crediti, curriculum del proprio corso
+- Qualsiasi domanda dove il corso/anno specifico cambia la risposta
+
+NON INCLUDERE le info studente quando la domanda riguarda:
+- Procedure generiche (iscrizioni, tasse, borse di studio)
+- Informazioni su docenti specifici
+- Servizi universitari (mensa, biblioteca, aule)
+- Informazioni generali sull'ateneo
+- Erasmus, tirocini, laurea
+- Qualsiasi domanda che ha la stessa risposta indipendentemente dal corso
+
+ESEMPIO con info studente (corso: ingegneria informatica, anno: 1, tipologia: magistrale):
+Domanda: "che materie ho al secondo anno?"
+Query: materie secondo anno ingegneria informatica magistrale unibg
+
+ESEMPIO con info studente (corso: scienze della comunicazione, anno: 2, tipologia: triennale):
+Domanda: "quali esami devo dare quest'anno?"
+Query: piano studi secondo anno scienze comunicazione triennale unibg
+
+ESEMPIO senza info studente:
+Domanda: "come faccio a iscrivermi al test di ammissione?"
+Query: iscrizione test ammissione unibg
+
+ESEMPIO senza info studente:
+Domanda: "chi è il docente di algoritmi?"
+Query: docente algoritmi unibg
+
+ESEMPIO senza info studente:
+Domanda: "dove si trova la mensa?"
+Query: mensa universitaria unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: ciao chi sono? cosa mi consigli di fare dopo la magistrale?
+- Assistente: Sei Raphael Mazzoleni, matricola 1086531, iscritto al 1° anno della Laurea Magistrale in Ingegneria Informatica presso la Scuola di Ingegneria.
+
+Dopo la Laurea Magistrale in Ingegneria Informatica, il
+- Studente: chi è brugnetti luca?
+- Assistente: Sono stati identificati due studenti di nome Luca Brugnetti:
+
+1.  LUCA BRUGNETTI (matricola 1086670) è uno studente del Corso di Laurea in Ingegneria Informatica (DM 270/04). Il titolo della sua tesi 
+
+
+Informazioni studente:
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Ultima richiesta dello studente: dove trovo il bando per l'erasmus
+
+Genera la query di ricerca web:
+
+>>> RISPOSTA:
+bando erasmus unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status              : success
+Query di ricerca    : bando erasmus unibg
+Totale risultati    : 24
+Risultati usati     : 5
+
+>>> RISULTATI PRINCIPALI:
+  [1] Score: 0.9999
+      Titolo   : Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio - UniBg
+      URL      : https://www.unibg.it/bandi/bando-erasmus-aa-2025-2026-mobilita-studio
+      Contenuto:  [Salta al contenuto principale](#main-content) 
+
+[![Home](/themes/custom/unibg/logo.svg)](/ "Home") 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e risorse](/vivere-unibg/spazi-e-risorse)
+  + [Opportunità e servizi](/vivere-unibg/opportunita-e-servizi)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. Bandi
+3. [Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio](/bandi/bando-erasmus-aa-2025-2026-mobilita-studio)
+
+[Bando Erasmus+ a.a. 2025-2026](/sites/default/files/media/documents/2025-02-03/Bando%20Erasmus%2B%202025-2026_Finale.pdf "Bando Erasmus+ 2025-2026_Finale.pdf")
+
+[Bando Erasmus+ a.a. 2025-2026 - English version](/sites/default/files/media/documents/2025-02-03/Bando%20ERASMUS%20%2B%202025-2026_eng.pdf "Bando ERASMUS + 2025-2026_eng.pdf")
+
+### Tabelle sedi di destinazione
+
+[Tabella Dipartimento di Scienze Aziendali e Dipartimento di Scienze Economiche](/sites/default/files/media/documents/2025-02-03/Tabella%20SASE%202025-2026_DEF.pdf "Tabella SASE 2025-2026_DEF.pdf")
+
+[Tabella Dip. Giurisprudenza](/sites/default/files/media/documents/2025-02-03/Tabella%20GIU%202025-2026.pdf "Tabella GIU 2025-2026.pdf")
+
+[Tabella Scuola di Ingegneria](/sites/default/files/media/documents/2025-02-03/Tabelle%20ING%202025-2026.pdf "Tabelle ING 2025-2026.pdf")
+
+[Tabella Dip. Lettere, Filosofia, Comunicazione](/sites/default/files/media/documents/2025-02-03/Tabella%20LFC%202025-2026.pdf "Tabella LFC 2025-2026.pdf")
+
+[Tabella Dip. Lingue, Letterature e Culture Straniere](/sites/default/files/media/documents/2025-02-03/Tabella%20LLCS%202025-26.pdf "Tabella LLCS 2025-26.pdf")
+
+[Tabella Dip. Scienze Umane e Sociali](/sites/default/files/media/documents/2025-02-03/Tabella%20SUS%202025-2026.pdf "Tabella SUS 2025-2026.pdf")
+
+### Formula calcolo punteggio graduatoria
+
+[Formula calcolo punteggio graduatoria](/sites/default/files/media/documents/2025-02-03/FORMULA%20PER%20SITO_rev27012025.pdf "FORMULA PER SITO_rev27012025.pdf")
+
+### Settimana informativa Erasmus - Dipartimento di LLCS
+
+Nella settimana 17-21 febbraio i docenti referenti delle sedi del Dipartimento di LLCS si renderanno disponibili a ricevere gli studenti negli orari secondo il calendario allegato.
+
+[settimana informativa LLCS](/sites/default/files/media/documents/2025-02-14/settimana%20informativa%20lingue%202025%20da%20pubblicare.pdf "settimana informativa lingue 2025 da pubblicare.pdf")
+
+### Date planarie assegnazione sedi Programma Erasmus+ 2025-2026
+
+[Avviso date plenarie Programma Erasmus+ a.a. 2025-2026](/sites/default/files/media/documents/2025-03-13/Avviso%20Plenarie%20Erasmus%2B%202025-2026.pdf "Avviso Plenarie Erasmus+ 2025-2026.pdf")
+
+[Delega](/sites/default/files/media/documents/2025-03-13/modello_delega.pdf "modello_delega.pdf")
+
+### Modulo di accettazione/rinuncia Erasmus+
+
+[Form di accettazione/rinuncia alla sede Erasmus+](/sites/default/files/media/documents/2025-03-24/Modulo%20di%20accettazione%20Erasmus%2B.pdf "Modulo di accettazione Erasmus+.pdf")
+
+Data di pubblicazione bando
+
+Data di scadenza bando
+
+ 
+
+  [2] Score: 0.9999
+      Titolo   : [PDF] Bando Erasmus + aa 2026/27 Form Candidatura - UniBg
+      URL      : https://www.unibg.it/sites/default/files/media/documents/2025-12-19/2025_MO_APPLICATION_GUIDA_ITA.pdf
+      Contenuto: Bando Erasmus + a.a. 2026/27 Form Candidatura UNIBG sta gradualmente introducendo il software MOBILITY ON LINE dedicato alla gestione dei programmi di mobilità internazionale Di seguito una breve guida alla compilazione della candidatura al BANDO ERASMUS PER STUDIO A.A. 2026/27 Bando Erasmus + a.a. 2026/27 STEP 1: APPLICATION DETAILS Dopo aver cliccato al link presente nel bando verrai reindirizzato alla pagina APPLICATION DETAILS: TROVERAI CAMPI A SISTEMA PRECOMPILATI Clicca su Continue per proseguire nella compilazione Bando Erasmus + a.a. 2026/27 STEP 2: PERSONAL DATA COMPILA I TUOI DATI PERSONALI NEL CAMPO EMAIL INDICA L’INDIRIZZO ISTITUZIONALE: (@STUDENTI.UNIBG.IT) Clicca su Continue per proseguire nella compilazione Bando Erasmus + a.a. 2026/27 STEP 3: EMERGENCY CONTACT INSERISCI I DATI I UNA PERSONA DI FIDUCIA DA CONTATTARE IN CASO DI EMERGENZA Clicca su Continue per proseguire nella compilazione Bando Erasmus + a.a. 2026/27 STEP 4: CURRENT STUDY DETAILS Seleziona il tuo DIPARTIMENTO POI IL LIVELLO DI STUDI (TRIENNALE O MAGISTRALE) E CORSO DI STUDIO; SELEZIONA INFINE LA TUA COORDINATRICE/IL TUO COORDINATORE DI DIPARTIMENTO Clicca su Continue per proseguire nella compilazione Bando Erasmus + a.a. 2026/27 STEP 5: PLANNED STAY DETAILS (FIRST CHOICE) LA FIRST CHOICE è L’UNICA SEDE OBBLIGATORIA DA INSERIRE Le altre sono opzionali • Ricorda: • Che è una sede ipotetica che poi potrà/dovrà essere modificata in sede di seduta plenaria • Utilizza i menù a tendina e seleziona in sequenza (i filtri si aggiornano ad ogni selezione): 1.
+La lingua di scambio della sede che hai scelto; 2.
+Il paese di destinazione; 3.
+La sede di destinazione; 4.
+Indica la modalità con cui hai acquisito il tuo livello linguistico; 5.
+Seleziona il livello linguistico che hai acquisito; 6.
+Riporta la data in cui hai sostenuto/ottenuto il livello linguistico; Bando Erasmus + a.a. 2026/27 STEP 5: PLANNED STAY DETAILS (2 nd – 3 rd – 4 th – 5 th CHOICE) Le sedi selezionate in questa fase sono indicative: - INSERISCI una sede per ciascun livello linguistico CHE POSSIEDI E per cui ti vuoi candidare. (In caso di discrepanze fanno fede le specifiche indicate nella tabella) Esempio: -Se mi candido per sedi Inglese B2 compilerò solo la FIRST CHOICE; -se mi candido per INGLESE B2 E FRANCESE B1 compilerò la FIRST e la SECOND CHOICE; -Se mi candido per INGLESE B2, FRANCESE B2 E TEDESCO B2 compilerò la FIRST, LA SECOND E LA THIRD CHOICE Bando Erasmus + a.a. 2026/27 STEP 10: Previous career and mobility period Compila le seguenti richieste in merito a periodi Erasmus precedenti – Lauree triennali conseguite all’estero e passaggi di corso/reimmatricolazioni ATT: Per periodi Erasmus sarà sufficiente che indichi i mesi già svolti – NELLO STESSO CICLO DI STUDI - Nei casi di carriera e passaggi di corso prepara le delibere di riconoscimento, nella fase successiva dell’application dovrai caricare i pdf.
+Bando Erasmus + a.a. 2026/27 STEP 11: OTHERS VERIFICA E SPUNTA LE OPZIONI OBBLIGATORIE SPUNTA E COMPILA NEL CASO TU SIA IMMATRICOLATO IN IPOTESI CLICCA SEND APPLICATION; 1. CONTROLLA L’EMAIL PER ACCEDERE A MOBILITY ON LINE PER COMPLETARE E RENDERE DEFINITIVA L’APPLICATION Thank you for registering with Mobility-Online.
+Please click the link at the end of this email to submit your Erasmus application and save it for future access to Mobility-Online: To submit your application, once logged in please: 1.
+Complete your personal data; 2.
+If necessary upload the following documents: 3.
+Language requirements or certification (i.e. IELTS/TOEFL certificate); 4.
+Bachelor career if not achieved at UNIBG; 5.
+Proof of previous studies achieved and recognized on the current study program 6.
+Click CONFIRM to submit the application.
+Bando Erasmus + a.a. 2026/27 CONFERMA APPLICATION Dopo aver inviato l’application riceverai una email di conferma con il testo sotto riportato e dovrai seguire le istruzioni per completare la procedura ATTENZIONE: SE NON SI COMPLETA LA PROCEDURA LA CANDIDATURA NON SARA’ COMPLETA Bando Erasmus + a.a. 2026/27 CONFERMA APPLICATION DOPO AVER EFFETTUATO L’ACCESSO CLICCA SU MY APPLICATION DATA E VEDRAI QUESTA PRIMA SEZIONE CLICCA SU COMPLETE PERSONAL DATA, VERIFICA E COMPLETA ENTRAMBE LE SEZIONI «PERSONAL DETAILS» E «PERMANENT ADDRESS DETAILS» : Clicca su FORWARD TO UPDATE, controlla e modifica se necessario e poi clicca UPDATE per salvare i dati e PROCEDI POI alla compilazione del «Questionario motivazionale» Bando Erasmus + a.a. 2026/27 CONFERMA APPLICATION In questa sezione devi caricare gli allegati necessari a completare la tua candidatura: -Language ProficiencyCERTIFICATI TOEFL/IELTScarica gli originali dei certificati -Proof of Previous StudiesSE HAI AVUTO RICONOSCIMENTI SULLA CARRIERA ATTUALEcarica le delibere di riconoscimento -Bachelor career uploadSE HAI CONSEGUITO/STAI CONSEGUENDO LA LAUREA TRIENNALE IN UN ALTRO ATENEO (italiano o estero):carica la carriera con CFU E VOTI conseguiti Quando hai terminato i caricamenti: Clicca su SUBMIT YOUR APPLICATION per completare l’application e presentare la candidatura Riceverai una email di conferma di candidatura presentata
+
+  [3] Score: 0.9999
+      Titolo   : Bando ERASMUS+ per la mobilità ai fini di studio a.a. 2026/2027
+      URL      : https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027
+      Contenuto:  [Salta al contenuto principale](#main-content) 
+
+[![Home](/themes/custom/unibg/logo.svg)](/ "Home") 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e risorse](/vivere-unibg/spazi-e-risorse)
+  + [Opportunità e servizi](/vivere-unibg/opportunita-e-servizi)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. Bandi
+3. [Bando ERASMUS+ per la mobilità ai fini di studio a.a. 2026/2027](/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027)
+
+E' pubblicato il bando per la mobilità Erasmus+ a.a. 2026/2027.
+
+La scadenza per candidarsi è il **20/01/2026, alle ore 08.00.**
+
+[Bando Erasmus+ a.a. 2026/2027](/sites/default/files/media/documents/2025-12-18/Bando%20Erasmus%2B%202026-2027_Finale.pdf "Bando Erasmus+ 2026-2027_Finale.pdf")
+
+[Bando Erasmus+ a.a. 2026/2027 - English version](/sites/default/files/media/documents/2025-12-18/Bando%20ERASMUS%20%2B%202026-2027_eng.pdf "Bando ERASMUS + 2026-2027_eng.pdf")
+
+[Tabella sedi Dipartimento di Giurisprudenza](/sites/default/files/media/documents/2025-12-18/Tabella%20GIU%202026-2027.pdf "Tabella GIU 2026-2027.pdf")
+
+[Tabella sedi Scuola di Ingegneria](/sites/default/files/media/documents/2025-12-18/Tabella%20ING%202026-27.pdf "Tabella ING 2026-27.pdf")
+
+[Tabella sedi Dipartimento di Lettere, Filosofia, Comunicazione](/sites/default/files/media/documents/2025-12-18/Tabella%20LFC%202026-2027.pdf "Tabella LFC 2026-2027.pdf")
+
+[Tabella sedi Dipartimento di Lingue, Letterature e Culture Straniere](/sites/default/files/media/documents/2025-12-18/Tabella%20LLCS%202026-27-definitiva.pdf "Tabella LLCS 2026-27-definitiva.pdf")
+
+[Tabella sedi Dipartimenti di Scienze Aziendali e Scienze Economiche](/sites/default/files/media/documents/2025-12-18/Tabella%20SASE%202026-2027.pdf "Tabella SASE 2026-2027.pdf")
+
+[Tabella sedi Dipartimento di Scienze Umane e Sociali](/sites/default/files/media/documents/2025-12-18/Tabella%20SUS%202026-2027.pdf "Tabella SUS 2026-2027.pdf")
+
+[Formula di calcolo per la graduatoria](/sites/default/files/media/documents/2025-12-18/NUOVA%20FORMULA%202025_Rev03.pdf "NUOVA FORMULA 2025_Rev03.pdf")
+
+[Guida Candidatura Erasmus](/sites/default/files/media/documents/2025-12-19/2025_MO_APPLICATION_GUIDA_ITA.pdf "2025_MO_APPLICATION_GUIDA_ITA.pdf")
+
+[Erasmus application guide](/sites/default/files/media/documents/2025-12-19/2025_MO_APPLICATION_GUIDA_ENG.pdf "2025_MO_APPLICATION_GUIDA_ENG.pdf")
+
+### Date plenarie assegnazione sedi Programma Erasmus+ 2026-2027
+
+[Calendario Plenarie scelta sedi Erasmus+ 2026-2027](/sites/default/files/media/documents/2026-02-16/Avviso%20Plenarie%20Erasmus%202026.pdf "Avviso Plenarie Erasmus 2026.pdf")
+
+[Delega](/sites/default/files/media/documents/2026-02-16/modello_delega.pdf "modello_delega.pdf")
+
+### Modulo accettazione/rinuncia sede Erasmus+ a.a. 2026-2027
+
+[Link modulo accettazione/rinuncia](/sites/default/files/media/documents/2026-02-26/Modulo%20accettazione%20Erasmus%2B%20a.a.%2026-27.pdf "Modulo accettazione Erasmus+ a.a. 26-27.pdf")
+
+## Esito
+
+Si prega di leggere attentamente le indicazioni riportate nella parte iniziale di ciascuna graduatoria.
+
+[Graduatoria provvisoria Giurisprudenza](/sites/default/files/media/documents/2026-02-19/GRADUATORIA%20GIU%202026-2027%20%281%29%20%282%29%20%281%29.pdf "GRADUATORIA GIU 2026-2027 (1) (2) (1).pdf")
+
+[Graduatoria provvisoria Ingegneria](/sites/default/files/media/documents/2026-02-19/GRADUATORIA%20ING%202026-2027%20%281%29%20%281%29%20%281%29.pdf "GRADUATORIA ING 2026-2027 (1) (1) (1).pdf")
+
+[Graduatoria provvisoria Lettere, Filosofia, Comunicazione](/sites/default/files/media/documents/2026-02-19/GRADUATORIA%20LFC%202026-2027%20%281%29%20%281%29%20%281%29.pdf "GRADUATORIA LFC 2026-2027 (1) (1) (1).pdf")
+
+[Graduatoria provvisoria Scienze Umane e Sociali](/sites/default/files/media/documents/2026-02-19/GRADUATORIA%20SUS%202026-2027%20%281%29%20%281%29%20%281%29.pdf "GRADUATORIA SUS 2026-2027 (1) (1) (1).pdf")
+
+[Graduatoria provvisoria Lingue, Letterature e Culture straniere](/sites/default/files/media/documents/2026-02-20/GRADUATORIA%20LLCS%20%28PROVVISORIA%29%202026-2027%20%281%29.pdf "GRADUATORIA LLCS (PROVVISORIA) 2026-2027 (1).pdf")
+
+[Graduatoria provvisoria Scienze Aziendali e Scienze Economiche](/sites/default/files/media/documents/2026-02-20/GRADUATORIA%20SASE%202026-2027%20%281%29.pdf "GRADUATORIA SASE 2026-2027 (1).pdf")
+
+Data di pubblicazione bando
+
+Data di scadenza bando
+
+ 
+
+  [4] Score: 0.9996
+      Titolo   : Erasmus+ | Università degli studi di Bergamo - UniBg
+      URL      : https://www.unibg.it/internazionale/andare-allestero/erasmus
+      Contenuto:  [Salta al contenuto principale](#main-content) 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](https://en.unibg.it)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e servizi](/vivere-unibg/spazi-e-servizi)
+  + [Opportunità](/vivere-unibg/opportunita)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. [Internazionale](/internazionale)
+3. [Andare all’estero](/internazionale/andare-allestero)
+4. [Erasmus+](/internazionale/andare-allestero/erasmus)
+
+### Che cos'è il programma Erasmus+?
+
+**Erasmus+ 2021-2027** è il programma dell'Unione Europea per l'istruzione, la formazione, la gioventù e lo sport, finalizzato a promuovere le competenze, e l'occupabilità, nonché a sostenere la modernizzazione dei sistemi d'istruzione, formazione e gioventù.
+
+Il programma consente di vivere esperienze culturali e professionali all'estero, conoscere nuovi sistemi di istruzione superiore, perfezionare la conoscenza di almeno un'altra lingua e incontrare giovani di altri Paesi, partecipando attivamente alla costruzione di un'Europa sempre più unita.
+
+[Erasmus Policy Statement 2021-2027](/sites/default/files/erasmus_policy_statement_2021-2027.pdf "erasmus_policy_statement_2021-2027.pdf")
+
+[Erasmus Policy Statement 2014-2020](/sites/default/files/internazionalizzazione/erasmus_policy_statement_per_sito_web_in_italiano.pdf "erasmus_policy_statement_per_sito_web_in_italiano.pdf")
+
+[Guida ECTS](/sites/default/files/internazionalizzazione/ects_guida_utente_pdf_exe.pdf "ects_guida_utente_pdf_exe.pdf")
+
+[ECHE I BERGAMO 01 2021-2027](/sites/default/files/eche_unibg.pdf "eche_unibg.pdf")
+
+[ECHE I BERGAMO 01 2014-2020](/sites/default/files/eche_template_en-ok_2014_-_2020.pdf "eche_template_en-ok_2014_-_2020.pdf")
+
+### Erasmus+ BIP
+
+La nuova programmazione Erasmus+ ha introdotto i programmi intensivi misti – Blended Intensive Programs, BIP.
+
+Sviluppati da gruppi di Istituti di istruzione superiore con un approccio pedagogico innovativo, i BIP prevedono brevi periodi di attività in presenza combinata con attività di apprendimento e cooperazione online, a cui possono partecipare gruppi congiunti di studenti, personale docente e staff amministrativo provenienti da diversi Paesi per collaborare a specifici compiti in modo collettivo e simultaneo.
+
+[Presentazione BIP](/sites/default/files/media/documents/2023-10-25/Presentazione%20BIP.pdf "Presentazione BIP.pdf")
+
+### Erasmus+ KA 131 (UE)
+
+Erasmus+ per Studio offre agli studenti l'opportunità di trascorrere **un periodo di studio (da 3 a 12 mesi)** presso una delle Università Partner Europee con cui l'Università di Bergamo ha firmato un accordo inter-istituzionale.
+
+Gli studenti Erasmus+ possono inoltre ricevere un contributo comunitario *ad hoc*, seguire corsi universitari e usufruire delle strutture disponibili presso l'Università ospitante senza dover pagare tasse aggiuntive, con la garanzia del riconoscimento del periodo di studi all'estero tramite il trasferimento dei rispettivi crediti formativi all'interno della loro carriera.
+
+Scorri questa pagina per consultare il bando e accedere a tutte le informazioni relative a sedi disponibili, scadenze e modalità.
+
+### Erasmus+ KA 107 (extra-UE)
+
+L'**Erasmus+ KA107 ICM International Credit Mobility** è un programma innovativo che permette di attivare progetti di **mobilità internazionale fuori dall’Unione Europea** ed è destinato a studenti, docenti e personale tecnico amministrativo europei.
+
+In particolare, gli studenti iscritti ai Corsi di laurea triennale, laurea magistrale e dottorato hanno la possibilità di svolgere un periodo di studio o di ricerca presso le università partner che va da un minimo di 3 a un massimo di 12 mesi. Le borse di studio sono finanziate dall'Unione Europea e vengono assegnate mediante bandi.
+
+Scorri questa pagina per consultare il bando e accedere a tutte le informazioni relative a sedi disponibili, scadenze e modalità.
+
+### Erasmus+ Traineeship
+
+Il Programma Erasmus+ Traineeship, in generale, consente agli studenti universitari iscritti, di candidarsi  per un'esperienza di tirocinio presso imprese attive nel mercato del lavoro o in settori quali l’istruzione, la formazione e la gioventù e presenti in uno dei Paesi partecipanti al Programma. I beneficiari avranno così l’opportunità di acquisire competenze specifiche e una migliore comprensione della cultura socio-economica del Paese ospitante. E' previsto un contributo comunitario per la durata del tirocinio all'estero.
+
+*The Erasmus+ Traineeship Programme allows university students  to carry out a traineeship period in companies active in the labour market or in sectors such as education, training and youth and present in one of the countries participating in the Programme. This will give beneficiaries the opportunity to acquire specific skills and a better understanding of the socio-economic culture of the host country. Students receive a monthly EU grant for their period abroad*
+
+**N.B.**: nell'ambito del Bando Erasmus+Traineeship CALL 2024 (2024/2025 e 2025/2026), sono ammessi tirocini curriculari, in piano di studio, oppure tirocini da inserire come scelta libera  o in sovrannumero (laddove non sia presente il tirocinio in piano), mentre sono esclusi i tirocini post-laurea.
+
+***N.B**. In the framework of the Call  2024 Erasmus+ Traineeship (a.y 2024/2025 - 2025/2026), grants are assignedfor curricular traineeships or, if not included in the study plan, as an elective or as extra credits.*
+
+Lo studente che ha già assolto i cfu per tirocinio in piano non potrà candidarsi per un secondo tirocinio nell'ambito del Bando di cui sopra.
+
+*If a student has already earned credits for a traineeship, they cannot apply for the Erasmus + Traineeship Programme.*
+
+Visita la [pagina dedicata](https://www.unibg.it/internazionale/andare-allestero/erasmus/erasmus-traineeships) per tutte le informazioni relative al Bando, scadenze e modalità.
+
+For information concerning the Call, deadlines and procedures please access the Erasmus Traineeship [webpage](https://www.unibg.it/internazionale/andare-allestero/erasmus/erasmus-traineeships)
+
+### Tabelle delle equipollenze
+
+Le tabelle pubblicate sono riportate esclusivamente a titolo esemplificativo.
+
+Lo studente deve necessariamente confrontarsi con i docenti referenti per individuare la corretta conversione dei corsi.
+
+[equipollenze GIURISPRUDENZA extraue.pdf](/sites/default/files/media/documents/2022-10-06/equipollenze%20GIURISPRUDENZA%20extraue.pdf)
+
+[equipollenze GIURISPRUDENZA.pdf](/sites/default/files/media/documents/2022-10-06/equipollenze%20GIURISPRUDENZA.pdf)
+
+[equipollenze ING IGIP.pdf](/sites/default/files/media/documents/2022-10-06/equipollenze%20ING%20IGIP.pdf)
+
+[Equipollenze ING ISA.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING%20ISA.pdf)
+
+[Equipollenze ING\_EXTRAUE.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING_EXTRAUE.pdf)
+
+[Equipollenze LFC EXTRA UE.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20LFC%20EXTRA%20UE.pdf)
+
+[Equipollenze LFC.pdf](/sites/default/files/media/documents/2023-09-18/Equipollenze%20LFC_0.pdf "Equipollenze LFC_0.pdf")
+
+[Equipollenze LLCS Extra UE.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20Extra%20UE.pdf)
+
+[Equipollenze LLCS LLEP.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LLEP.pdf)
+
+[Equipollenze LLCS LLSM.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LLSM.pdf)
+
+[Equipollenze LLCS LLSM\_0.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LLSM_0.pdf)
+
+[Equipollenze LLCS LMCCI.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LMCCI.pdf)
+
+[Equipollenze LLCS PMTS.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20PMTS.pdf)
+
+[Equipollenze SA-SE.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20SA-SE.pdf)
+
+[Equipollenze SA-SE\_Extra UE.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20SA-SE_Extra%20UE.pdf)
+
+[Equipollenze SUS EXTRA UE.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20SUS%20EXTRA%20UE.pdf)
+
+[Equipollenze SUS.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20SUS.pdf)
+
+### Tabelle di conversione voti per Dipartimento
+
+Le tabelle di conversione voti di seguito riportate sono indicative ed a cura dei docenti incaricati di ogni Dipartimento.
+
+Si precisa che si tratta di corrispondenze numeriche tendenziali e non assolute, essendoci la possibilità, da parte del responsabile Erasmus del Dipartimento, di adattamenti alle condizioni di ciascuna specifica sede.
+
+[Tabella conversione voti Dipartimento di Giurisprudenza](/sites/default/files/media/documents/2022-07-05/GIU%20Erasmus%20-%20Conversione%20voti%20Giurisprudenza.pdf "GIU Erasmus - Conversione voti Giurisprudenza.pdf")
+
+[Tabella conversione voti Erasmus Dip.ti ISA-IGIP](/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20ERASMUS_0.pdf "DIP ING _ TABELLE DI CONVERSIONE ERASMUS_0.pdf")
+
+[Tabella conversione voti Extra-UE Dip.ti ISA-IGIP](/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20EXTRA-UE_0.pdf "DIP ING _ TABELLE DI CONVERSIONE EXTRA-UE_0.pdf")
+
+[Tabella conversione voti Dip. LFC](/sites/default/files/media/documents/2023-09-18/Tabella%20conversione%20LFC%202023-2024%20def.pdf "Tabella conversione LFC 2023-2024 def.pdf")
+
+[Dipartimento di LLCS](/sites/default/files/media/documents/2023-07-18/tabelle%20conversione%20voti%20da%20a.a.%202023-24.pdf "tabelle conversione voti da a.a. 2023-24.pdf")
+
+[Tabella conversione voti SUS](/sites/default/files/media/documents/2023-11-08/Tabella%20conversione%20voti%20SUS.docx.pdf "Tabella conversione voti SUS.docx.pdf")
+
+[Tabella conversione voti SA-SE](/sites/default/files/media/documents/2024-03-04/Tabelle%20conversioni%20voti%20SA-SE..pdf "Tabelle conversioni voti SA-SE..pdf")
+
+### Diari di viaggio - Travel diaries (info generali dagli studenti rientrati dalle mobilità per studio)
+
+Nell'allegato sono disponibili le informazioni fornite da studentesse e studenti che hanno partecipato ai programmi di scambio negli anni scorsi in merito all’alloggio, trasporti, costo della vita e sui pro e contro dell’università ospitante.
+
+Le indicazioni contenute non intendono essere esaustive, ma vogliono essere un ulteriore aiuto e supporto a chi intende trascorrere un periodo di mobilità per studio.
+
+Essendo appunto basate sulle esperienze soggettive l’Ateneo non è responsabile delle informazioni qui riportate.
+
+Ovviamente nel caso di più mobilità verso la stessa sede le informazioni potrebbero essere diverse o replicate.
+
+Ringraziamo le studentesse e gli studenti che hanno contribuito alla creazione di questo documento.
+
+Le informazioni sono state catalogate in ordine di nazione.
+
+Buon Viaggio!
+
+[Travel diaries - agg. 04.03.2024](/sites/default/files/media/documents/2024-03-04/2024_Your%20travel%20diary.pdf "2024_Your travel diary.pdf")
+
+### Guida Erasmus ESN
+
+Di seguito la guida predisposta dall'associazione Erasmus Student Network
+
+[Erasmus: a complete guide by ESN](https://issuu.com/esnint/docs/erasmus_e-book?fbclid=IwAR2qe7aEfQXqqVkoL8FWMJBiPhCOcuqtLOTCW6XaMJ_bf_Ovx9efX-z5rIc)
+
+### Erasmus days 2024 - slides webinar
+
+[Erasmus per studio](/sites/default/files/media/documents/2024-10-14/Erasmus%20days%202024_ERASMUS.pdf "Erasmus days 2024_ERASMUS.pdf")
+
+[Erasmus per tirocinio](/sites/default/files/media/documents/2024-10-14/Erasmus%20days%202024_TRAINEESHIPS.pdf "Erasmus days 2024_TRAINEESHIPS.pdf")
+
+[Erasmus BIP (Blended Intensive Programs)](/sites/default/files/media/documents/2024-10-14/Erasmus%20days%202024_BIP.pdf "Erasmus days 2024_BIP.pdf")
+
+### Bando Erasmus+ a.a. 2026-2027 - Mobilità per studio
+
+[Bando Erasmus+ a.a. 2026-2027 - Mobilità per studio](/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027)
+
+### Bandi Erasmus+ a.a. 2023-24 e 2024-25 - Mobilità per Traineeship
+
+[Bandi Erasmus+ a.a. 2023-24 e 2024-25 - Mobilità per Traineeship](https://www.unibg.it/node/16133)
+
+### Bando Erasmus + Mobilità Studenti KA107
+
+[Bando Erasmus Plus per la mobilità studenti KA107 – International Credit Mobility a.a. 2022/2023 – verso Ort Braude College, Israele](/bandi/bando-erasmus-plus-mobilita-studenti-ka107-aa-2022-2023-verso-sede-ort-braude-college-israele)
+
+ 
+
+  [5] Score: 0.9995
+      Titolo   : [PDF] PROGRAMMA ERASMUS PLUS 2026/2027 - Bergamo - UniBg
+      URL      : https://www.unibg.it/sites/default/files/media/documents/2026-02-19/GRADUATORIA%20LFC%202026-2027%20%281%29%20%281%29%20%281%29.pdf
+      Contenuto: 24122 Bergamo, via S. Bernardino 72/e tel. 035 2052 830 / 831 / 832 / 833 / 109 email:relint@unibg.it Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167 PROGRAMMA ERASMUS PLUS 2026/2027 NUMERO MATRICOLA IDONEO/A PER SEDI DI LINGUA/E 1 1093606 ENG B2 2 1101298 ENG C1, IELTS 2025 3 1109539 ENG B2 4 1085328 ENG B2 5 1109299 FRA B2 ENG B2 6 1089405 ENG B2 FRA B2 SPA B1 7 1108212 SPA B1 ENG B2 8 1102132 SPA B1 ENG B2 9 1088813 SPA B1 ENG B2 10 1093626 ENG B2 11 1106447 ENG B2 12 1085729 ENG B2 SPA B1 L’ASSEGNAZIONE DELLE SEDI AVVERRÀ IN PRESENZA IL 26/02/2026 ORE 09.00, AULA 3 SEDE PIGNOLO Si raccomanda agli studenti la massima puntualità. Si ricorda che la mancata presenza all’incontro è considerata rinuncia, a meno che il candidato, impos-sibilitato a partecipare per ragioni importanti e motivate, deleghi un terzo per presenziare alla plenaria. Il delegato dovrà presentarsi con la delega firmata dallo studente assente, un proprio documento d’identità (in corso di validità), la copia del documento d’identità del delegante (in corso di validità) e l’elenco delle sedi di interesse. Gli studenti che si fossero candidati anche al bando Extra UE, qualora presenti anche nella graduatoria Erasmus, potranno presenziare alla Plenaria per l'assegnazione delle sedi UE, se ancora interessati al presente bando. Specifichiamo che tali studenti, saranno tenuti a deci-dere in Plenaria, se accettare la sede Erasmus o Extra -UE, confermata tramite la compilazione dell’ap-posito form. Facciamo presente altresì, che l'accettazione di una sede relativa al bando Erasmus+ o Ex-tra UE, comporterà inderogabilmente l'esclusione dalla graduatoria o dalla lista d'attesa dell’altro bando. ELENCO DEGLI STUDENTI IDONEI DIPARTIMENTO DI LETTERE, FILOSOFIA, COMUNICAZIONE 24122 Bergamo, via S. Bernardino 72/e tel. 035 2052 830 / 831 / 832 / 833 / 109 email:relint@unibg.it Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167 13 1101619 ENG B2 14 1088128 ENG B2 15 1100156 ENG B2 FRA B1 SPA B1 16 1086049 ENG B2 17 1078144 ENG B2 18 1080144 ENG B2 SPA B1 19 1088958 ENG B2 SPA B1 20 1092085 SPA B2 ENG B2 21 1100568 FRA B2 22 1109574 SPA B1 FRA B2 ENG B2 23 1088538 ENG B2 SPA C1 FRA B1 24 1083006 ENG B2 25 1066163 SPA B1 ENG B2 26 1087929 ENG B2 27 1107254 ENG B2 28 1064492 SPA B1 ENG B2 29 1089843 ENG B2 30 1089469 SPA B2 ENG B2 31 1034127 ENG B2 SPA B1 FRA B2 32 1101047 SPA B1 33 1087237 FRA B2 SPA B1 ENG B2 34 1094408 ENG B2 35 1100692 ENG B2 36 1101640 SPA B1 37 1110483 ENG B2 38 1098068 ENG B2 39 1109375 ENG B2 40 1109386 ENG B2 24122 Bergamo, via S. Bernardino 72/e tel. 035 2052 830 / 831 / 832 / 833 / 109 email:relint@unibg.it Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167 41 1099102 ENG B2 42 1097517 ENG B2 43 1102033 ENG B2 SPA B1 FRA B2 44 1101733 ENG B2 45 1108600 ENG B2 SPA B1 46 1082118 ENG B2 SPA B1 47 1087642 ENG B2 48 1105703 ENG B2 SPA C1 49 1099072 FRA B1 50 1098075 ENG B2 TED B2 FRA B1 51 1101425 ENG B2 SPA B1 52 1101069 ENG B2 53 1097788 ENG B2 SPA B1 54 1097787 ENG B2 55 1101710 SPA B2, DELE 2024 56 1096255 ENG B2 57 1097897 ENG B2 SPA B1 58 1108711 ENG B2 59 1097808 ENG B2 FRA B1 60 1105607 SPA B2, DELE 2024 61 1102990 ENG B2 62 1101691 SPA B1 63 1107380 ENG B2 64 1102709 SPA B1 65 1097805 SPA B2 66 1109895 FRA B1 67 1102633 SPA B1 ENG B2 68 1109282 ENG B2 24122 Bergamo, via S. Bernardino 72/e tel. 035 2052 830 / 831 / 832 / 833 / 109 email:relint@unibg.it Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167 69 1094949 SPA B1 70 1098091 TED B1 ENG B2 71 1108966 SPA B1 ENG B2 72 1093687 ENG B2 73 1105388 SPA B1 74 1105676 SPA B1 ENG B2 75 1098145 SPA B2, DELE 2024 76 1102095 ENG B2 IELTS, 2024 77 1101611 ENG B2 78 1105335 ENG B2 NB: Nella graduatoria compaiono unicamente le candidature finalizzate entro i termini Si informa che con successivo avviso verrà comunicata la data - presumibilmente nel mese di maggio/ giugno - dell’incontro informativo in cui verranno fornite a studentesse e studenti in partenza sul I semestre e sull’intero a.a. 26-27, le indicazioni in merito alla documentazione per la gestione della mobilità e alle modalità di richiesta di equipollenza dei corsi tramite la piatta-forma informatica dedicata. Per studentesse e studenti in partenza sul II semestre dell’a.a. 26-27, l’incontro si terrà in autunno, la data verrà comunicata in seguito. CANDIDATURE NON AMMISSIBILI 1107770 REQUISITO LINGUISTICO MANCANTE O NON VALIDO 1101540 REQUISITO LINGUISTICO MANCANTE O NON VALIDO 1106423 REQUISITO LINGUISTICO MANCANTE O NON VALIDO 1097557 REQUISITO LINGUISTICO MANCANTE O NON VALIDO 1105409 REQUISITO LINGUISTICO MANCANTE O NON VALIDO 1099073 REQUISITO LINGUISTICO MANCANTE O NON VALIDO 1108504 REQUISITO LINGUISTICO MANCANTE O NON VALIDO Firmato digitalmente da: Sergio Cavalieri Limitazioni d'uso: Explicit Text: I titolari fanno uso del certificato solo per le finalità di lavoro per le quali esso è rilasciato. The certificate holder must use the certificate only for the purposes for which it is issued.
+Data: 19/02/2026 09:33:54
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: procedure
+
+>>> SYSTEM PROMPT:
+Sei un esperto delle procedure amministrative dell'Università di Bergamo.
+Guida gli studenti attraverso procedure come iscrizioni, pagamento tasse, richieste documenti.
+Fornisci istruzioni chiare e passo-passo.
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+8. Alcune fonti sono documenti PDF: in quel caso vengono forniti anche i link ipertestuali estratti direttamente dal PDF con la pagina di provenienza. Se uno di questi link è rilevante per la risposta dello studente, includilo nella risposta in forma cliccabile (formato Markdown: [testo](url)) indicando anche da quale parte del documento proviene.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio - UniBg
+URL: https://www.unibg.it/bandi/bando-erasmus-aa-2025-2026-mobilita-studio
+Contenuto:  [Salta al contenuto principale](#main-content) 
+
+[![Home](/themes/custom/unibg/logo.svg)](/ "Home") 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e risorse](/vivere-unibg/spazi-e-risorse)
+  + [Opportunità e servizi](/vivere-unibg/opportunita-e-servizi)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. Bandi
+3. [Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio](/bandi/bando-erasmus-aa-2025-2026-mobilita-studio)
+
+[Bando Erasmus+ a.a. 2025-2026](/sites/default/files/media/documents/2025-02-03/Bando%20Erasmus%2B%202025-2026_Finale.pdf "Bando Erasmus+ 2025-2026_Finale.pdf")
+
+[Bando Erasmus+ a.a. 2025-2026 - English version](/sites/default/files/media/documents/2025-02-03/Bando%20ERASMUS%20%2B%202025-2026_eng.pdf "Bando ERASMUS + 2025-2026_eng.pdf")
+
+### Tabelle sedi di destinazione
+
+[Tabella Dipartimento di Scienze Aziendali e Dipartimento di Scienze Economiche](/sites/default/files/media/documents/2025-02-03/Tabella%20SASE%202025-2026_DEF.pdf "Tabella SASE 2025-2026_DEF.pdf")
+
+[Tabella Dip. Giurisprudenza](/sites/default/files/media/documents/2025-02-03/Tabella%20GIU%202025-2026.pdf "Tabella GIU 2025-2026.pdf")
+
+[Tabella Scuola di Ingegneria](/sites/default/files/media/documents/2025-02-03/Tabelle%20ING%202025-2026.pdf "Tabelle ING 2025-2026.pdf")
+
+[Tabella Dip. Lettere, Filosofia, Comunicazione](/sites/default/files/media/documents/2025-02-03/Tabella%20LFC%202025-2026.pdf "Tabella LFC 2025-2026.pdf")
+
+[Tabella Dip. Lingue, Letterature e Culture Straniere](/sites/default/files/media/documents/2025-02-03/Tabella%20LLCS%202025-26.pdf "Tabella LLCS 2025-26.pdf")
+
+[Tabella Dip. Scienze Umane e Sociali](/sites/default/files/media/documents/2025-02-03/Tabella%20SUS%202025-2026.pdf "Tabella SUS 2025-2026.pdf")
+
+### Formula calcolo punteggio graduatoria
+
+[Formula calcolo punteggio graduatoria](/sites/default/files/media/documents/2025-02-03/FORMULA%20PER%20SITO_rev27012025.pdf "FORMULA PER SITO_rev27012025.pdf")
+
+### Settimana informativa Erasmus - Dipartimento di LLCS
+
+Nella settimana 17-21 febbraio i docenti referenti delle sedi del Dipartimento di LLCS si renderanno disponibili a ricevere gli studenti negli orari secondo il calendario allegato.
+
+[settimana informativa LLCS](/sites/default/files/media/documents/2025-02-14/settimana%20informativa%20lingue%202025%20da%20pubblicare.pdf "settimana informativa lingue 2025 da pubblicare.pdf")
+
+### Date planarie assegnazione sedi Programma Erasmus+ 2025-2026
+
+[Avviso date plenarie Programma Erasmus+ a.a. 2025-2026](/sites/default/files/media/documents/2025-03-13/Avviso%20Plenarie%20Erasmus%2B%202025-2026.pdf "Avviso Plenarie Erasmus+ 2025-2026.pdf")
+
+[Delega](/sites/default/files/media/documents/2025-03-13/modello_delega.pdf "modello_delega.pdf")
+
+### Modulo di accettazione/rinuncia Erasmus+
+
+[Form di accettazione/rinuncia alla sede Erasmus+](/sites/default/files/media/documents/2025-03-24/Modulo%20di%20accettazione%20Erasmus%2B.pdf "Modulo di accettazione Erasmus+.pdf")
+
+Data di pubblicazione bando
+
+Data di scadenza bando
+
+ 
+
+Fonte 2: [PDF] Bando Erasmus + aa 2026/27 Form Candidatura - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2025-12-19/2025_MO_APPLICATION_GUIDA_ITA.pdf
+Contenuto: Bando Erasmus + a.a. 2026/27 Form Candidatura UNIBG sta gradualmente introducendo il software MOBILITY ON LINE dedicato alla gestione dei programmi di mobilità internazionale Di seguito una breve guida alla compilazione della candidatura al BANDO ERASMUS PER STUDIO A.A. 2026/27 Bando Erasmus + a.a. 2026/27 STEP 1: APPLICATION DETAILS Dopo aver cliccato al link presente nel bando verrai reindirizzato alla pagina APPLICATION DETAILS: TROVERAI CAMPI A SISTEMA PRECOMPILATI Clicca su Continue per proseguire nella compilazione Bando Erasmus + a.a. 2026/27 STEP 2: PERSONAL DATA COMPILA I TUOI DATI PERSONALI NEL CAMPO EMAIL INDICA L’INDIRIZZO ISTITUZIONALE: (@STUDENTI.UNIBG.IT) Clicca su Continue per proseguire nella compilazione Bando Erasmus + a.a. 2026/27 STEP 3: EMERGENCY CONTACT INSERISCI I DATI I UNA PERSONA DI FIDUCIA DA CONTATTARE IN CASO DI EMERGENZA Clicca su Continue per proseguire nella compilazione Bando Erasmus + a.a. 2026/27 STEP 4: CURRENT STUDY DETAILS Seleziona il tuo DIPARTIMENTO POI IL LIVELLO DI STUDI (TRIENNALE O MAGISTRALE) E CORSO DI STUDIO; SELEZIONA INFINE LA TUA COORDINATRICE/IL TUO COORDINATORE DI DIPARTIMENTO Clicca su Continue per proseguire nella compilazione Bando Erasmus + a.a. 2026/27 STEP 5: PLANNED STAY DETAILS (FIRST CHOICE) LA FIRST CHOICE è L’UNICA SEDE OBBLIGATORIA DA INSERIRE Le altre sono opzionali • Ricorda: • Che è una sede ipotetica che poi potrà/dovrà essere modificata in sede di seduta plenaria • Utilizza i menù a tendina e seleziona in sequenza (i filtri si aggiornano ad ogni selezione): 1.
+La lingua di scambio della sede che hai scelto; 2.
+Il paese di destinazione; 3.
+La sede di destinazione; 4.
+Indica la modalità con cui hai acquisito il tuo livello linguistico; 5.
+Seleziona il livello linguistico che hai acquisito; 6.
+Riporta la data in cui hai sostenuto/ottenuto il livello linguistico; Bando Erasmus + a.a. 2026/27 STEP 5: PLANNED STAY DETAILS (2 nd – 3 rd – 4 th – 5 th CHOICE) Le sedi selezionate in questa fase sono indicative: - INSERISCI una sede per ciascun livello linguistico CHE POSSIEDI E per cui ti vuoi candidare. (In caso di discrepanze fanno fede le specifiche indicate nella tabella) Esempio: -Se mi candido per sedi Inglese B2 compilerò solo la FIRST CHOICE; -se mi candido per INGLESE B2 E FRANCESE B1 compilerò la FIRST e la SECOND CHOICE; -Se mi candido per INGLESE B2, FRANCESE B2 E TEDESCO B2 compilerò la FIRST, LA SECOND E LA THIRD CHOICE Bando Erasmus + a.a. 2026/27 STEP 10: Previous career and mobility period Compila le seguenti richieste in merito a periodi Erasmus precedenti – Lauree triennali conseguite all’estero e passaggi di corso/reimmatricolazioni ATT: Per periodi Erasmus sarà sufficiente che indichi i mesi già svolti – NELLO STESSO CICLO DI STUDI - Nei casi di carriera e passaggi di corso prepara le delibere di riconoscimento, nella fase successiva dell’application dovrai caricare i pdf.
+Bando Erasmus + a.a. 2026/27 STEP 11: OTHERS VERIFICA E SPUNTA LE OPZIONI OBBLIGATORIE SPUNTA E COMPILA NEL CASO TU SIA IMMATRICOLATO IN IPOTESI CLICCA SEND APPLICATION; 1. CONTROLLA L’EMAIL PER ACCEDERE A MOBILITY ON LINE PER COMPLETARE E RENDERE DEFINITIVA L’APPLICATION Thank you for registering with Mobility-Online.
+Please click the link at the end of this email to submit your Erasmus application and save it for future access to Mobility-Online: To submit your application, once logged in please: 1.
+Complete your personal data; 2.
+If necessary upload the following documents: 3.
+Language requirements or certification (i.e. IELTS/TOEFL certificate); 4.
+Bachelor career if not achieved at UNIBG; 5.
+Proof of previous studies achieved and recognized on the current study program 6.
+Click CONFIRM to submit the application.
+Bando Erasmus + a.a. 2026/27 CONFERMA APPLICATION Dopo aver inviato l’application riceverai una email di conferma con il testo sotto riportato e dovrai seguire le istruzioni per completare la procedura ATTENZIONE: SE NON SI COMPLETA LA PROCEDURA LA CANDIDATURA NON SARA’ COMPLETA Bando Erasmus + a.a. 2026/27 CONFERMA APPLICATION DOPO AVER EFFETTUATO L’ACCESSO CLICCA SU MY APPLICATION DATA E VEDRAI QUESTA PRIMA SEZIONE CLICCA SU COMPLETE PERSONAL DATA, VERIFICA E COMPLETA ENTRAMBE LE SEZIONI «PERSONAL DETAILS» E «PERMANENT ADDRESS DETAILS» : Clicca su FORWARD TO UPDATE, controlla e modifica se necessario e poi clicca UPDATE per salvare i dati e PROCEDI POI alla compilazione del «Questionario motivazionale» Bando Erasmus + a.a. 2026/27 CONFERMA APPLICATION In questa sezione devi caricare gli allegati necessari a completare la tua candidatura: -Language ProficiencyCERTIFICATI TOEFL/IELTScarica gli originali dei certificati -Proof of Previous StudiesSE HAI AVUTO RICONOSCIMENTI SULLA CARRIERA ATTUALEcarica le delibere di riconoscimento -Bachelor career uploadSE HAI CONSEGUITO/STAI CONSEGUENDO LA LAUREA TRIENNALE IN UN ALTRO ATENEO (italiano o estero):carica la carriera con CFU E VOTI conseguiti Quando hai terminato i caricamenti: Clicca su SUBMIT YOUR APPLICATION per completare l’application e presentare la candidatura Riceverai una email di conferma di candidatura presentata
+
+Fonte 3: Bando ERASMUS+ per la mobilità ai fini di studio a.a. 2026/2027
+URL: https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027
+Contenuto:  [Salta al contenuto principale](#main-content) 
+
+[![Home](/themes/custom/unibg/logo.svg)](/ "Home") 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e risorse](/vivere-unibg/spazi-e-risorse)
+  + [Opportunità e servizi](/vivere-unibg/opportunita-e-servizi)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. Bandi
+3. [Bando ERASMUS+ per la mobilità ai fini di studio a.a. 2026/2027](/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027)
+
+E' pubblicato il bando per la mobilità Erasmus+ a.a. 2026/2027.
+
+La scadenza per candidarsi è il **20/01/2026, alle ore 08.00.**
+
+[Bando Erasmus+ a.a. 2026/2027](/sites/default/files/media/documents/2025-12-18/Bando%20Erasmus%2B%202026-2027_Finale.pdf "Bando Erasmus+ 2026-2027_Finale.pdf")
+
+[Bando Erasmus+ a.a. 2026/2027 - English version](/sites/default/files/media/documents/2025-12-18/Bando%20ERASMUS%20%2B%202026-2027_eng.pdf "Bando ERASMUS + 2026-2027_eng.pdf")
+
+[Tabella sedi Dipartimento di Giurisprudenza](/sites/default/files/media/documents/2025-12-18/Tabella%20GIU%202026-2027.pdf "Tabella GIU 2026-2027.pdf")
+
+[Tabella sedi Scuola di Ingegneria](/sites/default/files/media/documents/2025-12-18/Tabella%20ING%202026-27.pdf "Tabella ING 2026-27.pdf")
+
+[Tabella sedi Dipartimento di Lettere, Filosofia, Comunicazione](/sites/default/files/media/documents/2025-12-18/Tabella%20LFC%202026-2027.pdf "Tabella LFC 2026-2027.pdf")
+
+[Tabella sedi Dipartimento di Lingue, Letterature e Culture Straniere](/sites/default/files/media/documents/2025-12-18/Tabella%20LLCS%202026-27-definitiva.pdf "Tabella LLCS 2026-27-definitiva.pdf")
+
+[Tabella sedi Dipartimenti di Scienze Aziendali e Scienze Economiche](/sites/default/files/media/documents/2025-12-18/Tabella%20SASE%202026-2027.pdf "Tabella SASE 2026-2027.pdf")
+
+[Tabella sedi Dipartimento di Scienze Umane e Sociali](/sites/default/files/media/documents/2025-12-18/Tabella%20SUS%202026-2027.pdf "Tabella SUS 2026-2027.pdf")
+
+[Formula di calcolo per la graduatoria](/sites/default/files/media/documents/2025-12-18/NUOVA%20FORMULA%202025_Rev03.pdf "NUOVA FORMULA 2025_Rev03.pdf")
+
+[Guida Candidatura Erasmus](/sites/default/files/media/documents/2025-12-19/2025_MO_APPLICATION_GUIDA_ITA.pdf "2025_MO_APPLICATION_GUIDA_ITA.pdf")
+
+[Erasmus application guide](/sites/default/files/media/documents/2025-12-19/2025_MO_APPLICATION_GUIDA_ENG.pdf "2025_MO_APPLICATION_GUIDA_ENG.pdf")
+
+### Date plenarie assegnazione sedi Programma Erasmus+ 2026-2027
+
+[Calendario Plenarie scelta sedi Erasmus+ 2026-2027](/sites/default/files/media/documents/2026-02-16/Avviso%20Plenarie%20Erasmus%202026.pdf "Avviso Plenarie Erasmus 2026.pdf")
+
+[Delega](/sites/default/files/media/documents/2026-02-16/modello_delega.pdf "modello_delega.pdf")
+
+### Modulo accettazione/rinuncia sede Erasmus+ a.a. 2026-2027
+
+[Link modulo accettazione/rinuncia](/sites/default/files/media/documents/2026-02-26/Modulo%20accettazione%20Erasmus%2B%20a.a.%2026-27.pdf "Modulo accettazione Erasmus+ a.a. 26-27.pdf")
+
+## Esito
+
+Si prega di leggere attentamente le indicazioni riportate nella parte iniziale di ciascuna graduatoria.
+
+[Graduatoria provvisoria Giurisprudenza](/sites/default/files/media/documents/2026-02-19/GRADUATORIA%20GIU%202026-2027%20%281%29%20%282%29%20%281%29.pdf "GRADUATORIA GIU 2026-2027 (1) (2) (1).pdf")
+
+[Graduatoria provvisoria Ingegneria](/sites/default/files/media/documents/2026-02-19/GRADUATORIA%20ING%202026-2027%20%281%29%20%281%29%20%281%29.pdf "GRADUATORIA ING 2026-2027 (1) (1) (1).pdf")
+
+[Graduatoria provvisoria Lettere, Filosofia, Comunicazione](/sites/default/files/media/documents/2026-02-19/GRADUATORIA%20LFC%202026-2027%20%281%29%20%281%29%20%281%29.pdf "GRADUATORIA LFC 2026-2027 (1) (1) (1).pdf")
+
+[Graduatoria provvisoria Scienze Umane e Sociali](/sites/default/files/media/documents/2026-02-19/GRADUATORIA%20SUS%202026-2027%20%281%29%20%281%29%20%281%29.pdf "GRADUATORIA SUS 2026-2027 (1) (1) (1).pdf")
+
+[Graduatoria provvisoria Lingue, Letterature e Culture straniere](/sites/default/files/media/documents/2026-02-20/GRADUATORIA%20LLCS%20%28PROVVISORIA%29%202026-2027%20%281%29.pdf "GRADUATORIA LLCS (PROVVISORIA) 2026-2027 (1).pdf")
+
+[Graduatoria provvisoria Scienze Aziendali e Scienze Economiche](/sites/default/files/media/documents/2026-02-20/GRADUATORIA%20SASE%202026-2027%20%281%29.pdf "GRADUATORIA SASE 2026-2027 (1).pdf")
+
+Data di pubblicazione bando
+
+Data di scadenza bando
+
+ 
+
+Fonte 4: Erasmus+ | Università degli studi di Bergamo - UniBg
+URL: https://www.unibg.it/internazionale/andare-allestero/erasmus
+Contenuto:  [Salta al contenuto principale](#main-content) 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](https://en.unibg.it)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e servizi](/vivere-unibg/spazi-e-servizi)
+  + [Opportunità](/vivere-unibg/opportunita)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. [Internazionale](/internazionale)
+3. [Andare all’estero](/internazionale/andare-allestero)
+4. [Erasmus+](/internazionale/andare-allestero/erasmus)
+
+### Che cos'è il programma Erasmus+?
+
+**Erasmus+ 2021-2027** è il programma dell'Unione Europea per l'istruzione, la formazione, la gioventù e lo sport, finalizzato a promuovere le competenze, e l'occupabilità, nonché a sostenere la modernizzazione dei sistemi d'istruzione, formazione e gioventù.
+
+Il programma consente di vivere esperienze culturali e professionali all'estero, conoscere nuovi sistemi di istruzione superiore, perfezionare la conoscenza di almeno un'altra lingua e incontrare giovani di altri Paesi, partecipando attivamente alla costruzione di un'Europa sempre più unita.
+
+[Erasmus Policy Statement 2021-2027](/sites/default/files/erasmus_policy_statement_2021-2027.pdf "erasmus_policy_statement_2021-2027.pdf")
+
+[Erasmus Policy Statement 2014-2020](/sites/default/files/internazionalizzazione/erasmus_policy_statement_per_sito_web_in_italiano.pdf "erasmus_policy_statement_per_sito_web_in_italiano.pdf")
+
+[Guida ECTS](/sites/default/files/internazionalizzazione/ects_guida_utente_pdf_exe.pdf "ects_guida_utente_pdf_exe.pdf")
+
+[ECHE I BERGAMO 01 2021-2027](/sites/default/files/eche_unibg.pdf "eche_unibg.pdf")
+
+[ECHE I BERGAMO 01 2014-2020](/sites/default/files/eche_template_en-ok_2014_-_2020.pdf "eche_template_en-ok_2014_-_2020.pdf")
+
+### Erasmus+ BIP
+
+La nuova programmazione Erasmus+ ha introdotto i programmi intensivi misti – Blended Intensive Programs, BIP.
+
+Sviluppati da gruppi di Istituti di istruzione superiore con un approccio pedagogico innovativo, i BIP prevedono brevi periodi di attività in presenza combinata con attività di apprendimento e cooperazione online, a cui possono partecipare gruppi congiunti di studenti, personale docente e staff amministrativo provenienti da diversi Paesi per collaborare a specifici compiti in modo collettivo e simultaneo.
+
+[Presentazione BIP](/sites/default/files/media/documents/2023-10-25/Presentazione%20BIP.pdf "Presentazione BIP.pdf")
+
+### Erasmus+ KA 131 (UE)
+
+Erasmus+ per Studio offre agli studenti l'opportunità di trascorrere **un periodo di studio (da 3 a 12 mesi)** presso una delle Università Partner Europee con cui l'Università di Bergamo ha firmato un accordo inter-istituzionale.
+
+Gli studenti Erasmus+ possono inoltre ricevere un contributo comunitario *ad hoc*, seguire corsi universitari e usufruire delle strutture disponibili presso l'Università ospitante senza dover pagare tasse aggiuntive, con la garanzia del riconoscimento del periodo di studi all'estero tramite il trasferimento dei rispettivi crediti formativi all'interno della loro carriera.
+
+Scorri questa pagina per consultare il bando e accedere a tutte le informazioni relative a sedi disponibili, scadenze e modalità.
+
+### Erasmus+ KA 107 (extra-UE)
+
+L'**Erasmus+ KA107 ICM International Credit Mobility** è un programma innovativo che permette di attivare progetti di **mobilità internazionale fuori dall’Unione Europea** ed è destinato a studenti, docenti e personale tecnico amministrativo europei.
+
+In particolare, gli studenti iscritti ai Corsi di laurea triennale, laurea magistrale e dottorato hanno la possibilità di svolgere un periodo di studio o di ricerca presso le università partner che va da un minimo di 3 a un massimo di 12 mesi. Le borse di studio sono finanziate dall'Unione Europea e vengono assegnate mediante bandi.
+
+Scorri questa pagina per consultare il bando e accedere a tutte le informazioni relative a sedi disponibili, scadenze e modalità.
+
+### Erasmus+ Traineeship
+
+Il Programma Erasmus+ Traineeship, in generale, consente agli studenti universitari iscritti, di candidarsi  per un'esperienza di tirocinio presso imprese attive nel mercato del lavoro o in settori quali l’istruzione, la formazione e la gioventù e presenti in uno dei Paesi partecipanti al Programma. I beneficiari avranno così l’opportunità di acquisire competenze specifiche e una migliore comprensione della cultura socio-economica del Paese ospitante. E' previsto un contributo comunitario per la durata del tirocinio all'estero.
+
+*The Erasmus+ Traineeship Programme allows university students  to carry out a traineeship period in companies active in the labour market or in sectors such as education, training and youth and present in one of the countries participating in the Programme. This will give beneficiaries the opportunity to acquire specific skills and a better understanding of the socio-economic culture of the host country. Students receive a monthly EU grant for their period abroad*
+
+**N.B.**: nell'ambito del Bando Erasmus+Traineeship CALL 2024 (2024/2025 e 2025/2026), sono ammessi tirocini curriculari, in piano di studio, oppure tirocini da inserire come scelta libera  o in sovrannumero (laddove non sia presente il tirocinio in piano), mentre sono esclusi i tirocini post-laurea.
+
+***N.B**. In the framework of the Call  2024 Erasmus+ Traineeship (a.y 2024/2025 - 2025/2026), grants are assignedfor curricular traineeships or, if not included in the study plan, as an elective or as extra credits.*
+
+Lo studente che ha già assolto i cfu per tirocinio in piano non potrà candidarsi per un secondo tirocinio nell'ambito del Bando di cui sopra.
+
+*If a student has already earned credits for a traineeship, they cannot apply for the Erasmus + Traineeship Programme.*
+
+Visita la [pagina dedicata](https://www.unibg.it/internazionale/andare-allestero/erasmus/erasmus-traineeships) per tutte le informazioni relative al Bando, scadenze e modalità.
+
+For information concerning the Call, deadlines and procedures please access the Erasmus Traineeship [webpage](https://www.unibg.it/internazionale/andare-allestero/erasmus/erasmus-traineeships)
+
+### Tabelle delle equipollenze
+
+Le tabelle pubblicate sono riportate esclusivamente a titolo esemplificativo.
+
+Lo studente deve necessariamente confrontarsi con i docenti referenti per individuare la corretta conversione dei corsi.
+
+[equipollenze GIURISPRUDENZA extraue.pdf](/sites/default/files/media/documents/2022-10-06/equipollenze%20GIURISPRUDENZA%20extraue.pdf)
+
+[equipollenze GIURISPRUDENZA.pdf](/sites/default/files/media/documents/2022-10-06/equipollenze%20GIURISPRUDENZA.pdf)
+
+[equipollenze ING IGIP.pdf](/sites/default/files/media/documents/2022-10-06/equipollenze%20ING%20IGIP.pdf)
+
+[Equipollenze ING ISA.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING%20ISA.pdf)
+
+[Equipollenze ING\_EXTRAUE.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING_EXTRAUE.pdf)
+
+[Equipollenze LFC EXTRA UE.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20LFC%20EXTRA%20UE.pdf)
+
+[Equipollenze LFC.pdf](/sites/default/files/media/documents/2023-09-18/Equipollenze%20LFC_0.pdf "Equipollenze LFC_0.pdf")
+
+[Equipollenze LLCS Extra UE.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20Extra%20UE.pdf)
+
+[Equipollenze LLCS LLEP.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LLEP.pdf)
+
+[Equipollenze LLCS LLSM.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LLSM.pdf)
+
+[Equipollenze LLCS LLSM\_0.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LLSM_0.pdf)
+
+[Equipollenze LLCS LMCCI.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LMCCI.pdf)
+
+[Equipollenze LLCS PMTS.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20PMTS.pdf)
+
+[Equipollenze SA-SE.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20SA-SE.pdf)
+
+[Equipollenze SA-SE\_Extra UE.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20SA-SE_Extra%20UE.pdf)
+
+[Equipollenze SUS EXTRA UE.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20SUS%20EXTRA%20UE.pdf)
+
+[Equipollenze SUS.pdf](/sites/default/files/media/documents/2022-10-06/Equipollenze%20SUS.pdf)
+
+### Tabelle di conversione voti per Dipartimento
+
+Le tabelle di conversione voti di seguito riportate sono indicative ed a cura dei docenti incaricati di ogni Dipartimento.
+
+Si precisa che si tratta di corrispondenze numeriche tendenziali e non assolute, essendoci la possibilità, da parte del responsabile Erasmus del Dipartimento, di adattamenti alle condizioni di ciascuna specifica sede.
+
+[Tabella conversione voti Dipartimento di Giurisprudenza](/sites/default/files/media/documents/2022-07-05/GIU%20Erasmus%20-%20Conversione%20voti%20Giurisprudenza.pdf "GIU Erasmus - Conversione voti Giurisprudenza.pdf")
+
+[Tabella conversione voti Erasmus Dip.ti ISA-IGIP](/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20ERASMUS_0.pdf "DIP ING _ TABELLE DI CONVERSIONE ERASMUS_0.pdf")
+
+[Tabella conversione voti Extra-UE Dip.ti ISA-IGIP](/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20EXTRA-UE_0.pdf "DIP ING _ TABELLE DI CONVERSIONE EXTRA-UE_0.pdf")
+
+[Tabella conversione voti Dip. LFC](/sites/default/files/media/documents/2023-09-18/Tabella%20conversione%20LFC%202023-2024%20def.pdf "Tabella conversione LFC 2023-2024 def.pdf")
+
+[Dipartimento di LLCS](/sites/default/files/media/documents/2023-07-18/tabelle%20conversione%20voti%20da%20a.a.%202023-24.pdf "tabelle conversione voti da a.a. 2023-24.pdf")
+
+[Tabella conversione voti SUS](/sites/default/files/media/documents/2023-11-08/Tabella%20conversione%20voti%20SUS.docx.pdf "Tabella conversione voti SUS.docx.pdf")
+
+[Tabella conversione voti SA-SE](/sites/default/files/media/documents/2024-03-04/Tabelle%20conversioni%20voti%20SA-SE..pdf "Tabelle conversioni voti SA-SE..pdf")
+
+### Diari di viaggio - Travel diaries (info generali dagli studenti rientrati dalle mobilità per studio)
+
+Nell'allegato sono disponibili le informazioni fornite da studentesse e studenti che hanno partecipato ai programmi di scambio negli anni scorsi in merito all’alloggio, trasporti, costo della vita e sui pro e contro dell’università ospitante.
+
+Le indicazioni contenute non intendono essere esaustive, ma vogliono essere un ulteriore aiuto e supporto a chi intende trascorrere un periodo di mobilità per studio.
+
+Essendo appunto basate sulle esperienze soggettive l’Ateneo non è responsabile delle informazioni qui riportate.
+
+Ovviamente nel caso di più mobilità verso la stessa sede le informazioni potrebbero essere diverse o replicate.
+
+Ringraziamo le studentesse e gli studenti che hanno contribuito alla creazione di questo documento.
+
+Le informazioni sono state catalogate in ordine di nazione.
+
+Buon Viaggio!
+
+[Travel diaries - agg. 04.03.2024](/sites/default/files/media/documents/2024-03-04/2024_Your%20travel%20diary.pdf "2024_Your travel diary.pdf")
+
+### Guida Erasmus ESN
+
+Di seguito la guida predisposta dall'associazione Erasmus Student Network
+
+[Erasmus: a complete guide by ESN](https://issuu.com/esnint/docs/erasmus_e-book?fbclid=IwAR2qe7aEfQXqqVkoL8FWMJBiPhCOcuqtLOTCW6XaMJ_bf_Ovx9efX-z5rIc)
+
+### Erasmus days 2024 - slides webinar
+
+[Erasmus per studio](/sites/default/files/media/documents/2024-10-14/Erasmus%20days%202024_ERASMUS.pdf "Erasmus days 2024_ERASMUS.pdf")
+
+[Erasmus per tirocinio](/sites/default/files/media/documents/2024-10-14/Erasmus%20days%202024_TRAINEESHIPS.pdf "Erasmus days 2024_TRAINEESHIPS.pdf")
+
+[Erasmus BIP (Blended Intensive Programs)](/sites/default/files/media/documents/2024-10-14/Erasmus%20days%202024_BIP.pdf "Erasmus days 2024_BIP.pdf")
+
+### Bando Erasmus+ a.a. 2026-2027 - Mobilità per studio
+
+[Bando Erasmus+ a.a. 2026-2027 - Mobilità per studio](/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027)
+
+### Bandi Erasmus+ a.a. 2023-24 e 2024-25 - Mobilità per Traineeship
+
+[Bandi Erasmus+ a.a. 2023-24 e 2024-25 - Mobilità per Traineeship](https://www.unibg.it/node/16133)
+
+### Bando Erasmus + Mobilità Studenti KA107
+
+[Bando Erasmus Plus per la mobilità studenti KA107 – International Credit Mobility a.a. 2022/2023 – verso Ort Braude College, Israele](/bandi/bando-erasmus-plus-mobilita-studenti-ka107-aa-2022-2023-verso-sede-ort-braude-college-israele)
+
+ 
+
+Fonte 5: [PDF] PROGRAMMA ERASMUS PLUS 2026/2027 - Bergamo - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2026-02-19/GRADUATORIA%20LFC%202026-2027%20%281%29%20%281%29%20%281%29.pdf
+Contenuto: 24122 Bergamo, via S. Bernardino 72/e tel. 035 2052 830 / 831 / 832 / 833 / 109 email:relint@unibg.it Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167 PROGRAMMA ERASMUS PLUS 2026/2027 NUMERO MATRICOLA IDONEO/A PER SEDI DI LINGUA/E 1 1093606 ENG B2 2 1101298 ENG C1, IELTS 2025 3 1109539 ENG B2 4 1085328 ENG B2 5 1109299 FRA B2 ENG B2 6 1089405 ENG B2 FRA B2 SPA B1 7 1108212 SPA B1 ENG B2 8 1102132 SPA B1 ENG B2 9 1088813 SPA B1 ENG B2 10 1093626 ENG B2 11 1106447 ENG B2 12 1085729 ENG B2 SPA B1 L’ASSEGNAZIONE DELLE SEDI AVVERRÀ IN PRESENZA IL 26/02/2026 ORE 09.00, AULA 3 SEDE PIGNOLO Si raccomanda agli studenti la massima puntualità. Si ricorda che la mancata presenza all’incontro è considerata rinuncia, a meno che il candidato, impos-sibilitato a partecipare per ragioni importanti e motivate, deleghi un terzo per presenziare alla plenaria. Il delegato dovrà presentarsi con la delega firmata dallo studente assente, un proprio documento d’identità (in corso di validità), la copia del documento d’identità del delegante (in corso di validità) e l’elenco delle sedi di interesse. Gli studenti che si fossero candidati anche al bando Extra UE, qualora presenti anche nella graduatoria Erasmus, potranno presenziare alla Plenaria per l'assegnazione delle sedi UE, se ancora interessati al presente bando. Specifichiamo che tali studenti, saranno tenuti a deci-dere in Plenaria, se accettare la sede Erasmus o Extra -UE, confermata tramite la compilazione dell’ap-posito form. Facciamo presente altresì, che l'accettazione di una sede relativa al bando Erasmus+ o Ex-tra UE, comporterà inderogabilmente l'esclusione dalla graduatoria o dalla lista d'attesa dell’altro bando. ELENCO DEGLI STUDENTI IDONEI DIPARTIMENTO DI LETTERE, FILOSOFIA, COMUNICAZIONE 24122 Bergamo, via S. Bernardino 72/e tel. 035 2052 830 / 831 / 832 / 833 / 109 email:relint@unibg.it Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167 13 1101619 ENG B2 14 1088128 ENG B2 15 1100156 ENG B2 FRA B1 SPA B1 16 1086049 ENG B2 17 1078144 ENG B2 18 1080144 ENG B2 SPA B1 19 1088958 ENG B2 SPA B1 20 1092085 SPA B2 ENG B2 21 1100568 FRA B2 22 1109574 SPA B1 FRA B2 ENG B2 23 1088538 ENG B2 SPA C1 FRA B1 24 1083006 ENG B2 25 1066163 SPA B1 ENG B2 26 1087929 ENG B2 27 1107254 ENG B2 28 1064492 SPA B1 ENG B2 29 1089843 ENG B2 30 1089469 SPA B2 ENG B2 31 1034127 ENG B2 SPA B1 FRA B2 32 1101047 SPA B1 33 1087237 FRA B2 SPA B1 ENG B2 34 1094408 ENG B2 35 1100692 ENG B2 36 1101640 SPA B1 37 1110483 ENG B2 38 1098068 ENG B2 39 1109375 ENG B2 40 1109386 ENG B2 24122 Bergamo, via S. Bernardino 72/e tel. 035 2052 830 / 831 / 832 / 833 / 109 email:relint@unibg.it Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167 41 1099102 ENG B2 42 1097517 ENG B2 43 1102033 ENG B2 SPA B1 FRA B2 44 1101733 ENG B2 45 1108600 ENG B2 SPA B1 46 1082118 ENG B2 SPA B1 47 1087642 ENG B2 48 1105703 ENG B2 SPA C1 49 1099072 FRA B1 50 1098075 ENG B2 TED B2 FRA B1 51 1101425 ENG B2 SPA B1 52 1101069 ENG B2 53 1097788 ENG B2 SPA B1 54 1097787 ENG B2 55 1101710 SPA B2, DELE 2024 56 1096255 ENG B2 57 1097897 ENG B2 SPA B1 58 1108711 ENG B2 59 1097808 ENG B2 FRA B1 60 1105607 SPA B2, DELE 2024 61 1102990 ENG B2 62 1101691 SPA B1 63 1107380 ENG B2 64 1102709 SPA B1 65 1097805 SPA B2 66 1109895 FRA B1 67 1102633 SPA B1 ENG B2 68 1109282 ENG B2 24122 Bergamo, via S. Bernardino 72/e tel. 035 2052 830 / 831 / 832 / 833 / 109 email:relint@unibg.it Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167 69 1094949 SPA B1 70 1098091 TED B1 ENG B2 71 1108966 SPA B1 ENG B2 72 1093687 ENG B2 73 1105388 SPA B1 74 1105676 SPA B1 ENG B2 75 1098145 SPA B2, DELE 2024 76 1102095 ENG B2 IELTS, 2024 77 1101611 ENG B2 78 1105335 ENG B2 NB: Nella graduatoria compaiono unicamente le candidature finalizzate entro i termini Si informa che con successivo avviso verrà comunicata la data - presumibilmente nel mese di maggio/ giugno - dell’incontro informativo in cui verranno fornite a studentesse e studenti in partenza sul I semestre e sull’intero a.a. 26-27, le indicazioni in merito alla documentazione per la gestione della mobilità e alle modalità di richiesta di equipollenza dei corsi tramite la piatta-forma informatica dedicata. Per studentesse e studenti in partenza sul II semestre dell’a.a. 26-27, l’incontro si terrà in autunno, la data verrà comunicata in seguito. CANDIDATURE NON AMMISSIBILI 1107770 REQUISITO LINGUISTICO MANCANTE O NON VALIDO 1101540 REQUISITO LINGUISTICO MANCANTE O NON VALIDO 1106423 REQUISITO LINGUISTICO MANCANTE O NON VALIDO 1097557 REQUISITO LINGUISTICO MANCANTE O NON VALIDO 1105409 REQUISITO LINGUISTICO MANCANTE O NON VALIDO 1099073 REQUISITO LINGUISTICO MANCANTE O NON VALIDO 1108504 REQUISITO LINGUISTICO MANCANTE O NON VALIDO Firmato digitalmente da: Sergio Cavalieri Limitazioni d'uso: Explicit Text: I titolari fanno uso del certificato solo per le finalità di lavoro per le quali esso è rilasciato. The certificate holder must use the certificate only for the purposes for which it is issued.
+Data: 19/02/2026 09:33:54
+
+
+>>> USER PROMPT:
+dove trovo il bando per l'erasmus
+
+>>> RISPOSTA:
+Ciao Raphael,
+
+Puoi trovare i bandi per il programma Erasmus+ per la mobilità per studio sul sito dell'Università di Bergamo.
+
+Attualmente sono disponibili informazioni per i seguenti anni accademici:
+
+*   **Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio**: Puoi consultare il bando e i documenti correlati a questo link: [Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio](https://www.unibg.it/bandi/bando-erasmus-aa-2025-2026-mobilita-studio).
+*   **Bando ERASMUS+ per la mobilità ai fini di studio a.a. 2026/2027**: Questo bando è pubblicato e la scadenza per candidarsi è il **20/01/2026, alle ore 08.00**. Puoi consultare il bando e la guida alla candidatura a questo link: [Bando ERASMUS+ per la mobilità ai fini di studio a.a. 2026/2027](https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027).
+
+In generale, la pagina dedicata al programma Erasmus+ sul sito dell'Università di Bergamo, dove vengono pubblicati i bandi e tutte le informazioni relative a sedi disponibili, scadenze e modalità, è: [Erasmus+ | Università degli studi di Bergamo](https://www.unibg.it/internazionale/andare-allestero/erasmus).
+
+Ti consiglio di consultare il bando relativo all'anno accademico di tuo interesse per tutti i dettagli specifici.
+
+Pagina di riferimento:
+*   https://www.unibg.it/bandi/bando-erasmus-aa-2025-2026-mobilita-studio
+*   https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027
+*   https://www.unibg.it/internazionale/andare-allestero/erasmus
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Contesto conversazione:
+- Studente: ciao chi sono? cosa mi consigli di fare dopo la magistrale?
+- Assistente: Sei Raphael Mazzoleni, matricola 1086531, iscritto al 1° anno della Laurea Magistrale in Ingegneria Informatica presso la Scuola di Ingegneria.
+
+Dopo 
+- Studente: chi è brugnetti luca?
+- Assistente: Sono stati identificati due studenti di nome Luca Brugnetti:
+
+1.  LUCA BRUGNETTI (matricola 1086670) è uno studente del Corso di Laurea in Ingegneria 
+
+Domanda originale: dove trovo il bando per l'erasmus
+Categoria: procedure
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Raphael,
+
+Puoi trovare i bandi per il programma Erasmus+ per la mobilità per studio sul sito dell'Università di Bergamo.
+
+Attualmente sono disponibili informazioni per i seguenti anni accademici:
+
+*   **Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio**: Puoi consultare il bando e i documenti correlati a questo link: [Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio](https://www.unibg.it/bandi/bando-erasmus-aa-2025-2026-mobilita-studio).
+*   **Bando ERASMUS+ per la mobilità ai fini di studio a.a. 2026/2027**: Questo bando è pubblicato e la scadenza per candidarsi è il **20/01/2026, alle ore 08.00**. Puoi consultare il bando e la guida alla candidatura a questo link: [Bando ERASMUS+ per la mobilità ai fini di studio a.a. 2026/2027](https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027).
+
+In generale, la pagina dedicata al programma Erasmus+ sul sito dell'Università di Bergamo, dove vengono pubblicati i bandi e tutte le informazioni relative a sedi disponibili, scadenze e modalità, è: [Erasmus+ | Università degli studi di Bergamo](https://www.unibg.it/internazionale/andare-allestero/erasmus).
+
+Ti consiglio di consultare il bando relativo all'anno accademico di tuo interesse per tutti i dettagli specifici.
+
+Pagina di riferimento:
+*   https://www.unibg.it/bandi/bando-erasmus-aa-2025-2026-mobilita-studio
+*   https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027
+*   https://www.unibg.it/internazionale/andare-allestero/erasmus
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RISPOSTA:
+Ciao Raphael,
+
+Puoi trovare i bandi per il programma Erasmus+ per la mobilità per studio sul sito dell'Università di Bergamo.
+
+Attualmente sono disponibili informazioni per i seguenti anni accademici:
+
+- BANDO ERASMUS+ A.A. 2025-2026 - MOBILITÀ PER STUDIO: Puoi consultare il bando e i documenti correlati a questo link: [Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio](https://www.unibg.it/bandi/bando-erasmus-aa-2025-2026-mobilita-studio).
+- BANDO ERASMUS+ PER LA MOBILITÀ AI FINI DI STUDIO A.A. 2026/2027: Questo bando è pubblicato e la scadenza per candidarsi è il 20/01/2026, alle ore 08.00. Puoi consultare il bando e la guida alla candidatura a questo link: [Bando ERASMUS+ per la mobilità ai fini di studio a.a. 2026/2027](https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027).
+
+In generale, la pagina dedicata al programma Erasmus+ sul sito dell'Università di Bergamo, dove vengono pubblicati i bandi e tutte le informazioni relative a sedi disponibili, scadenze e modalità, è: [Erasmus+ | Università degli studi di Bergamo](https://www.unibg.it/internazionale/andare-allestero/erasmus).
+
+Pagina di riferimento:
+- https://www.unibg.it/bandi/bando-erasmus-aa-2025-2026-mobilita-studio
+- https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027
+- https://www.unibg.it/internazionale/andare-allestero/erasmus
+
+================================================================================
+RISPOSTA FINALE
+================================================================================
+Ciao Raphael,
+
+Puoi trovare i bandi per il programma Erasmus+ per la mobilità per studio sul sito dell'Università di Bergamo.
+
+Attualmente sono disponibili informazioni per i seguenti anni accademici:
+
+- BANDO ERASMUS+ A.A. 2025-2026 - MOBILITÀ PER STUDIO: Puoi consultare il bando e i documenti correlati a questo link: [Bando Erasmus+ a.a. 2025-2026 - Mobilità per studio](https://www.unibg.it/bandi/bando-erasmus-aa-2025-2026-mobilita-studio).
+- BANDO ERASMUS+ PER LA MOBILITÀ AI FINI DI STUDIO A.A. 2026/2027: Questo bando è pubblicato e la scadenza per candidarsi è il 20/01/2026, alle ore 08.00. Puoi consultare il bando e la guida alla candidatura a questo link: [Bando ERASMUS+ per la mobilità ai fini di studio a.a. 2026/2027](https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027).
+
+In generale, la pagina dedicata al programma Erasmus+ sul sito dell'Università di Bergamo, dove vengono pubblicati i bandi e tutte le informazioni relative a sedi disponibili, scadenze e modalità, è: [Erasmus+ | Università degli studi di Bergamo](https://www.unibg.it/internazionale/andare-allestero/erasmus).
+
+Pagina di riferimento:
+- https://www.unibg.it/bandi/bando-erasmus-aa-2025-2026-mobilita-studio
+- https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027
+- https://www.unibg.it/internazionale/andare-allestero/erasmus
+
+------------------------------------------------------------
+TEMPI DI ESECUZIONE
+------------------------------------------------------------
+  Classifier Agent         : 1.033s
+  Query Agent              : 1.119s
+  Web Agent                : 4.890s
+  Generator Agent          : 5.324s
+  Revision Agent           : 8.643s
+
+  TEMPO TOTALE             : 21.019s
+
+================================================================================
+FINE DEL LOG
+================================================================================
