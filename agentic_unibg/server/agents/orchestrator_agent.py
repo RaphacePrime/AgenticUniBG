@@ -2,6 +2,7 @@ from typing import Dict, List, Optional
 # from langchain_groq import ChatGroq
 from langchain_google_genai import ChatGoogleGenerativeAI
 import os
+import time
 
 from langgraph.graph import StateGraph, END
 from .agent_state import AgentState, build_user_context
@@ -10,7 +11,7 @@ from .query_agent import QueryAgent
 from .web_agent import WebAgent
 from .generator_agent import GeneratorAgent
 from .revision_agent import RevisionAgent
-from .pipeline_logger import PipelineLogger
+from logger.pipeline_logger import PipelineLogger
 
 
 class OrchestratorAgent:
@@ -72,8 +73,10 @@ class OrchestratorAgent:
         Nodo per la classificazione della query
         """
         try:
+            start = time.time()
             user_ctx = build_user_context(state)
             classification = await self.classifier.classify(state["query"], user_context=user_ctx, conversation_history=state.get("conversation_history"))
+            elapsed = time.time() - start
             
             state["category"] = classification["category"]
             state["category_description"] = classification["description"]
@@ -84,7 +87,8 @@ class OrchestratorAgent:
             state["workflow_steps"].append({
                 "step": "classification",
                 "agent": "ClassifierAgent",
-                "result": classification
+                "result": classification,
+                "elapsed_time": elapsed
             })
             
         except Exception as e:
@@ -98,12 +102,14 @@ class OrchestratorAgent:
         Nodo per la generazione della query di ricerca web
         """
         try:
+            start = time.time()
             user_ctx = build_user_context(state)
             result = await self.query_agent.generate_query(
                 query=state["query"],
                 conversation_history=state.get("conversation_history"),
                 user_context=user_ctx
             )
+            elapsed = time.time() - start
             
             state["search_query"] = result["search_query"]
             state["current_step"] = "query_generation"
@@ -112,7 +118,8 @@ class OrchestratorAgent:
             state["workflow_steps"].append({
                 "step": "query_generation",
                 "agent": "QueryAgent",
-                "result": result
+                "result": result,
+                "elapsed_time": elapsed
             })
             
         except Exception as e:
@@ -126,8 +133,10 @@ class OrchestratorAgent:
         Nodo per la ricerca web tramite Tavily
         """
         try:
+            start = time.time()
             search_query = state.get("search_query", state["query"])
             result = await self.web_agent.search(search_query)
+            elapsed = time.time() - start
             
             state["web_results"] = result.get("web_results", [])
             state["web_context"] = result.get("formatted_context", "")
@@ -142,7 +151,8 @@ class OrchestratorAgent:
                     "total_results": result.get("total_results", 0),
                     "top_results_count": result.get("top_results_count", 0),
                     "status": result.get("status", "unknown")
-                }
+                },
+                "elapsed_time": elapsed
             })
             
         except Exception as e:
@@ -157,6 +167,7 @@ class OrchestratorAgent:
         Nodo per la generazione della risposta
         """
         try:
+            start = time.time()
             user_ctx = build_user_context(state)
             
             # Arricchisci il contesto con i risultati web
@@ -172,6 +183,7 @@ class OrchestratorAgent:
                 user_context=user_ctx,
                 conversation_history=state.get("conversation_history")
             )
+            elapsed = time.time() - start
             
             state["generated_response"] = generation["response"]
             state["generation_status"] = generation.get("status", "success")
@@ -181,7 +193,8 @@ class OrchestratorAgent:
             state["workflow_steps"].append({
                 "step": "generation",
                 "agent": "GeneratorAgent",
-                "result": generation
+                "result": generation,
+                "elapsed_time": elapsed
             })
             
         except Exception as e:
@@ -195,6 +208,7 @@ class OrchestratorAgent:
         Nodo per la revisione della risposta
         """
         try:
+            start = time.time()
             user_ctx = build_user_context(state)
             revision = await self.reviser.revise(
                 original_query=state["query"],
@@ -203,6 +217,7 @@ class OrchestratorAgent:
                 user_context=user_ctx,
                 conversation_history=state.get("conversation_history")
             )
+            elapsed = time.time() - start
             
             state["final_response"] = revision["revised_response"]
             state["has_revisions"] = revision.get("has_changes", False)
@@ -213,7 +228,8 @@ class OrchestratorAgent:
             state["workflow_steps"].append({
                 "step": "revision",
                 "agent": "RevisionAgent",
-                "result": revision
+                "result": revision,
+                "elapsed_time": elapsed
             })
             
         except Exception as e:
@@ -270,13 +286,15 @@ class OrchestratorAgent:
             }
             
             # Esegui il workflow
+            pipeline_start = time.time()
             final_state = await self.workflow.ainvoke(initial_state)
+            total_time = time.time() - pipeline_start
             
-            # Write pipeline log
+            # Scrivi il log della pipeline
             try:
-                self.logger.write_log(final_state, final_state.get("workflow_steps", []))
+                self.logger.write_log(final_state, final_state.get("workflow_steps", []), total_time=total_time)
             except Exception:
-                pass  # Logging should never break the pipeline
+                pass  # Il logging non deve mai bloccare la pipeline
             
             # Restituisci il risultato
             return {

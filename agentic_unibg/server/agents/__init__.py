@@ -9,7 +9,7 @@ from .web_agent import WebAgent
 from .generator_agent import GeneratorAgent
 from .revision_agent import RevisionAgent
 from .agent_state import AgentState, build_user_context
-from .pipeline_logger import PipelineLogger
+from logger.pipeline_logger import PipelineLogger
 
 __all__ = [
     "OrchestratorAgent",

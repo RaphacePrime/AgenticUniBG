@@ -5,8 +5,8 @@ from typing import Dict, List, Optional
 
 class PipelineLogger:
     """
-    Logger that creates a detailed log file for each user query,
-    capturing the full pipeline: Classifier → QueryAgent → WebAgent → Generator → Reviser.
+    Logger che crea un file di log dettagliato per ogni query utente,
+    catturando l'intera pipeline: Classifier → QueryAgent → WebAgent → Generator → Reviser.
     """
 
     LOGS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "logs")
@@ -16,15 +16,15 @@ class PipelineLogger:
 
     def _build_filename(self, matricola: Optional[str], timestamp: datetime) -> str:
         """
-        Build the log filename: log_{matricola}_{timestamp} or log_ospite_{timestamp}
+        Costruisce il nome del file di log: log_{matricola}_{timestamp} oppure log_ospite_{timestamp}
         """
         user_id = matricola if matricola else "ospite"
         ts = timestamp.strftime("%Y%m%d_%H%M%S_%f")
         return f"log_{user_id}_{ts}.txt"
 
-    def write_log(self, state: Dict, workflow_steps: List[Dict], timestamp: datetime = None) -> str:
+    def write_log(self, state: Dict, workflow_steps: List[Dict], timestamp: datetime = None, total_time: float = None) -> str:
         """
-        Write a full pipeline log file and return the file path.
+        Scrive il file di log completo della pipeline e restituisce il percorso del file.
         """
         if timestamp is None:
             timestamp = datetime.now()
@@ -33,22 +33,22 @@ class PipelineLogger:
         filename = self._build_filename(matricola, timestamp)
         filepath = os.path.join(self.LOGS_DIR, filename)
 
-        lines = self._build_log_content(state, workflow_steps, timestamp)
+        lines = self._build_log_content(state, workflow_steps, timestamp, total_time)
 
         with open(filepath, "w", encoding="utf-8") as f:
             f.write("\n".join(lines))
 
         return filepath
 
-    def _build_log_content(self, state: Dict, workflow_steps: List[Dict], timestamp: datetime) -> List[str]:
+    def _build_log_content(self, state: Dict, workflow_steps: List[Dict], timestamp: datetime, total_time: float = None) -> List[str]:
         """
-        Build the full log content as a list of lines.
+        Costruisce il contenuto completo del log come lista di righe.
         """
         sep = "=" * 80
         sub_sep = "-" * 60
         lines = []
 
-        # ── Header ──
+        # ── Intestazione ──
         lines.append(sep)
         lines.append("AGENTIC UNIBG - PIPELINE LOG")
         lines.append(sep)
@@ -56,42 +56,42 @@ class PipelineLogger:
         lines.append(f"Status    : {state.get('status', 'unknown')}")
         lines.append("")
 
-        # ── User Info ──
+        # ── Informazioni utente ──
         lines.append(sub_sep)
-        lines.append("USER INFORMATION")
+        lines.append("INFORMAZIONI UTENTE")
         lines.append(sub_sep)
         user_status = state.get("user_status", "ospite")
-        lines.append(f"User type   : {user_status}")
+        lines.append(f"Tipo utente   : {user_status}")
         if user_status == "loggato":
-            lines.append(f"Name        : {state.get('user_name', 'N/A')} {state.get('user_surname', 'N/A')}")
-            lines.append(f"Matricola   : {state.get('user_matricola', 'N/A')}")
-            lines.append(f"Department  : {state.get('user_department', 'N/A')}")
-            lines.append(f"Course      : {state.get('user_course', 'N/A')}")
-            lines.append(f"Typology    : {state.get('user_tipology', 'N/A')}")
-            lines.append(f"Year        : {state.get('user_year', 'N/A')}")
+            lines.append(f"Nome          : {state.get('user_name', 'N/A')} {state.get('user_surname', 'N/A')}")
+            lines.append(f"Matricola     : {state.get('user_matricola', 'N/A')}")
+            lines.append(f"Dipartimento  : {state.get('user_department', 'N/A')}")
+            lines.append(f"Corso         : {state.get('user_course', 'N/A')}")
+            lines.append(f"Tipologia     : {state.get('user_tipology', 'N/A')}")
+            lines.append(f"Anno          : {state.get('user_year', 'N/A')}")
         else:
-            lines.append("(Guest user - no profile information available)")
+            lines.append("(Utente ospite - nessuna informazione di profilo disponibile)")
         lines.append("")
 
-        # ── Original Query ──
+        # ── Query originale ──
         lines.append(sub_sep)
-        lines.append("ORIGINAL USER QUERY")
+        lines.append("QUERY ORIGINALE DELL'UTENTE")
         lines.append(sub_sep)
         lines.append(state.get("query", "N/A"))
         lines.append("")
 
-        # ── Conversation History ──
+        # ── Storico conversazione ──
         conv = state.get("conversation_history")
         if conv:
             lines.append(sub_sep)
-            lines.append("CONVERSATION HISTORY (recent)")
+            lines.append("STORICO CONVERSAZIONE (recente)")
             lines.append(sub_sep)
             for msg in conv[-6:]:
-                role = "User" if msg.get("role") == "user" else "Assistant"
+                role = "Utente" if msg.get("role") == "user" else "Assistente"
                 lines.append(f"[{role}]: {msg.get('content', '')[:300]}")
             lines.append("")
 
-        # ── Process each pipeline step ──
+        # ── Elaborazione di ogni step della pipeline ──
         step_map = {s["step"]: s for s in workflow_steps}
 
         # 1. CLASSIFIER
@@ -130,24 +130,27 @@ class PipelineLogger:
             response_field="revised_response"
         ))
 
-        # ── Final Response ──
+        # ── Risposta finale ──
         lines.append(sep)
-        lines.append("FINAL RESPONSE")
+        lines.append("RISPOSTA FINALE")
         lines.append(sep)
         lines.append(state.get("final_response", "N/A"))
         lines.append("")
 
-        # ── Errors ──
+        # ── Errori ──
         error = state.get("error")
         if error:
             lines.append(sub_sep)
-            lines.append("ERRORS")
+            lines.append("ERRORI")
             lines.append(sub_sep)
             lines.append(error)
             lines.append("")
 
+        # ── Tempi di esecuzione ──
+        lines.extend(self._format_timing_section(workflow_steps, total_time))
+
         lines.append(sep)
-        lines.append("END OF LOG")
+        lines.append("FINE DEL LOG")
         lines.append(sep)
 
         return lines
@@ -160,7 +163,7 @@ class PipelineLogger:
         response_field: str = "raw_response"
     ) -> List[str]:
         """
-        Format a standard agent section with system prompt, user prompt, and response.
+        Formatta una sezione standard dell'agente con system prompt, user prompt e risposta.
         """
         sep = "-" * 60
         lines = []
@@ -172,7 +175,7 @@ class PipelineLogger:
         status = result.get("status", step_data.get("status", "N/A"))
         lines.append(f"Status: {status}")
 
-        # Extra fields (category, confidence, etc.)
+        # Campi aggiuntivi (categoria, confidence, ecc.)
         if extra_fields:
             for field in extra_fields:
                 value = result.get(field, "N/A")
@@ -194,10 +197,10 @@ class PipelineLogger:
             lines.append(user_prompt)
             lines.append("")
 
-        # Response
+        # Risposta
         raw_resp = result.get(response_field, "")
         if raw_resp:
-            lines.append(">>> RESPONSE:")
+            lines.append(">>> RISPOSTA:")
             lines.append(str(raw_resp))
             lines.append("")
 
@@ -205,7 +208,7 @@ class PipelineLogger:
 
     def _format_web_agent_section(self, step_data: Dict, web_results: List[Dict]) -> List[str]:
         """
-        Format the WebAgent section showing search query and top results.
+        Formatta la sezione del WebAgent mostrando la query di ricerca e i principali risultati.
         """
         sep = "-" * 60
         lines = []
@@ -214,23 +217,64 @@ class PipelineLogger:
         lines.append(sep)
 
         result = step_data.get("result", {})
-        lines.append(f"Status          : {result.get('status', 'N/A')}")
-        lines.append(f"Search query    : {result.get('search_query', 'N/A')}")
-        lines.append(f"Total results   : {result.get('total_results', 0)}")
-        lines.append(f"Top results used: {result.get('top_results_count', 0)}")
+        lines.append(f"Status              : {result.get('status', 'N/A')}")
+        lines.append(f"Query di ricerca    : {result.get('search_query', 'N/A')}")
+        lines.append(f"Totale risultati    : {result.get('total_results', 0)}")
+        lines.append(f"Risultati usati     : {result.get('top_results_count', 0)}")
         lines.append("")
 
         if web_results:
-            lines.append(">>> TOP RESULTS:")
+            lines.append(">>> RISULTATI PRINCIPALI:")
             for r in web_results:
                 lines.append(f"  [{r.get('rank', '?')}] Score: {r.get('score', 0):.4f}")
-                lines.append(f"      Title  : {r.get('title', 'N/A')}")
-                lines.append(f"      URL    : {r.get('url', 'N/A')}")
+                lines.append(f"      Titolo   : {r.get('title', 'N/A')}")
+                lines.append(f"      URL      : {r.get('url', 'N/A')}")
                 content = r.get('content', '')
-                lines.append(f"      Content: {content}")
+                lines.append(f"      Contenuto: {content}")
                 lines.append("")
         else:
-            lines.append(">>> No web results retrieved.")
+            lines.append(">>> Nessun risultato web recuperato.")
             lines.append("")
+
+        return lines
+
+    def _format_timing_section(self, workflow_steps: List[Dict], total_time: float = None) -> List[str]:
+        """
+        Formatta la sezione riepilogativa dei tempi di esecuzione di ogni agente e il tempo totale.
+        """
+        sep = "=" * 80
+        sub_sep = "-" * 60
+        lines = []
+
+        lines.append(sub_sep)
+        lines.append("TEMPI DI ESECUZIONE")
+        lines.append(sub_sep)
+
+        # Mappa nomi leggibili per ogni step
+        step_labels = {
+            "classification": "Classifier Agent",
+            "query_generation": "Query Agent",
+            "web_search": "Web Agent",
+            "generation": "Generator Agent",
+            "revision": "Revision Agent",
+        }
+
+        for step in workflow_steps:
+            step_name = step.get("step", "sconosciuto")
+            label = step_labels.get(step_name, step_name)
+            elapsed = step.get("elapsed_time")
+            if elapsed is not None:
+                lines.append(f"  {label:<25}: {elapsed:.3f}s")
+            else:
+                lines.append(f"  {label:<25}: N/A")
+
+        lines.append("")
+
+        if total_time is not None:
+            lines.append(f"  {'TEMPO TOTALE':<25}: {total_time:.3f}s")
+        else:
+            lines.append(f"  {'TEMPO TOTALE':<25}: N/A")
+
+        lines.append("")
 
         return lines
