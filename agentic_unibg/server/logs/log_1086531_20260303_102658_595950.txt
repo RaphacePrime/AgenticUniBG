@@ -1,0 +1,957 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-03 10:26:58
+Status    : success
+
+------------------------------------------------------------
+USER INFORMATION
+------------------------------------------------------------
+User type   : loggato
+Name        : Raphael Mazzoleni
+Matricola   : 1086531
+Department  : Scuola di Ingegneria
+Course      : Ingegneria informatica
+Typology    : Magistrale
+Year        : 1
+
+------------------------------------------------------------
+ORIGINAL USER QUERY
+------------------------------------------------------------
+quale è la mail di roy subhankar, preparami un template per chidergli di consegnare i voti dell'esame di deeplearning
+
+------------------------------------------------------------
+CONVERSATION HISTORY (recent)
+------------------------------------------------------------
+[User]: chi èl'abbadini? perchè è sempre in giro ed è cosi misterioso
+[Assistant]: Marco Abbadini è un Assegnista di ricerca e Postdoctoral Researcher presso l'Università degli Studi di Bergamo.
+
+Dettagli su Marco Abbadini:
+- NOME: Marco Abbadini
+- RUOLO: Assegnista di ricerca e Postdoctoral Researcher (dal ottobre 2024).
+- DIPARTIMENTO: Dipartimento di Ingegneria Gestionale, dell
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: informazioni_corso
+Description: Richieste su corsi, programmi, docenti
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, esami, ricevimenti
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: chi èl'abbadini? perchè è sempre in giro ed è cosi misterioso
+- Assistente: Marco Abbadini è un Assegnista di ricerca e Postdoctoral Researcher presso l'Università degli Studi di Bergamo.
+
+Dettagli su Marco Abbadini:
+- NOME: M
+
+Nuova domanda: quale è la mail di roy subhankar, preparami un template per chidergli di consegnare i voti dell'esame di deeplearning
+
+>>> RESPONSE:
+informazioni_corso
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: email roy subhankar deeplearning unibg
+Original Query: quale è la mail di roy subhankar, preparami un template per chidergli di consegnare i voti dell'esame di deeplearning
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- Tieni conto del contesto della conversazione per capire cosa cerca lo studente
+- La query deve essere in italiano
+- Massimo 6-8 parole
+
+INFORMAZIONI STUDENTE E QUANDO USARLE:
+Ti verranno fornite le informazioni del profilo dello studente (corso di laurea, dipartimento, anno, tipologia).
+Devi decidere AUTONOMAMENTE se includerle nella query in base al tipo di domanda:
+
+INCLUDI le info studente quando la domanda riguarda:
+- Materie, insegnamenti, piano di studi (es. "che materie ho?" → aggiungi corso + anno + tipologia)
+- Orari delle lezioni del proprio corso
+- Piano di studi, crediti, curriculum del proprio corso
+- Qualsiasi domanda dove il corso/anno specifico cambia la risposta
+
+NON INCLUDERE le info studente quando la domanda riguarda:
+- Procedure generiche (iscrizioni, tasse, borse di studio)
+- Informazioni su docenti specifici
+- Servizi universitari (mensa, biblioteca, aule)
+- Informazioni generali sull'ateneo
+- Erasmus, tirocini, laurea
+- Qualsiasi domanda che ha la stessa risposta indipendentemente dal corso
+
+ESEMPIO con info studente (corso: ingegneria informatica, anno: 1, tipologia: magistrale):
+Domanda: "che materie ho al secondo anno?"
+Query: materie secondo anno ingegneria informatica magistrale unibg
+
+ESEMPIO con info studente (corso: scienze della comunicazione, anno: 2, tipologia: triennale):
+Domanda: "quali esami devo dare quest'anno?"
+Query: piano studi secondo anno scienze comunicazione triennale unibg
+
+ESEMPIO senza info studente:
+Domanda: "come faccio a iscrivermi al test di ammissione?"
+Query: iscrizione test ammissione unibg
+
+ESEMPIO senza info studente:
+Domanda: "chi è il docente di algoritmi?"
+Query: docente algoritmi unibg
+
+ESEMPIO senza info studente:
+Domanda: "dove si trova la mensa?"
+Query: mensa universitaria unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: chi èl'abbadini? perchè è sempre in giro ed è cosi misterioso
+- Assistente: Marco Abbadini è un Assegnista di ricerca e Postdoctoral Researcher presso l'Università degli Studi di Bergamo.
+
+Dettagli su Marco Abbadini:
+- NOME: Marco Abbadini
+- RUOLO: Assegnista di ricerca e Pos
+
+
+Informazioni studente:
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Ultima richiesta dello studente: quale è la mail di roy subhankar, preparami un template per chidergli di consegnare i voti dell'esame di deeplearning
+
+Genera la query di ricerca web:
+
+>>> RESPONSE:
+email roy subhankar deeplearning unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status          : success
+Search query    : email roy subhankar deeplearning unibg
+Total results   : 17
+Top results used: 5
+
+>>> TOP RESULTS:
+  [1] Score: 0.9997
+      Title  : Informazioni sul corso | DEEP LEARNING ... - e-learning Unibg
+      URL    : https://elearning15.unibg.it/course/info.php?id=8198
+      Content: Informazioni sul corso. DEEP LEARNING - 38113 - 2025-26. Docente: ROY Subhankar. Academi. Il settore eLearning dell'Università degli studi di Bergamo
+
+  [2] Score: 0.9995
+      Title  : Course information | DEEP LEARNING - 38113 ... - e-learning Unibg
+      URL    : https://elearning15.unibg.it/course/info.php?id=8198&lang=en
+      Content: Course information | DEEP LEARNING - 38113 - 2025-26 | e-learning Unibg
+===============
+
+[Skip to main content](https://elearning15.unibg.it/course/info.php?id=8198&lang=en#maincontent)
+
+E-mail : [didattica.online@unibg.it](mailto:didattica.online@unibg.it)
+
+[English ‎(en)‎](https://elearning15.unibg.it/course/info.php?id=8198&lang=en#)
+
+[Deutsch ‎(de)‎](https://elearning15.unibg.it/course/info.php?id=8198&lang=de)[English ‎(en)‎](https://elearning15.unibg.it/course/info.php?id=8198&lang=en#)[Español - Internacional ‎(es)‎](https://elearning15.unibg.it/course/info.php?id=8198&lang=es)[Français ‎(fr)‎](https://elearning15.unibg.it/course/info.php?id=8198&lang=fr)[Italiano ‎(it)‎](https://elearning15.unibg.it/course/info.php?id=8198&lang=it)[Русский ‎(ru)‎](https://elearning15.unibg.it/course/info.php?id=8198&lang=ru)
+
+[Log in](https://elearning15.unibg.it/login/index.php)
+
+[e-learning Unibg](https://elearning15.unibg.it/ "e-learning Unibg")
+
+[Home](https://elearning15.unibg.it/)
+
+[![Image 1: e-learning Unibg](https://elearning15.unibg.it/pluginfile.php/1/theme_academi/logo/1772480802/logo-blu-unibg.svg)](https://elearning15.unibg.it/?redirect=0)
+
+*   [Home](https://elearning15.unibg.it/)
+*   [More](https://elearning15.unibg.it/course/info.php?id=8198&lang=en#)
+
+Course information
+==================
+
+### [DEEP LEARNING - 38113 - 2025-26](https://elearning15.unibg.it/course/view.php?id=8198)
+
+*   Teacher: [Subhankar ROY](https://elearning15.unibg.it/user/profile.php?id=83816)
+
+[![Image 2: Academi](https://elearning15.unibg.it/pluginfile.php/1/theme_academi/footerlogo/1772480802/unibg-elearning-bianco.svg)](https://elearning15.unibg.it/course/info.php?id=8198&lang=en#)
+
+Il settore eLearning dell'Università degli studi di Bergamo organizza e coordina la didattica online dei vari corsi di studio attraverso la piattaforma Moodle UniBg.
+
+Info
+----
+
+[e-Learning](https://www.unibg.it/elearning)[Studenti](https://www.unibg.it/studenti)[EasyUniBg](https://logistica.unibg.it/PortaleStudenti/)[MyUniBg](https://my.unibg.it/)[Dipartimenti](https://www.unibg.it/universita/organizzazione/dipartimenti)[Ticket Studenti](https://helpdesk.unibg.it/helpdesksegrestud/)[Esci da SEB](https://elearning15.unibg.it/login/logout.php)
+
+Contact Us
+----------
+
+Via dei Caniana, 2, Bergamo, 24127
+
+Email : [didattica.online@unibg.it](mailto:didattica.online@unibg.it)
+
+Follow Us
+---------
+
+*   [](https://x.com/unibergamo)
+*   [](https://www.youtube.com/@unibgtube)
+*   [](https://www.instagram.com/unibergamo/)
+*   [](https://www.facebook.com/@UniBergamo)
+
+[Contact site support](https://helpdesk.unibg.it/helpdesksegrestud)
+
+You are not logged in. ([Log in](https://elearning15.unibg.it/login/index.php))
+
+Powered by [Moodle](https://moodle.com/)
+
+[](https://elearning15.unibg.it/course/info.php?id=8198&lang=en#)
+
+  [3] Score: 0.9988
+      Title  : Esplora - Aisberg - UniBg
+      URL    : https://aisberg.unibg.it/browse?type=subjectSsd2024&sort_by=ASC&order=1&rpp=20&etal=-1&authority=ou53461&starts_with=M&filter_value_display=
+      Content: Metric-Learning-Based Deep Hashing Network for Content-Based Retrieval of Remote Sensing Images. 2021-01-01 Roy, Subhankar; Sangineto, Enver; Demir, Begum; Sebe
+
+  [4] Score: 0.9315
+      Title  : Entrar al sitio | e-learning Unibg
+      URL    : https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es
+      Content: Entrar al sitio | e-learning Unibg
+===============
+
+[Salta al contenido principal](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#maincontent)
+
+Correo electrónico : [didattica.online@unibg.it](mailto:didattica.online@unibg.it)
+
+[Español - Internacional ‎(es)‎](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#)
+
+[Deutsch ‎(de)‎](https://elearning15.unibg.it/login/index.php?lang=de)[English ‎(en)‎](https://elearning15.unibg.it/login/index.php?lang=en)[Español - Internacional ‎(es)‎](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#)[Français ‎(fr)‎](https://elearning15.unibg.it/login/index.php?lang=fr)[Italiano ‎(it)‎](https://elearning15.unibg.it/login/index.php?lang=it)[Русский ‎(ru)‎](https://elearning15.unibg.it/login/index.php?lang=ru)
+
+[Acceder](https://elearning15.unibg.it/login/index.php)
+
+[e-learning Unibg](https://elearning15.unibg.it/ "e-learning Unibg")
+
+[Página Principal](https://elearning15.unibg.it/)
+
+[![Image 1: e-learning Unibg](https://elearning15.unibg.it/pluginfile.php/1/theme_academi/logo/1765832564/logo-blu-unibg.svg)](https://elearning15.unibg.it/?redirect=0)
+
+*   [Página Principal](https://elearning15.unibg.it/)
+*   [Más](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#)
+
+UniBG
+-----
+
+**Studenti, Docenti, Guest, Tutor, Dottorandi, Personale Amministrativo, Tecnico e Bibliotecario.**
+
+Effettuano l'accesso tramite il pulsante sottostante inserendo le credenziali fornite dall'università per l'accesso allo Sportello Internet/Wifi.
+
+Identifíquese usando su cuenta en:
+----------------------------------
+
+[![Image 2](https://idp-idm.unibg.it/idp/images/Logo.png) IDP-UniBg](https://elearning15.unibg.it/auth/saml2/login.php?wants=https%3A%2F%2Felearning15.unibg.it%2Fmod%2Fbook%2Fview.php%3Fid%3D594%26chapterid%3D177%26lang%3Des&idp=07bc5821359dd97a289587c60de86f77&passive=off)
+
+[¿Olvidó su contraseña?](https://www.sia.unibg.it/ssp/?action=sendtoken)
+
+Esterni
+-------
+
+**Utenti Esterni non in possesso di email istituzionale UniBG.**
+
+Effettuano l'accesso attraverso le credenziali che sono state loro assegnate.
+
+ Nombre de usuario  
+
+Contraseña 
+
+Acceder Esterni
+
+[¿Olvidó su contraseña?](https://elearning15.unibg.it/login/forgot_password.php)
+
+Algunos cursos permiten el acceso de invitados
+----------------------------------------------
+
+Entrar como persona invitada
+
+[Español - Internacional ‎(es)‎](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#)
+
+[Deutsch ‎(de)‎](https://elearning15.unibg.it/login/index.php?lang=de)[English ‎(en)‎](https://elearning15.unibg.it/login/index.php?lang=en)[Español - Internacional ‎(es)‎](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#)[Français ‎(fr)‎](https://elearning15.unibg.it/login/index.php?lang=fr)[Italiano ‎(it)‎](https://elearning15.unibg.it/login/index.php?lang=it)[Русский ‎(ru)‎](https://elearning15.unibg.it/login/index.php?lang=ru)
+
+[![Image 3: Academi](https://elearning15.unibg.it/pluginfile.php/1/theme_academi/footerlogo/1765832564/unibg-elearning-bianco.svg)](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#)
+
+Il settore eLearning dell'Università degli studi di Bergamo organizza e coordina la didattica online dei vari corsi di studio attraverso la piattaforma Moodle UniBg.
+
+Información
+-----------
+
+[e-Learning](https://www.unibg.it/elearning)[Studenti](https://www.unibg.it/studenti)[EasyUniBg](https://logistica.unibg.it/PortaleStudenti/)[MyUniBg](https://my.unibg.it/)[Dipartimenti](https://www.unibg.it/universita/organizzazione/dipartimenti)[Ticket Studenti](https://helpdesk.unibg.it/helpdesksegrestud/)[Esci da SEB](https://elearning15.unibg.it/login/logout.php)
+
+Contacta
+--------
+
+Via dei Caniana, 2, Bergamo, 24127
+
+Correo electrónico : [didattica.online@unibg.it](mailto:didattica.online@unibg.it)
+
+Síguenos
+--------
+
+*   [](https://x.com/unibergamo)
+*   [](https://www.youtube.com/@unibgtube)
+*   [](https://www.instagram.com/unibergamo/)
+*   [](https://www.facebook.com/@UniBergamo)
+
+[Contactar con el soporte del sitio](https://helpdesk.unibg.it/helpdesksegrestud)
+
+Usted no se ha identificado.
+
+Desarrollado por [Moodle](https://moodle.com/)
+
+[](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#)
+
+  [5] Score: 0.9214
+      Title  : Вход на сайт | e-learning Unibg
+      URL    : https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru
+      Content: Вход на сайт | e-learning Unibg
+===============
+
+[Перейти к основному содержанию](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#maincontent)
+
+E-mail : [didattica.online@unibg.it](mailto:didattica.online@unibg.it)
+
+[Русский ‎(ru)‎](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#)
+
+[Deutsch ‎(de)‎](https://elearning15.unibg.it/login/index.php?lang=de)[English ‎(en)‎](https://elearning15.unibg.it/login/index.php?lang=en)[Español - Internacional ‎(es)‎](https://elearning15.unibg.it/login/index.php?lang=es)[Français ‎(fr)‎](https://elearning15.unibg.it/login/index.php?lang=fr)[Italiano ‎(it)‎](https://elearning15.unibg.it/login/index.php?lang=it)[Русский ‎(ru)‎](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#)
+
+[Вход](https://elearning15.unibg.it/login/index.php)
+
+[e-learning Unibg](https://elearning15.unibg.it/ "e-learning Unibg")
+
+[В начало](https://elearning15.unibg.it/)
+
+[![Image 1: e-learning Unibg](https://elearning15.unibg.it/pluginfile.php/1/theme_academi/logo/1765832564/logo-blu-unibg.svg)](https://elearning15.unibg.it/?redirect=0)
+
+*   [В начало](https://elearning15.unibg.it/)
+*   [Дополнительно](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#)
+
+UniBG
+-----
+
+**Studenti, Docenti, Guest, Tutor, Dottorandi, Personale Amministrativo, Tecnico e Bibliotecario.**
+
+Effettuano l'accesso tramite il pulsante sottostante inserendo le credenziali fornite dall'università per l'accesso allo Sportello Internet/Wifi.
+
+Войти с использованием учетной записи:
+--------------------------------------
+
+[![Image 2](https://idp-idm.unibg.it/idp/images/Logo.png) IDP-UniBg](https://elearning15.unibg.it/auth/saml2/login.php?wants=https%3A%2F%2Felearning15.unibg.it%2Fmod%2Fbook%2Fview.php%3Fid%3D593%26chapterid%3D208%26lang%3Dru&idp=07bc5821359dd97a289587c60de86f77&passive=off)
+
+[Забыли пароль?](https://www.sia.unibg.it/ssp/?action=sendtoken)
+
+Esterni
+-------
+
+**Utenti Esterni non in possesso di email istituzionale UniBG.**
+
+Effettuano l'accesso attraverso le credenziali che sono state loro assegnate.
+
+ Логин  
+
+Пароль 
+
+Вход Esterni
+
+[Забыли пароль?](https://elearning15.unibg.it/login/forgot_password.php)
+
+Некоторые курсы, возможно, открыты для гостей
+---------------------------------------------
+
+Зайти гостем
+
+[Русский ‎(ru)‎](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#)
+
+[Deutsch ‎(de)‎](https://elearning15.unibg.it/login/index.php?lang=de)[English ‎(en)‎](https://elearning15.unibg.it/login/index.php?lang=en)[Español - Internacional ‎(es)‎](https://elearning15.unibg.it/login/index.php?lang=es)[Français ‎(fr)‎](https://elearning15.unibg.it/login/index.php?lang=fr)[Italiano ‎(it)‎](https://elearning15.unibg.it/login/index.php?lang=it)[Русский ‎(ru)‎](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#)
+
+[![Image 3: Academi](https://elearning15.unibg.it/pluginfile.php/1/theme_academi/footerlogo/1765832564/unibg-elearning-bianco.svg)](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#)
+
+Il settore eLearning dell'Università degli studi di Bergamo organizza e coordina la didattica online dei vari corsi di studio attraverso la piattaforma Moodle UniBg.
+
+Инфо
+----
+
+[e-Learning](https://www.unibg.it/elearning)[Studenti](https://www.unibg.it/studenti)[EasyUniBg](https://logistica.unibg.it/PortaleStudenti/)[MyUniBg](https://my.unibg.it/)[Dipartimenti](https://www.unibg.it/universita/organizzazione/dipartimenti)[Ticket Studenti](https://helpdesk.unibg.it/helpdesksegrestud/)[Esci da SEB](https://elearning15.unibg.it/login/logout.php)
+
+Контакты
+--------
+
+Via dei Caniana, 2, Bergamo, 24127
+
+Email : [didattica.online@unibg.it](mailto:didattica.online@unibg.it)
+
+Follow Us
+---------
+
+*   [](https://x.com/unibergamo)
+*   [](https://www.youtube.com/@unibgtube)
+*   [](https://www.instagram.com/unibergamo/)
+*   [](https://www.facebook.com/@UniBergamo)
+
+[Служба поддержки сайта](https://helpdesk.unibg.it/helpdesksegrestud)
+
+Вы не вошли в систему
+
+На платформе [Moodle](https://moodle.com/)
+
+[](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#)
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: informazioni_corso
+
+>>> SYSTEM PROMPT:
+Sei un esperto dei corsi dell'Università di Bergamo.
+Fornisci informazioni dettagliate e accurate sui corsi, programmi di studio e docenti.
+Se non hai informazioni specifiche, suggerisci dove lo studente può trovarle (sito del corso, segreteria, etc.).
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+8. Alcune fonti sono documenti PDF: in quel caso vengono forniti anche i link ipertestuali estratti direttamente dal PDF con la pagina di provenienza. Se uno di questi link è rilevante per la risposta dello studente, includilo nella risposta in forma cliccabile (formato Markdown: [testo](url)) indicando anche da quale parte del documento proviene.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: Informazioni sul corso | DEEP LEARNING ... - e-learning Unibg
+URL: https://elearning15.unibg.it/course/info.php?id=8198
+Contenuto: Informazioni sul corso. DEEP LEARNING - 38113 - 2025-26. Docente: ROY Subhankar. Academi. Il settore eLearning dell'Università degli studi di Bergamo
+
+Fonte 2: Course information | DEEP LEARNING - 38113 ... - e-learning Unibg
+URL: https://elearning15.unibg.it/course/info.php?id=8198&lang=en
+Contenuto: Course information | DEEP LEARNING - 38113 - 2025-26 | e-learning Unibg
+===============
+
+[Skip to main content](https://elearning15.unibg.it/course/info.php?id=8198&lang=en#maincontent)
+
+E-mail : [didattica.online@unibg.it](mailto:didattica.online@unibg.it)
+
+[English ‎(en)‎](https://elearning15.unibg.it/course/info.php?id=8198&lang=en#)
+
+[Deutsch ‎(de)‎](https://elearning15.unibg.it/course/info.php?id=8198&lang=de)[English ‎(en)‎](https://elearning15.unibg.it/course/info.php?id=8198&lang=en#)[Español - Internacional ‎(es)‎](https://elearning15.unibg.it/course/info.php?id=8198&lang=es)[Français ‎(fr)‎](https://elearning15.unibg.it/course/info.php?id=8198&lang=fr)[Italiano ‎(it)‎](https://elearning15.unibg.it/course/info.php?id=8198&lang=it)[Русский ‎(ru)‎](https://elearning15.unibg.it/course/info.php?id=8198&lang=ru)
+
+[Log in](https://elearning15.unibg.it/login/index.php)
+
+[e-learning Unibg](https://elearning15.unibg.it/ "e-learning Unibg")
+
+[Home](https://elearning15.unibg.it/)
+
+[![Image 1: e-learning Unibg](https://elearning15.unibg.it/pluginfile.php/1/theme_academi/logo/1772480802/logo-blu-unibg.svg)](https://elearning15.unibg.it/?redirect=0)
+
+*   [Home](https://elearning15.unibg.it/)
+*   [More](https://elearning15.unibg.it/course/info.php?id=8198&lang=en#)
+
+Course information
+==================
+
+### [DEEP LEARNING - 38113 - 2025-26](https://elearning15.unibg.it/course/view.php?id=8198)
+
+*   Teacher: [Subhankar ROY](https://elearning15.unibg.it/user/profile.php?id=83816)
+
+[![Image 2: Academi](https://elearning15.unibg.it/pluginfile.php/1/theme_academi/footerlogo/1772480802/unibg-elearning-bianco.svg)](https://elearning15.unibg.it/course/info.php?id=8198&lang=en#)
+
+Il settore eLearning dell'Università degli studi di Bergamo organizza e coordina la didattica online dei vari corsi di studio attraverso la piattaforma Moodle UniBg.
+
+Info
+----
+
+[e-Learning](https://www.unibg.it/elearning)[Studenti](https://www.unibg.it/studenti)[EasyUniBg](https://logistica.unibg.it/PortaleStudenti/)[MyUniBg](https://my.unibg.it/)[Dipartimenti](https://www.unibg.it/universita/organizzazione/dipartimenti)[Ticket Studenti](https://helpdesk.unibg.it/helpdesksegrestud/)[Esci da SEB](https://elearning15.unibg.it/login/logout.php)
+
+Contact Us
+----------
+
+Via dei Caniana, 2, Bergamo, 24127
+
+Email : [didattica.online@unibg.it](mailto:didattica.online@unibg.it)
+
+Follow Us
+---------
+
+*   [](https://x.com/unibergamo)
+*   [](https://www.youtube.com/@unibgtube)
+*   [](https://www.instagram.com/unibergamo/)
+*   [](https://www.facebook.com/@UniBergamo)
+
+[Contact site support](https://helpdesk.unibg.it/helpdesksegrestud)
+
+You are not logged in. ([Log in](https://elearning15.unibg.it/login/index.php))
+
+Powered by [Moodle](https://moodle.com/)
+
+[](https://elearning15.unibg.it/course/info.php?id=8198&lang=en#)
+
+Fonte 3: Esplora - Aisberg - UniBg
+URL: https://aisberg.unibg.it/browse?type=subjectSsd2024&sort_by=ASC&order=1&rpp=20&etal=-1&authority=ou53461&starts_with=M&filter_value_display=
+Contenuto: Metric-Learning-Based Deep Hashing Network for Content-Based Retrieval of Remote Sensing Images. 2021-01-01 Roy, Subhankar; Sangineto, Enver; Demir, Begum; Sebe
+
+Fonte 4: Entrar al sitio | e-learning Unibg
+URL: https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es
+Contenuto: Entrar al sitio | e-learning Unibg
+===============
+
+[Salta al contenido principal](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#maincontent)
+
+Correo electrónico : [didattica.online@unibg.it](mailto:didattica.online@unibg.it)
+
+[Español - Internacional ‎(es)‎](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#)
+
+[Deutsch ‎(de)‎](https://elearning15.unibg.it/login/index.php?lang=de)[English ‎(en)‎](https://elearning15.unibg.it/login/index.php?lang=en)[Español - Internacional ‎(es)‎](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#)[Français ‎(fr)‎](https://elearning15.unibg.it/login/index.php?lang=fr)[Italiano ‎(it)‎](https://elearning15.unibg.it/login/index.php?lang=it)[Русский ‎(ru)‎](https://elearning15.unibg.it/login/index.php?lang=ru)
+
+[Acceder](https://elearning15.unibg.it/login/index.php)
+
+[e-learning Unibg](https://elearning15.unibg.it/ "e-learning Unibg")
+
+[Página Principal](https://elearning15.unibg.it/)
+
+[![Image 1: e-learning Unibg](https://elearning15.unibg.it/pluginfile.php/1/theme_academi/logo/1765832564/logo-blu-unibg.svg)](https://elearning15.unibg.it/?redirect=0)
+
+*   [Página Principal](https://elearning15.unibg.it/)
+*   [Más](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#)
+
+UniBG
+-----
+
+**Studenti, Docenti, Guest, Tutor, Dottorandi, Personale Amministrativo, Tecnico e Bibliotecario.**
+
+Effettuano l'accesso tramite il pulsante sottostante inserendo le credenziali fornite dall'università per l'accesso allo Sportello Internet/Wifi.
+
+Identifíquese usando su cuenta en:
+----------------------------------
+
+[![Image 2](https://idp-idm.unibg.it/idp/images/Logo.png) IDP-UniBg](https://elearning15.unibg.it/auth/saml2/login.php?wants=https%3A%2F%2Felearning15.unibg.it%2Fmod%2Fbook%2Fview.php%3Fid%3D594%26chapterid%3D177%26lang%3Des&idp=07bc5821359dd97a289587c60de86f77&passive=off)
+
+[¿Olvidó su contraseña?](https://www.sia.unibg.it/ssp/?action=sendtoken)
+
+Esterni
+-------
+
+**Utenti Esterni non in possesso di email istituzionale UniBG.**
+
+Effettuano l'accesso attraverso le credenziali che sono state loro assegnate.
+
+ Nombre de usuario  
+
+Contraseña 
+
+Acceder Esterni
+
+[¿Olvidó su contraseña?](https://elearning15.unibg.it/login/forgot_password.php)
+
+Algunos cursos permiten el acceso de invitados
+----------------------------------------------
+
+Entrar como persona invitada
+
+[Español - Internacional ‎(es)‎](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#)
+
+[Deutsch ‎(de)‎](https://elearning15.unibg.it/login/index.php?lang=de)[English ‎(en)‎](https://elearning15.unibg.it/login/index.php?lang=en)[Español - Internacional ‎(es)‎](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#)[Français ‎(fr)‎](https://elearning15.unibg.it/login/index.php?lang=fr)[Italiano ‎(it)‎](https://elearning15.unibg.it/login/index.php?lang=it)[Русский ‎(ru)‎](https://elearning15.unibg.it/login/index.php?lang=ru)
+
+[![Image 3: Academi](https://elearning15.unibg.it/pluginfile.php/1/theme_academi/footerlogo/1765832564/unibg-elearning-bianco.svg)](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#)
+
+Il settore eLearning dell'Università degli studi di Bergamo organizza e coordina la didattica online dei vari corsi di studio attraverso la piattaforma Moodle UniBg.
+
+Información
+-----------
+
+[e-Learning](https://www.unibg.it/elearning)[Studenti](https://www.unibg.it/studenti)[EasyUniBg](https://logistica.unibg.it/PortaleStudenti/)[MyUniBg](https://my.unibg.it/)[Dipartimenti](https://www.unibg.it/universita/organizzazione/dipartimenti)[Ticket Studenti](https://helpdesk.unibg.it/helpdesksegrestud/)[Esci da SEB](https://elearning15.unibg.it/login/logout.php)
+
+Contacta
+--------
+
+Via dei Caniana, 2, Bergamo, 24127
+
+Correo electrónico : [didattica.online@unibg.it](mailto:didattica.online@unibg.it)
+
+Síguenos
+--------
+
+*   [](https://x.com/unibergamo)
+*   [](https://www.youtube.com/@unibgtube)
+*   [](https://www.instagram.com/unibergamo/)
+*   [](https://www.facebook.com/@UniBergamo)
+
+[Contactar con el soporte del sitio](https://helpdesk.unibg.it/helpdesksegrestud)
+
+Usted no se ha identificado.
+
+Desarrollado por [Moodle](https://moodle.com/)
+
+[](https://elearning15.unibg.it/mod/book/view.php?id=594&chapterid=177&lang=es#)
+
+Fonte 5: Вход на сайт | e-learning Unibg
+URL: https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru
+Contenuto: Вход на сайт | e-learning Unibg
+===============
+
+[Перейти к основному содержанию](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#maincontent)
+
+E-mail : [didattica.online@unibg.it](mailto:didattica.online@unibg.it)
+
+[Русский ‎(ru)‎](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#)
+
+[Deutsch ‎(de)‎](https://elearning15.unibg.it/login/index.php?lang=de)[English ‎(en)‎](https://elearning15.unibg.it/login/index.php?lang=en)[Español - Internacional ‎(es)‎](https://elearning15.unibg.it/login/index.php?lang=es)[Français ‎(fr)‎](https://elearning15.unibg.it/login/index.php?lang=fr)[Italiano ‎(it)‎](https://elearning15.unibg.it/login/index.php?lang=it)[Русский ‎(ru)‎](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#)
+
+[Вход](https://elearning15.unibg.it/login/index.php)
+
+[e-learning Unibg](https://elearning15.unibg.it/ "e-learning Unibg")
+
+[В начало](https://elearning15.unibg.it/)
+
+[![Image 1: e-learning Unibg](https://elearning15.unibg.it/pluginfile.php/1/theme_academi/logo/1765832564/logo-blu-unibg.svg)](https://elearning15.unibg.it/?redirect=0)
+
+*   [В начало](https://elearning15.unibg.it/)
+*   [Дополнительно](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#)
+
+UniBG
+-----
+
+**Studenti, Docenti, Guest, Tutor, Dottorandi, Personale Amministrativo, Tecnico e Bibliotecario.**
+
+Effettuano l'accesso tramite il pulsante sottostante inserendo le credenziali fornite dall'università per l'accesso allo Sportello Internet/Wifi.
+
+Войти с использованием учетной записи:
+--------------------------------------
+
+[![Image 2](https://idp-idm.unibg.it/idp/images/Logo.png) IDP-UniBg](https://elearning15.unibg.it/auth/saml2/login.php?wants=https%3A%2F%2Felearning15.unibg.it%2Fmod%2Fbook%2Fview.php%3Fid%3D593%26chapterid%3D208%26lang%3Dru&idp=07bc5821359dd97a289587c60de86f77&passive=off)
+
+[Забыли пароль?](https://www.sia.unibg.it/ssp/?action=sendtoken)
+
+Esterni
+-------
+
+**Utenti Esterni non in possesso di email istituzionale UniBG.**
+
+Effettuano l'accesso attraverso le credenziali che sono state loro assegnate.
+
+ Логин  
+
+Пароль 
+
+Вход Esterni
+
+[Забыли пароль?](https://elearning15.unibg.it/login/forgot_password.php)
+
+Некоторые курсы, возможно, открыты для гостей
+---------------------------------------------
+
+Зайти гостем
+
+[Русский ‎(ru)‎](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#)
+
+[Deutsch ‎(de)‎](https://elearning15.unibg.it/login/index.php?lang=de)[English ‎(en)‎](https://elearning15.unibg.it/login/index.php?lang=en)[Español - Internacional ‎(es)‎](https://elearning15.unibg.it/login/index.php?lang=es)[Français ‎(fr)‎](https://elearning15.unibg.it/login/index.php?lang=fr)[Italiano ‎(it)‎](https://elearning15.unibg.it/login/index.php?lang=it)[Русский ‎(ru)‎](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#)
+
+[![Image 3: Academi](https://elearning15.unibg.it/pluginfile.php/1/theme_academi/footerlogo/1765832564/unibg-elearning-bianco.svg)](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#)
+
+Il settore eLearning dell'Università degli studi di Bergamo organizza e coordina la didattica online dei vari corsi di studio attraverso la piattaforma Moodle UniBg.
+
+Инфо
+----
+
+[e-Learning](https://www.unibg.it/elearning)[Studenti](https://www.unibg.it/studenti)[EasyUniBg](https://logistica.unibg.it/PortaleStudenti/)[MyUniBg](https://my.unibg.it/)[Dipartimenti](https://www.unibg.it/universita/organizzazione/dipartimenti)[Ticket Studenti](https://helpdesk.unibg.it/helpdesksegrestud/)[Esci da SEB](https://elearning15.unibg.it/login/logout.php)
+
+Контакты
+--------
+
+Via dei Caniana, 2, Bergamo, 24127
+
+Email : [didattica.online@unibg.it](mailto:didattica.online@unibg.it)
+
+Follow Us
+---------
+
+*   [](https://x.com/unibergamo)
+*   [](https://www.youtube.com/@unibgtube)
+*   [](https://www.instagram.com/unibergamo/)
+*   [](https://www.facebook.com/@UniBergamo)
+
+[Служба поддержки сайта](https://helpdesk.unibg.it/helpdesksegrestud)
+
+Вы не вошли в систему
+
+На платформе [Moodle](https://moodle.com/)
+
+[](https://elearning15.unibg.it/mod/book/view.php?id=593&chapterid=208&lang=ru#)
+
+
+>>> USER PROMPT:
+quale è la mail di roy subhankar, preparami un template per chidergli di consegnare i voti dell'esame di deeplearning
+
+>>> RESPONSE:
+Ciao Raphael,
+
+Ho cercato le informazioni di contatto del Professor Subhankar Roy nelle fonti a mia disposizione, ma la sua email specifica non è esplicitamente indicata.
+
+Tuttavia, posso suggerirti dove potresti trovarla:
+1.  **Pagina e-learning del corso:** Spesso l'email del docente è presente nella pagina del corso su e-learning. Puoi accedere alla pagina del corso "DEEP LEARNING - 38113 - 2025-26" tramite questo link: [DEEP LEARNING - 38113 - 2025-26](https://elearning15.unibg.it/course/view.php?id=8198).
+2.  **Profilo docente su e-learning:** Puoi provare a consultare il suo profilo docente su e-learning, che a volte include i contatti: [Subhankar ROY](https://elearning15.unibg.it/user/profile.php?id=83816).
+3.  **Sito del Dipartimento:** In alternativa, puoi cercare la sua pagina personale sul sito del Dipartimento di Ingegneria Gestionale, dell'Informazione e della Produzione, dove solitamente sono riportati i contatti dei docenti.
+
+Nel frattempo, ecco un template che puoi utilizzare per scrivergli una volta trovata la sua email. Ricorda di inviare l'email dal tuo indirizzo istituzionale (@studenti.unibg.it).
+
+---
+
+**Oggetto:** Richiesta pubblicazione voti esame Deep Learning - Matricola 1086531
+
+**Gentile Professor Roy,**
+
+sono Raphael Mazzoleni, studente del 1° anno della Laurea Magistrale in Ingegneria Informatica, con numero di matricola 1086531.
+
+Le scrivo in riferimento all'esame del corso di Deep Learning (codice 38113).
+Vorrei gentilmente chiederLe se fosse possibile avere informazioni riguardo alla pubblicazione dei voti dell'esame.
+
+La ringrazio in anticipo per la Sua disponibilità e il Suo tempo.
+
+Cordiali saluti,
+
+Raphael Mazzoleni
+Matricola: 1086531
+Corso di Laurea Magistrale in Ingegneria Informatica
+Università degli Studi di Bergamo
+
+---
+
+Pagina di riferimento:
+*   https://elearning15.unibg.it/course/info.php?id=8198
+*   https://elearning15.unibg.it/course/info.php?id=8198&lang=en
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Contesto conversazione:
+- Studente: chi èl'abbadini? perchè è sempre in giro ed è cosi misterioso
+- Assistente: Marco Abbadini è un Assegnista di ricerca e Postdoctoral Researcher presso l'Università degli Studi di Bergamo.
+
+Dettagli su Marco Abbadini:
+- NOME: M
+
+Domanda originale: quale è la mail di roy subhankar, preparami un template per chidergli di consegnare i voti dell'esame di deeplearning
+Categoria: informazioni_corso
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Raphael,
+
+Ho cercato le informazioni di contatto del Professor Subhankar Roy nelle fonti a mia disposizione, ma la sua email specifica non è esplicitamente indicata.
+
+Tuttavia, posso suggerirti dove potresti trovarla:
+1.  **Pagina e-learning del corso:** Spesso l'email del docente è presente nella pagina del corso su e-learning. Puoi accedere alla pagina del corso "DEEP LEARNING - 38113 - 2025-26" tramite questo link: [DEEP LEARNING - 38113 - 2025-26](https://elearning15.unibg.it/course/view.php?id=8198).
+2.  **Profilo docente su e-learning:** Puoi provare a consultare il suo profilo docente su e-learning, che a volte include i contatti: [Subhankar ROY](https://elearning15.unibg.it/user/profile.php?id=83816).
+3.  **Sito del Dipartimento:** In alternativa, puoi cercare la sua pagina personale sul sito del Dipartimento di Ingegneria Gestionale, dell'Informazione e della Produzione, dove solitamente sono riportati i contatti dei docenti.
+
+Nel frattempo, ecco un template che puoi utilizzare per scrivergli una volta trovata la sua email. Ricorda di inviare l'email dal tuo indirizzo istituzionale (@studenti.unibg.it).
+
+---
+
+**Oggetto:** Richiesta pubblicazione voti esame Deep Learning - Matricola 1086531
+
+**Gentile Professor Roy,**
+
+sono Raphael Mazzoleni, studente del 1° anno della Laurea Magistrale in Ingegneria Informatica, con numero di matricola 1086531.
+
+Le scrivo in riferimento all'esame del corso di Deep Learning (codice 38113).
+Vorrei gentilmente chiederLe se fosse possibile avere informazioni riguardo alla pubblicazione dei voti dell'esame.
+
+La ringrazio in anticipo per la Sua disponibilità e il Suo tempo.
+
+Cordiali saluti,
+
+Raphael Mazzoleni
+Matricola: 1086531
+Corso di Laurea Magistrale in Ingegneria Informatica
+Università degli Studi di Bergamo
+
+---
+
+Pagina di riferimento:
+*   https://elearning15.unibg.it/course/info.php?id=8198
+*   https://elearning15.unibg.it/course/info.php?id=8198&lang=en
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RESPONSE:
+L'email del Professor Subhankar Roy non è esplicitamente indicata nelle fonti disponibili.
+
+Puoi cercare l'email nei seguenti luoghi:
+1.  Pagina e-learning del corso: L'email del docente è spesso presente nella pagina del corso su e-learning. Puoi accedere alla pagina del corso "DEEP LEARNING - 38113 - 2025-26" tramite questo link: https://elearning15.unibg.it/course/view.php?id=8198.
+2.  Profilo docente su e-learning: Puoi consultare il suo profilo docente su e-learning, che a volte include i contatti: https://elearning15.unibg.it/user/profile.php?id=83816.
+3.  Sito del Dipartimento: Puoi cercare la sua pagina personale sul sito del Dipartimento di Ingegneria Gestionale, dell'Informazione e della Produzione, dove solitamente sono riportati i contatti dei docenti.
+
+Di seguito un template per l'email, da inviare dal tuo indirizzo istituzionale (@studenti.unibg.it):
+
+Oggetto: Richiesta pubblicazione voti esame Deep Learning - Matricola 1086531
+
+Gentile Professor Roy,
+
+sono Raphael Mazzoleni, studente del 1° anno della Laurea Magistrale in Ingegneria Informatica, con numero di matricola 1086531.
+
+Le scrivo in riferimento all'esame del corso di Deep Learning (codice 38113).
+Vorrei gentilmente chiederLe se fosse possibile avere informazioni riguardo alla pubblicazione dei voti dell'esame.
+
+La ringrazio in anticipo per la Sua disponibilità e il Suo tempo.
+
+Cordiali saluti,
+
+Raphael Mazzoleni
+Matricola: 1086531
+Corso di Laurea Magistrale in Ingegneria Informatica
+Università degli Studi di Bergamo
+
+Pagina di riferimento:
+-   https://elearning15.unibg.it/course/info.php?id=8198
+-   https://elearning15.unibg.it/course/info.php?id=8198&lang=en
+
+================================================================================
+FINAL RESPONSE
+================================================================================
+L'email del Professor Subhankar Roy non è esplicitamente indicata nelle fonti disponibili.
+
+Puoi cercare l'email nei seguenti luoghi:
+1.  Pagina e-learning del corso: L'email del docente è spesso presente nella pagina del corso su e-learning. Puoi accedere alla pagina del corso "DEEP LEARNING - 38113 - 2025-26" tramite questo link: https://elearning15.unibg.it/course/view.php?id=8198.
+2.  Profilo docente su e-learning: Puoi consultare il suo profilo docente su e-learning, che a volte include i contatti: https://elearning15.unibg.it/user/profile.php?id=83816.
+3.  Sito del Dipartimento: Puoi cercare la sua pagina personale sul sito del Dipartimento di Ingegneria Gestionale, dell'Informazione e della Produzione, dove solitamente sono riportati i contatti dei docenti.
+
+Di seguito un template per l'email, da inviare dal tuo indirizzo istituzionale (@studenti.unibg.it):
+
+Oggetto: Richiesta pubblicazione voti esame Deep Learning - Matricola 1086531
+
+Gentile Professor Roy,
+
+sono Raphael Mazzoleni, studente del 1° anno della Laurea Magistrale in Ingegneria Informatica, con numero di matricola 1086531.
+
+Le scrivo in riferimento all'esame del corso di Deep Learning (codice 38113).
+Vorrei gentilmente chiederLe se fosse possibile avere informazioni riguardo alla pubblicazione dei voti dell'esame.
+
+La ringrazio in anticipo per la Sua disponibilità e il Suo tempo.
+
+Cordiali saluti,
+
+Raphael Mazzoleni
+Matricola: 1086531
+Corso di Laurea Magistrale in Ingegneria Informatica
+Università degli Studi di Bergamo
+
+Pagina di riferimento:
+-   https://elearning15.unibg.it/course/info.php?id=8198
+-   https://elearning15.unibg.it/course/info.php?id=8198&lang=en
+
+================================================================================
+END OF LOG
+================================================================================

@@ -3,7 +3,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
 from db import students_collection
-from models.user import LoginRequest, RegisterRequest, QueryRequest, QueryResponse
+from models.user import (
+    LoginRequest,
+    RegisterRequest,
+    UpdateProfileRequest,
+    ChangePasswordRequest,
+    QueryRequest,
+    QueryResponse,
+)
 from auth.jwt_manager import JWTManager
 from auth.profile_repository import ProfileRepository
 from auth.service import AuthService
@@ -105,6 +112,33 @@ async def verify_auth(request: Request, payload: dict = Depends(verify_token)):
         "year": student.get("year"),
         "matricola": student.get("matricola"),
     }
+
+
+@app.put("/api/auth/profile")
+async def update_profile(
+    body: UpdateProfileRequest,
+    payload: dict = Depends(verify_token),
+):
+    """Aggiorna i dati del profilo utente autenticato."""
+    matricola = payload.get("matricola")
+    if not matricola:
+        raise HTTPException(status_code=401, detail="Token invalido")
+    update_fields = body.dict(exclude_none=True)
+    return await auth_controller.update_profile(matricola, update_fields)
+
+
+@app.put("/api/auth/password")
+async def change_password(
+    body: ChangePasswordRequest,
+    payload: dict = Depends(verify_token),
+):
+    """Cambia la password dell'utente autenticato."""
+    matricola = payload.get("matricola")
+    if not matricola:
+        raise HTTPException(status_code=401, detail="Token invalido")
+    return await auth_controller.change_password(
+        matricola, body.current_password, body.new_password
+    )
 
 
 @app.post("/api/auth/logout")

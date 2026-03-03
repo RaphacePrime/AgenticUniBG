@@ -1,0 +1,1656 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-03 10:19:30
+Status    : success
+
+------------------------------------------------------------
+USER INFORMATION
+------------------------------------------------------------
+User type   : loggato
+Name        : Raphael Mazzoleni
+Matricola   : 1086531
+Department  : Scuola di Ingegneria
+Course      : Ingegneria informatica
+Typology    : Magistrale
+Year        : 1
+
+------------------------------------------------------------
+ORIGINAL USER QUERY
+------------------------------------------------------------
+quale è la password del mio profilo
+
+------------------------------------------------------------
+CONVERSATION HISTORY (recent)
+------------------------------------------------------------
+[User]: ciao chi sono?
+[Assistant]: Sono l'assistente virtuale dell'Università di Bergamo.
+In base alle informazioni di cui dispongo, tu sei:
+- NOME: Raphael Mazzoleni
+- MATRICOLA: 1086531
+- CORSO DI LAUREA: Ingegneria gestionale (Triennale)
+- DIPARTIMENTO: Scuola di Ingegneria
+- ANNO DI FREQUENTAZIONE: 3° anno
+[User]: ciao chi sono ora?
+[Assistant]: Le tue informazioni di studente autenticato sono state aggiornate. Ora sei:
+- NOME: Raphael Mazzoleni
+- MATRICOLA: 1086531
+- CORSO DI LAUREA: Ingegneria informatica (Magistrale)
+- DIPARTIMENTO: Scuola di Ingegneria
+- ANNO DI FREQUENTAZIONE: 1° anno
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: altro
+Description: Altre richieste non classificabili
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, esami, ricevimenti
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: ciao chi sono?
+- Assistente: Sono l'assistente virtuale dell'Università di Bergamo.
+In base alle informazioni di cui dispongo, tu sei:
+- NOME: Raphael Mazzoleni
+- MATRICOLA: 10865
+- Studente: ciao chi sono ora?
+- Assistente: Le tue informazioni di studente autenticato sono state aggiornate. Ora sei:
+- NOME: Raphael Mazzoleni
+- MATRICOLA: 1086531
+- CORSO DI LAUREA: Ingegner
+
+Nuova domanda: quale è la password del mio profilo
+
+>>> RESPONSE:
+altro
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: password profilo unibg
+Original Query: quale è la password del mio profilo
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- Tieni conto del contesto della conversazione per capire cosa cerca lo studente
+- La query deve essere in italiano
+- Massimo 6-8 parole
+
+INFORMAZIONI STUDENTE E QUANDO USARLE:
+Ti verranno fornite le informazioni del profilo dello studente (corso di laurea, dipartimento, anno, tipologia).
+Devi decidere AUTONOMAMENTE se includerle nella query in base al tipo di domanda:
+
+INCLUDI le info studente quando la domanda riguarda:
+- Materie, insegnamenti, piano di studi (es. "che materie ho?" → aggiungi corso + anno + tipologia)
+- Orari delle lezioni del proprio corso
+- Piano di studi, crediti, curriculum del proprio corso
+- Qualsiasi domanda dove il corso/anno specifico cambia la risposta
+
+NON INCLUDERE le info studente quando la domanda riguarda:
+- Procedure generiche (iscrizioni, tasse, borse di studio)
+- Informazioni su docenti specifici
+- Servizi universitari (mensa, biblioteca, aule)
+- Informazioni generali sull'ateneo
+- Erasmus, tirocini, laurea
+- Qualsiasi domanda che ha la stessa risposta indipendentemente dal corso
+
+ESEMPIO con info studente (corso: ingegneria informatica, anno: 1, tipologia: magistrale):
+Domanda: "che materie ho al secondo anno?"
+Query: materie secondo anno ingegneria informatica magistrale unibg
+
+ESEMPIO con info studente (corso: scienze della comunicazione, anno: 2, tipologia: triennale):
+Domanda: "quali esami devo dare quest'anno?"
+Query: piano studi secondo anno scienze comunicazione triennale unibg
+
+ESEMPIO senza info studente:
+Domanda: "come faccio a iscrivermi al test di ammissione?"
+Query: iscrizione test ammissione unibg
+
+ESEMPIO senza info studente:
+Domanda: "chi è il docente di algoritmi?"
+Query: docente algoritmi unibg
+
+ESEMPIO senza info studente:
+Domanda: "dove si trova la mensa?"
+Query: mensa universitaria unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: ciao chi sono?
+- Assistente: Sono l'assistente virtuale dell'Università di Bergamo.
+In base alle informazioni di cui dispongo, tu sei:
+- NOME: Raphael Mazzoleni
+- MATRICOLA: 1086531
+- CORSO DI LAUREA: Ingegneria gestionale (Trien
+- Studente: ciao chi sono ora?
+- Assistente: Le tue informazioni di studente autenticato sono state aggiornate. Ora sei:
+- NOME: Raphael Mazzoleni
+- MATRICOLA: 1086531
+- CORSO DI LAUREA: Ingegneria informatica (Magistrale)
+- DIPARTIMENTO: Scuola
+
+
+Informazioni studente:
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Ultima richiesta dello studente: quale è la password del mio profilo
+
+Genera la query di ricerca web:
+
+>>> RESPONSE:
+password profilo unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status          : success
+Search query    : password profilo unibg
+Total results   : 25
+Top results used: 5
+
+>>> TOP RESULTS:
+  [1] Score: 0.9995
+      Title  : Ricerca - UniBg
+      URL    : https://sia.unibg.it/ricerca/faq_v2.html
+      Content: Ricerca
+===============
+
+### **Frequently Asked Questions**### [Login](https://sia.unibg.it/ricerca/faq_v2.html#)
+[Come modifico la password attuale?](https://sia.unibg.it/ricerca/faq_v2.html#FAQ.1)[Ho dimenticato la mia password: come posso riaverla?](https://sia.unibg.it/ricerca/faq_v2.html#FAQ.2)
+
+### **Risposte**
+**[Come modifico la password attuale?](https://sia.unibg.it/ricerca/faq_v2.html)**
+
+ Per cambiare qualsiasi dato personale, inclusa la tua password, fai clic su Impostazioni. Per cambiare la tua password, procedi nel modo seguente: 
+1.   Accedi al servizio.
+2.   Fai clic su **Impostazioni account** nella sezione MENU.
+3.   Fai clic su **Cambio password** nella sezione Impostazioni personali.
+4.   Inserisci la password attuale, quindi la nuova password (riconfermandola).
+5.   Quindi fai clic su **Avanti**.
+**[Ho dimenticato la mia password: come posso riaverla?](https://sia.unibg.it/ricerca/faq_v2.html)**
+
+ Per recuperare la password segui le indicazioni seguenti: 
+1.   Vai sul link ['recupero della password'](https://sia.unibg.it/ricerca/forget_pwd.jsp).
+2.   Immetti il nome Utente.
+3.   Immetti l'indirizzo email.
+4.   Quindi fai clic su **Avanti**.
+
+  [2] Score: 0.9978
+      Title  : [PDF] ELEARNING FAQ - Bergamo - UniBg
+      URL    : https://www.unibg.it/sites/default/files/didattica/faq_studenti.pdf
+      Content: GUIDA STUDENTE PIATTAFORMA ELEARNING MOODLE UNIBG ELEARNING FAQ Centro Tecnologie didattiche e Comunicazione Università degli Studi di Bergamo © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI Elenco dei contenuti 1. Dove sono i link ai corsi? ........................................................................................................................................... 3 2. Come si accede all’elearning? ................................................................................................................................... 3 3. Chi può accedere all’elearning? ................................................................................................................................ 4 4. Non ricordo la mia password. Come faccio?............................................................................................................. 4 5. Perchè all’atto dell’iscrizione ricevo il messaggio “possono iscriversi spontaneamente solo gli appartenenti al gruppo globale xxx?” ........................................................................................................................................................ 4 6. Cosa significa “iscrizione spontanea”? ...................................................................................................................... 4 7. All’atto dell’iscrizione mi viene richiesta una chiave di iscrizione. Dove la recupero? ............................................. 5 8. Sono iscritto a corsi singoli. Come faccio ad accedere all’elearning? ....................................................................... 5 9. Non riesco più ad accedere all’elearning. Come mai? .............................................................................................. 5 10. Ho effettuato il primo accesso e mi è apparsa una schermata con dei dati da completare. Perchè? ................. 5 11. Il docente a lezione ha chiesto di effettuare un primo accesso a Moodle. Perchè e come si fa? ....................... 6 12. Sono studente in ipotesi e non ho ancora una matricola. Come faccio ad accedere all’elearning? .................... 6 13. Sono studente iscritto con riserva. Come faccio ad accedere all’elearning? ....................................................... 7 14. Sono studente che ha inoltrato richiesta di immatricolazione tardiva e non ho ancora una matricola. Come faccio ad accedere all’elearning? ...................................................................................................................................... 7 15. Ho dato l’esame e vorrei annullare la mia iscrizione al corso. Come faccio? ....................................................... 8 16. Cosa significano le icone a forma di porta aperta, di chiave e di persona con chiave accanto ai titoli dei corsi moodle? ............................................................................................................................................................................ 8 17. Cos’è la pagina my home in moodle? ................................................................................................................... 8 18. Come funziona la messaggistica integrata in moodle? ......................................................................................... 9 19. Vorrei personalizzare il mio profilo in moodle, cambiare l’indirizzo email, la password o inserire una fotografia del profilo. Come faccio? ................................................................................................................................................ 10 20. Non trovo un corso dello scorso anno accademico. Dov’è? ............................................................................... 11 21. Ho visualizzato un corso con lo smartphone o il tablet ma non riesco a scaricare i contenuti. ......................... 11 © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI ACCESSO E ISCRIZIONE 1. Dove sono i link ai corsi? Dal portale Unibg fare clic su Didattica > E-learning I corsi precedenti all’a.a. 2014-15 sono accessibili dalle bacheche elearning dei dipartimenti. Sono disponibili i link diretti al termine della pagina elearning. 2. Come si accede all’elearning? I corsi eLearning Unibg sono accessibili digitando MATRICOLA come user id e PASSWORD dello sportello internet (segreteria on-line). © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI 3. Chi può accedere all’elearning? I corsi elearning Unibg sono accessibili esclusivamente agli studenti regolarmente immatricolati ed in possesso di un numero di matricola. Gli studenti in ipotesi, iscritti con riserva, con iscrizione tardiva o cessati non possono accedere alla piattaforma elearning. 4. Non ricordo la mia password. Come faccio? Nel caso non si fosse a conoscenza della password è possibile recuperarla attraverso l’apposita procedura nell’area Servizi online. 5. Perchè all’atto dell’iscrizione ricevo il messaggio “possono iscriversi spontaneamente solo gli appartenenti al gruppo globale xxx?” Alcuni corsi consentono l'iscrizione solo agli studenti appartenenti a un determinato CdL. Se all'accesso al corso viene visualizzato il messaggio "Possono iscriversi spontaneamente solo gli appartenenti al gruppo globale xxx" l'utente non dispone dei permessi perchè non risulta appartenere al cdl collegato al corso. 6. Cosa significa “iscrizione spontanea”? La maggior parte dei corsi consentono l'iscrizione diretta da parte dello studente. Tale opzione viene chiamata iscrizione spontanea. © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI 7. All’atto dell’iscrizione mi viene richiesta una chiave di iscrizione. Dove la recupero? Alcuni corsi consentono l'iscrizione solo agli studenti in possesso di una chiave di iscrizione. La chiave viene comunicata direttamente dal docente agli studenti, di solito a lezione. La richiesta della chiave va quindi inoltrata al docente di riferimento. 8. Sono iscritto a corsi singoli. Come faccio ad accedere all’elearning? Gli studenti iscritti ai corsi singoli non ricevono l’accesso diretto ai corsi elearning. E’ necessario pertanto che facciano richiesta di iscrizione ai corsi elearning alla mail studenti.learning@unibg.it. Gli studenti di corsi singoli afferenti al dipartimento di ingegneria devono rivolgersi a ingegneria.learning@unibg.it 9. Non riesco più ad accedere all’elearning. Come mai? Verificare che non si sia cambiata la password recentemente. Nel caso di cambio password la modifica sarà attiva a partire dal giorno successivo a quello di inoltro della richiesta. In caso di dubbi effettuare la procedura di recupero password descritta al punto 4. Se il problema persiste provare ad accedere da un altro pc/dispositivo o con un browser diverso. Si ricorda che l’accesso ai corsi elearning è riservato agli studenti regolarmente immatricolati come specificato al punto 3. 10. Ho effettuato il primo accesso e mi è apparsa una schermata con dei dati da completare. Perchè? Moodle chiede all’utente che esegue il primo accesso di completare i dati del proprio profilo. Di norma è richiesto l’inserimento di città/stato. E’ possibile anche specificare altri dati facoltativi quali numero di telefono, numero di cellulare, pagina web, skype id, indirizzo, ecc. Nel caso all’accesso al corso si visualizzasse una pagina simile a quella seguente, è necessario aggiornare il proprio profilo compilando i campi segnalati in rosso. © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI Digitare un indirizzo email valido all’interno del campo “Indirizzo email”, e indicare Città e Stato. Confermare facendo clic su Aggiornamento profilo. Il sistema invierà una email di verifica all’indirizzo fornito. Per confermare i dati è necessario fare clic sul link contenuto nella mail. A questo punto sarà possibile accedere al corso. 11. Il docente a lezione ha chiesto di effettuare un primo accesso a Moodle. Perchè e come si fa? Il primo accesso a Moodle è fondamentale per poter essere iscritti ad un corso manualmente dal docente o dall’assistenza elearning. Si effettua semplicemente accedendo al portale Moodle e loggandosi con matricola e password. Una volta autenticati, è possibile fare clic su “Esci” in alto a destra. 12. Sono studente in ipotesi e non ho ancora una matricola. Come faccio ad accedere all’elearning? Possono accedere all’elearning solo gli studenti regolarmente immatricolati. E’ necessario pertanto attendere la regolarizzazione della propria posizione per avere accesso alla piattaforma. © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI 13. Sono studente iscritto con riserva. Come faccio ad accedere all’elearning? Possono accedere all’elearning solo gli studenti regolarmente immatricolati. E’ necessario pertanto attendere la regolarizzazione della propria posizione per avere accesso alla piattaforma. 14. Sono studente che ha inoltrato richiesta di immatricolazione tardiva e non ho ancora una matricola. Come faccio ad accedere all’elearning? Possono accedere all’elearning solo gli studenti regolarmente immatricolati. E’ necessario pertanto attendere la regolarizzazione della propria posizione per avere accesso alla piattaforma. © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI USO DI MOODLE 15. Ho dato l’esame e vorrei annullare la mia iscrizione al corso. Come faccio? Per disiscriversi da un corso è necessario accedervi e fare clic sul link “Disiscrivimi da ……” all’interno del area “Amministrazione” sulla sinistra. 16. Cosa significano le icone a forma di porta aperta, di chiave e di persona con chiave accanto ai titoli dei corsi moodle? L’icona con la porta aperta presente accanto al titolo di un corso indica che è abilitata l’auto-iscrizione, chiamata “iscrizione spontanea”. L’icona con la chiave presente accanto al titolo di un corso indica che è abilitata l’auto-iscrizione ma è necessario inserire una chiave di registrazione, da richiedere al docente. L’icona con la persona e la chiave presente accanto al titolo di un corso indica che è abilitato l’accesso ospite. Chiunque può accedere al corso senza registrazione. 17. Cos’è la pagina my home in moodle? La pagina my home è personalizzata e fornisce l’accesso diretto a tutti i corsi ai quali si è iscritti. © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI 18. Come funziona la messaggistica integrata in moodle? Moodle dispone di un servizio di email interno. E’ quindi possibile contattare il docente direttamente dalla piattaforma senza necessità di utilizzare il proprio client di posta. Dalla pagina My home, fare clic su Il mio profilo > Messaggi Si accede al client di posta integrato dove sono riportati tutti i contatti recenti e dove è possibile visionare le conversazioni avute e avviarne di nuove. Per visualizzare lo storico delle conversazioni o avviare una nuova conversazione fare clic sul nome di un utente nel riquadro di sinistra. All’accesso alla piattaforma, il sistema avvisa l’utente della ricezione dei nuovi messaggi. © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI 19. Vorrei personalizzare il mio profilo in moodle, cambiare l’indirizzo email, la password o inserire una fotografia del profilo. Come faccio? Per modificare il profilo dalla pagina My home fare clic su “Il mio profilo” > “Visualizza” Poi nel box a destra sotto “Impostazioni profilo” fare clic su “Modifica”. A questa pagina è possibile cambiare l’indirizzo email, aggiungere altre tipologie di contatti (numero di telefono, numero di cellulare, pagina web, skype id, indirizzo, ecc) o aggiungere una foto per il profilo © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI 20. Non trovo un corso dello scorso anno accademico. Dov’è? I corsi degli anni accademici precedenti vengono spostati nei relativi archivi dove di solito restano disponibili esclusivamente per i debitori di prova che si erano già iscritti al corso elearning precedentemente. Gli archivi sono disponibili come link in alto nelle pagine Moodle di ogni dipartimento. 21. Ho visualizzato un corso con lo smartphone o il tablet ma non riesco a scaricare i contenuti. In caso di problemi con il tema per dispositivi mobili, è possibile richiedere il tema standard facendo clic sul link in basso. Il sito verrà visualizzato con la stessa grafica utilizzata sul computer.
+
+  [3] Score: 0.9964
+      Title  : [PDF] ELEARNING FAQ - UniBg
+      URL    : https://www.unibg.it/sites/default/files/didattica/faq_docenti.pdf
+      Content: GUIDA DOCENTE PIATTAFORMA 
+
+# ELEARNING MOODLE UNIBG 
+
+# ELEARNING FAQ 
+
+# Centro Tecnologie didattiche e Comunicazione 
+
+# Università degli Studi di Bergamo © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+Elenco dei contenuti 
+
+## 1. Requisiti per l’accesso ....................................................................... 3 
+
+## 2. Richiesta di attivazione corso Moodle ............................................... 4 
+
+## 3. Quale tipo di richiesta inoltrare ......................................................... 4 
+
+## 4. Link di accesso ai corsi ....................................................................... 5 
+
+## 5. My home e i miei corsi....................................................................... 5 
+
+## 6. Inviare una comunicazione a tutti gli studenti iscritti ........................ 7 
+
+## 7. Iscrizione studenti ad un corso .......................................................... 9 © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+1. Requisiti per l’accesso 
+
+Per l'accesso ai corsi elearning è necessario disporre di un account nome.cognome@unibg.it e della password di MyPortal/eLEarning. 
+
+In caso non si disponesse di queste credenziali si deve: 
+
+1) richiedere un account di posta nome.cognome@unibg.it usando l'apposito modulo on-line 
+
+http://siaappl.unibg.it/utility/richiesta_unibgemail.php 
+
+2) richiedere al proprio presidio di afferenza l'inserimento dell'utente nella rubrica del sito unibg. 
+
+Nel caso al corso debbano accedere altri docenti, tutor e collaboratori, assicurarsi che ognuno abbia il proprio user nome.cognome@unibg.it. 
+
+NB: la richiesta di un account per accedere all'elearning va inoltrata PRIMA dell'attivazione del corso 
+
+3) Quando l’utente è stato inserito, sarà visibile in Strutture e persone > Cercapersone 
+
+4) E’ ora possibile generare la password di MyPortal/eLearning tramite le pagina 
+
+www.unibg.it/pwd  indicando solo la e-mail e facendo clic su “invia richiesta” .
+
+5) Dopo aver ricevuto la password è necessario effettuare un primo login alla piattaforma Moodle. Tale operazione è possibile generalmente a partire dal giorno successivo alla generazione della password. Per il primo accesso, collegarsi a questo indirizzo: 
+
+http://elearning8.unibg.it/moodle25/login/index.php 
+
+ed effettuare un login inserendo nel campo username il proprio utente nome.cognome@unibg.it e nel campo password la password di MyPortal/eLearning. 
+
+Una volta effettuato l'accesso, fare clic su "Esci" in alto a destra. 
+
+Nel caso si disponga già di un corso Moodle o si avesse già effettuato almeno un accesso alla piattaforma, la procedura sopra descritta non è necessaria ed è possibile inoltrare direttamente la richiesta di attivazione corso. 
+
+A questa pagina  sono disponibili tutte le credenziali docenti ai servizi on-line unibg. © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+2. Richiesta di attivazione corso Moodle 
+
+Per richiedere l’apertura di un corso o l’aggiornamento di un corso già esistente sono 
+
+disponibili due form in MyPortal > Moodle > Richiesta attivazione corso .
+
+Non è possibile aprire o aggiornare corsi facendo richiesta via email. 
+
+E’ necessario compilare una form per ciascun corso per il quale si richiede l’apertura. 
+
+3. Quale tipo di richiesta inoltrare 
+
+In caso il docente non abbia richiesto durante il precedente anno accademico un corso 
+
+eLearning per il proprio insegnamento, e decida di richiedere l’apertura di un corso nuovo deve utilizzare la form “ NUOVE ATTIVAZIONI (CORSI VUOTI) ”. 
+
+In caso il docente abbia già richiesto un corso eLearning per il proprio insegnamento relativo 
+
+all’anno accademico precedente, deve utilizzare la form “ AGGIORNAMENTO DI UN CORSO GIÀ ESISTENTE (CLONAZIONE O RIDENOMINAZIONE) ”.
+
+E’ possibile decidere se: 
+
+1. riutilizzare il corso esistente per il nuovo anno accademico , rinominandolo con 
+
+l’indicazione del nuovo anno ed eliminando gli studenti iscritti. E’ altresì possibile 
+
+eliminare i contenuti o parte di essi o renderli non visibili agli studenti. In questo modo il docente può disporre dei documenti già presenti nel corso rendendoli visibili di volta in volta in base alle proprie necessità didattiche. 
+
+2. richiedere l’apertura di un corso nuovo vuoto , mettendo in archivio il corso 
+
+dell’anno accademico precedente. In questo caso bis ognerà specificare a chi consentire 
+
+l’accesso al corso dell’anno accademico precedente (gli studenti che si erano già iscritti ,tutti gli studenti, nessuno studente). 
+
+3. richiedere l’apertura di un corso nuovo mediante clonazione dei contenuti del corso dell ’anno accademico precedente. Anche in questo caso bisognerà specificare a chi consentire l’accesso al corso dell’anno accademico precedente (gli studenti che si erano già iscritti, tutti gli studenti, nessuno studente). Il corso dell’anno accademico 
+
+precedente verrà spostato in archivio. © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+ATTENZIONE: i corsi non si aggiornano automaticamente al nuovo anno accademico. 
+
+Le tempistiche di attivazione/aggiornamento vanno dalle 2 alle 4 settimane. Si consiglia pertanto di inoltrare le richieste in tempo utile per non subire rallentamenti o ritardi 
+
+dell’attività didattica. 
+
+4. Link di accesso ai corsi 
+
+L’accesso ai corsi eLearning Unibg attivati su piattaforma Moodle può avvenire direttamente 
+
+dalla bacheca Moodle o dalle bacheche dei dipartimenti. 
+
+Tutti i link sono pr esenti all’interno del portale eLearning. 
+
+Nelle bacheche dei dipartimenti sono presenti i link a tutti i corsi eLearning presenti e attivi 
+
+per l’anno accademico in corso, nonché agli archivi dei vari anni accademici contenenti corsi 
+
+non più attivi o per i quali esistono versioni più aggiornate. 
+
+Nella bacheche presenti nel portale Moodle sono riportati esclusivamente i link ai corsi attivati sulla piattaforma Moodle. 
+
+I corsi attivati su piattaforma Lotus Quickr precedentemente all’anno accademico 2013/2014 
+
+sono disponibili solo nelle bacheche eLearning dei vari dipartimenti. 
+
+5. My home e i miei corsi 
+
+L’accesso ai corsi avviene digitando indirizzo email completo  nome.cognome@unibg.it  epassword di MyPortal/eLEarning. 
+
+Una volta effettuato l’accesso è possibile visualizzare direttamente i link a tutti i corsi ai quali 
+
+si è iscritti. © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+Nel caso ci siano compiti da valutare o nuovi interventi nei forum, sotto il titolo del corso è presente un avviso. 
+
+E’ altresi possibile accedere ai propri corsi dalle bacheche Moodle dei singoli dipartimenti dalla pagina Home © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+6. Inviare una comunicazione a tutti gli studenti iscritti 
+
+Per inviare una messaggio a tutti gli studenti iscritti ad un corso è a disposizione il Forum News, presente di default in tutti i corsi sotto al logo eLearning Unibg. 
+
+Facendo clic su Aggiungi nuovo argomento è possibile creare un nuovo messaggio. 
+
+Tale messaggio sarà visibile all’interno del forum e verrà inviato entro alcune ore agli st udenti iscritti al corso. Il messaggio viene recapitato all’indirizzo email che gli studenti 
+
+hanno impostato su Moodle. L’indirizzo di default è quello istituzionale e tale resta a meno che lo studente non decida di modificarlo all’interno del proprio prof ilo. 
+
+Nel caso si desiderasse inviare subito il messaggio agli studenti, è necessario selezionare 
+
+l’opzione “Invio email immediato” © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+E’ anche possibile allegare file di qualsiasi tipo. Si raccomanda di limitare il più possibile la 
+
+dimensione dei file da in viare. Nel caso si abbia l’esigenza di inviare file di dimensioni 
+
+superiori ai 7MB, si consiglia di inserire il materiale nel corso come risorsa, e invitare gli studenti a visionare la pagina del corso, o in alternativa è possibile inviare agli studenti il link diretto alla risorsa (clic destro sulla risorsa > Copia indirizzo e poi incolla all’interno del 
+
+messaggio). 
+
+Per confermare l’invio fare clic su “Invia al forum” © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+7. Iscrizione studenti ad un corso 
+
+L’iscrizione degli studenti può essere effettuat a in diversi modi: 
+
+1. iscrizione spontanea : gli studenti accedono direttamente al corso e si auto-iscrivono. 
+
+E’ possibile restringere l’accesso agli studenti appartenenti ad un determinato CdL. 
+
+Non è possibile selezionare più di un CdL. 
+
+2. chiave di iscrizione : il docente comunica a lezione una chiave di iscrizione che viene fornita dai tecnici. Solo gli studenti in possesso di tale chiave possono iscriversi al corso. 
+
+3. iscrizione tramite elenco .csv : vengono iscritti al corso solo gli studenti presenti in un elenco csv contenente i numeri di matricola. 
+
+ATTENZIONE: questa modalità di iscrizione è possibile solo se TUTTI GLI STUDENTI hanno preventivamente effettuato un accesso alla piattaforma Moodle per un qualsiasi corso .
+
+4. iscrizione manuale : il docente procede autonomamente ad iscrivere al proprio corso gli studenti. Dal pannello “Amministrazione ” fare clic su Utenti > Iscrizioni 
+
+Fare poi clic su “Iscrivi utenti ” in alto a destra 
+
+Digitare “cognome ” oppure in caso di molte omonimie “nome cognome ” e fare clic su 
+
+“Cerca ”.© 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+Fare clic sul pulsante “Iscrivi ” in corrispondenza dello studente scelto. 
+
+Se uno studente non è presente nell ’elenco proposto verificare che: 
+
+- sia regolarmente immatricolato e disponga di un numero di matricola 
+
+- abbia effettuato almeno un accesso durante la sua carriera alla piattaforma Moodle 
+
+La modalità “iscrizione manuale ” può essere usata dal docente in qualsiasi momento e a prescindere dall ’aver scelto in fase di richiesta attivazione iscrizione spontanea/chiave/elenco .csv.
+
+  [4] Score: 0.9956
+      Title  : [PDF] Istruzioni tecniche per la compilazione della domanda di ... - UniBg
+      URL    : https://www.unibg.it/sites/default/files/media/documents/2025-05-15/Istruzioni%20compilazione%20domanda%20PICA%20per%20dottorandi%20ITA%20agg.pdf
+      Content: Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+# Istruzioni tecniche per la compilazione della domanda di partecipazione alle 
+
+# selezioni su PICA 
+
+# (Piattaforma Integrata Concorsi Atenei) 
+
+# Collegarsi al link:  https://pica.cineca.it/unibg/dottorato41 
+
+1. La procedura per la presentazione di tale domanda è informatizzata . Le domande che verranno 
+
+inviate a mezzo PEC, posta ordinaria o per Raccomanda Uno o A/R non saranno prese in 
+
+considerazione .
+
+2. L’istanza di partecipazione al concorso può avvenire anche tramite il Sistema Pubblico d’Identità 
+
+Digitale c.d. SPID , utilizzando la coppia di credenziali personali in possesso (username e 
+
+password). L’accesso con SPID può avvenire da qualsiasi dispositivo: computer, tablet e
+
+smartphone, cliccando sul pulsante “ Accedi con SPID o credenziali istituzionali ” presente nella 
+
+schermata. 
+
+3. Prima di compilare la domanda è consigliato legg ere attentamente l’avviso di selezione per cui si 
+
+è deciso di presentare la domanda, accertarsi di possedere i requisiti richiesti e verificare quali 
+
+sono i documenti richiesti da allegare obbligatoriamente . I campi obbligatori, così come gli 
+
+allegati obbl igatori, se non compilati e allegati non consentono di procedere con la 
+
+compilazione dell’istanza e l’invio della domanda di partecipazione al concorso. 
+
+4. Tutti i documenti necessari per la domanda dovranno essere caricati in formato PDF e in alcuni 
+
+casi sta mpati, firmati e ricaricati , nel rispetto dei limiti di estensione del file indicati nel format. Si 
+
+consiglia pertanto di utilizzare una postazione munita di stampante e scanner. 
+
+5. È possibile compilare la domanda in tempi differenti, accedendo alla piattaforma più volte . I dati 
+
+così inseriti e salvati verranno recuperati dal candidato in occasione dei successi vi accessi . In 
+
+questo modo l’utente , attraverso il tasto MODIFICA , potrà continuare la compilazione ( allo 
+
+scadere del termine u tile per la presentazione, il sistema non permetterà più l’accesso e 
+
+l’invio del modulo elettronico ). 
+
+6. Per problemi tecnici contattare il supporto tramite il link presente in fondo alla pagina 
+
+https://pica.cineca.it/unibg . Non si garantisce la lettura di mail inviate ad altri indirizzi diversi da 
+
+questi .
+
+7. Ulteriori informazioni relative alle procedure di selezione possono essere richieste inviando una 
+
+mail a:  bando.dottorati@unibg.it .
+
+8. I candidati che intendano concorrere per più Corsi di Dottorato dovranno compilare una domanda 
+
+per ciascun Corso. Ciascun candidato potrà concorrere per un numero massimo di tre tematiche. 
+
+9. Terminata la procedura di compilazione e presentazione della domanda il candidato riceverà una 
+
+mail con la conferma dell’avvenuta consegna, riportante anche il num ero identificativo della 
+
+domanda. Si precisa che la compilazione e l’inoltro della domanda a mezzo SPID non richiede la 
+
+firma dell’istanza a conclusione della procedura ai fini dell’invio della domanda. Nella schermata 
+
+che verrà visualizzata dal candidato comparirà la seguente dicitura: “ Autenticato SPID: firma 
+
+digitale non richiesta /SPID authentication: digital signature not needed ”. Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+1. REGISTRAZIONE E ACCESSO AL SISTEMA 
+
+Per accedere al sistema è neces sario collegarsi al sito  https://pica.cineca.it/login 
+
+Nel caso di primo accesso , e se non si è abilitati all’utilizzo dello SPID, è possibile registrarsi cliccando 
+
+su “ Nuova Registrazione ” e inserendo i dati richiesti dal sistema (fig. 1 e 2). I candidati che hanno già 
+
+un’utenza alla banca dati LOGINMIUR possono accedere senza registrarsi inserendo username e 
+
+password dell’account LOGINMIUR nel campo credenziali: in questo caso si deve selezi onare 
+
+LOGINMIUR. Nel caso in cui l’utente possieda le credenziali ma non le ricordi deve cliccare l’opzione 
+
+“Credenziali dimenticate? ”; in questo caso riceverà una mail con la password. 
+
+Figura 1 – Pagina di login /autenticazione 
+
+Figura 2 –Registrazione dati utente. Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+Dopo aver inserito tutti i dati richiesti dalla procedura di registrazione cliccare su “Nuova 
+
+registrazione ”: il sistema invierà all’indirizzo di posta inserito una mail con le indicazioni per confermare 
+
+la registrazione. Nel caso in cui il candidato non riceva tale mail o non riesca a visualizzarla deve 
+
+contattare il supporto tramite il link presente in fondo alla pagina  https://pica.cineca.it/unibg  (fig. 3). 
+
+Figura 3 – Registrazione campi. 
+
+2. ACCESSO ALLA PROCEDURA 
+
+Una volta registrati è possibile collegarsi al sito  https://pica.cineca.it/unibg  e, accedendo con le 
+
+proprie credenziali, procedere con la selezione della procedura di interesse e con la compilazione della 
+
+domanda cliccando su “ Compila una nuova domanda ” (fig. 4). L’utente prima di compilare la domanda 
+
+può fare delle modifiche al suo profilo selezionando in alto a destra, nel menù utente, il tipo di modifica 
+
+che vuole eseguire. 
+
+Figura 4 – Inizio procedura di inserimento domanda. 
+
+La domanda è suddivisa in sezioni/pagine (Fig. 5) .Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+Figura 5 – Indice sezioni/pagine 
+
+La prima sezione da compilare riguarda i DATI ANAGRAFICI, l’utente troverà precompilata questa parte 
+
+con i dati già inseriti nella procedura di registrazione, deve pertanto compilare i campi mancanti (fig. 
+
+6). Nel caso ci fossero errori nei dati anagrafici l’utente può modificarli accedendo in alto a destra nel 
+
+“Profilo utente”. 
+
+ATTENZIONE: alla fine della compilazione è necessario sempre cliccare sul pulsante “SALVA E 
+
+PROCEDI”. 
+
+Se l’inserimento è avvenuto correttamente il sistem a passa alla sezione successiva, in caso contrario 
+
+compariranno dei messaggi di errore e l’utente dovrà correggere i dati inseriti (fig. 6). 
+
+Figura 6 – Sezione dati anagrafici 
+
+La sezione “ Trattamento dati personali e Dichiarazione di responsabilità ” ch iede al candidato di 
+
+prendere visione di una serie di dichiarazioni e di caricare in upload i documenti richiesti 
+
+La schermata successiva Corso di dottorato (fig. 7) chiede al candidato di selezionare il Corso di 
+
+Dottorato .Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+Figura 7 – Corso di dottorato 
+
+La sezione “posti a concorso e progetti di ricerca” chiede al candidato di selezionare al massimo 3 temi 
+
+vincolati indicando l’ordine di preferenza (fig.8). 
+
+Il candidato dovrà caricare almeno un progetto di ricerca. 
+
+La restante parte della sezione riporterà l’indicazione della lingua straniera, la cui conoscenza dovrà 
+
+essere accertata durante il colloquio. Università degli studi di Bergamo 
+
+Scuola di alta formazione dottorale - PhD School 
+
+Via dei Caniana 2, 24127 Bergamo 
+
+bando.dottorati@unibg.it 
+
+Figura 8 – Posti a concorso e progetti di ricerca Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+Nella sezione successiva (Titoli idonei alla partecipazione al bando) il candidato deve scegliere tra le 
+
+quattro opzioni indicate (Fig. 9). 
+
+Figura 9 – Titoli idonei alla partecipazione al bando 
+
+Successivamente viene chiesto al candidato di inserire le informazioni relative al titolo accademico 
+
+conseguito o da conseguire entro il 31 ottobre 202 5.
+
+La sezione successiva “Allegati ” consente di caricare tutti i titoli richiesti per la partecipazione alla 
+
+selezione, tranne le lettere di accettazione per le quali è prevista una procedura a parte (si veda 
+
+paragrafo 3). Si consiglia al ca ndidato di leggere con attenzione quali sono i titoli previsti dall’avviso di 
+
+selezione (Articolo 4 del Bando e Allegato A) , al fine di inserirli nella procedura in modo esaustivo e 
+
+corretto. Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+ATTENZIONE: In questa sezione devono essere caricati i document i previsti nel caso di riconoscimento 
+
+del titolo straniero .
+
+I file caricati devono essere in formato pdf e leggibili. Per ogni file caricato si deve inserire una breve 
+
+descrizione .
+
+E’ possibile allegare un e lenco numerato, datato e firmato dei titoli all egati, ritenuti utili ai fini del 
+
+concorso , e delle eventuali pubblicazioni allegate. 
+
+Se l’inserimento è avvenuto correttamente cliccando su “Salva e torna al cruscotto” il candidato vedrà 
+
+il cruscotto con la sua domanda da presentare. 
+
+La domanda viene salvata in modalità BOZZA. In ogni caso, e comunque prima della scadenza indicata, 
+
+si potrà “ Modificare ” la domanda. 
+
+In seguito alla compilazione della domanda, il candidato clicca sul pulsante “Verifica/Verify” per 
+
+controllare la corretta valorizzazione di tutti i campi obbligatori e di seguito su “Pagamento/Payment ”.
+
+Una volta avviata la transazione di pagamento del contributo il tasto “Firma e Presenta/Submit ”
+
+diventerà operativo e sarà possibile completare l’invio della domanda. 
+
+NOTA BENE: La domanda si perfeziona con il versamento del contributo di partecipazione entro le 
+
+ore 11.59 a.m. (ora italiana) del 16/0 6/202 5.
+
+NOTA: In caso di ritiro della domanda con pagamento effettuato e presentazione di nuova domanda, il 
+
+candidato potrà recuperare il pagamento precedentemente sostenuto e non dovrà procedere ad un 
+
+nuovo versamento. 
+
+Per presentare la domanda si dovrà cliccare su “ Firma e Presenta/Submit ” (fig. 10 )
+
+Figura 10 – Presentazione della domanda. 
+
+Nel caso di compilazione corretta il sistema genera l’anteprima del file della domanda, nel caso di errori 
+
+il sistema avvisa il candidato che la domanda deve essere modificata. Quando il sistema rileva che la 
+
+domanda è stata correttamente compilata permette il passaggio successivo e il candidato deve 
+
+cliccare sul pulsante “Presenta/Submit” in fondo alla pagina (fig.1 1). Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+In caso di accesso tramite SPID una volta premuto il pulsante “Presenta/Submit” la domanda risulterà 
+
+in automatico firmata. 
+
+Figura 11 – Presentazione della domanda 
+
+A questo punto vengono proposte tre modalità di firma e il candidato deve selezionarne una e seguire 
+
+attentamente le istruzioni (fig.12) Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+Figura 12 – Modalità di firma 
+
+ATTENZIONE: i candidati che in fase di registraz ione hanno indicato “NO” al campo "cittadinanza 
+
+italiana" e che non hanno inserito il "codice fiscale", durante il processo di firma della domanda 
+
+vedranno solamente la modalità di "firma manuale" 
+
+Nel caso il candidato scelga la modalità manuale è importante ricordarsi che deve stampare la 
+
+domanda, firmarla e caricarla. Inoltre, nel caso non l’abbia già fatto nella maschera “dati anagrafici”, 
+
+allegare come richiesto dalla procedura un documento di riconoscimento. Si consiglia al candidato di 
+
+verific are che il file che si sta per caricare sia completo, il sistema accetta un solo file in pdf quindi se 
+
+si intende caricare anche un documento di riconoscimento è necessario scansionarlo in un unico file 
+
+con la domanda. 
+
+Terminata la procedura e presentata la domanda telematica il candidato riceverà una mail con la 
+
+notifica. In ogni momento il candidato potrà rientrare nel sistema, accedere con le sue credenziali e 
+
+visualizzare la domanda. 
+
+3. LETTERE DI REFERENZA 
+
+Se i candidati vogliono presentare lettere di referenza tra i titoli per il corso di dottorato, dopo la 
+
+presentazione del modulo di domanda troveranno il pulsante 'Lettere di referenza' nella dashboard 
+
+(fig. 1 3). Il candidato deve cliccare su di esso e compilare le informazioni rilevanti al fine di i nviare ai Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+referee scelti la richiesta della lettera. I candidati devono specificare l'indirizzo email istituzionale del 
+
+referee, non un indirizzo e -mail personale. 
+
+Figura 13 – Lettere di referenza 
+
+Il referee specificato riceverà la richiesta di inviare la “lettera di referenza” e potrà presentarla entro il 
+
+16 gi ugno 202 5 alle 12 :00. Consigliamo ai candidati di informare i referee che riceveranno la richiesta. 
+
+Se il referee invia la lettera, il richiedente riceverà un'e -mail che specifica che la lettera è stata inviata. 
+
+I candidati, tuttavia, possono sempre verificare lo stato della richiesta. Le lettere di riferimento 
+
+caricate dai candidati non saranno prese in considerazione. 
+
+Se i candidati desiderano cambiare il referee devono contattare il supporto tra mite il link presente in 
+
+fondo alla pagina  https://pica.cineca.it/unibg  specificando l'ID della domanda .
+
+4. PROCEDURA DI MODIFICA E RITIRO 
+
+Nel caso in cui il candidato abbia la necessità di fare delle modifiche alla domanda dopo aver generato 
+
+il pdf (visibile nella home nella sezione dedicata alle domande presentate) della domanda stessa e
+
+comunque prima della scadenza prevista per la candidatura :
+
+- Se il candidato ha presentato la domanda e ricevuto la mail di conferma della presentazione non 
+
+sarà più possibile accedere a tale domanda per modificarla ma sarà solo possibile ritirarla 
+
+accedendo alla procedura di ritiro dal cruscotto e ripresentare una nuova domanda. 
+
+- Se il candidato ha generato il file pdf della do manda, ma non ha terminato la procedura di 
+
+presentazione (la domanda firmata non è stata ancora caricata e quindi il candidato non ha ricevuto 
+
+la mail di conferma della presentazione) deve contattare il supporto tramite il link presente in fondo 
+
+alla pagin a https://pica.cineca.it/unibg  e c hie dere l’apertura della domanda, specificando la 
+
+motivazione, l’id -domanda e allegando il documento di riconoscimento. 
+
+N.B. La presente guida fornisce informazioni generiche e parziali per la presentazione delle 
+
+candidature. Non sostituisce quanto indicato nei bandi e non descrive in dettaglio tutte le 
+
+casistiche che potrebbero presentarsi .
+
+  [5] Score: 0.9953
+      Title  : [PDF] GUIDA ALLA PROCEDURA ON LINE REGISTRAZIONE ... - UniBg
+      URL    : https://www.unibg.it/sites/default/files/campus_e_servizi/guida_registrazione-sportello-internet-studenti.pdf
+      Content: In questa maschera troverai un riepilogo relativo al tuo nome utente e alla tua password. Clicca poi su “Procedi con l'autenticazione” per accedere ai
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: altro
+
+>>> SYSTEM PROMPT:
+Sei un assistente dell'Università di Bergamo.
+Cerca di comprendere la richiesta e fornire una risposta utile o indirizzare l'utente verso la risorsa giusta.
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+8. Alcune fonti sono documenti PDF: in quel caso vengono forniti anche i link ipertestuali estratti direttamente dal PDF con la pagina di provenienza. Se uno di questi link è rilevante per la risposta dello studente, includilo nella risposta in forma cliccabile (formato Markdown: [testo](url)) indicando anche da quale parte del documento proviene.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: Ricerca - UniBg
+URL: https://sia.unibg.it/ricerca/faq_v2.html
+Contenuto: Ricerca
+===============
+
+### **Frequently Asked Questions**### [Login](https://sia.unibg.it/ricerca/faq_v2.html#)
+[Come modifico la password attuale?](https://sia.unibg.it/ricerca/faq_v2.html#FAQ.1)[Ho dimenticato la mia password: come posso riaverla?](https://sia.unibg.it/ricerca/faq_v2.html#FAQ.2)
+
+### **Risposte**
+**[Come modifico la password attuale?](https://sia.unibg.it/ricerca/faq_v2.html)**
+
+ Per cambiare qualsiasi dato personale, inclusa la tua password, fai clic su Impostazioni. Per cambiare la tua password, procedi nel modo seguente: 
+1.   Accedi al servizio.
+2.   Fai clic su **Impostazioni account** nella sezione MENU.
+3.   Fai clic su **Cambio password** nella sezione Impostazioni personali.
+4.   Inserisci la password attuale, quindi la nuova password (riconfermandola).
+5.   Quindi fai clic su **Avanti**.
+**[Ho dimenticato la mia password: come posso riaverla?](https://sia.unibg.it/ricerca/faq_v2.html)**
+
+ Per recuperare la password segui le indicazioni seguenti: 
+1.   Vai sul link ['recupero della password'](https://sia.unibg.it/ricerca/forget_pwd.jsp).
+2.   Immetti il nome Utente.
+3.   Immetti l'indirizzo email.
+4.   Quindi fai clic su **Avanti**.
+
+Fonte 2: [PDF] ELEARNING FAQ - Bergamo - UniBg
+URL: https://www.unibg.it/sites/default/files/didattica/faq_studenti.pdf
+Tipo: PDF
+Link estratti dal PDF:
+  - http://sportello.unibg.it/esse3/Anagrafica/PasswordDimenticata.do;jsessionid=9AFB2DD263D0C30AD5854942D6456F2D.jvm1a (pagina 4)
+  - mailto:studenti.learning@unibg.it (pagina 5)
+  - mailto:ingegneria.learning@unibg.it (pagina 5)
+Contenuto: GUIDA STUDENTE PIATTAFORMA ELEARNING MOODLE UNIBG ELEARNING FAQ Centro Tecnologie didattiche e Comunicazione Università degli Studi di Bergamo © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI Elenco dei contenuti 1. Dove sono i link ai corsi? ........................................................................................................................................... 3 2. Come si accede all’elearning? ................................................................................................................................... 3 3. Chi può accedere all’elearning? ................................................................................................................................ 4 4. Non ricordo la mia password. Come faccio?............................................................................................................. 4 5. Perchè all’atto dell’iscrizione ricevo il messaggio “possono iscriversi spontaneamente solo gli appartenenti al gruppo globale xxx?” ........................................................................................................................................................ 4 6. Cosa significa “iscrizione spontanea”? ...................................................................................................................... 4 7. All’atto dell’iscrizione mi viene richiesta una chiave di iscrizione. Dove la recupero? ............................................. 5 8. Sono iscritto a corsi singoli. Come faccio ad accedere all’elearning? ....................................................................... 5 9. Non riesco più ad accedere all’elearning. Come mai? .............................................................................................. 5 10. Ho effettuato il primo accesso e mi è apparsa una schermata con dei dati da completare. Perchè? ................. 5 11. Il docente a lezione ha chiesto di effettuare un primo accesso a Moodle. Perchè e come si fa? ....................... 6 12. Sono studente in ipotesi e non ho ancora una matricola. Come faccio ad accedere all’elearning? .................... 6 13. Sono studente iscritto con riserva. Come faccio ad accedere all’elearning? ....................................................... 7 14. Sono studente che ha inoltrato richiesta di immatricolazione tardiva e non ho ancora una matricola. Come faccio ad accedere all’elearning? ...................................................................................................................................... 7 15. Ho dato l’esame e vorrei annullare la mia iscrizione al corso. Come faccio? ....................................................... 8 16. Cosa significano le icone a forma di porta aperta, di chiave e di persona con chiave accanto ai titoli dei corsi moodle? ............................................................................................................................................................................ 8 17. Cos’è la pagina my home in moodle? ................................................................................................................... 8 18. Come funziona la messaggistica integrata in moodle? ......................................................................................... 9 19. Vorrei personalizzare il mio profilo in moodle, cambiare l’indirizzo email, la password o inserire una fotografia del profilo. Come faccio? ................................................................................................................................................ 10 20. Non trovo un corso dello scorso anno accademico. Dov’è? ............................................................................... 11 21. Ho visualizzato un corso con lo smartphone o il tablet ma non riesco a scaricare i contenuti. ......................... 11 © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI ACCESSO E ISCRIZIONE 1. Dove sono i link ai corsi? Dal portale Unibg fare clic su Didattica > E-learning I corsi precedenti all’a.a. 2014-15 sono accessibili dalle bacheche elearning dei dipartimenti. Sono disponibili i link diretti al termine della pagina elearning. 2. Come si accede all’elearning? I corsi eLearning Unibg sono accessibili digitando MATRICOLA come user id e PASSWORD dello sportello internet (segreteria on-line). © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI 3. Chi può accedere all’elearning? I corsi elearning Unibg sono accessibili esclusivamente agli studenti regolarmente immatricolati ed in possesso di un numero di matricola. Gli studenti in ipotesi, iscritti con riserva, con iscrizione tardiva o cessati non possono accedere alla piattaforma elearning. 4. Non ricordo la mia password. Come faccio? Nel caso non si fosse a conoscenza della password è possibile recuperarla attraverso l’apposita procedura nell’area Servizi online. 5. Perchè all’atto dell’iscrizione ricevo il messaggio “possono iscriversi spontaneamente solo gli appartenenti al gruppo globale xxx?” Alcuni corsi consentono l'iscrizione solo agli studenti appartenenti a un determinato CdL. Se all'accesso al corso viene visualizzato il messaggio "Possono iscriversi spontaneamente solo gli appartenenti al gruppo globale xxx" l'utente non dispone dei permessi perchè non risulta appartenere al cdl collegato al corso. 6. Cosa significa “iscrizione spontanea”? La maggior parte dei corsi consentono l'iscrizione diretta da parte dello studente. Tale opzione viene chiamata iscrizione spontanea. © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI 7. All’atto dell’iscrizione mi viene richiesta una chiave di iscrizione. Dove la recupero? Alcuni corsi consentono l'iscrizione solo agli studenti in possesso di una chiave di iscrizione. La chiave viene comunicata direttamente dal docente agli studenti, di solito a lezione. La richiesta della chiave va quindi inoltrata al docente di riferimento. 8. Sono iscritto a corsi singoli. Come faccio ad accedere all’elearning? Gli studenti iscritti ai corsi singoli non ricevono l’accesso diretto ai corsi elearning. E’ necessario pertanto che facciano richiesta di iscrizione ai corsi elearning alla mail studenti.learning@unibg.it. Gli studenti di corsi singoli afferenti al dipartimento di ingegneria devono rivolgersi a ingegneria.learning@unibg.it 9. Non riesco più ad accedere all’elearning. Come mai? Verificare che non si sia cambiata la password recentemente. Nel caso di cambio password la modifica sarà attiva a partire dal giorno successivo a quello di inoltro della richiesta. In caso di dubbi effettuare la procedura di recupero password descritta al punto 4. Se il problema persiste provare ad accedere da un altro pc/dispositivo o con un browser diverso. Si ricorda che l’accesso ai corsi elearning è riservato agli studenti regolarmente immatricolati come specificato al punto 3. 10. Ho effettuato il primo accesso e mi è apparsa una schermata con dei dati da completare. Perchè? Moodle chiede all’utente che esegue il primo accesso di completare i dati del proprio profilo. Di norma è richiesto l’inserimento di città/stato. E’ possibile anche specificare altri dati facoltativi quali numero di telefono, numero di cellulare, pagina web, skype id, indirizzo, ecc. Nel caso all’accesso al corso si visualizzasse una pagina simile a quella seguente, è necessario aggiornare il proprio profilo compilando i campi segnalati in rosso. © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI Digitare un indirizzo email valido all’interno del campo “Indirizzo email”, e indicare Città e Stato. Confermare facendo clic su Aggiornamento profilo. Il sistema invierà una email di verifica all’indirizzo fornito. Per confermare i dati è necessario fare clic sul link contenuto nella mail. A questo punto sarà possibile accedere al corso. 11. Il docente a lezione ha chiesto di effettuare un primo accesso a Moodle. Perchè e come si fa? Il primo accesso a Moodle è fondamentale per poter essere iscritti ad un corso manualmente dal docente o dall’assistenza elearning. Si effettua semplicemente accedendo al portale Moodle e loggandosi con matricola e password. Una volta autenticati, è possibile fare clic su “Esci” in alto a destra. 12. Sono studente in ipotesi e non ho ancora una matricola. Come faccio ad accedere all’elearning? Possono accedere all’elearning solo gli studenti regolarmente immatricolati. E’ necessario pertanto attendere la regolarizzazione della propria posizione per avere accesso alla piattaforma. © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI 13. Sono studente iscritto con riserva. Come faccio ad accedere all’elearning? Possono accedere all’elearning solo gli studenti regolarmente immatricolati. E’ necessario pertanto attendere la regolarizzazione della propria posizione per avere accesso alla piattaforma. 14. Sono studente che ha inoltrato richiesta di immatricolazione tardiva e non ho ancora una matricola. Come faccio ad accedere all’elearning? Possono accedere all’elearning solo gli studenti regolarmente immatricolati. E’ necessario pertanto attendere la regolarizzazione della propria posizione per avere accesso alla piattaforma. © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI USO DI MOODLE 15. Ho dato l’esame e vorrei annullare la mia iscrizione al corso. Come faccio? Per disiscriversi da un corso è necessario accedervi e fare clic sul link “Disiscrivimi da ……” all’interno del area “Amministrazione” sulla sinistra. 16. Cosa significano le icone a forma di porta aperta, di chiave e di persona con chiave accanto ai titoli dei corsi moodle? L’icona con la porta aperta presente accanto al titolo di un corso indica che è abilitata l’auto-iscrizione, chiamata “iscrizione spontanea”. L’icona con la chiave presente accanto al titolo di un corso indica che è abilitata l’auto-iscrizione ma è necessario inserire una chiave di registrazione, da richiedere al docente. L’icona con la persona e la chiave presente accanto al titolo di un corso indica che è abilitato l’accesso ospite. Chiunque può accedere al corso senza registrazione. 17. Cos’è la pagina my home in moodle? La pagina my home è personalizzata e fornisce l’accesso diretto a tutti i corsi ai quali si è iscritti. © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI 18. Come funziona la messaggistica integrata in moodle? Moodle dispone di un servizio di email interno. E’ quindi possibile contattare il docente direttamente dalla piattaforma senza necessità di utilizzare il proprio client di posta. Dalla pagina My home, fare clic su Il mio profilo > Messaggi Si accede al client di posta integrato dove sono riportati tutti i contatti recenti e dove è possibile visionare le conversazioni avute e avviarne di nuove. Per visualizzare lo storico delle conversazioni o avviare una nuova conversazione fare clic sul nome di un utente nel riquadro di sinistra. All’accesso alla piattaforma, il sistema avvisa l’utente della ricezione dei nuovi messaggi. © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI 19. Vorrei personalizzare il mio profilo in moodle, cambiare l’indirizzo email, la password o inserire una fotografia del profilo. Come faccio? Per modificare il profilo dalla pagina My home fare clic su “Il mio profilo” > “Visualizza” Poi nel box a destra sotto “Impostazioni profilo” fare clic su “Modifica”. A questa pagina è possibile cambiare l’indirizzo email, aggiungere altre tipologie di contatti (numero di telefono, numero di cellulare, pagina web, skype id, indirizzo, ecc) o aggiungere una foto per il profilo © 2016 Università degli studi di Bergamo - Centro Tecnologie Didattiche e Comunicazione - Guida Moodle - ACCESSO STUDENTI 20. Non trovo un corso dello scorso anno accademico. Dov’è? I corsi degli anni accademici precedenti vengono spostati nei relativi archivi dove di solito restano disponibili esclusivamente per i debitori di prova che si erano già iscritti al corso elearning precedentemente. Gli archivi sono disponibili come link in alto nelle pagine Moodle di ogni dipartimento. 21. Ho visualizzato un corso con lo smartphone o il tablet ma non riesco a scaricare i contenuti. In caso di problemi con il tema per dispositivi mobili, è possibile richiedere il tema standard facendo clic sul link in basso. Il sito verrà visualizzato con la stessa grafica utilizzata sul computer.
+
+Fonte 3: [PDF] ELEARNING FAQ - UniBg
+URL: https://www.unibg.it/sites/default/files/didattica/faq_docenti.pdf
+Tipo: PDF
+Link estratti dal PDF:
+  - http://siaappl.unibg.it/utility/richiesta_unibgemail.php (pagina 3)
+  - http://elearning8.unibg.it/moodle25/login/index.php (pagina 3)
+  - http://www.unibg.it/node/2392 (pagina 3)
+  - mailto:nome.cognome@unibg.it (pagina 5)
+Contenuto: GUIDA DOCENTE PIATTAFORMA 
+
+# ELEARNING MOODLE UNIBG 
+
+# ELEARNING FAQ 
+
+# Centro Tecnologie didattiche e Comunicazione 
+
+# Università degli Studi di Bergamo © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+Elenco dei contenuti 
+
+## 1. Requisiti per l’accesso ....................................................................... 3 
+
+## 2. Richiesta di attivazione corso Moodle ............................................... 4 
+
+## 3. Quale tipo di richiesta inoltrare ......................................................... 4 
+
+## 4. Link di accesso ai corsi ....................................................................... 5 
+
+## 5. My home e i miei corsi....................................................................... 5 
+
+## 6. Inviare una comunicazione a tutti gli studenti iscritti ........................ 7 
+
+## 7. Iscrizione studenti ad un corso .......................................................... 9 © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+1. Requisiti per l’accesso 
+
+Per l'accesso ai corsi elearning è necessario disporre di un account nome.cognome@unibg.it e della password di MyPortal/eLEarning. 
+
+In caso non si disponesse di queste credenziali si deve: 
+
+1) richiedere un account di posta nome.cognome@unibg.it usando l'apposito modulo on-line 
+
+http://siaappl.unibg.it/utility/richiesta_unibgemail.php 
+
+2) richiedere al proprio presidio di afferenza l'inserimento dell'utente nella rubrica del sito unibg. 
+
+Nel caso al corso debbano accedere altri docenti, tutor e collaboratori, assicurarsi che ognuno abbia il proprio user nome.cognome@unibg.it. 
+
+NB: la richiesta di un account per accedere all'elearning va inoltrata PRIMA dell'attivazione del corso 
+
+3) Quando l’utente è stato inserito, sarà visibile in Strutture e persone > Cercapersone 
+
+4) E’ ora possibile generare la password di MyPortal/eLearning tramite le pagina 
+
+www.unibg.it/pwd  indicando solo la e-mail e facendo clic su “invia richiesta” .
+
+5) Dopo aver ricevuto la password è necessario effettuare un primo login alla piattaforma Moodle. Tale operazione è possibile generalmente a partire dal giorno successivo alla generazione della password. Per il primo accesso, collegarsi a questo indirizzo: 
+
+http://elearning8.unibg.it/moodle25/login/index.php 
+
+ed effettuare un login inserendo nel campo username il proprio utente nome.cognome@unibg.it e nel campo password la password di MyPortal/eLearning. 
+
+Una volta effettuato l'accesso, fare clic su "Esci" in alto a destra. 
+
+Nel caso si disponga già di un corso Moodle o si avesse già effettuato almeno un accesso alla piattaforma, la procedura sopra descritta non è necessaria ed è possibile inoltrare direttamente la richiesta di attivazione corso. 
+
+A questa pagina  sono disponibili tutte le credenziali docenti ai servizi on-line unibg. © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+2. Richiesta di attivazione corso Moodle 
+
+Per richiedere l’apertura di un corso o l’aggiornamento di un corso già esistente sono 
+
+disponibili due form in MyPortal > Moodle > Richiesta attivazione corso .
+
+Non è possibile aprire o aggiornare corsi facendo richiesta via email. 
+
+E’ necessario compilare una form per ciascun corso per il quale si richiede l’apertura. 
+
+3. Quale tipo di richiesta inoltrare 
+
+In caso il docente non abbia richiesto durante il precedente anno accademico un corso 
+
+eLearning per il proprio insegnamento, e decida di richiedere l’apertura di un corso nuovo deve utilizzare la form “ NUOVE ATTIVAZIONI (CORSI VUOTI) ”. 
+
+In caso il docente abbia già richiesto un corso eLearning per il proprio insegnamento relativo 
+
+all’anno accademico precedente, deve utilizzare la form “ AGGIORNAMENTO DI UN CORSO GIÀ ESISTENTE (CLONAZIONE O RIDENOMINAZIONE) ”.
+
+E’ possibile decidere se: 
+
+1. riutilizzare il corso esistente per il nuovo anno accademico , rinominandolo con 
+
+l’indicazione del nuovo anno ed eliminando gli studenti iscritti. E’ altresì possibile 
+
+eliminare i contenuti o parte di essi o renderli non visibili agli studenti. In questo modo il docente può disporre dei documenti già presenti nel corso rendendoli visibili di volta in volta in base alle proprie necessità didattiche. 
+
+2. richiedere l’apertura di un corso nuovo vuoto , mettendo in archivio il corso 
+
+dell’anno accademico precedente. In questo caso bis ognerà specificare a chi consentire 
+
+l’accesso al corso dell’anno accademico precedente (gli studenti che si erano già iscritti ,tutti gli studenti, nessuno studente). 
+
+3. richiedere l’apertura di un corso nuovo mediante clonazione dei contenuti del corso dell ’anno accademico precedente. Anche in questo caso bisognerà specificare a chi consentire l’accesso al corso dell’anno accademico precedente (gli studenti che si erano già iscritti, tutti gli studenti, nessuno studente). Il corso dell’anno accademico 
+
+precedente verrà spostato in archivio. © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+ATTENZIONE: i corsi non si aggiornano automaticamente al nuovo anno accademico. 
+
+Le tempistiche di attivazione/aggiornamento vanno dalle 2 alle 4 settimane. Si consiglia pertanto di inoltrare le richieste in tempo utile per non subire rallentamenti o ritardi 
+
+dell’attività didattica. 
+
+4. Link di accesso ai corsi 
+
+L’accesso ai corsi eLearning Unibg attivati su piattaforma Moodle può avvenire direttamente 
+
+dalla bacheca Moodle o dalle bacheche dei dipartimenti. 
+
+Tutti i link sono pr esenti all’interno del portale eLearning. 
+
+Nelle bacheche dei dipartimenti sono presenti i link a tutti i corsi eLearning presenti e attivi 
+
+per l’anno accademico in corso, nonché agli archivi dei vari anni accademici contenenti corsi 
+
+non più attivi o per i quali esistono versioni più aggiornate. 
+
+Nella bacheche presenti nel portale Moodle sono riportati esclusivamente i link ai corsi attivati sulla piattaforma Moodle. 
+
+I corsi attivati su piattaforma Lotus Quickr precedentemente all’anno accademico 2013/2014 
+
+sono disponibili solo nelle bacheche eLearning dei vari dipartimenti. 
+
+5. My home e i miei corsi 
+
+L’accesso ai corsi avviene digitando indirizzo email completo  nome.cognome@unibg.it  epassword di MyPortal/eLEarning. 
+
+Una volta effettuato l’accesso è possibile visualizzare direttamente i link a tutti i corsi ai quali 
+
+si è iscritti. © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+Nel caso ci siano compiti da valutare o nuovi interventi nei forum, sotto il titolo del corso è presente un avviso. 
+
+E’ altresi possibile accedere ai propri corsi dalle bacheche Moodle dei singoli dipartimenti dalla pagina Home © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+6. Inviare una comunicazione a tutti gli studenti iscritti 
+
+Per inviare una messaggio a tutti gli studenti iscritti ad un corso è a disposizione il Forum News, presente di default in tutti i corsi sotto al logo eLearning Unibg. 
+
+Facendo clic su Aggiungi nuovo argomento è possibile creare un nuovo messaggio. 
+
+Tale messaggio sarà visibile all’interno del forum e verrà inviato entro alcune ore agli st udenti iscritti al corso. Il messaggio viene recapitato all’indirizzo email che gli studenti 
+
+hanno impostato su Moodle. L’indirizzo di default è quello istituzionale e tale resta a meno che lo studente non decida di modificarlo all’interno del proprio prof ilo. 
+
+Nel caso si desiderasse inviare subito il messaggio agli studenti, è necessario selezionare 
+
+l’opzione “Invio email immediato” © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+E’ anche possibile allegare file di qualsiasi tipo. Si raccomanda di limitare il più possibile la 
+
+dimensione dei file da in viare. Nel caso si abbia l’esigenza di inviare file di dimensioni 
+
+superiori ai 7MB, si consiglia di inserire il materiale nel corso come risorsa, e invitare gli studenti a visionare la pagina del corso, o in alternativa è possibile inviare agli studenti il link diretto alla risorsa (clic destro sulla risorsa > Copia indirizzo e poi incolla all’interno del 
+
+messaggio). 
+
+Per confermare l’invio fare clic su “Invia al forum” © 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+7. Iscrizione studenti ad un corso 
+
+L’iscrizione degli studenti può essere effettuat a in diversi modi: 
+
+1. iscrizione spontanea : gli studenti accedono direttamente al corso e si auto-iscrivono. 
+
+E’ possibile restringere l’accesso agli studenti appartenenti ad un determinato CdL. 
+
+Non è possibile selezionare più di un CdL. 
+
+2. chiave di iscrizione : il docente comunica a lezione una chiave di iscrizione che viene fornita dai tecnici. Solo gli studenti in possesso di tale chiave possono iscriversi al corso. 
+
+3. iscrizione tramite elenco .csv : vengono iscritti al corso solo gli studenti presenti in un elenco csv contenente i numeri di matricola. 
+
+ATTENZIONE: questa modalità di iscrizione è possibile solo se TUTTI GLI STUDENTI hanno preventivamente effettuato un accesso alla piattaforma Moodle per un qualsiasi corso .
+
+4. iscrizione manuale : il docente procede autonomamente ad iscrivere al proprio corso gli studenti. Dal pannello “Amministrazione ” fare clic su Utenti > Iscrizioni 
+
+Fare poi clic su “Iscrivi utenti ” in alto a destra 
+
+Digitare “cognome ” oppure in caso di molte omonimie “nome cognome ” e fare clic su 
+
+“Cerca ”.© 2017 Università di Bergamo - Centro Tecnologie Didattiche- Guida MOODLE docenti 
+
+Fare clic sul pulsante “Iscrivi ” in corrispondenza dello studente scelto. 
+
+Se uno studente non è presente nell ’elenco proposto verificare che: 
+
+- sia regolarmente immatricolato e disponga di un numero di matricola 
+
+- abbia effettuato almeno un accesso durante la sua carriera alla piattaforma Moodle 
+
+La modalità “iscrizione manuale ” può essere usata dal docente in qualsiasi momento e a prescindere dall ’aver scelto in fase di richiesta attivazione iscrizione spontanea/chiave/elenco .csv.
+
+Fonte 4: [PDF] Istruzioni tecniche per la compilazione della domanda di ... - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2025-05-15/Istruzioni%20compilazione%20domanda%20PICA%20per%20dottorandi%20ITA%20agg.pdf
+Tipo: PDF
+Link estratti dal PDF:
+  - https://pica.cineca.it/unibg/dottorato41 (pagina 1)
+  - https://pica.cineca.it/unibg (pagina 1)
+  - https://pica.cineca.it/login (pagina 2)
+Contenuto: Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+# Istruzioni tecniche per la compilazione della domanda di partecipazione alle 
+
+# selezioni su PICA 
+
+# (Piattaforma Integrata Concorsi Atenei) 
+
+# Collegarsi al link:  https://pica.cineca.it/unibg/dottorato41 
+
+1. La procedura per la presentazione di tale domanda è informatizzata . Le domande che verranno 
+
+inviate a mezzo PEC, posta ordinaria o per Raccomanda Uno o A/R non saranno prese in 
+
+considerazione .
+
+2. L’istanza di partecipazione al concorso può avvenire anche tramite il Sistema Pubblico d’Identità 
+
+Digitale c.d. SPID , utilizzando la coppia di credenziali personali in possesso (username e 
+
+password). L’accesso con SPID può avvenire da qualsiasi dispositivo: computer, tablet e
+
+smartphone, cliccando sul pulsante “ Accedi con SPID o credenziali istituzionali ” presente nella 
+
+schermata. 
+
+3. Prima di compilare la domanda è consigliato legg ere attentamente l’avviso di selezione per cui si 
+
+è deciso di presentare la domanda, accertarsi di possedere i requisiti richiesti e verificare quali 
+
+sono i documenti richiesti da allegare obbligatoriamente . I campi obbligatori, così come gli 
+
+allegati obbl igatori, se non compilati e allegati non consentono di procedere con la 
+
+compilazione dell’istanza e l’invio della domanda di partecipazione al concorso. 
+
+4. Tutti i documenti necessari per la domanda dovranno essere caricati in formato PDF e in alcuni 
+
+casi sta mpati, firmati e ricaricati , nel rispetto dei limiti di estensione del file indicati nel format. Si 
+
+consiglia pertanto di utilizzare una postazione munita di stampante e scanner. 
+
+5. È possibile compilare la domanda in tempi differenti, accedendo alla piattaforma più volte . I dati 
+
+così inseriti e salvati verranno recuperati dal candidato in occasione dei successi vi accessi . In 
+
+questo modo l’utente , attraverso il tasto MODIFICA , potrà continuare la compilazione ( allo 
+
+scadere del termine u tile per la presentazione, il sistema non permetterà più l’accesso e 
+
+l’invio del modulo elettronico ). 
+
+6. Per problemi tecnici contattare il supporto tramite il link presente in fondo alla pagina 
+
+https://pica.cineca.it/unibg . Non si garantisce la lettura di mail inviate ad altri indirizzi diversi da 
+
+questi .
+
+7. Ulteriori informazioni relative alle procedure di selezione possono essere richieste inviando una 
+
+mail a:  bando.dottorati@unibg.it .
+
+8. I candidati che intendano concorrere per più Corsi di Dottorato dovranno compilare una domanda 
+
+per ciascun Corso. Ciascun candidato potrà concorrere per un numero massimo di tre tematiche. 
+
+9. Terminata la procedura di compilazione e presentazione della domanda il candidato riceverà una 
+
+mail con la conferma dell’avvenuta consegna, riportante anche il num ero identificativo della 
+
+domanda. Si precisa che la compilazione e l’inoltro della domanda a mezzo SPID non richiede la 
+
+firma dell’istanza a conclusione della procedura ai fini dell’invio della domanda. Nella schermata 
+
+che verrà visualizzata dal candidato comparirà la seguente dicitura: “ Autenticato SPID: firma 
+
+digitale non richiesta /SPID authentication: digital signature not needed ”. Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+1. REGISTRAZIONE E ACCESSO AL SISTEMA 
+
+Per accedere al sistema è neces sario collegarsi al sito  https://pica.cineca.it/login 
+
+Nel caso di primo accesso , e se non si è abilitati all’utilizzo dello SPID, è possibile registrarsi cliccando 
+
+su “ Nuova Registrazione ” e inserendo i dati richiesti dal sistema (fig. 1 e 2). I candidati che hanno già 
+
+un’utenza alla banca dati LOGINMIUR possono accedere senza registrarsi inserendo username e 
+
+password dell’account LOGINMIUR nel campo credenziali: in questo caso si deve selezi onare 
+
+LOGINMIUR. Nel caso in cui l’utente possieda le credenziali ma non le ricordi deve cliccare l’opzione 
+
+“Credenziali dimenticate? ”; in questo caso riceverà una mail con la password. 
+
+Figura 1 – Pagina di login /autenticazione 
+
+Figura 2 –Registrazione dati utente. Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+Dopo aver inserito tutti i dati richiesti dalla procedura di registrazione cliccare su “Nuova 
+
+registrazione ”: il sistema invierà all’indirizzo di posta inserito una mail con le indicazioni per confermare 
+
+la registrazione. Nel caso in cui il candidato non riceva tale mail o non riesca a visualizzarla deve 
+
+contattare il supporto tramite il link presente in fondo alla pagina  https://pica.cineca.it/unibg  (fig. 3). 
+
+Figura 3 – Registrazione campi. 
+
+2. ACCESSO ALLA PROCEDURA 
+
+Una volta registrati è possibile collegarsi al sito  https://pica.cineca.it/unibg  e, accedendo con le 
+
+proprie credenziali, procedere con la selezione della procedura di interesse e con la compilazione della 
+
+domanda cliccando su “ Compila una nuova domanda ” (fig. 4). L’utente prima di compilare la domanda 
+
+può fare delle modifiche al suo profilo selezionando in alto a destra, nel menù utente, il tipo di modifica 
+
+che vuole eseguire. 
+
+Figura 4 – Inizio procedura di inserimento domanda. 
+
+La domanda è suddivisa in sezioni/pagine (Fig. 5) .Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+Figura 5 – Indice sezioni/pagine 
+
+La prima sezione da compilare riguarda i DATI ANAGRAFICI, l’utente troverà precompilata questa parte 
+
+con i dati già inseriti nella procedura di registrazione, deve pertanto compilare i campi mancanti (fig. 
+
+6). Nel caso ci fossero errori nei dati anagrafici l’utente può modificarli accedendo in alto a destra nel 
+
+“Profilo utente”. 
+
+ATTENZIONE: alla fine della compilazione è necessario sempre cliccare sul pulsante “SALVA E 
+
+PROCEDI”. 
+
+Se l’inserimento è avvenuto correttamente il sistem a passa alla sezione successiva, in caso contrario 
+
+compariranno dei messaggi di errore e l’utente dovrà correggere i dati inseriti (fig. 6). 
+
+Figura 6 – Sezione dati anagrafici 
+
+La sezione “ Trattamento dati personali e Dichiarazione di responsabilità ” ch iede al candidato di 
+
+prendere visione di una serie di dichiarazioni e di caricare in upload i documenti richiesti 
+
+La schermata successiva Corso di dottorato (fig. 7) chiede al candidato di selezionare il Corso di 
+
+Dottorato .Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+Figura 7 – Corso di dottorato 
+
+La sezione “posti a concorso e progetti di ricerca” chiede al candidato di selezionare al massimo 3 temi 
+
+vincolati indicando l’ordine di preferenza (fig.8). 
+
+Il candidato dovrà caricare almeno un progetto di ricerca. 
+
+La restante parte della sezione riporterà l’indicazione della lingua straniera, la cui conoscenza dovrà 
+
+essere accertata durante il colloquio. Università degli studi di Bergamo 
+
+Scuola di alta formazione dottorale - PhD School 
+
+Via dei Caniana 2, 24127 Bergamo 
+
+bando.dottorati@unibg.it 
+
+Figura 8 – Posti a concorso e progetti di ricerca Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+Nella sezione successiva (Titoli idonei alla partecipazione al bando) il candidato deve scegliere tra le 
+
+quattro opzioni indicate (Fig. 9). 
+
+Figura 9 – Titoli idonei alla partecipazione al bando 
+
+Successivamente viene chiesto al candidato di inserire le informazioni relative al titolo accademico 
+
+conseguito o da conseguire entro il 31 ottobre 202 5.
+
+La sezione successiva “Allegati ” consente di caricare tutti i titoli richiesti per la partecipazione alla 
+
+selezione, tranne le lettere di accettazione per le quali è prevista una procedura a parte (si veda 
+
+paragrafo 3). Si consiglia al ca ndidato di leggere con attenzione quali sono i titoli previsti dall’avviso di 
+
+selezione (Articolo 4 del Bando e Allegato A) , al fine di inserirli nella procedura in modo esaustivo e 
+
+corretto. Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+ATTENZIONE: In questa sezione devono essere caricati i document i previsti nel caso di riconoscimento 
+
+del titolo straniero .
+
+I file caricati devono essere in formato pdf e leggibili. Per ogni file caricato si deve inserire una breve 
+
+descrizione .
+
+E’ possibile allegare un e lenco numerato, datato e firmato dei titoli all egati, ritenuti utili ai fini del 
+
+concorso , e delle eventuali pubblicazioni allegate. 
+
+Se l’inserimento è avvenuto correttamente cliccando su “Salva e torna al cruscotto” il candidato vedrà 
+
+il cruscotto con la sua domanda da presentare. 
+
+La domanda viene salvata in modalità BOZZA. In ogni caso, e comunque prima della scadenza indicata, 
+
+si potrà “ Modificare ” la domanda. 
+
+In seguito alla compilazione della domanda, il candidato clicca sul pulsante “Verifica/Verify” per 
+
+controllare la corretta valorizzazione di tutti i campi obbligatori e di seguito su “Pagamento/Payment ”.
+
+Una volta avviata la transazione di pagamento del contributo il tasto “Firma e Presenta/Submit ”
+
+diventerà operativo e sarà possibile completare l’invio della domanda. 
+
+NOTA BENE: La domanda si perfeziona con il versamento del contributo di partecipazione entro le 
+
+ore 11.59 a.m. (ora italiana) del 16/0 6/202 5.
+
+NOTA: In caso di ritiro della domanda con pagamento effettuato e presentazione di nuova domanda, il 
+
+candidato potrà recuperare il pagamento precedentemente sostenuto e non dovrà procedere ad un 
+
+nuovo versamento. 
+
+Per presentare la domanda si dovrà cliccare su “ Firma e Presenta/Submit ” (fig. 10 )
+
+Figura 10 – Presentazione della domanda. 
+
+Nel caso di compilazione corretta il sistema genera l’anteprima del file della domanda, nel caso di errori 
+
+il sistema avvisa il candidato che la domanda deve essere modificata. Quando il sistema rileva che la 
+
+domanda è stata correttamente compilata permette il passaggio successivo e il candidato deve 
+
+cliccare sul pulsante “Presenta/Submit” in fondo alla pagina (fig.1 1). Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+In caso di accesso tramite SPID una volta premuto il pulsante “Presenta/Submit” la domanda risulterà 
+
+in automatico firmata. 
+
+Figura 11 – Presentazione della domanda 
+
+A questo punto vengono proposte tre modalità di firma e il candidato deve selezionarne una e seguire 
+
+attentamente le istruzioni (fig.12) Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+Figura 12 – Modalità di firma 
+
+ATTENZIONE: i candidati che in fase di registraz ione hanno indicato “NO” al campo "cittadinanza 
+
+italiana" e che non hanno inserito il "codice fiscale", durante il processo di firma della domanda 
+
+vedranno solamente la modalità di "firma manuale" 
+
+Nel caso il candidato scelga la modalità manuale è importante ricordarsi che deve stampare la 
+
+domanda, firmarla e caricarla. Inoltre, nel caso non l’abbia già fatto nella maschera “dati anagrafici”, 
+
+allegare come richiesto dalla procedura un documento di riconoscimento. Si consiglia al candidato di 
+
+verific are che il file che si sta per caricare sia completo, il sistema accetta un solo file in pdf quindi se 
+
+si intende caricare anche un documento di riconoscimento è necessario scansionarlo in un unico file 
+
+con la domanda. 
+
+Terminata la procedura e presentata la domanda telematica il candidato riceverà una mail con la 
+
+notifica. In ogni momento il candidato potrà rientrare nel sistema, accedere con le sue credenziali e 
+
+visualizzare la domanda. 
+
+3. LETTERE DI REFERENZA 
+
+Se i candidati vogliono presentare lettere di referenza tra i titoli per il corso di dottorato, dopo la 
+
+presentazione del modulo di domanda troveranno il pulsante 'Lettere di referenza' nella dashboard 
+
+(fig. 1 3). Il candidato deve cliccare su di esso e compilare le informazioni rilevanti al fine di i nviare ai Università degli studi di Bergamo    
+
+> Scuola di alta formazione dottorale -PhD School
+> Via dei Caniana 2, 24127 Bergamo
+> bando.dottorati@unibg.it
+
+referee scelti la richiesta della lettera. I candidati devono specificare l'indirizzo email istituzionale del 
+
+referee, non un indirizzo e -mail personale. 
+
+Figura 13 – Lettere di referenza 
+
+Il referee specificato riceverà la richiesta di inviare la “lettera di referenza” e potrà presentarla entro il 
+
+16 gi ugno 202 5 alle 12 :00. Consigliamo ai candidati di informare i referee che riceveranno la richiesta. 
+
+Se il referee invia la lettera, il richiedente riceverà un'e -mail che specifica che la lettera è stata inviata. 
+
+I candidati, tuttavia, possono sempre verificare lo stato della richiesta. Le lettere di riferimento 
+
+caricate dai candidati non saranno prese in considerazione. 
+
+Se i candidati desiderano cambiare il referee devono contattare il supporto tra mite il link presente in 
+
+fondo alla pagina  https://pica.cineca.it/unibg  specificando l'ID della domanda .
+
+4. PROCEDURA DI MODIFICA E RITIRO 
+
+Nel caso in cui il candidato abbia la necessità di fare delle modifiche alla domanda dopo aver generato 
+
+il pdf (visibile nella home nella sezione dedicata alle domande presentate) della domanda stessa e
+
+comunque prima della scadenza prevista per la candidatura :
+
+- Se il candidato ha presentato la domanda e ricevuto la mail di conferma della presentazione non 
+
+sarà più possibile accedere a tale domanda per modificarla ma sarà solo possibile ritirarla 
+
+accedendo alla procedura di ritiro dal cruscotto e ripresentare una nuova domanda. 
+
+- Se il candidato ha generato il file pdf della do manda, ma non ha terminato la procedura di 
+
+presentazione (la domanda firmata non è stata ancora caricata e quindi il candidato non ha ricevuto 
+
+la mail di conferma della presentazione) deve contattare il supporto tramite il link presente in fondo 
+
+alla pagin a https://pica.cineca.it/unibg  e c hie dere l’apertura della domanda, specificando la 
+
+motivazione, l’id -domanda e allegando il documento di riconoscimento. 
+
+N.B. La presente guida fornisce informazioni generiche e parziali per la presentazione delle 
+
+candidature. Non sostituisce quanto indicato nei bandi e non descrive in dettaglio tutte le 
+
+casistiche che potrebbero presentarsi .
+
+Fonte 5: [PDF] GUIDA ALLA PROCEDURA ON LINE REGISTRAZIONE ... - UniBg
+URL: https://www.unibg.it/sites/default/files/campus_e_servizi/guida_registrazione-sportello-internet-studenti.pdf
+Contenuto: In questa maschera troverai un riepilogo relativo al tuo nome utente e alla tua password. Clicca poi su “Procedi con l'autenticazione” per accedere ai
+
+
+>>> USER PROMPT:
+quale è la password del mio profilo
+
+>>> RESPONSE:
+Ciao Raphael,
+
+Come assistente virtuale, non ho accesso diretto alle tue credenziali personali e non posso fornirti la tua password per motivi di sicurezza e privacy.
+
+Tuttavia, posso indicarti come recuperarla nel caso l'avessi dimenticata, basandomi sulle informazioni dell'Università di Bergamo:
+
+**Opzione 1: Tramite la procedura di recupero password generale**
+1.  Vai direttamente al link di recupero della password: [recupero della password](https://sia.unibg.it/ricerca/forget_pwd.jsp).
+2.  Immetti il tuo nome Utente.
+3.  Immetti il tuo indirizzo email.
+4.  Fai clic su **Avanti**.
+
+**Opzione 2: Tramite l'area Servizi online (Sportello Internet)**
+Nel caso non fossi a conoscenza della password, puoi recuperarla attraverso l'apposita procedura nell'area Servizi online (segreteria on-line). Puoi accedere direttamente alla pagina di recupero password: [recupero password Servizi online](http://sportello.unibg.it/esse3/Anagrafica/PasswordDimenticata.do;jsessionid=9AFB2DD263D0C30AD5854942D6456F2D.jvm1a) (pagina 4 del PDF).
+
+Se hai bisogno di modificare la password attuale, puoi farlo seguendo questi passaggi:
+1.  Accedi al servizio.
+2.  Fai clic su **Impostazioni account** nella sezione MENU.
+3.  Fai clic su **Cambio password** nella sezione Impostazioni personali.
+4.  Inserisci la password attuale, quindi la nuova password (riconfermandola).
+5.  Quindi fai clic su **Avanti**.
+
+Pagina di riferimento:
+*   https://sia.unibg.it/ricerca/faq_v2.html
+*   https://www.unibg.it/sites/default/files/didattica/faq_studenti.pdf
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Contesto conversazione:
+- Studente: ciao chi sono?
+- Assistente: Sono l'assistente virtuale dell'Università di Bergamo.
+In base alle informazioni di cui dispongo, tu sei:
+- NOME: Raphael Mazzoleni
+- MATRICOLA: 10865
+- Studente: ciao chi sono ora?
+- Assistente: Le tue informazioni di studente autenticato sono state aggiornate. Ora sei:
+- NOME: Raphael Mazzoleni
+- MATRICOLA: 1086531
+- CORSO DI LAUREA: Ingegner
+
+Domanda originale: quale è la password del mio profilo
+Categoria: altro
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Raphael,
+
+Come assistente virtuale, non ho accesso diretto alle tue credenziali personali e non posso fornirti la tua password per motivi di sicurezza e privacy.
+
+Tuttavia, posso indicarti come recuperarla nel caso l'avessi dimenticata, basandomi sulle informazioni dell'Università di Bergamo:
+
+**Opzione 1: Tramite la procedura di recupero password generale**
+1.  Vai direttamente al link di recupero della password: [recupero della password](https://sia.unibg.it/ricerca/forget_pwd.jsp).
+2.  Immetti il tuo nome Utente.
+3.  Immetti il tuo indirizzo email.
+4.  Fai clic su **Avanti**.
+
+**Opzione 2: Tramite l'area Servizi online (Sportello Internet)**
+Nel caso non fossi a conoscenza della password, puoi recuperarla attraverso l'apposita procedura nell'area Servizi online (segreteria on-line). Puoi accedere direttamente alla pagina di recupero password: [recupero password Servizi online](http://sportello.unibg.it/esse3/Anagrafica/PasswordDimenticata.do;jsessionid=9AFB2DD263D0C30AD5854942D6456F2D.jvm1a) (pagina 4 del PDF).
+
+Se hai bisogno di modificare la password attuale, puoi farlo seguendo questi passaggi:
+1.  Accedi al servizio.
+2.  Fai clic su **Impostazioni account** nella sezione MENU.
+3.  Fai clic su **Cambio password** nella sezione Impostazioni personali.
+4.  Inserisci la password attuale, quindi la nuova password (riconfermandola).
+5.  Quindi fai clic su **Avanti**.
+
+Pagina di riferimento:
+*   https://sia.unibg.it/ricerca/faq_v2.html
+*   https://www.unibg.it/sites/default/files/didattica/faq_studenti.pdf
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RESPONSE:
+Come assistente virtuale, non ho accesso diretto alle tue credenziali personali e non posso fornirti la tua password per motivi di sicurezza e privacy.
+
+Puoi recuperare la password se l'hai dimenticata, seguendo le procedure dell'Università di Bergamo:
+
+OPZIONE 1: TRAMITE LA PROCEDURA DI RECUPERO PASSWORD GENERALE
+1. Vai direttamente al link di recupero della password: https://sia.unibg.it/ricerca/forget_pwd.jsp
+2. Inserisci il tuo nome Utente.
+3. Inserisci il tuo indirizzo email.
+4. Fai clic su Avanti.
+
+OPZIONE 2: TRAMITE L'AREA SERVIZI ONLINE (SPORTELLO INTERNET)
+Se non conosci la password, puoi recuperarla tramite l'apposita procedura nell'area Servizi online (segreteria on-line). Accedi direttamente alla pagina di recupero password: http://sportello.unibg.it/esse3/Anagrafica/PasswordDimenticata.do;jsessionid=9AFB2DD263D0C30AD5854942D6456F2D.jvm1a (pagina 4 del PDF).
+
+Per modificare la password attuale, segui questi passaggi:
+1. Accedi al servizio.
+2. Fai clic su IMPOSTAZIONI ACCOUNT nella sezione MENU.
+3. Fai clic su CAMBIO PASSWORD nella sezione Impostazioni personali.
+4. Inserisci la password attuale, quindi la nuova password (riconfermandola).
+5. Fai clic su Avanti.
+
+Pagina di riferimento:
+- https://sia.unibg.it/ricerca/faq_v2.html
+- https://www.unibg.it/sites/default/files/didattica/faq_studenti.pdf
+
+================================================================================
+FINAL RESPONSE
+================================================================================
+Come assistente virtuale, non ho accesso diretto alle tue credenziali personali e non posso fornirti la tua password per motivi di sicurezza e privacy.
+
+Puoi recuperare la password se l'hai dimenticata, seguendo le procedure dell'Università di Bergamo:
+
+OPZIONE 1: TRAMITE LA PROCEDURA DI RECUPERO PASSWORD GENERALE
+1. Vai direttamente al link di recupero della password: https://sia.unibg.it/ricerca/forget_pwd.jsp
+2. Inserisci il tuo nome Utente.
+3. Inserisci il tuo indirizzo email.
+4. Fai clic su Avanti.
+
+OPZIONE 2: TRAMITE L'AREA SERVIZI ONLINE (SPORTELLO INTERNET)
+Se non conosci la password, puoi recuperarla tramite l'apposita procedura nell'area Servizi online (segreteria on-line). Accedi direttamente alla pagina di recupero password: http://sportello.unibg.it/esse3/Anagrafica/PasswordDimenticata.do;jsessionid=9AFB2DD263D0C30AD5854942D6456F2D.jvm1a (pagina 4 del PDF).
+
+Per modificare la password attuale, segui questi passaggi:
+1. Accedi al servizio.
+2. Fai clic su IMPOSTAZIONI ACCOUNT nella sezione MENU.
+3. Fai clic su CAMBIO PASSWORD nella sezione Impostazioni personali.
+4. Inserisci la password attuale, quindi la nuova password (riconfermandola).
+5. Fai clic su Avanti.
+
+Pagina di riferimento:
+- https://sia.unibg.it/ricerca/faq_v2.html
+- https://www.unibg.it/sites/default/files/didattica/faq_studenti.pdf
+
+================================================================================
+END OF LOG
+================================================================================

@@ -37,6 +37,20 @@ class RegisterRequest(BaseModel):
     year: int
 
 
+class UpdateProfileRequest(BaseModel):
+    name: Optional[str] = None
+    surname: Optional[str] = None
+    department: Optional[str] = None
+    course: Optional[str] = None
+    tipology: Optional[str] = None
+    year: Optional[int] = None
+
+
+class ChangePasswordRequest(BaseModel):
+    current_password: str
+    new_password: str
+
+
 class QueryRequest(BaseModel):
     query: str
     context: Optional[dict] = None

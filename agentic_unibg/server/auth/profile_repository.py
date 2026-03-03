@@ -36,3 +36,22 @@ class ProfileRepository:
         """Verifica se esiste già un documento con la matricola indicata."""
         doc = await self._collection.find_one({"matricola": matricola}, {"_id": 1})
         return doc is not None
+
+    async def updateProfile(self, matricola: str, update_fields: dict) -> Optional[dict]:
+        """Aggiorna i campi del profilo utente (esclude passwordHash e matricola)."""
+        safe_fields = {k: v for k, v in update_fields.items() if k not in ("passwordHash", "matricola", "_id")}
+        if not safe_fields:
+            return await self.findById(matricola)
+        await self._collection.update_one(
+            {"matricola": matricola},
+            {"$set": safe_fields},
+        )
+        return await self.findById(matricola)
+
+    async def updatePassword(self, matricola: str, hashed_password: str) -> bool:
+        """Aggiorna la password (hash) dell'utente."""
+        result = await self._collection.update_one(
+            {"matricola": matricola},
+            {"$set": {"passwordHash": hashed_password}},
+        )
+        return result.modified_count > 0

@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import LoginPage from "./LoginPage";
+import SettingsPage from "./SettingsPage";
+import unibgLogo from "./img/unibg_logo.png";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -9,6 +11,7 @@ function App() {
   const conversationEndRef = useRef(null);
   const [connectionStatus, setConnectionStatus] = useState("checking");
   const [showWorkflow, setShowWorkflow] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   // Auth state
   const [userInfo, setUserInfo] = useState(null); // null = not logged in, show login page
@@ -72,6 +75,8 @@ function App() {
   const handleLogin = (userData) => {
     setUserInfo(userData);
     setIsAuthenticated(true);
+    // Il login è riuscito → il server è raggiungibile
+    setConnectionStatus("connected");
   };
 
   const handleGuest = () => {
@@ -171,6 +176,10 @@ function App() {
     }
   };
 
+  const handleProfileUpdate = (updatedData) => {
+    setUserInfo((prev) => ({ ...prev, ...updatedData }));
+  };
+
   const clearConversation = () => {
     setConversation([]);
     if (userInfo) {
@@ -217,16 +226,26 @@ function App() {
       if (match[1] && match[2]) {
         // Link Markdown: [testo](url)
         parts.push(
-          <a key={match.index} href={match[2]} target="_blank" rel="noopener noreferrer">
+          <a
+            key={match.index}
+            href={match[2]}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {match[1]}
-          </a>
+          </a>,
         );
       } else if (match[3]) {
         // URL nuda
         parts.push(
-          <a key={match.index} href={match[3]} target="_blank" rel="noopener noreferrer">
+          <a
+            key={match.index}
+            href={match[3]}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {match[3]}
-          </a>
+          </a>,
         );
       }
       lastIndex = regex.lastIndex;
@@ -258,11 +277,13 @@ function App() {
   return (
     <div className="App">
       <header className="app-header">
-        <div className="header-content">
-          <h1>Agentic UniBG</h1>
-          <p className="subtitle">
-            Assistente Intelligente per l'Università di Bergamo
-          </p>
+        <div className="header-left">
+          <img src={unibgLogo} alt="UniBG" className="header-logo" />
+        </div>
+        <div className="header-center">
+          <h1>
+            Agentic <span>UniBG</span>
+          </h1>
         </div>
         <div className="header-right">
           <div className="user-badge">
@@ -272,30 +293,38 @@ function App() {
                 : "Ospite"}
             </span>
           </div>
-          <div className="connection-status">
-            <span className={`status-indicator ${connectionStatus}`}></span>
-            {connectionStatus === "connected"
-              ? "Connesso"
-              : connectionStatus === "error"
-                ? "Disconnesso"
-                : "Connessione..."}
-          </div>
-          <button className="logout-btn" onClick={handleLogout}>
-            Esci
+          {userInfo?.status === "loggato" && (
+            <button
+              className="settings-gear-btn"
+              onClick={() => setShowSettings(true)}
+              title="Impostazioni"
+            >
+              ⚙
+            </button>
+          )}
+          <button className="logout-btn" onClick={handleLogout} title="Esci">
+            ⏻
           </button>
         </div>
       </header>
 
       <main className="app-main">
-        <div className="conversation-container">
+        <div
+          className={`conversation-container ${conversation.length === 0 ? "empty" : ""}`}
+        >
           {conversation.length === 0 ? (
             <div className="welcome-message">
+              <div className="welcome-icon">&#128075;</div>
               <h2>
                 {userInfo?.status === "loggato"
-                  ? `Benvenuto, ${userInfo.name}!`
-                  : "Benvenuto!"}
+                  ? `Ciao, ${userInfo.name}!`
+                  : "Ciao!"}
               </h2>
-              <p>Sono il tuo assistente per l'Università di Bergamo.</p>
+              <p>
+                Sono il tuo assistente per l'Università di Bergamo.
+                <br />
+                Chiedimi qualsiasi cosa!
+              </p>
             </div>
           ) : (
             <div className="messages">
@@ -317,21 +346,26 @@ function App() {
                         </span>
                       )}
                       <div className="message-text">
-                        {msg.content.split("\n").map((line, i) => (
+                        {msg.content.split("\n").map((line, i) =>
                           i === 0 ? (
                             <p key={i}>
-                              <strong className="msg-sender">&nbsp;&nbsp;</strong>
+                              <strong className="msg-sender">
+                                &nbsp;&nbsp;
+                              </strong>
                               {line ? renderLineWithLinks(line) : "\u00A0"}
                             </p>
                           ) : (
-                            <p key={i}>{line ? renderLineWithLinks(line) : "\u00A0"}</p>
-                          )
-                        ))}
+                            <p key={i}>
+                              {line ? renderLineWithLinks(line) : "\u00A0"}
+                            </p>
+                          ),
+                        )}
                       </div>
                       {msg.metadata && msg.metadata.workflow_steps && (
                         <details className="workflow-details">
                           <summary>
-                            Mostra workflow ({msg.metadata.workflow_steps.length} steps)
+                            Mostra workflow (
+                            {msg.metadata.workflow_steps.length} steps)
                           </summary>
                           <div className="workflow-steps">
                             {msg.metadata.workflow_steps.map((step, i) => (
@@ -368,17 +402,22 @@ function App() {
         </div>
 
         <div className="input-container">
-          {conversation.length > 0 && (
-            <button className="clear-btn" onClick={clearConversation}>
-              Pulisci conversazione
-            </button>
-          )}
           <form onSubmit={handleSubmit} className="input-form">
+            {conversation.length > 0 && (
+              <button
+                type="button"
+                className="clear-btn"
+                onClick={clearConversation}
+                title="Pulisci conversazione"
+              >
+                🗑
+              </button>
+            )}
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Scrivi la tua domanda qui..."
-              rows="2"
+              rows="1"
               disabled={loading}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
@@ -386,16 +425,46 @@ function App() {
                   handleSubmit(e);
                 }
               }}
+              onInput={(e) => {
+                e.target.style.height = "auto";
+                e.target.style.height =
+                  Math.min(e.target.scrollHeight, 120) + "px";
+              }}
             />
-            <button type="submit" disabled={loading || !message.trim()}>
-              {loading ? "Elaborazione..." : "Invia"}
+            <button
+              type="submit"
+              className={`send-btn ${message.trim() && !loading ? "active" : ""}`}
+              disabled={loading || !message.trim()}
+              title="Invia"
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M8 14V3"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M3 7L8 2L13 7"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </button>
           </form>
-          <p className="input-hint">
-            Premi Enter per inviare, Shift+Enter per andare a capo
-          </p>
         </div>
       </main>
+
+      {showSettings && (
+        <SettingsPage
+          userInfo={userInfo}
+          connectionStatus={connectionStatus}
+          onClose={() => setShowSettings(false)}
+          onProfileUpdate={handleProfileUpdate}
+        />
+      )}
     </div>
   );
 }

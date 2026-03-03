@@ -65,6 +65,22 @@ class AuthController:
             max_age=self._cookie_max_age,
         )
 
+    async def update_profile(self, matricola: str, update_fields: dict) -> dict:
+        """
+        Aggiorna il profilo utente e restituisce il profilo pubblico aggiornato.
+        """
+        updated = await self._service.updateProfile(matricola, update_fields)
+        return self._public_profile(updated)
+
+    async def change_password(
+        self, matricola: str, current_password: str, new_password: str
+    ) -> dict:
+        """
+        Cambia la password dell'utente.
+        """
+        await self._service.changePassword(matricola, current_password, new_password)
+        return {"status": "success", "message": "Password aggiornata con successo"}
+
     @staticmethod
     def _public_profile(student: dict) -> dict:
         """Restituisce solo i campi pubblici del profilo (omette passwordHash)."""

@@ -77,3 +77,37 @@ class AuthService:
         saved = await self._repo.save(student_doc)
         token = self._jwt.generateToken({"matricola": matricola, "status": "loggato"})
         return {"student": saved, "token": token}
+
+    async def updateProfile(self, matricola: str, update_fields: dict) -> dict:
+        """
+        Aggiorna i dati del profilo utente.
+        Restituisce il documento aggiornato.
+        Solleva HTTPException 404 se l'utente non esiste.
+        """
+        student = await self._repo.findById(matricola)
+        if not student:
+            raise HTTPException(status_code=404, detail="Utente non trovato")
+
+        updated = await self._repo.updateProfile(matricola, update_fields)
+        return updated
+
+    async def changePassword(
+        self, matricola: str, current_password: str, new_password: str
+    ) -> bool:
+        """
+        Cambia la password verificando prima quella corrente.
+        Solleva HTTPException 401 se la password corrente è errata.
+        Solleva HTTPException 404 se l'utente non esiste.
+        """
+        student = await self._repo.findById(matricola)
+        if not student:
+            raise HTTPException(status_code=404, detail="Utente non trovato")
+
+        if not bcrypt.checkpw(
+            current_password.encode("utf-8"),
+            student["passwordHash"].encode("utf-8"),
+        ):
+            raise HTTPException(status_code=401, detail="Password corrente errata")
+
+        hashed = bcrypt.hashpw(new_password.encode("utf-8"), bcrypt.gensalt())
+        return await self._repo.updatePassword(matricola, hashed.decode("utf-8"))
