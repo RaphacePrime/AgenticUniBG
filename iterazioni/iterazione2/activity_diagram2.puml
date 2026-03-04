@@ -11,14 +11,14 @@ start
 
 if (Token JWT valido?) then (Sì)
   |MongoDB|
-  :Cerca profilo utente\nper userId nel JWT;
+  :Cerca profilo utente\nper matricola;
   :Restituisce profilo;
 
   |API Gateway|
-  :Inietta profilo nel prompt;
+  :Inserisce informazioni \nprofilo nel prompt;
 else (No)
   |API Gateway|
-  :Accesso senza profilo\n(risposta generica);
+  :Accesso come ospite;
 endif
 
 |Orchestrator Agent|

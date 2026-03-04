@@ -17,7 +17,7 @@ skinparam componentStyle uml2
 
 ' ─── Client Tier ─────────────────────────────────────────────
 package "Client Tier" {
-  [Web / Mobile App] as Client
+  [Web] as Client
 }
 
 ' ─── Backend Tier ────────────────────────────────────────────
@@ -62,12 +62,12 @@ Client      ..> IHTTP     : usa
 Gateway     ..> IAuthAPI  : delega autenticazione
 Gateway     ..> IOrch     : invia richiesta
 AuthCtrl    ..> IAuthSvc  : verifica credenziali
-AuthSvc     ..> IJWT      : genera / valida token
+AuthSvc     ..> IJWT      : genera/valida token
 AuthSvc     ..> IProfile  : recupera profilo utente
-Orch        ..> IClassif  : classifica intent
+Orch        ..> IClassif  : classifica intento
 Orch        ..> IGen      : genera risposta
 Orch        ..> IRev      : revisiona risposta
-Orch        ..> IProfile  : recupera contesto utente
+Orch        ..> IProfile  : recupera contesto
 ProfileRepo ..> IMongo    : persistenza dati
 
 @enduml

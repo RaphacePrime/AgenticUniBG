@@ -9,12 +9,12 @@ actor "Ospite" as Guest
 Student --|> User
 Guest  --|> User
 
-rectangle "Agentic UniBG System" {
+rectangle "Sistema ad agenti universitario" {
 
   usecase "Registrazione" as UC1
   usecase "Login" as UC2
   usecase "Inviare Richiesta" as UC4
-  usecase "Ricevere Risposta" as UC5
+  usecase "Leggere Risposta" as UC5
   usecase "Recupero Profilo" as UC6
   usecase "Risposta Personalizzata" as UC7
 }
