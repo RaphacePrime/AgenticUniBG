@@ -42,12 +42,4 @@ UC5  ..> UC11 : <<include>>
 UC7  ..> UC5  : <<extend>>\ncondizione: utente autenticato
 UC9  ..> UC8  : <<extend>>\ncondizione: sessione attiva
 
-note right of UC11
-  La risposta è arricchita con
-  contenuti recuperati da unibg.it
-  tramite WebAgent + Tavily.
-  Il QueryAgent ottimizza la ricerca
-  in base al profilo dello studente.
-end note
-
 @enduml

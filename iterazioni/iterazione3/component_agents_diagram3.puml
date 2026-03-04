@@ -41,23 +41,4 @@ component "Agent Layer" {
     Orch --> pDataOut
 }
 
-note right of Classifier
-  Usa conversation_history[-4:]
-  (ultimi 2 scambi) come
-  contesto per la classificazione
-end note
-
-note right of Generator
-  Converte TUTTA la conversation_history
-  in messaggi LLM nativi
-  (HumanMessage / AIMessage)
-  per vera memoria conversazionale
-end note
-
-note right of Revision
-  Usa conversation_history[-4:]
-  (ultimi 2 scambi) nel
-  prompt di revisione
-end note
-
 @enduml

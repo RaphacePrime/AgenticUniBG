@@ -24,20 +24,12 @@ Orch -> Orch : Inizializza AgentState\n(query + profilo + history)
 
 ' ─── 3. Classificazione ───────────────────────────────────────
 Orch -> Cls  : classify(query, user_context, conversation_history)
-note right of Cls
-  Usa Gemini 2.5 Flash
-  per classificare l'intento
-end note
+
 Cls  --> Orch : { category, description, confidence }
 
 ' ─── 4. Generazione search query ──────────────────────────────
 Orch -> QA   : generate_query(query, conversation_history, user_context)
-note right of QA
-  Usa Gemini 2.5 Flash.
-  Decide autonomamente se inserire
-  info profilo nella query.
-  Restituisce max 6-8 keywords.
-end note
+
 QA   --> Orch : { search_query: "parole chiave ottimizzate" }
 
 ' ─── 5. Ricerca web ───────────────────────────────────────────
@@ -54,11 +46,7 @@ WA   --> Orch : { web_results, formatted_context, total_results, status }
 
 ' ─── 6. Generazione risposta ─────────────────────────────────
 Orch -> Gen  : generate(query, category,\ncontext+web_context,\nuser_context, conversation_history)
-note right of Gen
-  web_context iniettato in
-  context["additional_info"]
-  come fonte per la risposta
-end note
+
 Gen  --> Orch : { response, status }
 
 ' ─── 7. Revisione ────────────────────────────────────────────
@@ -68,13 +56,7 @@ Rev  --> Orch : { revised_response, has_changes }
 ' ─── 8. Logging pipeline ─────────────────────────────────────
 Orch -> Log  : write_log(state, workflow_steps)
 Log  -> Log  : _build_filename(matricola, timestamp)
-note right of Log
-  Nome: log_{matricola}_{timestamp}.txt
-  Contiene: header, user info,
-  query originale, history,
-  step classificatore, query agent,
-  web agent, generator, reviser
-end note
+
 Log  -> FS   : scrive file log txt
 FS   --> Log : filepath
 Log  --> Orch : filepath

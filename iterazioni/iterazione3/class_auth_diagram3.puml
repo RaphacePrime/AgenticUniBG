@@ -1,5 +1,5 @@
 @startuml
-title Class Diagram - Iterazione 4 (Authentication Package)
+title Class Diagram - Iterazione 3 (Authentication Package)
 
 package "auth" <<folder>> {
 
@@ -59,9 +59,5 @@ AuthController --> AuthService           : delega
 AuthService    --> JWTManager            : genera/valida token
 AuthService    --> ProfileRepository     : gestisce profilo
 ProfileRepository "1" --> "0..1" User    : persiste
-
-note bottom of AuthController
-  Invariato dall'Iterazione 3.
-end note
 
 @enduml

@@ -22,16 +22,4 @@ package "frontend" <<folder>> {
 ' ─── Relazioni ────────────────────────────────────────────────
 ConversationStore "1" o--> "*" Message : memorizza
 
-note right of ConversationStore
-  Invariato dall'Iterazione 3.
-  localStorage del browser con
-  key "conversation_{matricola}".
-end note
-
-note bottom of Message
-  type ∈ {"user", "agent", "error"}
-  conversation_history: max 10 msg
-  (ultimi 5 scambi) inviati al backend.
-end note
-
 @enduml

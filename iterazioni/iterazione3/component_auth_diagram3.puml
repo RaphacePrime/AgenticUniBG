@@ -4,7 +4,7 @@ top to bottom direction
 skinparam nodesep 70
 skinparam ranksep 50
 
-title Component Diagram - Iterazione 4 (Authentication Layer)
+title Component Diagram - Iterazione 3 (Authentication Layer)
 
 component "Authentication Layer" {
 
@@ -34,11 +34,4 @@ component "Authentication Layer" {
     ' ─── Service → Data Tier ──────────────────────────────────
     AuthSvc --> pDataOut
 }
-
-note right of AuthCtrl
-  Invariato dall'Iterazione 3.
-  _set_auth_cookie() imposta
-  JWT come httpOnly cookie.
-end note
-
 @enduml

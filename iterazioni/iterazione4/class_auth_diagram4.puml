@@ -1,5 +1,5 @@
 @startuml
-title Class Diagram - Iterazione 3 (Authentication Package)
+title Class Diagram - Iterazione 4 (Authentication Package)
 
 package "auth" <<folder>> {
 
@@ -59,19 +59,5 @@ AuthController --> AuthService           : delega
 AuthService    --> JWTManager            : genera/valida token
 AuthService    --> ProfileRepository     : gestisce profilo
 ProfileRepository "1" --> "0..1" User    : persiste
-
-note right of AuthController
-  _set_auth_cookie() imposta
-  il JWT come httpOnly cookie.
-  _public_profile() rimuove
-  passwordHash dalla risposta.
-end note
-
-note right of JWTManager
-  validateFromRequest() estrae
-  il token dal cookie httpOnly
-  della richiesta HTTP.
-  Scadenza: 7 giorni.
-end note
 
 @enduml

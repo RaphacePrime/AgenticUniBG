@@ -2,8 +2,8 @@
 title Memoria Conversazionale - Opzione Redis (Sequence)
 
 actor       Studente        as S
-participant "Frontend\n(App.jsx)"            as FE
-participant "POST /api/agent/query\n(main.py)" as API
+participant "Frontend"            as FE
+participant "POST /api/agent/query" as API
 participant "OrchestratorAgent"              as ORC
 participant "ConversationRepository\n(Redis)" as REPO
 database    "Redis\nchat:{matricola}"        as RDS
@@ -13,7 +13,6 @@ database    "MongoDB\nconversations"         as MDB
 S -> FE : login
 FE -> API : POST /api/auth/login
 API --> FE : JWT cookie + userInfo
-note over FE : non carica history dal client\n(la gestisce il server)
 
 ' ─── Turno N ──────────────────────────────────────────────────
 S -> FE : invia messaggio
@@ -53,14 +52,5 @@ REPO -> RDS : DEL chat:{matricola}
 
 API --> FE : cookie eliminato
 FE --> S : redirect login
-
-legend bottom
-  | Aspetto              | Comportamento                          |
-  | Fonte della history  | Redis (lato server)                   |
-  | Payload dal client   | solo query + user_info                |
-  | Scadenza sessione    | TTL 24h su inattività (automatico)    |
-  | Persistenza storico  | flush su MongoDB al logout            |
-  | AgentState           | invariato, riceve history da Redis    |
-endlegend
 
 @enduml

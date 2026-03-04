@@ -57,24 +57,4 @@ component "Agent Layer" {
     Orch --> pDataOut
 }
 
-note right of QueryAg
-  Genera 6-8 keyword ottimizzate
-  per motori di ricerca.
-  Decide autonomamente se
-  includere info profilo studente.
-end note
-
-note right of WebAg
-  Tavily API: search_depth="advanced"
-  include_domains=[unibg.it,
-    coursecatalogue.cineca.it]
-  max_results=30 → top 5 per score.
-  Estrae link da PDF (PyMuPDF).
-end note
-
-note bottom of Orch
-  LangGraph StateGraph:
-  classify → query → web_search → generate → revise
-end note
-
 @enduml

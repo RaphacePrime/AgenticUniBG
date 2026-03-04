@@ -2,20 +2,13 @@
 title Gestione della Memoria Conversazionale
 
 actor       Studente       as S
-participant "Frontend\n(App.jsx)"       as FE
+participant "Frontend"       as FE
 participant "Main.py" as API
 participant "OrchestratorAgent"         as ORC
 participant "ClassifierAgent"           as CLA
 participant "GeneratorAgent"            as GEN
 participant "RevisionAgent"             as REV
 database    "localStorage\n(browser)"  as LS
-
-' ─── Persistenza locale ───────────────────────────────────────
-note over FE, LS
-  La conversazione completa è salvata in localStorage
-  con chiave "conversation_<matricola>" ad ogni aggiornamento.
-  Alla riapertura dell'app viene ripristinata automaticamente.
-end note
 
 ' ─── Turno N - invio messaggio ───────────────────────────────
 S -> FE : digita e invia messaggio
@@ -46,14 +39,6 @@ ORC -> ORC : state[category] = ...
 ORC -> GEN : generate(\n  query, category,\n  user_context,\n  conversation_history[10]\n)
 
 GEN -> GEN : costruisce messages[]:\n  [SystemMessage(prompt)]\n  + TUTTI i 10 msg come\n    HumanMessage / AIMessage\n  + HumanMessage(query corrente)
-
-note right of GEN
-  È l'unico agente che usa
-  l'intera conversation_history
-  come messaggi LLM nativi,
-  garantendo vera memoria
-  conversazionale all'LLM.
-end note
 
 GEN --> ORC : { response, category_used }
 

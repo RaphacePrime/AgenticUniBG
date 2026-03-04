@@ -14,12 +14,6 @@ component "Client Tier" as ClientTier {
     Client --> pHttpOut
 }
 
-note bottom of ClientTier
-  Nessun localStorage per la conversazione.
-  La history è gestita interamente lato server.
-  Il client invia query + user_info + conv_id.
-end note
-
 ' ─── Interfaccia Client ↔ Backend ────────────────────────────
 interface "HTTP/REST\nhttpOnly Cookie" as IHTTP
 
@@ -80,13 +74,5 @@ pDataOut --> IProfile
 pDataOut --> IConvRepo
 IProfile   --> pDataIn
 IConvRepo  --> pDataIn
-
-note bottom of ConvColl
-  Collection "conversations":
-  { _id, matricola, messages[], createdAt, updatedAt }
-  Supporta conversazioni multiple.
-  Storico permanente, nessun TTL.
-  Scrittura ad ogni messaggio.
-end note
 
 @enduml

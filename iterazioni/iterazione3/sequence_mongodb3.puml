@@ -1,12 +1,12 @@
 @startuml
-title Memoria Conversazionale - Opzione MongoDB (Sequence)
+title Memoria Conversazionale - Opzione MongoDB (Sequence) - Iterazione 3
 
 actor       Studente         as S
-participant "Frontend\n(App.jsx)"             as FE
+participant "Frontend"             as FE
 participant "POST /api/agent/query\n(main.py)" as API
-participant "OrchestratorAgent"               as ORC
-participant "ConversationRepository\n(MongoDB)" as REPO
-database    "MongoDB\nconversations"          as MDB
+participant "OrchestratorAgent" as ORC
+participant "ConversationRepository" as REPO
+database    "MongoDB\nconversations"  as MDB
 
 ' ─── Login + carica chat precedenti ──────────────────────────
 S -> FE : login
@@ -61,25 +61,8 @@ ORC -> ORC : final_response pronto
 ORC -> REPO : appendMessages(conv_id, user_msg, assistant_msg)
 REPO -> MDB : updateOne({ _id: conv_id })\n$push messages user_msg\n$push messages assistant_msg\n$set updatedAt = now()
 
-note over REPO, MDB
-  Ogni messaggio viene scritto
-  direttamente su MongoDB —
-  nessun rischio di perdita dati
-  in caso di crash o chiusura browser.
-end note
-
 ORC --> API : { response, metadata }
 API --> FE : { response, metadata }
 FE --> S : mostra risposta
-
-legend bottom
-  | Aspetto              | Comportamento                              |
-  | Fonte della history  | MongoDB (lato server)                     |
-  | Payload dal client   | query + user_info + conv_id               |
-  | Scadenza sessione    | nessuna — storico permanente              |
-  | Persistenza storico  | scrittura ad ogni messaggio               |
-  | Conversazioni multi  | sì — gestite tramite conv_id              |
-  | AgentState           | invariato, riceve history da MongoDB      |
-endlegend
 
 @enduml

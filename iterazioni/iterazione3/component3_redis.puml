@@ -14,12 +14,6 @@ component "Client Tier" as ClientTier {
     Client --> pHttpOut
 }
 
-note bottom of ClientTier
-  Nessun localStorage per la conversazione.
-  La history è gestita interamente lato server.
-  Il client invia solo query + user_info.
-end note
-
 ' ─── Interfaccia Client ↔ Backend ────────────────────────────
 interface "HTTP/REST\nhttpOnly Cookie" as IHTTP
 
@@ -79,12 +73,5 @@ pDataOut --> IProfile
 pDataOut --> IRedis
 IProfile --> pDataIn
 IRedis   --> pDataIn
-
-note bottom of Redis
-  Key: chat:{matricola}
-  Lista con max 20 messaggi (10 scambi).
-  TTL 24h su inattività.
-  Al logout → flush su MongoDB.
-end note
 
 @enduml

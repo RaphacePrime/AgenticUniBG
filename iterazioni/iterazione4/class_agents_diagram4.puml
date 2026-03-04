@@ -1,5 +1,5 @@
 @startuml
-title Class Diagram - Iterazione 3 (Agents Package)
+title Class Diagram - Iterazione 4 (Agents & Logging Package)
 
 package "agents" <<folder>> {
 
@@ -18,6 +18,9 @@ package "agents" <<folder>> {
         +category: String
         +category_description: String
         +confidence: String
+        +search_query: String
+        +web_results: List<dict>
+        +web_context: String
         +generated_response: String
         +generation_status: String
         +final_response: String
@@ -33,49 +36,74 @@ package "agents" <<folder>> {
     }
 
     class OrchestratorAgent {
-        -llm: ChatGroq
+        -llm: ChatGoogleGenerativeAI
         -classifier: ClassifierAgent
+        -queryAgent: QueryAgent
+        -webAgent: WebAgent
         -generator: GeneratorAgent
         -reviser: RevisionAgent
+        -logger: PipelineLogger
         -workflow: StateGraph
         +process_query(query: String, context: dict, user_info: dict, conversation_history: List): dict
         +get_available_agents(): List<dict>
         +analyze_query(query: String): dict
         -_build_workflow(): StateGraph
         -_classify_node(state: AgentState): AgentState
+        -_query_node(state: AgentState): AgentState
+        -_web_search_node(state: AgentState): AgentState
         -_generate_node(state: AgentState): AgentState
         -_revise_node(state: AgentState): AgentState
     }
 
     class ClassifierAgent {
         -CATEGORIES: dict
-        -llm: ChatGroq
+        -llm: ChatGoogleGenerativeAI
         +classify(query: String, user_context: String, conversation_history: List): dict
         +execute(state: AgentState): AgentState
     }
 
+    class QueryAgent {
+        -llm: ChatGoogleGenerativeAI
+        +generate_query(query: String, conversation_history: List, user_context: String): dict
+        -_build_system_prompt(): String
+    }
+
+    class WebAgent {
+        -client: TavilyClient
+        -{static} SEARCH_DOMAINS: List<String>
+        +search(search_query: String): dict
+        -_is_pdf_url(url: String): bool
+        -_extract_pdf_links(pdf_url: String): List<dict>
+        -_format_results(results: List<dict>): String
+    }
+
     class GeneratorAgent {
         -CATEGORY_PROMPTS: dict
-        -llm: ChatGroq
+        -llm: ChatGoogleGenerativeAI
         +generate(query: String, category: String, context: dict, user_context: String, conversation_history: List): dict
         +execute(state: AgentState): AgentState
     }
 
     class RevisionAgent {
-        -llm: ChatGroq
+        -llm: ChatGoogleGenerativeAI
         -system_prompt: String
         +revise(original_query: String, generated_response: String, category: String, user_context: String, conversation_history: List): dict
         +execute(state: AgentState): AgentState
     }
 }
 
-' ─── Funzione di utilità ──────────────────────────────────────
-note bottom of AgentState
-  build_user_context(state): String
-  Funzione di utilità che costruisce
-  una stringa di contesto utente
-  a partire dai campi dello stato.
-end note
+package "logger" <<folder>> {
+
+    class PipelineLogger {
+        -{static} LOGS_DIR: String
+        +write_log(state: dict, workflow_steps: List<dict>, timestamp: datetime, total_time: float): String
+        -_build_filename(matricola: String, timestamp: datetime): String
+        -_build_log_content(state: dict, workflow_steps: List<dict>, timestamp: datetime, total_time: float): List<String>
+        -_format_agent_section(title: String, step: dict, extra_fields: dict): List<String>
+        -_format_web_agent_section(step: dict, web_results: List): List<String>
+    }
+}
+
 
 ' ─── Ereditarietà ────────────────────────────────────────────
 Agent <|-- ClassifierAgent
@@ -84,28 +112,11 @@ Agent <|-- RevisionAgent
 
 ' ─── Composizione Orchestrator ────────────────────────────────
 OrchestratorAgent "1" *--> "1" ClassifierAgent : classifier
+OrchestratorAgent "1" *--> "1" QueryAgent      : queryAgent
+OrchestratorAgent "1" *--> "1" WebAgent        : webAgent
 OrchestratorAgent "1" *--> "1" GeneratorAgent  : generator
 OrchestratorAgent "1" *--> "1" RevisionAgent   : reviser
+OrchestratorAgent "1" *--> "1" PipelineLogger  : logger
 OrchestratorAgent --> AgentState                : crea/aggiorna
-
-' ─── Uso della conversation_history ──────────────────────────
-note right of ClassifierAgent
-  Usa conversation_history[-4:]
-  (ultimi 2 scambi) come testo
-  prima della domanda corrente.
-end note
-
-note right of GeneratorAgent
-  Converte TUTTA la conversation_history
-  in messaggi LLM nativi
-  (HumanMessage / AIMessage) per
-  vera memoria conversazionale.
-end note
-
-note right of RevisionAgent
-  Usa conversation_history[-4:]
-  (ultimi 2 scambi) nel prompt
-  di revisione qualità.
-end note
 
 @enduml

@@ -37,12 +37,6 @@ endif
 :Analizza query + history + profilo\nutente;
 :Genera search query ottimizzata\n(max 6-8 parole chiave);
 
-note right
-  Decide autonomamente se includere
-  le info del profilo studente
-  nella query in base al tipo di domanda
-end note
-
 |Web Agent|
 :Esegue ricerca su Tavily API\n(domini: unibg.it, coursecatalogue);
 :Recupera fino a 30 risultati;
@@ -68,14 +62,6 @@ endif
 
 |Pipeline Logger|
 :Scrive log file (txt) nella cartella logs/\ncon tutti i dettagli della pipeline;
-
-note right
-  Nome file:
-  log_{matricola}_{timestamp}.txt
-  Contiene: query, history, classificazione,
-  search query, risultati web,
-  risposta generata, revisione
-end note
 
 |Orchestrator Agent|
 :Restituisce risposta all'API Gateway;
