@@ -3,15 +3,21 @@ title Activity Diagram - Iterazione 2
 
 |Utente|
 start
-:Inserisce domanda;
+:Inserisce domanda + JWT;
 
 |API Gateway|
 :Riceve richiesta + JWT;
+:Valida token JWT;
 
 if (Token JWT valido?) then (Sì)
-  :Recupera profilo da MongoDB;
+  |MongoDB|
+  :Cerca profilo utente\nper userId nel JWT;
+  :Restituisce profilo;
+
+  |API Gateway|
   :Inietta profilo nel prompt;
 else (No)
+  |API Gateway|
   :Accesso senza profilo\n(risposta generica);
 endif
 
@@ -38,6 +44,9 @@ endif
 :Restituisce risposta finale;
 
 |Orchestrator Agent|
+:Invia risposta all'API Gateway;
+
+|API Gateway|
 :Invia risposta all'utente;
 
 |Utente|

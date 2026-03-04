@@ -9,7 +9,12 @@ start
 :Riceve GET\n(con httpOnly cookie);
 
 if (Cookie presente e JWT valido?) then (Sì)
-  :Recupera profilo da MongoDB;
+  |MongoDB|
+  :Cerca profilo utente\nper userId nel JWT;
+  :Restituisce profilo;
+
+  |API Gateway|
+  :Invia profilo al browser;
 
   |Browser|
   :Carica conversazione salvata;
@@ -19,7 +24,14 @@ else (No)
 
   if (Azione utente?) then (Login)
     |API Gateway|
-    :POST verifica credenziali;
+    :POST /login\nriceve credenziali;
+
+    |MongoDB|
+    :Cerca utente per username;
+    :Verifica password hash;
+    :Restituisce dati utente;
+
+    |API Gateway|
     :Genera JWT e imposta\nhttpOnly cookie;
     :Restituisce profilo;
 
@@ -28,7 +40,13 @@ else (No)
     :Carica conversazione (se presente);
   else (Registrazione)
     |API Gateway|
-    :POST crea account;
+    :POST /register\nriceve dati nuovo utente;
+
+    |MongoDB|
+    :Crea nuovo documento utente;
+    :Restituisce utente creato;
+
+    |API Gateway|
     :Genera JWT e imposta\nhttpOnly cookie;
     :Restituisce profilo;
 
@@ -43,7 +61,15 @@ endif
 :Costruisce conversation_history\n(ultimi 10 messaggi);
 
 |API Gateway|
-:Riceve POST \n(cookie + query + history);
+:Riceve POST\n(cookie + query + history);
+:Valida JWT dal cookie;
+
+|MongoDB|
+:Recupera profilo aggiornato\ndell'utente;
+:Restituisce profilo;
+
+|API Gateway|
+:Inoltra query + profilo + history\nall'Orchestrator;
 
 |Orchestrator Agent|
 :Inizializza AgentState\n(profilo + query + history);
@@ -74,11 +100,11 @@ endif
 
 |Browser|
 :Aggiunge messaggio alla conversazione;
-:Salva conversazione;
+:Salva conversazione in localStorage;
 
 if (Logout?) then (Sì)
   |API Gateway|
-  :POST Elimina httpOnly cookie;
+  :POST /logout\nElimina httpOnly cookie;
 
   |Browser|
   :Cancella profilo dalla memoria;
