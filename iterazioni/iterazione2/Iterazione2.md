@@ -207,7 +207,23 @@ Il backend utilizza `uvicorn` con `motor` per la connessione asincrona a MongoDB
 
 ---
 
-## 12. Obiettivi Raggiunti
+## 12. Diagrammi UML
+
+Tutti i diagrammi sono in formato PlantUML (`.puml`).
+
+| Diagramma | File | Descrizione |
+|---|---|---|
+| Use Case | `usecase_diagram2.puml` | Casi d'uso: registrazione, login, query, risposta personalizzata |
+| Activity | `activity_diagram2.puml` | Flusso attività della pipeline classify → generate → revise |
+| Sequence | `sequence_diagram2.puml` | Processo di login: Frontend → Gateway → Auth → MongoDB → JWT |
+| Class | `class_diagram2.puml` | Diagramma classi completo (Auth Layer + Agent Layer + modelli) |
+| Component (Overview) | `component_diagram2.puml` | Architettura a 3 tier con porte e interfacce cross-tier |
+| Component (Auth Layer) | `component2_auth.puml` | Dettaglio Authentication Layer: AuthCtrl → AuthSvc → JWT |
+| Component (Agent Layer) | `component2_agents.puml` | Dettaglio Agent Layer: Orchestrator → Classifier, Generator, Revision |
+
+---
+
+## 13. Obiettivi Raggiunti
 
 | Obiettivo | Stato |
 |---|---|

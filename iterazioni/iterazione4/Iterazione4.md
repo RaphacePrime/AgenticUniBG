@@ -219,7 +219,27 @@ Gli endpoint esposti dal backend rimangono invariati rispetto all'Iterazione 3. 
 
 ---
 
-## 12. Obiettivi Raggiunti
+## 12. Diagrammi UML
+
+Tutti i diagrammi sono in formato PlantUML (`.puml`).
+
+| Diagramma | File | Descrizione |
+|---|---|---|
+| Use Case | `usecase4.puml` | Casi d'uso UC-01 — UC-12 (include UC-11 Risposta con Dati Reali, UC-12 Logging Pipeline) |
+| Activity | `activity4.puml` | Flusso attività pipeline completa con QueryAgent, WebAgent e Logger |
+| Sequence | `sequence4.puml` | Pipeline end-to-end: Classify → Query → Web → Generate → Revise → Log |
+| Class (Auth) | `class4_auth.puml` | Package `auth`: AuthController, AuthService, JWTManager, ProfileRepository, User |
+| Class (Agents + Logger) | `class4_agents.puml` | Package `agents` + `logger`: tutti gli agenti incl. QueryAgent, WebAgent, PipelineLogger |
+| Class (Frontend) | `class4_frontend.puml` | Package `frontend`: ConversationStore, Message |
+| Class (completo) | `class4.puml` | Diagramma classi monolitico (tutti i package in un file) |
+| Component (Overview) | `component4.puml` | Architettura a 4 tier (Client, Backend, Data, External Services) con porte |
+| Component (Auth) | `component4_auth.puml` | Dettaglio Authentication Layer (invariato da Iterazione 3) |
+| Component (Agents) | `component4_agents.puml` | Dettaglio Agent Layer con QueryAgent, WebAgent e porta verso servizi esterni |
+| Component (Logging) | `component4_logging.puml` | Dettaglio Logging Layer: PipelineLogger → File System |
+
+---
+
+## 13. Obiettivi Raggiunti
 
 | Obiettivo | Stato |
 |---|---|

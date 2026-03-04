@@ -1,82 +1,70 @@
 @startuml
-title Component Diagram - Iterazione 3
-
 skinparam componentStyle uml2
+left to right direction
+skinparam nodesep 80
+skinparam ranksep 60
+skinparam padding 10
 
-' ─── Interfacce fornite (ball) ────────────────────────────────
-() "HTTP/REST"          as IHTTP
-() "httpOnly Cookie"    as ICookie
-() "IAuthAPI"           as IAuthAPI
-() "IAuthService"       as IAuthSvc
-() "IJWTManager"        as IJWT
-() "IProfileRepo"       as IProfile
-() "IOrchestrator"      as IOrch
-() "IClassifier"        as IClassif
-() "IGenerator"         as IGen
-() "IRevision"          as IRev
-() "IMongoDriver"       as IMongo
-() "ILocalStorage"      as ILS
+title Component Diagram - Iterazione 3 (Overview)
 
 ' ─── Client Tier ─────────────────────────────────────────────
-package "Client Tier" {
-  [Web App] as Client
-  [Conversation Store]  as LS
+component "Client Tier" as ClientTier {
+    portout pHttpOut
+    component [Web App\n(React + Vite)]          <<component>> as Client
+    component [Conversation Store\n(localStorage)] <<component>> as LS
+    Client --> pHttpOut
+    Client --> LS
 }
+
+' ─── Interfaccia Client ↔ Backend ────────────────────────────
+interface "HTTP/REST\nhttpOnly Cookie" as IHTTP
 
 ' ─── Backend Tier ────────────────────────────────────────────
-package "Backend Tier" {
+component "Backend Tier" as BackendTier {
+    portin  pHttpIn
+    portout pDataOut
 
-  [API Gateway] as Gateway
+    interface "IAuthAPI"      as IAuthAPI
+    interface "IOrchestrator" as IOrch
 
-  package "Authentication Layer" {
-    [Auth Controller]    as AuthCtrl
-    [Auth Service]       as AuthSvc
-    [JWT Manager]        as JWT
-    [Profile Repository] as ProfileRepo
-  }
+    component [API Gateway\n(FastAPI)]        <<component>> as Gateway
+    component [Authentication Layer]          <<component>> as AuthLayer
+    component [Agent Layer]                   <<component>> as AgentLayer
 
-  package "Agent Layer" {
-    [Orchestrator Agent] as Orch
-    [Classifier Agent]   as Classifier
-    [Generator Agent]    as Generator
-    [Revision Agent]     as Revision
-  }
+    pHttpIn --> Gateway
+
+    Gateway --( IAuthAPI
+    IAuthAPI  -  AuthLayer
+
+    Gateway --( IOrch
+    IOrch    -  AgentLayer
+
+    AuthLayer  --> pDataOut
+    AgentLayer --> pDataOut
 }
+
+' ─── Interfaccia Backend ↔ Data ──────────────────────────────
+interface "IProfileRepo" as IProfile
 
 ' ─── Data Tier ───────────────────────────────────────────────
-package "Data Tier" {
-  [MongoDB Atlas] as DB
+component "Data Tier" as DataTier {
+    portin pDataIn
+
+    interface "IMongoDriver" as IMongo
+
+    component [Profile Repository] <<component>> as ProfileRepo
+    component [MongoDB Atlas]      <<component>> as DB
+
+    pDataIn --> ProfileRepo
+    ProfileRepo --( IMongo
+    IMongo       -  DB
 }
 
-' ─── Provided interfaces ──────────────────────────────────────
-Client      - IHTTP
-Client      - ICookie
-Gateway     - IAuthAPI
-AuthCtrl    - IAuthSvc
-AuthSvc     - IJWT
-JWT         - IJWT
-ProfileRepo - IProfile
-Orch        - IOrch
-Classifier  - IClassif
-Generator   - IGen
-Revision    - IRev
-DB          - IMongo
-LS          - ILS
+' ─── Connessioni cross-tier ──────────────────────────────────
+pHttpOut  --> IHTTP
+IHTTP     --> pHttpIn
 
-' ─── Required interfaces ──────────────────────────────────────
-Client       ..> IHTTP    : richieste REST
-Client       ..> ICookie  : invia cookie
-Client       ..> ILS      : conversazione persistente
-Client       ..> IAuthAPI : login/logout
-Client       ..> IOrch    : query + conversation_history
-Gateway      ..> IOrch    : delega query
-Gateway      ..> IAuthAPI : delega autenticazione
-AuthCtrl     ..> IAuthSvc : delega logica di business
-AuthSvc      ..> IJWT     : genera e valida JWT
-AuthSvc      ..> IProfile : recupera profilo
-ProfileRepo  ..> IMongo   : persistenza
-Orch         ..> IClassif : classifica intento
-Orch         ..> IGen     : genera risposta con history
-Orch         ..> IRev     : revisiona risposta con history
+pDataOut  --> IProfile
+IProfile  --> pDataIn
 
 @enduml

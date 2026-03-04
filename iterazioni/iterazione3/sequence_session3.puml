@@ -1,0 +1,101 @@
+@startuml
+title Sequence Diagram (Gestione Sessione) - Iterazione 3
+
+actor       Studente                    as S
+participant "Browser\n(React App)"      as FE
+participant "API Gateway\n(FastAPI)"    as GW
+participant "Auth Controller"           as AC
+participant "Auth Service"              as AS
+participant "JWT Manager"               as JWT
+participant "Profile Repository"        as PR
+database    "MongoDB Atlas"             as DB
+database    "localStorage\n(browser)"   as LS
+
+== Scenario 1: Ripristino Sessione Automatica ==
+
+S -> FE : Apre / ricarica l'applicazione
+
+FE -> GW : GET /api/auth/verify\n[Cookie: access_token=<JWT>]\ncredentials: "include"
+
+GW -> JWT : validateFromRequest(request)
+JWT -> JWT : Estrae cookie "access_token"\nDecodifica e verifica firma + scadenza
+
+alt Token valido
+    JWT --> GW : payload { matricola, status }
+    GW -> PR : findById(matricola)
+    PR -> DB : query
+    DB --> PR : user document
+    PR --> GW : profilo studente
+
+    GW --> FE : 200 { status, name, surname,\n  department, course, tipology,\n  year, matricola }
+
+    FE -> FE : setUserInfo(userData)\nsetIsAuthenticated(true)
+    FE -> LS : getItem("conversation_{matricola}")
+
+    alt Conversazione salvata
+        LS --> FE : JSON conversation[]
+        FE -> FE : setConversation(parsed)
+    else Nessuna conversazione
+        LS --> FE : null
+    end
+
+    FE --> S : Mostra chat con sessione ripristinata
+
+else Token assente, scaduto o invalido
+    JWT --> GW : HTTPException 401
+    GW --> FE : 401 Unauthorized
+
+    FE -> FE : setIsAuthenticated(false)
+    FE --> S : Mostra pagina di login
+end
+
+== Scenario 2: Login con Cookie ==
+
+S -> FE : Inserisce matricola e password
+FE -> GW : POST /api/auth/login\n{ matricola, password }
+
+GW -> AC : login(matricola, password, response)
+AC -> AS : authenticate(matricola, password)
+AS -> PR : findById(matricola)
+PR -> DB : query
+DB --> PR : user document
+PR --> AS : student
+
+AS -> AS : bcrypt.checkpw(\n  password, passwordHash)
+
+alt Credenziali valide
+    AS -> JWT : generateToken({ matricola, status })
+    JWT --> AS : token JWT (scadenza 7gg)
+    AS --> AC : { token, student }
+
+    AC -> AC : _set_auth_cookie(response, token)\nhttponly=True, samesite=lax
+
+    AC --> GW : profilo pubblico
+    GW --> FE : 200 { status, name, matricola, ... }\n[Set-Cookie: access_token=<JWT>; HttpOnly]
+
+    FE -> FE : setUserInfo(userData)\nsetIsAuthenticated(true)
+    FE -> LS : getItem("conversation_{matricola}")
+    LS --> FE : conversation[] (se presente)
+    FE --> S : Mostra chat
+
+else Credenziali errate
+    AS --> AC : HTTPException 401
+    AC --> GW : 401 Unauthorized
+    GW --> FE : 401
+    FE --> S : Mostra errore
+end
+
+== Scenario 3: Logout Sicuro ==
+
+S -> FE : Click su "Logout"
+
+FE -> GW : POST /api/auth/logout\ncredentials: "include"
+GW -> GW : response.delete_cookie("access_token")
+GW --> FE : 200 { status: "success" }
+
+FE -> LS : removeItem("conversation_{matricola}")
+FE -> FE : setUserInfo(null)\nsetIsAuthenticated(false)\nsetConversation([])
+
+FE --> S : Mostra pagina di login
+
+@enduml

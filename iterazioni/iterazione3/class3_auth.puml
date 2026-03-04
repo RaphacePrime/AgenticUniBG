@@ -1,0 +1,77 @@
+@startuml
+title Class Diagram - Iterazione 3 (Authentication Package)
+
+package "auth" <<folder>> {
+
+    class AuthController {
+        -_service: AuthService
+        -_cookie_max_age: int
+        +login(matricola: String, password: String, response: Response): dict
+        +register(name: String, surname: String, matricola: String, password: String, department: String, course: String, tipology: String, year: int, response: Response): dict
+        +update_profile(matricola: String, update_fields: dict): dict
+        +change_password(matricola: String, current_password: String, new_password: String): dict
+        -_set_auth_cookie(response: Response, token: String): void
+        -_public_profile(student: dict): dict
+    }
+
+    class AuthService {
+        -_repo: ProfileRepository
+        -_jwt: JWTManager
+        +authenticate(matricola: String, password: String): dict
+        +createUser(name: String, surname: String, matricola: String, password: String, department: String, course: String, tipology: String, year: int): dict
+        +updateProfile(matricola: String, update_fields: dict): dict
+        +changePassword(matricola: String, current_password: String, new_password: String): void
+    }
+
+    class JWTManager {
+        -secret_key: String
+        -algorithm: String
+        -expire_minutes: int
+        +generateToken(data: dict): String
+        +validateToken(token: String): dict
+        +validateFromRequest(request: Request): dict
+    }
+
+    class ProfileRepository {
+        -_collection: AsyncIOMotorCollection
+        +findById(matricola: String): dict
+        +findByEmail(email: String): dict
+        +save(user_doc: dict): dict
+        +exists(matricola: String): bool
+    }
+}
+
+package "models" <<folder>> {
+    class User {
+        +name: String
+        +surname: String
+        +matricola: String
+        +department: String
+        +course: String
+        +tipology: String
+        +year: int
+        -passwordHash: String
+    }
+}
+
+' ─── Relazioni ────────────────────────────────────────────────
+AuthController --> AuthService           : delega
+AuthService    --> JWTManager            : genera/valida token
+AuthService    --> ProfileRepository     : gestisce profilo
+ProfileRepository "1" --> "0..1" User    : persiste
+
+note right of AuthController
+  _set_auth_cookie() imposta
+  il JWT come httpOnly cookie.
+  _public_profile() rimuove
+  passwordHash dalla risposta.
+end note
+
+note right of JWTManager
+  validateFromRequest() estrae
+  il token dal cookie httpOnly
+  della richiesta HTTP.
+  Scadenza: 7 giorni.
+end note
+
+@enduml

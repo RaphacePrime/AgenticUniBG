@@ -1,115 +1,96 @@
 @startuml
-title Component Diagram - Iteration 4
-
 skinparam componentStyle uml2
+left to right direction
+skinparam nodesep 80
+skinparam ranksep 60
+skinparam padding 10
 
-' ─── Interfacce fornite (ball) ────────────────────────────────
-() "HTTP/REST"          as IHTTP
-() "httpOnly Cookie"    as ICookie
-() "IAuthAPI"           as IAuthAPI
-() "IAuthService"       as IAuthSvc
-() "IJWTManager"        as IJWT
-() "IProfileRepo"       as IProfile
-() "IOrchestrator"      as IOrch
-() "IClassifier"        as IClassif
-() "IQueryAgent"        as IQuery
-() "IWebAgent"          as IWeb
-() "IGenerator"         as IGen
-() "IRevision"          as IRev
-() "IPipelineLogger"    as ILog
-() "IMongoDriver"       as IMongo
-() "ILocalStorage"      as ILS
-() "ITavilyAPI"         as ITavily
+title Component Diagram - Iterazione 4 (Overview)
 
 ' ─── Client Tier ─────────────────────────────────────────────
-package "Client Tier" {
-  [Web App\n(React + Vite)]          as Client
-  [Conversation Store\n(localStorage)] as LS
+component "Client Tier" as ClientTier {
+    portout pHttpOut
+    component [Web App\n(React + Vite)]          <<component>> as Client
+    component [Conversation Store\n(localStorage)] <<component>> as LS
+    Client --> pHttpOut
+    Client --> LS
 }
+
+' ─── Interfaccia Client ↔ Backend ────────────────────────────
+interface "HTTP/REST\nhttpOnly Cookie" as IHTTP
 
 ' ─── Backend Tier ────────────────────────────────────────────
-package "Backend Tier" {
+component "Backend Tier" as BackendTier {
+    portin  pHttpIn
+    portout pDataOut
+    portout pExtOut
 
-  [API Gateway\n(FastAPI)] as Gateway
+    interface "IAuthAPI"      as IAuthAPI
+    interface "IOrchestrator" as IOrch
 
-  package "Authentication Layer" {
-    [Auth Controller]    as AuthCtrl
-    [Auth Service]       as AuthSvc
-    [JWT Manager]        as JWT
-    [Profile Repository] as ProfileRepo
-  }
+    component [API Gateway\n(FastAPI)]        <<component>> as Gateway
+    component [Authentication Layer]          <<component>> as AuthLayer
+    component [Agent Layer]                   <<component>> as AgentLayer
+    component [Pipeline Logger]               <<component>> as Logger
 
-  package "Agent Layer" {
-    [Orchestrator Agent]  as Orch
-    [Classifier Agent]    as Classifier
-    [Query Agent]         as QueryAg
-    [Web Agent]           as WebAg
-    [Generator Agent]     as Generator
-    [Revision Agent]      as Revision
-  }
+    pHttpIn --> Gateway
 
-  package "Logging Layer" {
-    [Pipeline Logger]    as Logger
-  }
+    Gateway --( IAuthAPI
+    IAuthAPI  -  AuthLayer
+
+    Gateway --( IOrch
+    IOrch    -  AgentLayer
+
+    AgentLayer --> Logger
+    AgentLayer --> pExtOut
+
+    AuthLayer  --> pDataOut
+    AgentLayer --> pDataOut
+    Logger     --> pDataOut
 }
+
+' ─── Interfaccia Backend ↔ Data ──────────────────────────────
+interface "IProfileRepo"  as IProfile
+interface "ITavilySearch" as ITavily
 
 ' ─── Data Tier ───────────────────────────────────────────────
-package "Data Tier" {
-  [MongoDB Atlas]         as DB
-  [File System\n(logs/)]  as FS
+component "Data Tier" as DataTier {
+    portin pDataIn
+
+    interface "IMongoDriver" as IMongo
+    interface "IFileSystem"  as IFS
+
+    component [Profile Repository] <<component>> as ProfileRepo
+    component [MongoDB Atlas]      <<component>> as DB
+    component [File System\n(logs/)] <<component>> as FS
+
+    pDataIn --> ProfileRepo
+    pDataIn --> FS
+
+    ProfileRepo --( IMongo
+    IMongo       -  DB
+
+    FS - IFS
 }
 
-' ─── External Services ────────────────────────────────────────
-cloud "Tavily Search API" as Tavily
-cloud "Google Gemini\n(gemini-2.5-flash)" as Gemini
+' ─── External Services ───────────────────────────────────────
+component "External Services" as ExtSvc {
+    portin pExtIn
+    component [Tavily Search API]                  <<service>> as Tavily
+    component [Google Gemini\n(gemini-2.5-flash)]  <<service>> as Gemini
 
-' ─── Provided interfaces ──────────────────────────────────────
-Client      - IHTTP
-Client      - ICookie
-Gateway     - IAuthAPI
-AuthCtrl    - IAuthSvc
-AuthSvc     - IJWT
-JWT         - IJWT
-ProfileRepo - IProfile
-Orch        - IOrch
-Classifier  - IClassif
-QueryAg     - IQuery
-WebAg       - IWeb
-Generator   - IGen
-Revision    - IRev
-Logger      - ILog
-DB          - IMongo
-LS          - ILS
-Tavily      - ITavily
+    pExtIn --> Tavily
+    pExtIn --> Gemini
+}
 
-' ─── Required interfaces ──────────────────────────────────────
-Client       ..> IHTTP    : richieste REST
-Client       ..> ICookie  : invia cookie con ogni request
-Client       ..> ILS      : persiste conversazione per matricola
-Gateway      ..> IAuthAPI : login / register / verify / logout
-Gateway      ..> IOrch    : query + conversation_history
-AuthCtrl     ..> IAuthSvc : delega logica di business
-AuthSvc      ..> IJWT     : genera e valida JWT
-AuthSvc      ..> IProfile : recupera / salva profilo
-ProfileRepo  ..> IMongo   : persistenza
-Orch         ..> IClassif : classifica intento
-Orch         ..> IQuery   : genera search query
-Orch         ..> IWeb     : esegue ricerca web
-Orch         ..> IGen     : genera risposta con web context
-Orch         ..> IRev     : revisiona risposta
-Orch         ..> ILog     : scrive log pipeline
-Logger       ..> FS       : scrive file log txt
-WebAg        ..> ITavily  : ricerca su unibg.it
+' ─── Connessioni cross-tier ──────────────────────────────────
+pHttpOut  --> IHTTP
+IHTTP     --> pHttpIn
 
-note right of Gemini
-  LLM Provider per tutti gli agenti
-  (Classifier, QueryAgent,
-  Generator, RevisionAgent)
-end note
+pDataOut  --> IProfile
+IProfile  --> pDataIn
 
-Classifier   ..> Gemini : ainvoke
-QueryAg      ..> Gemini : ainvoke
-Generator    ..> Gemini : ainvoke
-Revision     ..> Gemini : ainvoke
+pExtOut   --> ITavily
+ITavily   --> pExtIn
 
 @enduml

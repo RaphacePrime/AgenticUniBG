@@ -1,0 +1,25 @@
+@startuml
+skinparam componentStyle uml2
+
+title Component Diagram - Iterazione 1
+
+package "Client Tier" {
+    component [Web App] <<component>> as Client
+}
+
+package "Application Logic Tier" {
+    interface "HTTP/REST" as IHTTP
+    interface "IOrchestrator" as IOrch
+
+    component [API Gateway] <<component>> as Gateway
+    component [Agent Pipeline] <<component>> as Agents
+}
+
+' Relazioni e Interfacce
+Client --( IHTTP
+IHTTP - Gateway
+
+Gateway --( IOrch
+IOrch - Agents
+
+@enduml

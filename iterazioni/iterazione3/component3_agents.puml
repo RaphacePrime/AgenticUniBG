@@ -1,0 +1,63 @@
+@startuml
+skinparam componentStyle uml2
+top to bottom direction
+skinparam nodesep 70
+skinparam ranksep 50
+
+title Component Diagram - Iterazione 3 (Agent Layer)
+
+component "Agent Layer" {
+
+    portin  pAgentIn
+    portout pDataOut
+
+    component [Orchestrator Agent] <<component>> as Orch
+    component [Classifier Agent]   <<component>> as Classifier
+    component [Generator Agent]    <<component>> as Generator
+    component [Revision Agent]     <<component>> as Revision
+
+    interface "IOrchestrator" as IOrch
+    interface "IClassifier"   as IClassif
+    interface "IGenerator"    as IGen
+    interface "IRevision"     as IRev
+
+    ' ─── Ingresso dal Gateway ─────────────────────────────────
+    pAgentIn --> IOrch
+    IOrch     -  Orch
+
+    ' ─── Orchestrator → Classifier ────────────────────────────
+    Orch     --( IClassif
+    IClassif  -  Classifier
+
+    ' ─── Orchestrator → Generator ─────────────────────────────
+    Orch  --( IGen
+    IGen   -  Generator
+
+    ' ─── Orchestrator → Revision ──────────────────────────────
+    Orch  --( IRev
+    IRev   -  Revision
+
+    ' ─── Orchestrator → Data Tier ─────────────────────────────
+    Orch --> pDataOut
+}
+
+note right of Classifier
+  Usa conversation_history[-4:]
+  (ultimi 2 scambi) come
+  contesto per la classificazione
+end note
+
+note right of Generator
+  Converte TUTTA la conversation_history
+  in messaggi LLM nativi
+  (HumanMessage / AIMessage)
+  per vera memoria conversazionale
+end note
+
+note right of Revision
+  Usa conversation_history[-4:]
+  (ultimi 2 scambi) nel
+  prompt di revisione
+end note
+
+@enduml

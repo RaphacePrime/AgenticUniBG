@@ -1,0 +1,42 @@
+@startuml
+title Class Diagram - Iterazione 3 (Frontend Package)
+
+package "frontend" <<folder>> {
+
+    class ConversationStore <<boundary>> {
+        -storageKey: String
+        +load(matricola: String): List<Message>
+        +save(matricola: String, history: List<Message>): void
+        +clear(matricola: String): void
+    }
+
+    class Message {
+        +type: String
+        +content: String
+        +timestamp: Date
+        +category: String
+        +metadata: dict
+    }
+}
+
+' ─── Relazioni ────────────────────────────────────────────────
+ConversationStore "1" o--> "*" Message : memorizza
+
+note right of ConversationStore
+  Implementata sul frontend tramite
+  localStorage del browser.
+  Key: "conversation_{matricola}"
+  Salva automaticamente ad
+  ogni aggiornamento della
+  conversazione.
+end note
+
+note bottom of Message
+  type ∈ {"user", "agent", "error"}
+  Il frontend filtra solo "user" e "agent"
+  per costruire conversation_history
+  (max 10 messaggi = 5 scambi)
+  da inviare al backend.
+end note
+
+@enduml

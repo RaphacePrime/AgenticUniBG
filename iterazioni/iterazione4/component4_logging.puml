@@ -1,0 +1,43 @@
+@startuml
+skinparam componentStyle uml2
+top to bottom direction
+skinparam nodesep 70
+skinparam ranksep 50
+
+title Component Diagram - Iterazione 4 (Logging Layer)
+
+component "Logging Layer" {
+
+    portin  pLogIn
+    portout pFSOut
+
+    component [Pipeline Logger] <<component>> as Logger
+
+    interface "IPipelineLogger" as ILog
+
+    ' ─── Ingresso dall'Orchestrator ───────────────────────────
+    pLogIn --> ILog
+    ILog    -  Logger
+
+    ' ─── Logger → File System ─────────────────────────────────
+    Logger --> pFSOut
+}
+
+note right of Logger
+  write_log(state, workflow_steps, timestamp)
+  Crea la directory logs/ se non esiste.
+  Filename: log_{matricola}_{YYYYMMDD_HHMMSS_ffffff}.txt
+  Contenuto:
+    • Header con timestamp
+    • User Info (matricola, dipartimento, corso)
+    • Query originale
+    • Conversation History
+    • Step 1: Classifier (category, confidence)
+    • Step 2: Query Agent (search_query)
+    • Step 3: Web Agent (web_results, context)
+    • Step 4: Generator (generated_response)
+    • Step 5: Reviser (final_response)
+  Errori ingoiati silenziosamente (try/except).
+end note
+
+@enduml

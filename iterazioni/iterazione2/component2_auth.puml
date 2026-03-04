@@ -1,0 +1,38 @@
+@startuml
+skinparam componentStyle uml2
+top to bottom direction
+skinparam nodesep 70
+skinparam ranksep 50
+
+title Component Diagram - Iterazione 2 (Authentication Layer)
+
+component "Authentication Layer" {
+
+    portin  pAuthIn
+    portout pDataOut
+
+    component [Auth Controller] <<component>> as AuthCtrl
+    component [Auth Service]    <<component>> as AuthSvc
+    component [JWT Manager]     <<component>> as JWT
+
+    interface "IAuthAPI"     as IAuthAPI
+    interface "IAuthService" as IAuthSvc
+    interface "IJWTManager"  as IJWT
+
+    ' ─── Ingresso dal Gateway ─────────────────────────────────
+    pAuthIn --> IAuthAPI
+    IAuthAPI  -  AuthCtrl
+
+    ' ─── Controller → Service ─────────────────────────────────
+    AuthCtrl --( IAuthSvc
+    IAuthSvc  -  AuthSvc
+
+    ' ─── Service → JWT Manager ────────────────────────────────
+    AuthSvc --( IJWT
+    IJWT     -  JWT
+
+    ' ─── Service → Data Tier ──────────────────────────────────
+    AuthSvc --> pDataOut
+}
+
+@enduml

@@ -5,30 +5,36 @@ skinparam nodesep 80
 skinparam ranksep 60
 skinparam padding 10
 
-title Component Diagram - Iterazione 2 (Overview)
+title Component Diagram - Iterazione 3\nAlternativa C: Memoria con MongoDB
 
 ' ─── Client Tier ─────────────────────────────────────────────
 component "Client Tier" as ClientTier {
     portout pHttpOut
-    component [Web App] <<component>> as Client
+    component [Web App\n(React + Vite)] <<component>> as Client
     Client --> pHttpOut
 }
 
+note bottom of ClientTier
+  Nessun localStorage per la conversazione.
+  La history è gestita interamente lato server.
+  Il client invia query + user_info + conv_id.
+end note
+
 ' ─── Interfaccia Client ↔ Backend ────────────────────────────
-interface "HTTP/REST" as IHTTP
+interface "HTTP/REST\nhttpOnly Cookie" as IHTTP
 
 ' ─── Backend Tier ────────────────────────────────────────────
 component "Backend Tier" as BackendTier {
     portin  pHttpIn
-    portout pDataOut1
-    portout pDataOut2
+    portout pDataOut
 
     interface "IAuthAPI"      as IAuthAPI
     interface "IOrchestrator" as IOrch
 
-    component [API Gateway]           <<component>> as Gateway
-    component [Authentication Layer]  <<component>> as AuthLayer
-    component [Agent Layer]           <<component>> as AgentLayer
+    component [API Gateway\n(FastAPI)]              <<component>> as Gateway
+    component [Authentication Layer]                <<component>> as AuthLayer
+    component [Agent Layer]                         <<component>> as AgentLayer
+    component [Conversation Repository\n(MongoDB)]  <<component>> as ConvRepo
 
     pHttpIn --> Gateway
 
@@ -38,12 +44,15 @@ component "Backend Tier" as BackendTier {
     Gateway --( IOrch
     IOrch    -  AgentLayer
 
-    AuthLayer  --> pDataOut1
-    AgentLayer --> pDataOut2
+    AgentLayer --> ConvRepo : getHistory / appendMessages
+
+    AuthLayer --> pDataOut
+    ConvRepo  --> pDataOut
 }
 
 ' ─── Interfaccia Backend ↔ Data ──────────────────────────────
-interface "IProfileRepo" as IProfile
+interface "IProfileRepo"       as IProfile
+interface "IConversationRepo"  as IConvRepo
 
 ' ─── Data Tier ───────────────────────────────────────────────
 component "Data Tier" as DataTier {
@@ -51,20 +60,33 @@ component "Data Tier" as DataTier {
 
     interface "IMongoDriver" as IMongo
 
-    component [Profile Repository] <<component>> as ProfileRepo
-    component [MongoDB]            <<component>> as DB
+    component [Profile Repository]      <<component>> as ProfileRepo
+    component [Conversation Collection] <<component>> as ConvColl
+    component [MongoDB Atlas]           <<component>> as DB
 
     pDataIn --> ProfileRepo
+    pDataIn --> ConvColl
+
     ProfileRepo --( IMongo
+    ConvColl    --( IMongo
     IMongo       -  DB
 }
 
 ' ─── Connessioni cross-tier ──────────────────────────────────
-pHttpOut  --> IHTTP
-IHTTP     --> pHttpIn
+pHttpOut --> IHTTP
+IHTTP    --> pHttpIn
 
-pDataOut1 --> IProfile
-pDataOut2 --> IProfile
-IProfile  --> pDataIn
+pDataOut --> IProfile
+pDataOut --> IConvRepo
+IProfile   --> pDataIn
+IConvRepo  --> pDataIn
+
+note bottom of ConvColl
+  Collection "conversations":
+  { _id, matricola, messages[], createdAt, updatedAt }
+  Supporta conversazioni multiple.
+  Storico permanente, nessun TTL.
+  Scrittura ad ogni messaggio.
+end note
 
 @enduml

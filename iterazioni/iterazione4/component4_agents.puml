@@ -1,0 +1,80 @@
+@startuml
+skinparam componentStyle uml2
+top to bottom direction
+skinparam nodesep 70
+skinparam ranksep 50
+
+title Component Diagram - Iterazione 4 (Agent Layer)
+
+component "Agent Layer" {
+
+    portin  pAgentIn
+    portout pDataOut
+    portout pExtOut
+
+    component [Orchestrator Agent] <<component>> as Orch
+    component [Classifier Agent]   <<component>> as Classifier
+    component [Query Agent]        <<component>> as QueryAg
+    component [Web Agent]          <<component>> as WebAg
+    component [Generator Agent]    <<component>> as Generator
+    component [Revision Agent]     <<component>> as Revision
+
+    interface "IOrchestrator" as IOrch
+    interface "IClassifier"   as IClassif
+    interface "IQueryAgent"   as IQuery
+    interface "IWebAgent"     as IWeb
+    interface "IGenerator"    as IGen
+    interface "IRevision"     as IRev
+
+    ' ─── Ingresso dal Gateway ─────────────────────────────────
+    pAgentIn --> IOrch
+    IOrch     -  Orch
+
+    ' ─── Orchestrator → Classifier ────────────────────────────
+    Orch     --( IClassif
+    IClassif  -  Classifier
+
+    ' ─── Orchestrator → Query Agent ───────────────────────────
+    Orch   --( IQuery
+    IQuery  -  QueryAg
+
+    ' ─── Orchestrator → Web Agent ─────────────────────────────
+    Orch  --( IWeb
+    IWeb   -  WebAg
+
+    ' ─── Orchestrator → Generator ─────────────────────────────
+    Orch  --( IGen
+    IGen   -  Generator
+
+    ' ─── Orchestrator → Revision ──────────────────────────────
+    Orch  --( IRev
+    IRev   -  Revision
+
+    ' ─── Web Agent → External Services ────────────────────────
+    WebAg --> pExtOut
+
+    ' ─── Orchestrator → Data Tier ─────────────────────────────
+    Orch --> pDataOut
+}
+
+note right of QueryAg
+  Genera 6-8 keyword ottimizzate
+  per motori di ricerca.
+  Decide autonomamente se
+  includere info profilo studente.
+end note
+
+note right of WebAg
+  Tavily API: search_depth="advanced"
+  include_domains=[unibg.it,
+    coursecatalogue.cineca.it]
+  max_results=30 → top 5 per score.
+  Estrae link da PDF (PyMuPDF).
+end note
+
+note bottom of Orch
+  LangGraph StateGraph:
+  classify → query → web_search → generate → revise
+end note
+
+@enduml

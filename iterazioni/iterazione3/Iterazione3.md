@@ -207,7 +207,39 @@ e popola `initial_state["conversation_history"]`.
 
 ---
 
-## 12. Obiettivi Raggiunti
+## 12. Diagrammi UML
+
+Tutti i diagrammi sono in formato PlantUML (`.puml`).
+
+### 12.1 Diagrammi principali (soluzione implementata)
+
+| Diagramma | File | Descrizione |
+|---|---|---|
+| Use Case | `usecase3.puml` | Casi d'uso UC-01 — UC-10 (include UC-08 Ripristino Sessione, UC-09 Logout, UC-10 Richiesta Contestuale) |
+| Activity | `activity_diagram3.puml` | Flusso attività con swimlane MongoDB |
+| Sequence (Sessione) | `sequence_session3.puml` | Gestione sessione: ripristino automatico, login con cookie, logout sicuro |
+| Sequence (Memoria) | `sequence_memory.puml` | Flusso memoria conversazionale con localStorage e conversation_history |
+| Class (Auth) | `class3_auth.puml` | Package `auth`: AuthController, AuthService, JWTManager, ProfileRepository, User |
+| Class (Agents) | `class3_agents.puml` | Package `agents`: AgentState, Orchestrator, Classifier, Generator, Revision |
+| Class (Frontend) | `class3_frontend.puml` | Package `frontend`: ConversationStore (localStorage), Message |
+| Class (completo) | `class3.puml` | Diagramma classi monolitico (tutti i package in un file) |
+| Component (Overview) | `component3.puml` | Architettura a 3 tier con porte — soluzione localStorage |
+| Component (Auth) | `component3_auth.puml` | Dettaglio Authentication Layer con note su httpOnly cookie |
+| Component (Agents) | `component3_agents.puml` | Dettaglio Agent Layer con note su uso della conversation_history |
+
+### 12.2 Alternative di design valutate
+
+Per la gestione della memoria conversazionale sono state analizzate tre alternative architetturali:
+
+| Alternativa | Component | Sequence | Caratteristica chiave |
+|---|---|---|---|
+| **A — localStorage** (implementata) | `component3.puml` | `sequence_memory.puml` | History lato client, max 10 msg, nessun server-side storage |
+| **B — Redis** | `component3_redis.puml` | `sequence_redis.puml` | History lato server in Redis, TTL 24h, flush su MongoDB al logout |
+| **C — MongoDB** | `component3_mongodb.puml` | `sequence_mongodb.puml` | History permanente su MongoDB, supporto multi-conversazione, nessun TTL |
+
+---
+
+## 13. Obiettivi Raggiunti
 
 | Obiettivo | Stato |
 |---|---|

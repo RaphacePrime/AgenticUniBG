@@ -10,7 +10,7 @@ start
 
 if (Cookie presente e JWT valido?) then (Sì)
   |MongoDB|
-  :Cerca profilo utente\nper userId nel JWT;
+  :Cerca profilo utente;
   :Restituisce profilo;
 
   |API Gateway|
@@ -27,7 +27,7 @@ else (No)
     :POST /login\nriceve credenziali;
 
     |MongoDB|
-    :Cerca utente per username;
+    :Cerca utente;
     :Verifica password hash;
     :Restituisce dati utente;
 
@@ -43,7 +43,7 @@ else (No)
     :POST /register\nriceve dati nuovo utente;
 
     |MongoDB|
-    :Crea nuovo documento utente;
+    :Crea nuovo utente;
     :Restituisce utente creato;
 
     |API Gateway|
@@ -56,51 +56,50 @@ else (No)
 endif
 
 |Browser|
-:Mostra interfaccia chat;
 :Utente inserisce domanda;
 :Costruisce conversation_history\n(ultimi 10 messaggi);
 
 |API Gateway|
 :Riceve POST\n(cookie + query + history);
-:Valida JWT dal cookie;
+:Valida JWT;
 
 |MongoDB|
 :Recupera profilo aggiornato\ndell'utente;
 :Restituisce profilo;
 
 |API Gateway|
-:Inoltra query + profilo + history\nall'Orchestrator;
+:Inoltra query + profilo + history;
 
 |Orchestrator Agent|
-:Inizializza AgentState\n(profilo + query + history);
+:Inizializza AgentState;
 
 |Classifier Agent|
 :Classifica intento;
 :Restituisce categoria;
 
 |Orchestrator Agent|
-:Invia query + profilo + history\nal Generator;
+:Invia query + profilo + history;
 
 |Generator Agent|
 :Genera risposta contestualizzata;
 :Restituisce bozza;
 
 |Orchestrator Agent|
-:Invia bozza + history\nal Revision;
+:Invia bozza + history;
 
 |Revision Agent|
 :Revisiona risposta;
 :Restituisce risposta finale;
 
 |Orchestrator Agent|
-:Restituisce risposta all'API;
+:Restituisce risposta;
 
 |API Gateway|
 :Invia risposta al browser;
 
 |Browser|
 :Aggiunge messaggio alla conversazione;
-:Salva conversazione in localStorage;
+:Salva conversazione;
 
 if (Logout?) then (Sì)
   |API Gateway|
