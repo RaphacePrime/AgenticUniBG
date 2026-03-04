@@ -21,7 +21,5 @@ IHTTP - WS
 
 WS --( IBL
 IBL - AS
-note right of IHTTP : Provided by Web Server
-note right of IBL : Logic & Services
 
 @enduml

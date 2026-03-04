@@ -5,9 +5,9 @@ left to right direction
 
 actor Studente
 
-rectangle "Sistema Assistente Universitario" {
+rectangle "Sistema ad agenti universitario" {
     usecase "Inviare domanda" as UC1
-    usecase "Ricevere risposta" as UC2
+    usecase "Leggere risposta" as UC2
 }
 
 Studente --> UC1
