@@ -19,9 +19,6 @@ class ProfileRepository:
         """Cerca un utente tramite matricola (chiave primaria applicativa)."""
         return await self._collection.find_one({"matricola": matricola})
 
-    async def findByEmail(self, email: str) -> Optional[dict]:
-        """Cerca un utente tramite email."""
-        return await self._collection.find_one({"email": email})
 
     async def save(self, user_doc: dict) -> dict:
         """
