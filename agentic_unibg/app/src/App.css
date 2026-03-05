@@ -110,19 +110,8 @@ body {
   margin: 0;
   font-size: 1.75rem;
   font-weight: 800;
-  color: var(--text-primary);
   letter-spacing: -0.5px;
-}
-
-.header-center h1 span {
-  background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--primary-color);
 }
 
 .header-right {

@@ -235,11 +235,20 @@ L'utente ha chiesto: "{query}"
 {user_context}
 
 Ecco i link ai calendari esami disponibili:
+0. NON È POSSIBILE DETERMINARE IL CALENDARIO — L'utente non ha specificato un corso o dipartimento e non è autenticato. Non scegliere un calendario a caso.
 {options_text}
 
 Portale generale esami: {EXAM_PORTAL_LINK}
 
 Scegli IL NUMERO del link più appropriato da cui estrarre le date degli esami per rispondere alla domanda dell'utente.
+
+REGOLA CRITICA:
+- Se l'utente è un OSPITE (non autenticato) E la sua domanda NON specifica un corso, dipartimento o polo preciso (es. "che esami ho?", "esami quest'anno?", "prossima sessione?"), DEVI rispondere con NUMERO: 0.
+  In questo caso NON scegliere un calendario a caso (es. Ingegneria). Senza sapere il corso dell'utente, non puoi sapere quale calendario serve.
+- Rispondi con un numero diverso da 0 SOLO se:
+  a) L'utente è autenticato (ha un profilo con corso/dipartimento), OPPURE
+  b) L'utente ha specificato esplicitamente nella domanda il corso, il dipartimento o il polo (es. "esami di giurisprudenza", "calendario ingegneria", "esami polo umanistico").
+
 IMPORTANTE: Scegli il calendario del POLO/DIPARTIMENTO che corrisponde alla domanda dell'utente, NON necessariamente quello del suo profilo.
 Per esempio, se l'utente è iscritto a Ingegneria ma chiede degli esami di Giurisprudenza, scegli il calendario del Polo Economico-Giuridico.
 Considera quale sessione è più vicina o pertinente alla domanda.
@@ -263,13 +272,17 @@ MOTIVO: <breve spiegazione>"""
             for line in text.split("\n"):
                 if line.strip().upper().startswith("NUMERO:"):
                     num = line.split(":", 1)[1].strip().split()[0]
+                    if num == "0":
+                        # L'LLM ha scelto 0: non è possibile determinare il calendario
+                        chosen = {"polo": None, "sessione": None, "url": None}
+                        break
                     if num in option_map:
                         chosen = option_map[num]
                         break
                 if line.strip().upper().startswith("MOTIVO:"):
                     reasoning = line.split(":", 1)[1].strip()
 
-            if chosen:
+            if chosen is not None:
                 chosen["reasoning"] = reasoning
                 chosen["llm_response"] = text
                 chosen["prompt"] = prompt
@@ -363,8 +376,16 @@ MOTIVO: <breve spiegazione>"""
         today = get_italian_timestamp()
         lines = [f"DATA ODIERNA: {today}", ""]
 
-        # Calendario estratto
-        if extract_result.get("content"):
+        # Caso: nessun calendario selezionato (ospite senza corso specificato)
+        if link_selection.get("polo") is None and link_selection.get("url") is None:
+            lines.append("═══ CALENDARIO ESAMI ═══")
+            lines.append("Non è stato possibile determinare quale calendario consultare.")
+            lines.append("L'utente non ha specificato il corso o il dipartimento e non è autenticato.")
+            lines.append("Chiedi gentilmente all'utente quale corso di laurea o dipartimento frequenta per poter consultare il calendario corretto.")
+            lines.append(f"Motivo: {link_selection.get('reasoning', 'N/D')}")
+            lines.append("")
+        # Calendario estratto con successo
+        elif extract_result.get("content"):
             lines.append("═══ CALENDARIO ESAMI ESTRATTO ═══")
             lines.append(f"Polo/Dipartimento: {link_selection.get('polo', 'N/D')}")
             lines.append(f"Sessione: {link_selection.get('sessione', 'N/D')}")

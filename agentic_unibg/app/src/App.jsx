@@ -307,10 +307,19 @@ function App() {
             </button>
           )}
           <button className="logout-btn" onClick={handleLogout} title="Esci">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-              <polyline points="16 17 21 12 16 7"/>
-              <line x1="21" y1="12" x2="9" y2="12"/>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
             </svg>
           </button>
         </div>
@@ -340,10 +349,7 @@ function App() {
                 <div key={idx} className={`message ${msg.type}`}>
                   {msg.type === "user" && (
                     <div className="message-content user-message">
-                      <p>
-                        <strong className="msg-sender">&nbsp;</strong>
-                        {msg.content}
-                      </p>
+                      <p>{msg.content}</p>
                     </div>
                   )}
                   {msg.type === "agent" && (
@@ -354,20 +360,19 @@ function App() {
                         </span>
                       )}
                       <div className="message-text">
-                        {msg.content.split("\n").map((line, i) =>
-                          i === 0 ? (
-                            <p key={i}>
-                              <strong className="msg-sender">
-                                &nbsp;&nbsp;
-                              </strong>
-                              {line ? renderLineWithLinks(line) : "\u00A0"}
-                            </p>
-                          ) : (
-                            <p key={i}>
-                              {line ? renderLineWithLinks(line) : "\u00A0"}
-                            </p>
-                          ),
-                        )}
+                        {msg.content
+                          .split("\n")
+                          .map((line, i) =>
+                            i === 0 ? (
+                              <p key={i}>
+                                {line ? renderLineWithLinks(line) : "\u00A0"}
+                              </p>
+                            ) : (
+                              <p key={i}>
+                                {line ? renderLineWithLinks(line) : "\u00A0"}
+                              </p>
+                            ),
+                          )}
                       </div>
                       {msg.metadata && msg.metadata.workflow_steps && (
                         <details className="workflow-details">
@@ -418,11 +423,20 @@ function App() {
                 onClick={clearConversation}
                 title="Pulisci conversazione"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="3 6 5 6 21 6"/>
-                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-                  <path d="M10 11v6M14 11v6"/>
-                  <path d="M9 6V4h6v2"/>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="3 6 5 6 21 6" />
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                  <path d="M10 11v6M14 11v6" />
+                  <path d="M9 6V4h6v2" />
                 </svg>
               </button>
             )}

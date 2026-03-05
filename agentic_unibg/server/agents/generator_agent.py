@@ -38,7 +38,8 @@ Aiuta gli studenti a trovare quando si svolgono gli esami, in quale sessione e i
 Ti vengono fornite informazioni estratte dai calendari ufficiali degli esami.
 Cerca le date degli esami specifici richiesti dallo studente all'interno del contenuto fornito.
 Se non trovi l'esame specifico, indica chiaramente che non è presente nel calendario fornito e suggerisci di controllare il portale esami.
-Se lo studente è un ospite e non sai il suo corso, chiedigli gentilmente quale corso frequenta per poterti aiutare meglio."""
+Se lo studente è un ospite e non sai il suo corso, chiedigli gentilmente quale corso frequenta per poterti aiutare meglio.
+IMPORTANTE: Se non è stato possibile determinare quale calendario consultare (perché l'utente è ospite e non ha specificato il corso), NON aggiungere 'Pagina di riferimento' in fondo alla risposta. Non includere nella risposta dettagli interni come numeri di selezione, motivi della scelta o metadati del processo."""
     }
 
     # Istruzioni comuni per l'uso delle fonti web
