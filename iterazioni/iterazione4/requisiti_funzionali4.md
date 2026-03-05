@@ -83,6 +83,33 @@ Tutti i use case UC-01 (Registrazione), UC-02 (Login), UC-04 (Invia Richiesta), 
 
 ---
 
+### UC-13: Risposta su Date Esami con Calendario Ufficiale
+
+- **ID**: UC-13
+- **Nome**: Risposta su Date Esami con Calendario Ufficiale
+- **Descrizione**: Quando l'utente chiede informazioni su date o sessioni degli esami, il sistema attiva un flusso dedicato che seleziona automaticamente il calendario corretto dal polo di appartenenza e ne estrae il contenuto per fornire risposte precise.
+- **Attori**: Utente (innescato automaticamente quando il ClassifierAgent classifica la query come `date_esami`)
+- **Precondizioni**: L'utente ha inviato una query relativa a date o sessioni degli esami.
+- **Flusso Principale**:
+  1. Il `ClassifierAgent` classifica la query come `date_esami`.
+  2. Il `QueryAgent` genera una search query ottimizzata per la ricerca di calendario esami.
+  3. Il routing condizionale (`_route_after_query`) instrada il flusso verso il nodo `exam_extract`.
+  4. Il `WebAgent` presenta all'LLM la lista completa dei calendari disponibili (`EXAM_CALENDAR_LINKS`).
+  5. L'LLM seleziona il calendario più appropriato in base alla domanda, al profilo utente (se autenticato) e alla data corrente.
+  6. `WebAgent.extract(url)` estrae il contenuto completo del calendario selezionato tramite Tavily Extract.
+  7. Una Tavily Search aggiuntiva recupera le top 3 fonti web generiche per contesto.
+  8. Il contesto formattato (calendario + fonti web) viene iniettato nel `GeneratorAgent`.
+  9. Il `GeneratorAgent` cerca le date specifiche richieste all'interno del calendario e produce la risposta.
+  10. Il `RevisionAgent` revisiona la risposta.
+- **Flussi Alternativi**:
+  - 5a. Utente ospite senza corso specificato: l'LLM risponde `NUMERO: 0`; il `GeneratorAgent` chiede all'utente di specificare il proprio corso.
+  - 6a. Errore in Tavily Extract: il `GeneratorAgent` procede con le sole fonti web aggiuntive.
+  - 5b. L'utente chiede di un corso diverso dal proprio: l'LLM seleziona il calendario del polo corrispondente alla domanda, non al profilo.
+- **Postcondizioni**: L'utente riceve le date degli esami estratte dal calendario ufficiale del proprio polo.
+- **Priorità**: Alta
+
+---
+
 ## Requisiti Non Funzionali
 
 ### RNF-1 – Accuratezza della Ricerca Web
@@ -117,3 +144,9 @@ I file di log nella directory `logs/` devono essere conservati per un periodo mi
 
 ### RNF-11 – Sicurezza e Sessione *(ereditati dall'Iterazione 3)*
 Tutti i requisiti di sicurezza JWT (RNF-1 through RNF-8 dell'Iterazione 3) rimangono validi e vincolanti.
+
+### RNF-12 – Routing Condizionale della Pipeline
+Il workflow LangGraph deve supportare routing condizionale dopo il nodo `query`. La funzione `_route_after_query` deve instradare il flusso verso `exam_extract` quando `category == "date_esami"`, verso `web_search` in tutti gli altri casi. Entrambi i rami devono convergere sul nodo `generate`.
+
+### RNF-13 – Selezione Calendario Esami
+La selezione del calendario deve essere delegata all'LLM con un prompt strutturato. Se l'utente è ospite e non ha specificato il corso, l'LLM deve restituire `NUMERO: 0` per segnalare l'impossibilità di determinare il calendario. Il sistema non deve mai scegliere un calendario a caso.
