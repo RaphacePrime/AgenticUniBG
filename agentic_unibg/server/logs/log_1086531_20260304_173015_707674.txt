@@ -1,0 +1,2884 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-04 17:30:15
+Status    : success
+
+------------------------------------------------------------
+INFORMAZIONI UTENTE
+------------------------------------------------------------
+Tipo utente   : loggato
+Nome          : Raphael Mazzoleni
+Matricola     : 1086531
+Dipartimento  : Scuola di Ingegneria
+Corso         : Ingegneria informatica
+Tipologia     : Magistrale
+Anno          : 1
+
+------------------------------------------------------------
+QUERY ORIGINALE DELL'UTENTE
+------------------------------------------------------------
+Che convenzioni ho con i trasporti?
+
+------------------------------------------------------------
+STORICO CONVERSAZIONE (recente)
+------------------------------------------------------------
+[Utente]: Quali sono le ultime news dell'universita?
+[Assistente]: Ultime news e opportunità dall'Università di Bergamo, aggiornate al 04 marzo 2026, per studenti del primo anno di Ingegneria Informatica Magistrale:
+
+1.  "C’è Posto per te” - Il Truck dei Servizi per il Lavoro in tour per l’Italia
+    -   Campagna di Sviluppo Lavoro Italia con un truck itinerante pe
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: servizi
+Description: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, ricevimenti
+- date_esami: Richieste su date e orari degli esami, sessioni d'esame, quando si svolge un esame
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+- "Quando è l'esame di analisi?" -> date_esami
+- "Che esami ho alla prossima sessione?" -> date_esami
+- "In che date sono gli esami della sessione estiva?" -> date_esami
+- "Quando posso dare l'esame di basi di dati?" -> date_esami
+
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: Quali sono le ultime news dell'universita?
+- Assistente: Ultime news e opportunità dall'Università di Bergamo, aggiornate al 04 marzo 2026, per studenti del primo anno di Ingegneria Informatica Magistrale:
+
+
+
+Nuova domanda: Che convenzioni ho con i trasporti?
+
+>>> RISPOSTA:
+servizi
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: convenzioni trasporti studenti unibg
+Original Query: Che convenzioni ho con i trasporti?
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+DATA ODIERNA: 04 marzo 2026 (Anno accademico 2025/2026)
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE FONDAMENTALI:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- La query deve essere in italiano
+- Massimo 8 parole
+- Quando la domanda riguarda date, sessioni o periodi temporali, includi l'anno accademico (2025/2026) o il periodo specifico (es. "marzo 2026", "sessione estiva 2026") nella query
+
+REGOLA CRITICA - CONTESTO CONVERSAZIONE:
+Il contesto della conversazione ha SEMPRE la priorità sul profilo dello studente.
+Se la conversazione indica che l'utente sta chiedendo informazioni su un corso/dipartimento DIVERSO dal proprio, la query DEVE riferirsi al corso/dipartimento menzionato nella conversazione, NON a quello del profilo.
+
+Esempio critico:
+- Profilo studente: Ingegneria informatica, Magistrale
+- Conversazione precedente: lo studente chiedeva degli esami di Giurisprudenza
+- Nuova domanda: "invece nella sessione estiva?"
+- Query CORRETTA: date esami giurisprudenza sessione estiva 2025/2026 unibg
+- Query SBAGLIATA: esami sessione estiva ingegneria informatica magistrale unibg
+Motivo: dalla conversazione è chiaro che "invece" si riferisce sempre a Giurisprudenza, non al suo corso.
+
+QUANDO USARE LE INFORMAZIONI DEL PROFILO STUDENTE:
+INCLUDI le info del profilo SOLO quando:
+- La domanda riguarda esplicitamente il PROPRIO corso dello studente (es. "che materie ho?", "i miei esami")
+- Non c'è contesto conversazionale che indichi un argomento diverso
+- La domanda usa pronomi possessivi ("mio", "miei", "il mio corso")
+
+NON INCLUDERE le info del profilo quando:
+- La conversazione indica un argomento/corso diverso dal profilo
+- La domanda è generica (procedure, servizi, docenti, mensa, erasmus)
+- La domanda menziona esplicitamente un altro corso o dipartimento
+- La domanda è un follow-up ("e nella sessione X?", "invece per...", "e gli orari?") e il contesto conversazionale indica un corso diverso
+
+ESEMPI CON PROFILO (corso: ingegneria informatica, anno: 1, magistrale):
+- "che materie ho al secondo anno?" → materie secondo anno ingegneria informatica magistrale unibg
+- "i miei esami della prossima sessione" → esami prossima sessione ingegneria informatica magistrale 2025/2026 unibg
+
+ESEMPI SENZA PROFILO:
+- "come faccio a iscrivermi al test di ammissione?" → iscrizione test ammissione unibg
+- "chi è il docente di algoritmi?" → docente algoritmi unibg
+- "dove si trova la mensa?" → mensa universitaria unibg
+- "esami giurisprudenza terzo anno" → date esami giurisprudenza terzo anno 2025/2026 unibg
+
+ESEMPIO FOLLOW-UP (contesto: si parlava di esami di giurisprudenza):
+- "invece nella sessione estiva?" → date esami giurisprudenza sessione estiva 2025/2026 unibg
+- "e quelli del quarto anno?" → date esami giurisprudenza quarto anno 2025/2026 unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+Contesto conversazione recente:
+- Studente: Quali sono le ultime news dell'universita?
+- Assistente: Ultime news e opportunità dall'Università di Bergamo, aggiornate al 04 marzo 2026, per studenti del primo anno di Ingegneria Informatica Magistrale:
+
+1.  "C’è Posto per te” - Il Truck dei Servizi per 
+
+
+Informazioni studente:
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Ultima richiesta dello studente: Che convenzioni ho con i trasporti?
+
+Genera la query di ricerca web:
+
+>>> RISPOSTA:
+convenzioni trasporti studenti unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status              : success
+Query di ricerca    : convenzioni trasporti studenti unibg
+Totale risultati    : 20
+Risultati usati     : 5
+
+>>> RISULTATI PRINCIPALI:
+  [1] Score: 0.9997
+      Titolo   : UniBg e mobilità sostenibile | Università degli studi di Bergamo
+      URL      : https://www.unibg.it/node/15501
+      Contenuto:  [Salta al contenuto principale](#main-content) 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e risorse](/vivere-unibg/spazi-e-risorse)
+  + [Opportunità e servizi](/vivere-unibg/opportunita-e-servizi)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. Node
+3. [UniBg e mobilità sostenibile](/node/15501)
+
+### L’Ateneo mette a disposizione 700.000 euro a favore dell’utilizzo dei mezzi pubblici e della bicicletta
+
+A partire dal 1° agosto e per i prossimi due anni*,* UniBg conferma l’impegno a favore della **mobilità sostenibile tra i suoi studenti, docenti e dipendenti**.Per il 10° anno consecutivo ha infatti sottoscritto l’accordo con **ATB** e **Bergamo Trasporti** per la **mobilità urbana ed extraurbana**, garantendo un finanziamento di **€** **700.000** che permetterà di accedere agli abbonamenti a tariffe ridotte sia per l’utilizzo dei bus sia, per la prima volta, della **bicicletta tradizionale o a pedalata assistita**.
+
+In particolare, gli **studenti** e i **dipendenti** dell'Università di Bergamo avranno l’opportunità di usufruire di **abbonamenti annuali a** € 200 per i trasporti urbani e a € 470 per gli extraurbani. Tariffe che potranno anche godere di ulteriori riduzioni se previste dagli enti comunali delle rispettive residenze.
+
+Inoltre, l’Università ha deciso di concorrere all’applicazione di tariffe agevolate per gli abbonamenti mensili per gli studenti in mobilità internazionale e di favorire l’utilizzo della bicicletta. Un finanziamento specifico di **€ 40.000** permetterà infatti di usufruire di un **abbonamento annuale al servizio di bike sharing BiGi per le biciclette normali e assistite** al prezzo agevolato di soli **€10,00** contro la tariffa di € 40.
+
+*“L’Università degli studi di Bergamo rinsalda, con questo accordo, i legami con il territorio, e aumenta il proprio impegno per migliorare la sostenibilità della propria comunità in movimento. –* commenta la **prof.ssa Annalisa Cristini**,Prorettrice con Delega al welfare e allo sviluppo sostenibile *- Le risorse economiche messe a disposizione sono considerevoli e comprendono, da quest’anno, un incentivo all’utilizzo della BIGI, una scelta che speriamo faciliti gli spostamenti e abitui ad una mobilità dolce. Si tratta di un impegno coerente con gli obiettivi del piano strategico d’Ateneo e che l’Università sta portando avanti anche in sinergia con il centro nazionale mobilità.”*
+
+ 
+
+  [2] Score: 0.9992
+      Titolo   : [PDF] unibg per la mobilità sostenibile trenord – atb – bergamo trasporti
+      URL      : https://www.unibg.it/sites/default/files/media/documents/2023-08-02/MOBILITA%27%20SOSTENIBILE%20STUDENTI%202022%202023.pdf
+      Contenuto: 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# UNIBG PER LA MOBILITÀ SOSTENIBILE 
+
+# TRENORD – ATB – BERGAMO TRASPORTI 
+
+Per agevolare la mobilità sostenibile dei propri studenti l’Università degli Studi di Bergamo ha 
+
+promosso con le Società di Trasporto pubblico nuove agevolazioni che prevedono interventi a livello 
+
+cittadino, provinciale e regionale per incentivare il trasporto su gomma e su rotaia. Le opportunità 
+
+offerte sono specificate di seguito. 
+
+# TRENORD S.P.A. 
+
+http://www.tren ord.it 
+
+La convenzione con Trenord S.p.A. prevede un abbonamento mensile del treno il cui costo risulterà 
+
+ridotto del 10% grazie all’intervento dell’Ateneo. Nella convenzione è prevista l’automatica 
+
+attribuzione di un bonus qualora Trenord non rispetti lo standard minimo di affidabilità previsto dal 
+
+Contratto di Servizio. 
+
+Modalità di richiesta : gli studenti interessati dovranno inoltrare richiesta della Tessera TRENORD 
+
+(validità 3 anni/36 mesi) accedendo alla propria area personale dello Sportello Internet Studenti, alla 
+
+sezione Segreteria > Altri Servizi > Trenord (scegliendo tra “Nuova Richiesta” e “Possiedo già la 
+
+tessera”), cliccando poi su “Invia Richiesta Trenord”. 
+
+L’Università, dopo aver verificato la presenza nel proprio archivio della fotografia dello studente in 
+
+formato JPEG, invierà l’elenco a Trenord secondo il calendario sotto riportato: 
+
+VALIDITA’ TESSERA ITINERO  RICHIESTA ON LINE  SPEDIZIONE ENTRO 
+
+1 FEB 23 - 31 GEN 2 6 entro 1 1 Dicembre 20 22 entro 20 Gennaio 20 23
+
+1 MAR 23 - 28 FEB 2 6 entro 19 Gennaio 20 23 entro 19 Febbraio 20 23 
+
+1 APR 23 - 31 MAR 2 6 entro 19 Febbraio 20 23 entro 19 Marzo 20 23
+
+1 MAG 23 - 30 APR 2 6 entro 1 9 Marzo 20 23 entro 23 Aprile 20 23
+
+1 GIU 23 - 31 MAG 2 6 entro 23 Aprile 20 23 entro 21 Maggio 20 23
+
+1 LUG 23 - 30 GIU 2 6 entro 21 Maggio 20 23 entro 23 Giugno 20 23
+
+1 AGO 23 - 31 LUG 2 6 entro 22 Giugno 20 23 entro 23 Luglio 20 23
+
+1 SET 23 – 31 AGO 2 6 entro 23 Luglio 20 23 entro 2 0 Agosto 20 23
+
+1 OTT 23 - 30 SET 2 6 entro 20 Agosto 20 23 entro 2 4 Settembre 20 23
+
+1 NOV 23 - 31 OTT 2 6 entro 24 Settembre 20 23 entro 22 Ottobre 20 23
+
+1 DIC 23 - 30 NOV 2 6 entro 22 Ottobre 20 23 entro 1 9 Novembre 20 23
+
+1 GEN 2 4 - 31 DIC 2 6 entro 1 5 Novembre 20 23 entro 10 Dicembre 20 23
+
+Dopo aver ricevuto la mail di notifica dell’arrivo della tessera lo studente potrà ritirarla presso il Servizio 
+
+Diritto allo Studio di via dei Caniana, 2 - Bergamo e acquistare l’Abbonamento Speciale studenti 
+
+mensile presso le biglietterie e i distributori automatici Trenord. 
+
+IMPORTANTE: la tessera ha validità di 3 anni dalla data del rilascio. Al cessare dell’iscrizione 
+
+andrà riconsegnata all’Ateneo, presso il Servizio Diritto allo Studio. 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# ATB 
+
+http://www.atb.bergamo.it 
+
+È stata rinnovata per il bienni o accademico 202 3/202 5 la convenzione che consente di acquistare 
+
+l’ abbonamento annuale per studenti fino a 26 anni di età non compiuti ad una tariffa flat di €
+
+20 0,00 indipendentemente dalle zone tariffarie attraversate per raggiungere la sede universitaria 
+
+dalla propria residenza. 
+
+Modalità di stipula : l’abbonamento si può richiedere o rinnovare presso l’ATB Point di Porta Nuova 
+
+BG esibendo la ricevuta di pagament o della prima rata delle tasse universitarie o del contributo di pre -
+
+iscrizione previsto per la Laurea Magistrale. 
+
+# ATB e Bergamo Trasporti 
+
+http://www.atb.bergamo.it 
+
+L’intesa consente allo studente di stipulare un abbonamento annuale per studenti fino a 26 anni di 
+
+età non compiuti che integri il trasporto in area urbana e quello in ambito provinciale ad una tariffa 
+
+flat di € 470,00 indipendentemente dalla località di p rovenienza. 
+
+Modalità di stipula : l’abbonamento si può richiedere presso l’ATB Point di Porta Nuova BG – lo 
+
+Sportello interno alla Stazione Autolinee BG – gli Autoservizi Locatelli di via Toscanini, 6 a 
+
+Bonate Sopra oppure in via Furietti, 17 Bergamo esibe ndo la ricevuta di pagamento della prima rata 
+
+delle tasse universitarie o del contributo di pre -iscrizione previsto per la Laurea Magistrale.
+
+  [3] Score: 0.9989
+      Titolo   : [PDF] unibg per la mobilità sostenibile trenord – atb – bergamo trasporti
+      URL      : https://www.unibg.it/sites/default/files/mobilita_sostenibile_studenti_2021_2023_1.pdf
+      Contenuto: 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# UNIBG PER LA MOBILITÀ SOSTENIBILE 
+
+# TRENORD – ATB – BERGAMO TRASPORTI 
+
+Per agevolare la mobilità sostenibile dei propri studenti l’Università degli Studi di Bergamo ha 
+
+promosso con le Società di Trasporto pubblico nuove agevolazioni che prevedono interventi a livello 
+
+cittadino, provinciale e regionale per incentivare il trasporto su gomma e su rotaia. Le opportunità 
+
+offerte sono specificate di seguito. 
+
+# TRENORD S.P.A. 
+
+http://www.trenord.it 
+
+La convenzione con Trenord S.p.A. prevede un abbonamento mensile del treno il cui costo risulterà 
+
+ridotto del 10% grazie all’intervento dell’Ateneo. Nella convenzione è prevista l’automatica 
+
+attribuzione di un bo nus qualora Trenord non rispetti lo standard minimo di affidabilità previsto dal 
+
+Contratto di Servizio. 
+
+Modalità di richiesta : gli studenti interessati dovranno inoltrare richiesta della Tessera TRENORD 
+
+(validità 3 anni/36 mesi) accedendo alla propria are a personale dello Sportello Internet Studenti, alla 
+
+sezione Segreteria > Altri Servizi > Trenord (scegliendo tra “Nuova Richiesta” e “Possiedo già la 
+
+tessera”), cliccando poi su “Invia Richiesta Trenord”. 
+
+L’Università, dopo aver verificato la presenza ne l proprio archivio della fotografia dello studente in 
+
+formato JPEG, invierà l’elenco a Trenord secondo il calendario sotto riportato: 
+
+VALIDITA’ TESSERA ITINERO  RICHIESTA ON LINE  SPEDIZIONE ENTRO 
+
+1 FEB 21 - 31 GEN 2 4 entro 1 1 Dicembre 20 20  entro 20 Gennaio 20 21
+
+1 MAR 21 - 28 FEB 2 4 entro 20 Gennaio 20 21 entro 19 Febbraio 20 21
+
+1 APR 21 - 31 MAR 2 4 entro 19 Febbraio 20 21 entro 19 Marzo 20 21
+
+1 MAG 21 - 30 APR 2 4 entro 1 9 Marzo 20 21 entro 23 Aprile 20 21
+
+1 GIU 21 - 31 MAG 2 4 entro 23 Aprile 20 21 entro 21 Maggio 20 21
+
+1 LUG 21 - 30 GIU 2 4 entro 21 Maggio 20 21 entro 23 Giugno 20 21
+
+1 AGO 21 - 31 LUG 2 4 entro 23 Giugno 20 21 entro 23 Luglio 20 21
+
+1 SET 21 – 31 AGO 2 4 entro 23 Luglio 20 21 entro 2 0 Agosto 20 21
+
+1 OTT 21 - 30 SET 2 4 entro 20 Agosto 20 21 entro 2 4 Settembre 20 21
+
+1 NOV 21 - 31 OTT 2 4 entro 24 Settembre 20 21 entro 22 Ottobre 20 21
+
+1 DIC 21 - 30 NOV 2 4 entro 22 Ottobre 20 21 entro 1 9 Novembre 20 21
+
+1 GEN 2 2 - 31 DIC 2 4 entro 1 6 Novembre 20 21 entro 10 Dicembre 20 21
+
+Alle scadenze indicate (dopo aver ricevuto la mail di notifica) lo studente potrà ritirare la tessera presso 
+
+il Servizio Diritto allo Studio di via dei Caniana , 2 - Bergamo e acquistare l’Abbonamento Speciale 
+
+studenti mensile presso le biglietterie e i distributori automatici Trenord. 
+
+IMPORTANTE: la tessera ha validità di 3 anni dalla data del rilascio. Al cessare dell’iscrizione 
+
+andrà riconsegnata all’Ateneo, presso il Servizio Diritto allo Studio. 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# ATB 
+
+http://www.atb.bergamo.it 
+
+È stata rinnovata per il biennio accademico 20 21/202 2 e 2022/2023 la convenzione che consente di 
+
+acquistare l’ abbonamento annuale per studenti fino a 26 anni di età non compiuti ad una tariffa 
+
+flat di € 200,00 indipendentemente dalle zone tariffarie attraversate per raggiungere la sede 
+
+universitaria dalla propria residenza. 
+
+Modalità di stipula : l’abbonamento si può richiedere o rinnovare presso l’ATB Point di Porta N uova 
+
+BG esibendo la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre -
+
+iscrizione previsto per la Laurea Magistrale. 
+
+# ATB e Bergamo Trasporti 
+
+http://www.atb.bergamo.it 
+
+L’intesa consente allo studente di stipulare un abbonamento annuale per studenti fino a 26 anni di 
+
+età non compiuti che integri il trasporto in area urbana e quello in ambito provinciale ad una tariffa 
+
+flat di € 470,00 indipendentemente dalla località di p rovenienza. 
+
+Modalità di stipula : l’abbonamento si può richiedere presso l’ATB Point di Porta Nuova BG – lo 
+
+Sportello interno alla Stazione Autolinee BG – gli Autoservizi Locatelli di via Toscanini, 6 a 
+
+Bonate Sopra oppure in via Furietti, 17 Bergamo esibendo la ricevuta di pagamento della prima rata 
+
+delle tasse universitarie o del contributo di pre -iscrizione previsto per la Laurea Magistrale.
+
+  [4] Score: 0.9984
+      Titolo   : Convenzioni e sconti | Università degli studi di Bergamo - UniBg
+      URL      : https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti
+      Contenuto: Convenzioni e sconti | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7056 "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7056 "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Convenzioni e sconti
+====================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+3.   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+4.   [Convenzioni e sconti](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti)
+
+[](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti)
+
+Per agevolare la **mobilità sostenibile** dei propri studenti, l’Università degli studi di Bergamo promuove l'accesso a tariffe preferenziali con Società di Trasporto pubblico operanti a livello urbano ed extraurbano.
+
+L'Ateneo ha anche siglato convenzioni con operatori privati del territorio per l'erogazione di **prestazioni sanitarie** a condizioni economiche.
+
+Inoltre, il **tesserino universitario** per studenti, oltre alla valenza di documento di riconoscimento nelle varie sedi universitarie, assume anche la funzione di carta prepagata, con condizioni vantaggiose.
+
+### Convenzione Trenitalia
+
+L’Università degli studi di Bergamo ha aderito all’offerta commerciale Trenitalia for Business che prevede, tra l’altro, la formula **Trenitalia Welfare Plus.**
+
+Trenitalia riconosce uno sconto a **dipendenti e studenti dell'Ateneo** che scelgono Trenitalia per i loro viaggi privati.
+
+Accedi all'area riservata **[My UniBg](https://my.unibg.it/)** per saperne di più e beneficiare della formula Trenitalia Welfare Plus.
+
+### Convenzione Trenord
+
+[Informazioni sulla convenzione](https://www.unibg.it/sites/default/files/media/documents/2026-01-14/ITA%20TRENORD%202026.pdf "ITA TRENORD 2026.pdf")
+
+[About the discount](https://www.unibg.it/sites/default/files/media/documents/2026-01-14/ENG-%20TRENORD%202026.pdf "ENG- TRENORD 2026.pdf")
+
+### Convenzione ATB e Bergamo Trasporti
+
+Se sei uno studente o una studentessa UniBg, puoi acquistare l'**abbonamento annuale ATB** al prezzo speciale di **200 euro** (165 euro se residenti in uno dei comuni convenzionati).
+
+Per quanto riguarda l'utilizzo del servizio**La BiGi**, gli utenti UNIBG possono fruire di due iniziative che vanno utilizzate in maniera sequenziale: dapprima l'utente può fruire di 100 corse gratuite per "sperimentare" il servizio e, una volta esaurite, può attivare l’**abbonamento annuale** a 10 € tramite il codice sconto da richiedere all’ATB Point (solo nel caso in cui abbia già attivo anche un abbonamento al servizio di trasporto urbano ATB).
+
+Leggi la documentazione e scopri condizioni e modalità di attivazione!
+
+[Informazioni sulla convenzione](https://www.unibg.it/sites/default/files/media/documents/2025-09-01/ITA%20-%20ATB%202025.pdf "ITA - ATB 2025.pdf")
+
+[Information on the agreement](https://www.unibg.it/sites/default/files/media/documents/2025-09-01/ENG-%20ATB%202025.pdf "ENG- ATB 2025.pdf")
+
+### Convenzioni per prestazioni sanitarie a condizioni agevolate
+
+Nell’ambito delle iniziative rivolte a conseguire il benessere organizzativo della propria comunità, l'Ateneo ha stipulate convenzioni per fruire di prestazioni sanitarie a condizioni economiche di vantaggio con alcuni operatori privati del territorio.
+
+Accedi all'area riservata **[My UniBg](https://my.unibg.it/)** per saperne di più.
+
+### Flash Up Studio: la tua tessera
+
+**Flash Up Studio**: la tua tessera – dettagli della carta prepagata presenti sulla [Scheda Prodotto](https://www.intesasanpaolo.com/it/persone-e-famiglie/prodotti/carte/carte-prepagate/carta-flash-up-studio-universita-bergamo.html) raggiungibile sul sito della Banca.
+
+**Carta Flash Up Studio**
+
+ Gli studenti dell'Università degli studi di Bergamo avranno a disposizione la tessera universitaria Flash Up Studio, la speciale carta multifunzione nata dalla collaborazione tra l'Università e Banca Intesa Sanpaolo. Oltre a rappresentare la tessera universitaria di riconoscimento dello studente, ti permetterà di effettuare i pagamenti e usufruire facilmente dei servizi dentro e fuori l'Università.
+
+Con la tessera universitaria Flash Up Studio potrai:
+
+*   essere riconosciuto all'interno dell'Università e accedere alle biblioteche e alle mense universitarie
+*   pagare le tasse universitarie
+*   pagare contactless i tuoi pasti presso le mense universitarie
+*   pagare le fotocopie all'interno del Centro stampa dell'Ateneo
+*   ricevere senza costi aggiuntivi gli accrediti delle borse di studio
+*   pagare in modo semplice e veloce in Università
+*   ottenere sconti nei negozi che aderiscono al circuito US Card
+
+La carta prevede condizioni vantaggiose:
+
+*   Canone annuo gratis
+*   Costo per prelievo su sportelli automatici abilitati di altre banche - area SEPA 0,00
+
+Grazie alle funzioni di pagamento (a zero spese), potrai inoltre:
+
+*   pagare i tuoi acquisti, semplicemente avvicinando la carta ai POS, dentro e fuori l'Università, e, per importi fino a € 25 (50 € a partire dal 01/09/2021), senza digitare il PIN;
+*   effettuare pagamenti online sicuri grazie al servizio PAGAMENTI SICURI INTERNET;
+*   pagare multe, bollette e tasse universitarie (anche da ATM), domiciliare utenze e ricaricare il cellulare;
+*   prelevare denaro contante presso tutti gli sportelli automatici dell’area SEPA;
+*   disporre e ricevere bonifici grazie al codice IBAN presente sulla carta (la ricezione del bonifico non prevede spese, la disposizione prevede una commissione di 0,40 €);
+
+**Come richiedere la tessera Flash Up Studio**
+
+Durante la procedura di immatricolazione online, ti verrà richiesto di effettuare l'upload della tua fotografia necessaria per il rilascio della tessera, nel rispetto del formato che sarà indicato nella procedura stessa.
+
+Il rilascio della tessera universitaria è strettamente funzionale alla fruizione dei servizi universitari e non comporta per lo studente alcun obbligo di utilizzo delle funzionalità bancarie, usufruibili a scelta dello studente.
+
+La carta potrà essere richiesta gratuitamente, esclusivamente attraverso l’APP Intesa Sanpaolo Mobile, e potrà essere recapitata al tuo indirizzo di residenza o altro indirizzo a tua scelta, purché sul territorio italiano.
+
+Prima di richiedere la carta è necessario sottoscrivere gratuitamente il Contratto My Key, direttamente dal sito della Banca, al [link](https://www.intesasanpaolo.com/it/persone-e-famiglie/tutti-i-giorni/my-key/my-key.html)[My](https://www.intesasanpaolo.com/it/persone-e-famiglie/tutti-i-giorni/my-key/my-key.html)[Key](https://www.intesasanpaolo.com/it/persone-e-famiglie/tutti-i-giorni/my-key/my-key.html).
+
+My key è un contratto gratuito d'identità digitale della banca, che norma le firme digitali (Firma Digitale Remota e Firma Elettronica Avanzata) e l'accesso ai canali della banca.
+
+Per Sottoscrivere il Contratto My Key online è necessario possedere un documento d’identità Italiano (carta d’identità, patente italiana, passaporto italiano); in caso contrario è necessario prendere appuntamento nella filiale più vicina per la sottoscrizione in sede.
+
+### Potrebbe interessarti
+
+*   [Alloggi / Accommodation Service](https://www.unibg.it/vivere-unibg/spazi-e-servizi/alloggi)  
+*   [Servizio ristorazione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/mense-e-caffetterie)  
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+  [5] Score: 0.9982
+      Titolo   : Diritto allo studio | Università degli studi di Bergamo - UniBg
+      URL      : https://www.unibg.it/dsu
+      Contenuto: Diritto allo studio | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/dsu#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/dsu#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/dsu#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Diritto allo studio
+===================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Diritto allo studio](https://www.unibg.it/dsu)
+
+[](https://www.unibg.it/dsu)
+
+Il **Diritto allo Studio Universitario (DSU) promuove la possibilità di studiare anche a chi si trova in una situazione economica svantaggiata**. A chi risulta idoneo ai benefici, arriva a garantire la gratuità dell'iscrizione insieme a un sostegno economico per affrontare le spese relative al proprio percorso di studio.
+
+**L'Università degli studi di Bergamo offre tante opportunità di Diritto allo Studio** come un'occasione per imparare, crescere e vivere l'Ateneo. Scoprile tutte!
+
+### Borse di studio
+
+![Image 3: Studentessa UniBg che legge in un'aula studio della sede di Palazzo Bernareggi](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-26/News_360x250-2022-10-diritto-allo-studio-borse.png?itok=nQbTk12u)
+
+**Di cosa si tratta?**
+
+Grazie al finanziamento di fondi ministeriali e regionali, UniBg eroga:
+
+*   borse di studio a importo variabile a seconda della tua fascia di reddito e del tuo status (in sede, pendolare o fuori sede). Sono previste maggiorazioni per studentesse iscritte a corsi STEM, e studenti in prima fascia di reddito
+*   un pasto quotidiano gratuito in mensa per l’anno solare successivo a quello di assegnazione della borsa
+*   esonero totale dal pagamento del contributo onnicomprensivo,ad eccezione della tassa di iscrizione di 156 euro
+
+I benefici sono dimezzati per gli iscritti al primo anno fuori corso e per gli iscritti part time, i quali beneficiano dell’esonero totale dal pagamento del contributo onnicomprensivo.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti criteri:
+
+*   sei intendi iscriverti a una laurea triennale, magistrale, magistrale a ciclo unico (5 anni) o a un Dottorato di ricerca,fino al primo anno fuori corso (o secondo anno fuori corso per studentesse e studenti con invalidità pari o superiore al 66% o che usufruiscono dei benefici previsti dalla L.104/92)
+*   hai un voto di maturità pari o maggiore a 70/100 per primo anno di Laurea triennale e Laurea magistrali a ciclo unico (5 anni)
+*   hai ottenuto il numero minimo di crediti per gli anni successivi al primo
+*   hai la laurea triennale - o in alternativa almeno 150 cfu - o magistrale se richiedi la borsa per il primo anno e sei iscritto alla laurea magistrale o al corso di Dottorato
+*   hai regolarità accademica
+*   hai i requisiti di reddito previsti dal bando
+
+### Priorità di assegnazione
+
+Le studentesse e gli studenti con invalidità pari o superiore al 66% o che usufruiscono dei benefici previsti dalla L.104/92 hanno priorità nell’assegnazione delle borse di studio. A seconda delle valutazioni specifiche, esse o essi possono essere riconosciuti idonei anche se hanno fino al 40% in meno dei CFU o del voto di maturità richiesti. Possono altresì usufruire del beneficio intero anche per il primo anno fuori corso, mentre verrà dimezzato a partire dal secondo anno fuori corso.
+
+**Come richiedere la borsa di studio?**
+
+Consulta la pagina [Borse di studio](https://www.unibg.it/studiare/iscriversi/tasse-e-agevolazioni/borse-studio): una volta pubblicato il bando (mese di luglio), potrai compilare la domanda online entro le scadenze previste dallo stesso avviso di selezione. Dovrai presentare la domanda per ogni anno accademico, per permettere la valutazione dei tuoi requisiti.
+
+### Integrazioni o maggiorazioni della borsa di studio
+
+### Maggiorazione della borsa di studio per studenti con invalidità
+
+**Di cosa si tratta?**
+
+Puoi ottenere una maggiorazione della borsa di studio fino al 40% dell'importo.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti requisiti:
+
+*   sei una studentessa o uno studente beneficiario o idoneo alla borsa di studio
+*   hai un'invalidità pari o superiore al 66% o usufruisci dei benefici previsti dalla L.104/92
+
+**Come richiederla?**
+
+Devi richiedere la maggiorazione al momento della compilazione della domanda online della borsa di studio e motivata entro la scadenza prevista dal bando. Percepirai la maggiorazione con il saldo della borsa di studio.
+
+### Integrazione dell’importo di borsa per mobilità internazionale
+
+![Image 4: Studente in una stazione dei treni che guarda il tabellone degli orari](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-28/News_360x250-2022-10-diritto-allo-studio-mobilit%C3%A0%20internazionale.png?itok=BJXQaa7k)
+
+**Di cosa si tratta?**
+
+Puoi ottenere un'integrazione dell’importo di borsa che prevede un contributo mensile, dal quale vanno sottratti eventuali altri contributi ricevuti dall’Ufficio Programmi Internazionali. A questo si aggiunge il rimborso delle spese di viaggio fino a un tetto massimo di € 100 per destinazioni UE e di € 500 per destinazioni extra UE.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti requisiti:
+
+*   sei una studentessa o uno studente beneficiario o idoneo alla borsa di studio
+*   sei intenzionato a partecipare a programmi di mobilità internazionale organizzati dall’Ateneo nell’anno accademico, per il quale stai chiedendo i benefici della borsa di studio
+
+**Come richiederla?**
+
+Devi richiedere l'integrazione al momento della presentazione della domanda online di borsa di studio, partecipando a un programma di mobilità internazionale.
+
+### Contributo per il rimborso delle spese dei canoni di locazione
+
+![Image 5: Caseggiato con balconate e chiome di alberi](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-26/News_360x250-2022-10-diritto-allo-studio-canone-affitto.png?itok=z9mFmyVK)
+
+**Di cosa si tratta?**
+
+UniBg contribuisce alle spese del tuo alloggio erogando un contributo a rimborso per il periodo oggetto del relativo bando.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti criteri:
+
+*   sei iscritto a una laurea triennale, magistrale, magistrale a ciclo unico (5 anni) o a un Corso di Dottorato
+*   hai un valore ISEE entro i limiti previsti dal Ministero
+*   hai stipulato un regolare contratto d’affitto per un immobile in un Comune diverso da quello di residenza
+*   non hai percepito altri contributi alloggio (es. borsa di studio come fuori sede)
+
+**Come richiederlo?**
+
+Il Servizio di Diritto allo studio metterà a disposizione delle studentesse e degli studenti tutte le informazioni necessarie. I dettagli saranno integralmente riportati nel bando
+
+### Esonero studentesse e studenti che diventano genitori
+
+![Image 6: Mamma con passeggino che porta a spasso la figlia](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-29/News_360x250-2022-10-diritto-allo-studio-genitori.png?itok=qc97owP-)
+
+**Di cosa si tratta?**
+
+L’Ateneo riconosce uno sconto parziale sulle tasse proporzionato alla fascia di reddito (dal 40% per chi è in fascia A al 10% per chi è in fascia G).
+
+**Chi sono i destinatari?**
+
+Benefici dell'esonero se sei una studentessa o uno studente iscritto che diventa genitore nel corso dell'anno solare.Nel caso entrambi da genitori siate entrambi iscritti in UniBg l’esonero può essere richiesto da uno solo dei due.
+
+**Come richiederlo?**
+
+Leggi il regolamento contribuzione studentesca che si trova all'interno della pagina [Tasse e Agevolazioni](https://www.unibg.it/studiare/iscriversi/tasse-e-agevolazioni/contribuzione-studentesca "Contribuzione studentesca").
+
+### TOP 10 student program
+
+![Image 7: Studentessa UniBg che legge un libro su una delle terrazze di Pignolo](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-29/News_360x250-2022-10-diritto-allo-studio-top-10.png?itok=ytnOD3yF)
+
+**Di cosa si tratta?**
+
+**[TOP Ten student program](https://www.unibg.it/studiare/iscriversi/tasse-e-agevolazioni/top-10-student-program "Top 10 Student Program")** premia il tuo merito, a prescindere dal reddito, prevedendo l’esonero parziale o totale dal pagamento delle tasse universitarie (esclusa la tassa di iscrizione di 156 euro).
+
+**Chi sono i destinatari?**
+
+Puoi beneficiare del programma se sei una studentessa o studente iscritto in corso a una Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico entro le scadenze previste, entro i 30 anni di età, con alti requisiti di merito:
+
+*   per il primo anno di Laurea triennale e Laurea Magistrale a ciclo unico. voto di maturità da 85 a 89 (sconto pari a 10%), per chi ha un voto di maturità da 90 a 95 (sconto del 25%) o totale in caso di voto di maturità da 96 a 100
+*   per primo anno Laurea Magistrale: voto di laurea di almeno 105
+*   crediti e media di almeno 28 per gli anni successivi al primo) e regolarità accademica
+
+Il programma non include alcune tipologie di iscrizioni e corsi (ad esempio iscrizione part time, corso di giurisprudenza della guardia di finanza).
+
+**Come richiederlo?**
+
+L'Ufficio Tasse seleziona automaticamente fino al 10% degli iscritti. L'elenco di beneficiari viene reso noto entro il 31 gennaio di ogni anno.
+
+### Servizio abitativo
+
+![Image 8: Residenza universitaria UniBg di Dalmine](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-28/News_360x250-2022-10-diritto-allo-studio-servizio-abitativo.png?itok=URRuQquo)
+
+**Di cosa si tratta?**
+
+L'Ateneo mette a disposizione 200 posti alloggio distribuiti nelle 4 residenze universitarie:
+
+*   15 nella residenza di Caboto
+*   91 nella residenza di Garibaldi
+*   46 nella residenza del Seminario 
+*   48 nella residenza di Dalmine
+
+Potrai ottenere l'alloggio per 10 mesi,dalla fine di settembre alla fine di luglio, pagando la cauzione e una retta mensile: chi rientra nelle tre prime fasce di reddito ha diritto a una retta agevolata.
+
+**Chi sono i destinatari?**
+
+Puoi ottenere un alloggio in una residenza universitaria se rispetti tutti i seguenti requisiti:
+
+*   sei iscritto a un a Laurea triennale, Lauree magistrale, Laurea magistrale a ciclo unico o a un Corso di Dottorato fino al primo anno fuori corso (o secondo anno fuori corso per studentesse e studenti con invalidità pari o superiore al 66% o che usufruiscono dei benefici previsti dalla L.104/92) e 
+*   sei in possesso dei requisiti di merito e distanza previsti dal bando.
+
+Le studentesse e gli studenti borsisti che rispettano i requisiti previsti dal bando non pagano la retta mensile; il costo dell’alloggio è coperto dalla borsa di studio.
+
+Le studentesse e gli studenti in possesso di un ISEE entro i limiti previsti per la borsa di studio hanno la priorità in graduatoria.
+
+Le studentesse e gli studenti con invalidità pari o superiore al 66%, o che usufruiscono dei benefici previsti dalla L.104/92, hanno la priorità nell’assegnazione dell’alloggio ed è possibile che vengano riconosciuti idonei anche se hanno fino al 40% in meno dei CFU o del voto di maturità richiesti.
+
+**Come richiederlo?**
+
+Puoi richiedere l'alloggio, tramite il [bando di concorso](https://www.unibg.it/vivere-unibg/spazi-e-servizi/alloggi "Alloggi") pubblicato dall'Ateneo nel mese di luglio, compilando la domanda online entro le scadenze previste dall'avviso. Dovrai rispondere al bando per ogni anno di corso.
+
+### Accommodation Service
+
+![Image 9: Stanza di uno studente universitario con letto, scrivania e PC](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-29/News_360x250-2022-10-diritto-allo-studio-accomodation-service.png?itok=t-fU1DHw)
+
+**Di cosa si tratta?**
+
+L'**[Accommodation Service](https://www.unibg.it/vivere-unibg/spazi-e-servizi/alloggi/accommodation-service)** è un'offerta di mediazione gratuita che ti aiuta a trovare una soluzione abitativa a Bergamo, Dalmine e dintorni, supportandoti per le pratiche di stipulazione di un regolare contratto di locazione. **[Cerco Alloggio](https://www.cercoalloggio.com/bergamo "Cerco Alloggio")**, gestore del servizio, mette a tua disposizione una piattaforma dove consultare tutte le possibilità di alloggio, con profili completi di fotografie, video tour, indirizzi e contatti dei proprietari.
+
+L'unico costo extra a tuo carico è il compenso per la registrazione del contratto e per le pulizie finali.
+
+**Chi sono i destinatari?**
+
+Puoi utilizzare il servizio se:
+
+*   sei iscritto a una Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico o Corso di Dottorato in corso o fuori corso,
+*   sei uno studente o studentessa Erasmus in ingresso da altri Atenei
+
+**Come richiederlo?**
+
+Accedi alla piattaforma**[Cerco Alloggio](https://www.cercoalloggio.com/bergamo "Cerco Alloggio")**con le credenziali di Ateneo.
+
+### Servizio Ristorazione
+
+![Image 10: Studenti UniBg nella mensa della sede di Dalmine](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-29/News_360x250-2022-10-diritto-allo-studio-ristorazione.png?itok=VHUuV_Eg)
+
+**Di cosa si tratta?**
+
+Il **[Servizio Ristorazione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/mense-e-caffetterie)**ti dà accesso a sconstistiche per mangiare nelle mense universitarie di Caniana, Dalmine e Città Alta (San Lorenzo).
+
+**Chi sono i destinatari?**
+
+Se sei una studentessa o uno studente UniBg, Erasmus incoming inclusi, puoi sempre utilizzare il Servizio Ristorazione. Se hai determinati requisiti di merito o reddito puoi accedere auna speciale scontistica:
+
+*   sconto del 20,50% garantito a tutti gli studenti anche in assenza di ISEE presentato;
+*   sconto del 48,10% per chi è collocato in fascia C;
+*   sconto del 56,60% per chi è collocato in fascia B;
+*   sconto del 65,30% per chi è collocato in fascia A.
+
+Sei sei un borsista hai diritto al pasto gratuito, il cui costo è parzialmente coperto dalla Borsa di studio.
+
+Sei sei una studentessa o studente Erasmus incoming benefici di uno sconto del 48,10% a prescindere dalla fascia di reddito.
+
+**Come richiederlo?**
+
+Per ricevere lo sconto dedicato a tutti gli studenti, o personalizzato in base alla fascia di reddito assegnata considerando ISEE universitario acquisito dall’Ateneo per l’anno accademico in corso, dovrai scaricare la App Unibg.EAT e associare il tuo profilo studente seguendo le istruzioni pubblicate alla pagina dedicata alle [Mense e caffetterie](https://www.unibg.it/vivere-unibg/spazi-e-risorse/mense-e-caffetterie).
+
+L'app ti consentirà di creare un Qr code dinamico da presentare alla cassa al momento del pagamento.
+
+L'ISEE universitario acquisito entro il 31 dicembre di ogni anno garantisce lo sconto per l’anno solare successivo.
+
+### Convenzione trasporti
+
+![Image 11: Autobus ATB che porta gli studenti UniBg in Città Alta](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-29/News_360x250-2022-10-diritto-allo-studio-sconti-convenzioni_0.png?itok=4FDy077A)
+
+**Di cosa si tratta?**
+
+Puoi viaggiare, beneficiando di sconti speciali per i seguenti abbonamenti:
+
+*   annuale per pullman ATB, Bergamo Trasporti, la BiGi
+*   mensile per treni Trenord
+
+L'Ateneo copre sia il costo dello sconto sia dell'emissione della tessera IoViaggio.
+
+**Chi sono i destinatari?**
+
+Puoi accedere agli **[sconti e alle convenzioni trasporti](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti "Convenzioni e sconti")**se sei una studentessa o studente iscritto a una Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico o Corso di Dottorato in corso o fuori corso.
+
+**Come richiederla?**
+
+*   Treno: richiedi l’emissione di una tessera IoViaggio tramite lo Sportello internet studenti e ritirarla presso lo sportello del Diritto allo studio personalmente o tramite delegato.La tessera con la quale si usufruisce degli sconti vale 3 anni e deve essere riconsegnata in caso di laurea, rinuncia agli studi o mancato rinnovo dell’iscrizione presso UniBg.
+*   Pullman: acquista direttamente l’abbonamento presso l'ATB point, mostrando la ricevuta di pagamento della tassa d’iscrizione.
+
+### Centro stampa e copie gratuite
+
+![Image 12: studenti UniBg in un corridoio della sede di Dalmine](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-29/News_360x250-2022-10-diritto-allo-studio-stampe.png?itok=pLL1lwof)
+
+**Di cosa si tratta?**
+
+L’Ateneo ti offre un servizio di stampa e fotocopie di documenti, stampa e rilegatura tesi con invio dei file via email, gestito da una società esterna e a listino prezzi concordato. La stampa della tesi avviene in automatico seguendo le regole tipografiche e di impaginazione richieste dall’università.
+
+L’Ateneo garantisce alle studentesse e agli studenti 250 copie gratuite ogni anno.
+
+**Chi sono i destinatari?**
+
+Puoi usufruire del **[Centro stampa e copie gratuite](https://www.unibg.it/vivere-unibg/spazi-e-servizi/servizio-stampe)** se sei in possesso della tessera universitaria.
+
+**Come richiederlo?**
+
+Utilizza la tua tessera presso i centri stampa nelle sedi di Caniana, Sant'Agostino e Dalmine, le postazioni self service di tutte le sedi e dei laboratori indicati sul sito alla sezione **[Centro stampa e copie gratuite](https://www.unibg.it/vivere-unibg/spazi-e-servizi/servizio-stampe)**.
+
+### Vuoi maggiori info? Sfoglia la brochure!
+
+### Contatti
+
+**Settore Diritto allo studio**
+
+ via F.lli Calvi 10
+
+ 24122 Bergamo
+
+ T+39 035 205 2870
+
+**[Ticket Diritto allo studio](https://helpdesk.unibg.it/helpdesksegrestud/login.php)**
+
+**Orari di apertura sportello (solo su prenotazione, a questo[link](https://logistica.unibg.it/PortalePlanning/UNIBG-servizi/index.php)**)
+
+ Lunedì 13:30 -15:30
+
+ Giovedì 10:00 -12:00
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/dsu#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: servizi
+
+>>> SYSTEM PROMPT:
+Sei un assistente per i servizi universitari dell'Università di Bergamo.
+Fornisci informazioni su mense, biblioteche, aule studio, servizi agli studenti.
+Indica orari di apertura e location quando possibile.
+
+
+DATA ODIERNA: 04 marzo 2026 (Anno accademico 2025/2026)
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+8. Alcune fonti sono documenti PDF: in quel caso vengono forniti anche i link ipertestuali estratti direttamente dal PDF con la pagina di provenienza. Se uno di questi link è rilevante per la risposta dello studente, includilo nella risposta in forma cliccabile (formato Markdown: [testo](url)) indicando anche da quale parte del documento proviene.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: UniBg e mobilità sostenibile | Università degli studi di Bergamo
+URL: https://www.unibg.it/node/15501
+Contenuto:  [Salta al contenuto principale](#main-content) 
+
+## Link utili utente
+
+* [MyUniBg](https://my.unibg.it)
+* [Webmail](/webmail)
+* [Motore di ricerca](#block-formdiricerca)
+* [EN](/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+  + [Chi siamo](/ateneo/chi-siamo)
+  + [Organizzazione e struttura](/ateneo/organizzazione-e-struttura)
+  + [Amministrazione](/ateneo/amministrazione)
+  + [Assicurazione della qualità](/ateneo/assicurazione-qualita)
+* [Studiare](/studiare)
+  + [Perché scegliere UniBg](/studiare/perche-scegliere-unibg)
+  + [I corsi](/studiare/corsi)
+  + [Orientarsi](/studiare/orientarsi)
+  + [Iscriversi](/studiare/iscriversi)
+  + [Frequentare](/studiare/frequentare)
+  + [eLearning UniBg](/studiare/elearning-unibg)
+  + [Laurearsi](/studiare/laurearsi)
+  + [Diritto allo studio](/dsu)
+  + [Contatta la Segreteria](/studiare/contatta-segreteria)
+* [Ricerca](/ricerca)
+  + [Fare ricerca](/ricerca/fare-ricerca)
+  + [Ambiti e progetti di ricerca](/ricerca/ambiti-e-progetti-ricerca)
+  + [Ricercatori e prodotti](/ricerca/ricercatori-e-prodotti)
+  + [Strutture, organizzazione e governance](/ricerca/strutture-organizzazione-e-governance)
+* [Terza missione](/terza-missione)
+  + [Valorizzare la conoscenza](/terza-missione/valorizzare-conoscenza)
+  + [Formazione continua](/terza-missione/formazione-continua)
+  + [Collaborazioni enti e imprese](/terza-missione/collaborazioni-enti-e-imprese)
+  + [Cultura e Società](/terza-missione/cultura-e-societa)
+* [Internazionale](/internazionale)
+  + [Andare all’estero](/internazionale/andare-allestero)
+  + [Destinazione UniBg](/internazionale/destinazione-unibg)
+  + [Cooperazione allo sviluppo](/internazionale/cooperazione-sviluppo)
+  + [UniBg for peace: opportunità e iniziative](/internazionale/unibg-for-peace-opportunita-e-iniziative)
+* [Vivere UniBg](/vivere-unibg)
+  + [Open Campus](/vivere-unibg/open-campus)
+  + [Spazi e risorse](/vivere-unibg/spazi-e-risorse)
+  + [Opportunità e servizi](/vivere-unibg/opportunita-e-servizi)
+  + [Eventi istituzionali](/vivere-unibg/eventi-istituzionali)
+
+
+## Servizi on line
+
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+* [Piano Strategico](https://www.unibg.it/node/15273)
+* [Web Radio](http://www.unibgonair.it/)
+
+## Navigazione principale
+
+* [Ateneo](/ateneo)
+* [Studiare](/studiare)
+* [Ricerca](/ricerca)
+* [Terza missione](/terza-missione)
+* [Internazionale](/internazionale)
+* [Vivere UniBg](/vivere-unibg)
+
+ 
+
+## Breadcrumb
+
+1. [Home](/)
+2. Node
+3. [UniBg e mobilità sostenibile](/node/15501)
+
+### L’Ateneo mette a disposizione 700.000 euro a favore dell’utilizzo dei mezzi pubblici e della bicicletta
+
+A partire dal 1° agosto e per i prossimi due anni*,* UniBg conferma l’impegno a favore della **mobilità sostenibile tra i suoi studenti, docenti e dipendenti**.Per il 10° anno consecutivo ha infatti sottoscritto l’accordo con **ATB** e **Bergamo Trasporti** per la **mobilità urbana ed extraurbana**, garantendo un finanziamento di **€** **700.000** che permetterà di accedere agli abbonamenti a tariffe ridotte sia per l’utilizzo dei bus sia, per la prima volta, della **bicicletta tradizionale o a pedalata assistita**.
+
+In particolare, gli **studenti** e i **dipendenti** dell'Università di Bergamo avranno l’opportunità di usufruire di **abbonamenti annuali a** € 200 per i trasporti urbani e a € 470 per gli extraurbani. Tariffe che potranno anche godere di ulteriori riduzioni se previste dagli enti comunali delle rispettive residenze.
+
+Inoltre, l’Università ha deciso di concorrere all’applicazione di tariffe agevolate per gli abbonamenti mensili per gli studenti in mobilità internazionale e di favorire l’utilizzo della bicicletta. Un finanziamento specifico di **€ 40.000** permetterà infatti di usufruire di un **abbonamento annuale al servizio di bike sharing BiGi per le biciclette normali e assistite** al prezzo agevolato di soli **€10,00** contro la tariffa di € 40.
+
+*“L’Università degli studi di Bergamo rinsalda, con questo accordo, i legami con il territorio, e aumenta il proprio impegno per migliorare la sostenibilità della propria comunità in movimento. –* commenta la **prof.ssa Annalisa Cristini**,Prorettrice con Delega al welfare e allo sviluppo sostenibile *- Le risorse economiche messe a disposizione sono considerevoli e comprendono, da quest’anno, un incentivo all’utilizzo della BIGI, una scelta che speriamo faciliti gli spostamenti e abitui ad una mobilità dolce. Si tratta di un impegno coerente con gli obiettivi del piano strategico d’Ateneo e che l’Università sta portando avanti anche in sinergia con il centro nazionale mobilità.”*
+
+ 
+
+Fonte 2: [PDF] unibg per la mobilità sostenibile trenord – atb – bergamo trasporti
+URL: https://www.unibg.it/sites/default/files/media/documents/2023-08-02/MOBILITA%27%20SOSTENIBILE%20STUDENTI%202022%202023.pdf
+Tipo: PDF
+Link estratti dal PDF:
+  - https://helpdesk.unibg.it/helpdesksegrestud/login.php (pagina 1)
+  - http://www.trenord.it/ (pagina 1)
+  - http://www.atb.bergamo.it/ (pagina 2)
+Contenuto: 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# UNIBG PER LA MOBILITÀ SOSTENIBILE 
+
+# TRENORD – ATB – BERGAMO TRASPORTI 
+
+Per agevolare la mobilità sostenibile dei propri studenti l’Università degli Studi di Bergamo ha 
+
+promosso con le Società di Trasporto pubblico nuove agevolazioni che prevedono interventi a livello 
+
+cittadino, provinciale e regionale per incentivare il trasporto su gomma e su rotaia. Le opportunità 
+
+offerte sono specificate di seguito. 
+
+# TRENORD S.P.A. 
+
+http://www.tren ord.it 
+
+La convenzione con Trenord S.p.A. prevede un abbonamento mensile del treno il cui costo risulterà 
+
+ridotto del 10% grazie all’intervento dell’Ateneo. Nella convenzione è prevista l’automatica 
+
+attribuzione di un bonus qualora Trenord non rispetti lo standard minimo di affidabilità previsto dal 
+
+Contratto di Servizio. 
+
+Modalità di richiesta : gli studenti interessati dovranno inoltrare richiesta della Tessera TRENORD 
+
+(validità 3 anni/36 mesi) accedendo alla propria area personale dello Sportello Internet Studenti, alla 
+
+sezione Segreteria > Altri Servizi > Trenord (scegliendo tra “Nuova Richiesta” e “Possiedo già la 
+
+tessera”), cliccando poi su “Invia Richiesta Trenord”. 
+
+L’Università, dopo aver verificato la presenza nel proprio archivio della fotografia dello studente in 
+
+formato JPEG, invierà l’elenco a Trenord secondo il calendario sotto riportato: 
+
+VALIDITA’ TESSERA ITINERO  RICHIESTA ON LINE  SPEDIZIONE ENTRO 
+
+1 FEB 23 - 31 GEN 2 6 entro 1 1 Dicembre 20 22 entro 20 Gennaio 20 23
+
+1 MAR 23 - 28 FEB 2 6 entro 19 Gennaio 20 23 entro 19 Febbraio 20 23 
+
+1 APR 23 - 31 MAR 2 6 entro 19 Febbraio 20 23 entro 19 Marzo 20 23
+
+1 MAG 23 - 30 APR 2 6 entro 1 9 Marzo 20 23 entro 23 Aprile 20 23
+
+1 GIU 23 - 31 MAG 2 6 entro 23 Aprile 20 23 entro 21 Maggio 20 23
+
+1 LUG 23 - 30 GIU 2 6 entro 21 Maggio 20 23 entro 23 Giugno 20 23
+
+1 AGO 23 - 31 LUG 2 6 entro 22 Giugno 20 23 entro 23 Luglio 20 23
+
+1 SET 23 – 31 AGO 2 6 entro 23 Luglio 20 23 entro 2 0 Agosto 20 23
+
+1 OTT 23 - 30 SET 2 6 entro 20 Agosto 20 23 entro 2 4 Settembre 20 23
+
+1 NOV 23 - 31 OTT 2 6 entro 24 Settembre 20 23 entro 22 Ottobre 20 23
+
+1 DIC 23 - 30 NOV 2 6 entro 22 Ottobre 20 23 entro 1 9 Novembre 20 23
+
+1 GEN 2 4 - 31 DIC 2 6 entro 1 5 Novembre 20 23 entro 10 Dicembre 20 23
+
+Dopo aver ricevuto la mail di notifica dell’arrivo della tessera lo studente potrà ritirarla presso il Servizio 
+
+Diritto allo Studio di via dei Caniana, 2 - Bergamo e acquistare l’Abbonamento Speciale studenti 
+
+mensile presso le biglietterie e i distributori automatici Trenord. 
+
+IMPORTANTE: la tessera ha validità di 3 anni dalla data del rilascio. Al cessare dell’iscrizione 
+
+andrà riconsegnata all’Ateneo, presso il Servizio Diritto allo Studio. 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# ATB 
+
+http://www.atb.bergamo.it 
+
+È stata rinnovata per il bienni o accademico 202 3/202 5 la convenzione che consente di acquistare 
+
+l’ abbonamento annuale per studenti fino a 26 anni di età non compiuti ad una tariffa flat di €
+
+20 0,00 indipendentemente dalle zone tariffarie attraversate per raggiungere la sede universitaria 
+
+dalla propria residenza. 
+
+Modalità di stipula : l’abbonamento si può richiedere o rinnovare presso l’ATB Point di Porta Nuova 
+
+BG esibendo la ricevuta di pagament o della prima rata delle tasse universitarie o del contributo di pre -
+
+iscrizione previsto per la Laurea Magistrale. 
+
+# ATB e Bergamo Trasporti 
+
+http://www.atb.bergamo.it 
+
+L’intesa consente allo studente di stipulare un abbonamento annuale per studenti fino a 26 anni di 
+
+età non compiuti che integri il trasporto in area urbana e quello in ambito provinciale ad una tariffa 
+
+flat di € 470,00 indipendentemente dalla località di p rovenienza. 
+
+Modalità di stipula : l’abbonamento si può richiedere presso l’ATB Point di Porta Nuova BG – lo 
+
+Sportello interno alla Stazione Autolinee BG – gli Autoservizi Locatelli di via Toscanini, 6 a 
+
+Bonate Sopra oppure in via Furietti, 17 Bergamo esibe ndo la ricevuta di pagamento della prima rata 
+
+delle tasse universitarie o del contributo di pre -iscrizione previsto per la Laurea Magistrale.
+
+Fonte 3: [PDF] unibg per la mobilità sostenibile trenord – atb – bergamo trasporti
+URL: https://www.unibg.it/sites/default/files/mobilita_sostenibile_studenti_2021_2023_1.pdf
+Tipo: PDF
+Link estratti dal PDF:
+  - https://helpdesk.unibg.it/helpdesksegrestud/login.php (pagina 1)
+  - http://www.trenord.it/ (pagina 1)
+  - http://www.atb.bergamo.it/ (pagina 2)
+Contenuto: 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# UNIBG PER LA MOBILITÀ SOSTENIBILE 
+
+# TRENORD – ATB – BERGAMO TRASPORTI 
+
+Per agevolare la mobilità sostenibile dei propri studenti l’Università degli Studi di Bergamo ha 
+
+promosso con le Società di Trasporto pubblico nuove agevolazioni che prevedono interventi a livello 
+
+cittadino, provinciale e regionale per incentivare il trasporto su gomma e su rotaia. Le opportunità 
+
+offerte sono specificate di seguito. 
+
+# TRENORD S.P.A. 
+
+http://www.trenord.it 
+
+La convenzione con Trenord S.p.A. prevede un abbonamento mensile del treno il cui costo risulterà 
+
+ridotto del 10% grazie all’intervento dell’Ateneo. Nella convenzione è prevista l’automatica 
+
+attribuzione di un bo nus qualora Trenord non rispetti lo standard minimo di affidabilità previsto dal 
+
+Contratto di Servizio. 
+
+Modalità di richiesta : gli studenti interessati dovranno inoltrare richiesta della Tessera TRENORD 
+
+(validità 3 anni/36 mesi) accedendo alla propria are a personale dello Sportello Internet Studenti, alla 
+
+sezione Segreteria > Altri Servizi > Trenord (scegliendo tra “Nuova Richiesta” e “Possiedo già la 
+
+tessera”), cliccando poi su “Invia Richiesta Trenord”. 
+
+L’Università, dopo aver verificato la presenza ne l proprio archivio della fotografia dello studente in 
+
+formato JPEG, invierà l’elenco a Trenord secondo il calendario sotto riportato: 
+
+VALIDITA’ TESSERA ITINERO  RICHIESTA ON LINE  SPEDIZIONE ENTRO 
+
+1 FEB 21 - 31 GEN 2 4 entro 1 1 Dicembre 20 20  entro 20 Gennaio 20 21
+
+1 MAR 21 - 28 FEB 2 4 entro 20 Gennaio 20 21 entro 19 Febbraio 20 21
+
+1 APR 21 - 31 MAR 2 4 entro 19 Febbraio 20 21 entro 19 Marzo 20 21
+
+1 MAG 21 - 30 APR 2 4 entro 1 9 Marzo 20 21 entro 23 Aprile 20 21
+
+1 GIU 21 - 31 MAG 2 4 entro 23 Aprile 20 21 entro 21 Maggio 20 21
+
+1 LUG 21 - 30 GIU 2 4 entro 21 Maggio 20 21 entro 23 Giugno 20 21
+
+1 AGO 21 - 31 LUG 2 4 entro 23 Giugno 20 21 entro 23 Luglio 20 21
+
+1 SET 21 – 31 AGO 2 4 entro 23 Luglio 20 21 entro 2 0 Agosto 20 21
+
+1 OTT 21 - 30 SET 2 4 entro 20 Agosto 20 21 entro 2 4 Settembre 20 21
+
+1 NOV 21 - 31 OTT 2 4 entro 24 Settembre 20 21 entro 22 Ottobre 20 21
+
+1 DIC 21 - 30 NOV 2 4 entro 22 Ottobre 20 21 entro 1 9 Novembre 20 21
+
+1 GEN 2 2 - 31 DIC 2 4 entro 1 6 Novembre 20 21 entro 10 Dicembre 20 21
+
+Alle scadenze indicate (dopo aver ricevuto la mail di notifica) lo studente potrà ritirare la tessera presso 
+
+il Servizio Diritto allo Studio di via dei Caniana , 2 - Bergamo e acquistare l’Abbonamento Speciale 
+
+studenti mensile presso le biglietterie e i distributori automatici Trenord. 
+
+IMPORTANTE: la tessera ha validità di 3 anni dalla data del rilascio. Al cessare dell’iscrizione 
+
+andrà riconsegnata all’Ateneo, presso il Servizio Diritto allo Studio. 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# ATB 
+
+http://www.atb.bergamo.it 
+
+È stata rinnovata per il biennio accademico 20 21/202 2 e 2022/2023 la convenzione che consente di 
+
+acquistare l’ abbonamento annuale per studenti fino a 26 anni di età non compiuti ad una tariffa 
+
+flat di € 200,00 indipendentemente dalle zone tariffarie attraversate per raggiungere la sede 
+
+universitaria dalla propria residenza. 
+
+Modalità di stipula : l’abbonamento si può richiedere o rinnovare presso l’ATB Point di Porta N uova 
+
+BG esibendo la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre -
+
+iscrizione previsto per la Laurea Magistrale. 
+
+# ATB e Bergamo Trasporti 
+
+http://www.atb.bergamo.it 
+
+L’intesa consente allo studente di stipulare un abbonamento annuale per studenti fino a 26 anni di 
+
+età non compiuti che integri il trasporto in area urbana e quello in ambito provinciale ad una tariffa 
+
+flat di € 470,00 indipendentemente dalla località di p rovenienza. 
+
+Modalità di stipula : l’abbonamento si può richiedere presso l’ATB Point di Porta Nuova BG – lo 
+
+Sportello interno alla Stazione Autolinee BG – gli Autoservizi Locatelli di via Toscanini, 6 a 
+
+Bonate Sopra oppure in via Furietti, 17 Bergamo esibendo la ricevuta di pagamento della prima rata 
+
+delle tasse universitarie o del contributo di pre -iscrizione previsto per la Laurea Magistrale.
+
+Fonte 4: Convenzioni e sconti | Università degli studi di Bergamo - UniBg
+URL: https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti
+Contenuto: Convenzioni e sconti | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7056 "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7056 "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Convenzioni e sconti
+====================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+3.   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+4.   [Convenzioni e sconti](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti)
+
+[](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti)
+
+Per agevolare la **mobilità sostenibile** dei propri studenti, l’Università degli studi di Bergamo promuove l'accesso a tariffe preferenziali con Società di Trasporto pubblico operanti a livello urbano ed extraurbano.
+
+L'Ateneo ha anche siglato convenzioni con operatori privati del territorio per l'erogazione di **prestazioni sanitarie** a condizioni economiche.
+
+Inoltre, il **tesserino universitario** per studenti, oltre alla valenza di documento di riconoscimento nelle varie sedi universitarie, assume anche la funzione di carta prepagata, con condizioni vantaggiose.
+
+### Convenzione Trenitalia
+
+L’Università degli studi di Bergamo ha aderito all’offerta commerciale Trenitalia for Business che prevede, tra l’altro, la formula **Trenitalia Welfare Plus.**
+
+Trenitalia riconosce uno sconto a **dipendenti e studenti dell'Ateneo** che scelgono Trenitalia per i loro viaggi privati.
+
+Accedi all'area riservata **[My UniBg](https://my.unibg.it/)** per saperne di più e beneficiare della formula Trenitalia Welfare Plus.
+
+### Convenzione Trenord
+
+[Informazioni sulla convenzione](https://www.unibg.it/sites/default/files/media/documents/2026-01-14/ITA%20TRENORD%202026.pdf "ITA TRENORD 2026.pdf")
+
+[About the discount](https://www.unibg.it/sites/default/files/media/documents/2026-01-14/ENG-%20TRENORD%202026.pdf "ENG- TRENORD 2026.pdf")
+
+### Convenzione ATB e Bergamo Trasporti
+
+Se sei uno studente o una studentessa UniBg, puoi acquistare l'**abbonamento annuale ATB** al prezzo speciale di **200 euro** (165 euro se residenti in uno dei comuni convenzionati).
+
+Per quanto riguarda l'utilizzo del servizio**La BiGi**, gli utenti UNIBG possono fruire di due iniziative che vanno utilizzate in maniera sequenziale: dapprima l'utente può fruire di 100 corse gratuite per "sperimentare" il servizio e, una volta esaurite, può attivare l’**abbonamento annuale** a 10 € tramite il codice sconto da richiedere all’ATB Point (solo nel caso in cui abbia già attivo anche un abbonamento al servizio di trasporto urbano ATB).
+
+Leggi la documentazione e scopri condizioni e modalità di attivazione!
+
+[Informazioni sulla convenzione](https://www.unibg.it/sites/default/files/media/documents/2025-09-01/ITA%20-%20ATB%202025.pdf "ITA - ATB 2025.pdf")
+
+[Information on the agreement](https://www.unibg.it/sites/default/files/media/documents/2025-09-01/ENG-%20ATB%202025.pdf "ENG- ATB 2025.pdf")
+
+### Convenzioni per prestazioni sanitarie a condizioni agevolate
+
+Nell’ambito delle iniziative rivolte a conseguire il benessere organizzativo della propria comunità, l'Ateneo ha stipulate convenzioni per fruire di prestazioni sanitarie a condizioni economiche di vantaggio con alcuni operatori privati del territorio.
+
+Accedi all'area riservata **[My UniBg](https://my.unibg.it/)** per saperne di più.
+
+### Flash Up Studio: la tua tessera
+
+**Flash Up Studio**: la tua tessera – dettagli della carta prepagata presenti sulla [Scheda Prodotto](https://www.intesasanpaolo.com/it/persone-e-famiglie/prodotti/carte/carte-prepagate/carta-flash-up-studio-universita-bergamo.html) raggiungibile sul sito della Banca.
+
+**Carta Flash Up Studio**
+
+ Gli studenti dell'Università degli studi di Bergamo avranno a disposizione la tessera universitaria Flash Up Studio, la speciale carta multifunzione nata dalla collaborazione tra l'Università e Banca Intesa Sanpaolo. Oltre a rappresentare la tessera universitaria di riconoscimento dello studente, ti permetterà di effettuare i pagamenti e usufruire facilmente dei servizi dentro e fuori l'Università.
+
+Con la tessera universitaria Flash Up Studio potrai:
+
+*   essere riconosciuto all'interno dell'Università e accedere alle biblioteche e alle mense universitarie
+*   pagare le tasse universitarie
+*   pagare contactless i tuoi pasti presso le mense universitarie
+*   pagare le fotocopie all'interno del Centro stampa dell'Ateneo
+*   ricevere senza costi aggiuntivi gli accrediti delle borse di studio
+*   pagare in modo semplice e veloce in Università
+*   ottenere sconti nei negozi che aderiscono al circuito US Card
+
+La carta prevede condizioni vantaggiose:
+
+*   Canone annuo gratis
+*   Costo per prelievo su sportelli automatici abilitati di altre banche - area SEPA 0,00
+
+Grazie alle funzioni di pagamento (a zero spese), potrai inoltre:
+
+*   pagare i tuoi acquisti, semplicemente avvicinando la carta ai POS, dentro e fuori l'Università, e, per importi fino a € 25 (50 € a partire dal 01/09/2021), senza digitare il PIN;
+*   effettuare pagamenti online sicuri grazie al servizio PAGAMENTI SICURI INTERNET;
+*   pagare multe, bollette e tasse universitarie (anche da ATM), domiciliare utenze e ricaricare il cellulare;
+*   prelevare denaro contante presso tutti gli sportelli automatici dell’area SEPA;
+*   disporre e ricevere bonifici grazie al codice IBAN presente sulla carta (la ricezione del bonifico non prevede spese, la disposizione prevede una commissione di 0,40 €);
+
+**Come richiedere la tessera Flash Up Studio**
+
+Durante la procedura di immatricolazione online, ti verrà richiesto di effettuare l'upload della tua fotografia necessaria per il rilascio della tessera, nel rispetto del formato che sarà indicato nella procedura stessa.
+
+Il rilascio della tessera universitaria è strettamente funzionale alla fruizione dei servizi universitari e non comporta per lo studente alcun obbligo di utilizzo delle funzionalità bancarie, usufruibili a scelta dello studente.
+
+La carta potrà essere richiesta gratuitamente, esclusivamente attraverso l’APP Intesa Sanpaolo Mobile, e potrà essere recapitata al tuo indirizzo di residenza o altro indirizzo a tua scelta, purché sul territorio italiano.
+
+Prima di richiedere la carta è necessario sottoscrivere gratuitamente il Contratto My Key, direttamente dal sito della Banca, al [link](https://www.intesasanpaolo.com/it/persone-e-famiglie/tutti-i-giorni/my-key/my-key.html)[My](https://www.intesasanpaolo.com/it/persone-e-famiglie/tutti-i-giorni/my-key/my-key.html)[Key](https://www.intesasanpaolo.com/it/persone-e-famiglie/tutti-i-giorni/my-key/my-key.html).
+
+My key è un contratto gratuito d'identità digitale della banca, che norma le firme digitali (Firma Digitale Remota e Firma Elettronica Avanzata) e l'accesso ai canali della banca.
+
+Per Sottoscrivere il Contratto My Key online è necessario possedere un documento d’identità Italiano (carta d’identità, patente italiana, passaporto italiano); in caso contrario è necessario prendere appuntamento nella filiale più vicina per la sottoscrizione in sede.
+
+### Potrebbe interessarti
+
+*   [Alloggi / Accommodation Service](https://www.unibg.it/vivere-unibg/spazi-e-servizi/alloggi)  
+*   [Servizio ristorazione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/mense-e-caffetterie)  
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Fonte 5: Diritto allo studio | Università degli studi di Bergamo - UniBg
+URL: https://www.unibg.it/dsu
+Contenuto: Diritto allo studio | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/dsu#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/dsu#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/dsu#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Diritto allo studio
+===================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Diritto allo studio](https://www.unibg.it/dsu)
+
+[](https://www.unibg.it/dsu)
+
+Il **Diritto allo Studio Universitario (DSU) promuove la possibilità di studiare anche a chi si trova in una situazione economica svantaggiata**. A chi risulta idoneo ai benefici, arriva a garantire la gratuità dell'iscrizione insieme a un sostegno economico per affrontare le spese relative al proprio percorso di studio.
+
+**L'Università degli studi di Bergamo offre tante opportunità di Diritto allo Studio** come un'occasione per imparare, crescere e vivere l'Ateneo. Scoprile tutte!
+
+### Borse di studio
+
+![Image 3: Studentessa UniBg che legge in un'aula studio della sede di Palazzo Bernareggi](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-26/News_360x250-2022-10-diritto-allo-studio-borse.png?itok=nQbTk12u)
+
+**Di cosa si tratta?**
+
+Grazie al finanziamento di fondi ministeriali e regionali, UniBg eroga:
+
+*   borse di studio a importo variabile a seconda della tua fascia di reddito e del tuo status (in sede, pendolare o fuori sede). Sono previste maggiorazioni per studentesse iscritte a corsi STEM, e studenti in prima fascia di reddito
+*   un pasto quotidiano gratuito in mensa per l’anno solare successivo a quello di assegnazione della borsa
+*   esonero totale dal pagamento del contributo onnicomprensivo,ad eccezione della tassa di iscrizione di 156 euro
+
+I benefici sono dimezzati per gli iscritti al primo anno fuori corso e per gli iscritti part time, i quali beneficiano dell’esonero totale dal pagamento del contributo onnicomprensivo.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti criteri:
+
+*   sei intendi iscriverti a una laurea triennale, magistrale, magistrale a ciclo unico (5 anni) o a un Dottorato di ricerca,fino al primo anno fuori corso (o secondo anno fuori corso per studentesse e studenti con invalidità pari o superiore al 66% o che usufruiscono dei benefici previsti dalla L.104/92)
+*   hai un voto di maturità pari o maggiore a 70/100 per primo anno di Laurea triennale e Laurea magistrali a ciclo unico (5 anni)
+*   hai ottenuto il numero minimo di crediti per gli anni successivi al primo
+*   hai la laurea triennale - o in alternativa almeno 150 cfu - o magistrale se richiedi la borsa per il primo anno e sei iscritto alla laurea magistrale o al corso di Dottorato
+*   hai regolarità accademica
+*   hai i requisiti di reddito previsti dal bando
+
+### Priorità di assegnazione
+
+Le studentesse e gli studenti con invalidità pari o superiore al 66% o che usufruiscono dei benefici previsti dalla L.104/92 hanno priorità nell’assegnazione delle borse di studio. A seconda delle valutazioni specifiche, esse o essi possono essere riconosciuti idonei anche se hanno fino al 40% in meno dei CFU o del voto di maturità richiesti. Possono altresì usufruire del beneficio intero anche per il primo anno fuori corso, mentre verrà dimezzato a partire dal secondo anno fuori corso.
+
+**Come richiedere la borsa di studio?**
+
+Consulta la pagina [Borse di studio](https://www.unibg.it/studiare/iscriversi/tasse-e-agevolazioni/borse-studio): una volta pubblicato il bando (mese di luglio), potrai compilare la domanda online entro le scadenze previste dallo stesso avviso di selezione. Dovrai presentare la domanda per ogni anno accademico, per permettere la valutazione dei tuoi requisiti.
+
+### Integrazioni o maggiorazioni della borsa di studio
+
+### Maggiorazione della borsa di studio per studenti con invalidità
+
+**Di cosa si tratta?**
+
+Puoi ottenere una maggiorazione della borsa di studio fino al 40% dell'importo.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti requisiti:
+
+*   sei una studentessa o uno studente beneficiario o idoneo alla borsa di studio
+*   hai un'invalidità pari o superiore al 66% o usufruisci dei benefici previsti dalla L.104/92
+
+**Come richiederla?**
+
+Devi richiedere la maggiorazione al momento della compilazione della domanda online della borsa di studio e motivata entro la scadenza prevista dal bando. Percepirai la maggiorazione con il saldo della borsa di studio.
+
+### Integrazione dell’importo di borsa per mobilità internazionale
+
+![Image 4: Studente in una stazione dei treni che guarda il tabellone degli orari](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-28/News_360x250-2022-10-diritto-allo-studio-mobilit%C3%A0%20internazionale.png?itok=BJXQaa7k)
+
+**Di cosa si tratta?**
+
+Puoi ottenere un'integrazione dell’importo di borsa che prevede un contributo mensile, dal quale vanno sottratti eventuali altri contributi ricevuti dall’Ufficio Programmi Internazionali. A questo si aggiunge il rimborso delle spese di viaggio fino a un tetto massimo di € 100 per destinazioni UE e di € 500 per destinazioni extra UE.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti requisiti:
+
+*   sei una studentessa o uno studente beneficiario o idoneo alla borsa di studio
+*   sei intenzionato a partecipare a programmi di mobilità internazionale organizzati dall’Ateneo nell’anno accademico, per il quale stai chiedendo i benefici della borsa di studio
+
+**Come richiederla?**
+
+Devi richiedere l'integrazione al momento della presentazione della domanda online di borsa di studio, partecipando a un programma di mobilità internazionale.
+
+### Contributo per il rimborso delle spese dei canoni di locazione
+
+![Image 5: Caseggiato con balconate e chiome di alberi](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-26/News_360x250-2022-10-diritto-allo-studio-canone-affitto.png?itok=z9mFmyVK)
+
+**Di cosa si tratta?**
+
+UniBg contribuisce alle spese del tuo alloggio erogando un contributo a rimborso per il periodo oggetto del relativo bando.
+
+**Chi sono i destinatari?**
+
+Puoi farne richiesta, se rispetti tutti i seguenti criteri:
+
+*   sei iscritto a una laurea triennale, magistrale, magistrale a ciclo unico (5 anni) o a un Corso di Dottorato
+*   hai un valore ISEE entro i limiti previsti dal Ministero
+*   hai stipulato un regolare contratto d’affitto per un immobile in un Comune diverso da quello di residenza
+*   non hai percepito altri contributi alloggio (es. borsa di studio come fuori sede)
+
+**Come richiederlo?**
+
+Il Servizio di Diritto allo studio metterà a disposizione delle studentesse e degli studenti tutte le informazioni necessarie. I dettagli saranno integralmente riportati nel bando
+
+### Esonero studentesse e studenti che diventano genitori
+
+![Image 6: Mamma con passeggino che porta a spasso la figlia](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-29/News_360x250-2022-10-diritto-allo-studio-genitori.png?itok=qc97owP-)
+
+**Di cosa si tratta?**
+
+L’Ateneo riconosce uno sconto parziale sulle tasse proporzionato alla fascia di reddito (dal 40% per chi è in fascia A al 10% per chi è in fascia G).
+
+**Chi sono i destinatari?**
+
+Benefici dell'esonero se sei una studentessa o uno studente iscritto che diventa genitore nel corso dell'anno solare.Nel caso entrambi da genitori siate entrambi iscritti in UniBg l’esonero può essere richiesto da uno solo dei due.
+
+**Come richiederlo?**
+
+Leggi il regolamento contribuzione studentesca che si trova all'interno della pagina [Tasse e Agevolazioni](https://www.unibg.it/studiare/iscriversi/tasse-e-agevolazioni/contribuzione-studentesca "Contribuzione studentesca").
+
+### TOP 10 student program
+
+![Image 7: Studentessa UniBg che legge un libro su una delle terrazze di Pignolo](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-29/News_360x250-2022-10-diritto-allo-studio-top-10.png?itok=ytnOD3yF)
+
+**Di cosa si tratta?**
+
+**[TOP Ten student program](https://www.unibg.it/studiare/iscriversi/tasse-e-agevolazioni/top-10-student-program "Top 10 Student Program")** premia il tuo merito, a prescindere dal reddito, prevedendo l’esonero parziale o totale dal pagamento delle tasse universitarie (esclusa la tassa di iscrizione di 156 euro).
+
+**Chi sono i destinatari?**
+
+Puoi beneficiare del programma se sei una studentessa o studente iscritto in corso a una Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico entro le scadenze previste, entro i 30 anni di età, con alti requisiti di merito:
+
+*   per il primo anno di Laurea triennale e Laurea Magistrale a ciclo unico. voto di maturità da 85 a 89 (sconto pari a 10%), per chi ha un voto di maturità da 90 a 95 (sconto del 25%) o totale in caso di voto di maturità da 96 a 100
+*   per primo anno Laurea Magistrale: voto di laurea di almeno 105
+*   crediti e media di almeno 28 per gli anni successivi al primo) e regolarità accademica
+
+Il programma non include alcune tipologie di iscrizioni e corsi (ad esempio iscrizione part time, corso di giurisprudenza della guardia di finanza).
+
+**Come richiederlo?**
+
+L'Ufficio Tasse seleziona automaticamente fino al 10% degli iscritti. L'elenco di beneficiari viene reso noto entro il 31 gennaio di ogni anno.
+
+### Servizio abitativo
+
+![Image 8: Residenza universitaria UniBg di Dalmine](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-28/News_360x250-2022-10-diritto-allo-studio-servizio-abitativo.png?itok=URRuQquo)
+
+**Di cosa si tratta?**
+
+L'Ateneo mette a disposizione 200 posti alloggio distribuiti nelle 4 residenze universitarie:
+
+*   15 nella residenza di Caboto
+*   91 nella residenza di Garibaldi
+*   46 nella residenza del Seminario 
+*   48 nella residenza di Dalmine
+
+Potrai ottenere l'alloggio per 10 mesi,dalla fine di settembre alla fine di luglio, pagando la cauzione e una retta mensile: chi rientra nelle tre prime fasce di reddito ha diritto a una retta agevolata.
+
+**Chi sono i destinatari?**
+
+Puoi ottenere un alloggio in una residenza universitaria se rispetti tutti i seguenti requisiti:
+
+*   sei iscritto a un a Laurea triennale, Lauree magistrale, Laurea magistrale a ciclo unico o a un Corso di Dottorato fino al primo anno fuori corso (o secondo anno fuori corso per studentesse e studenti con invalidità pari o superiore al 66% o che usufruiscono dei benefici previsti dalla L.104/92) e 
+*   sei in possesso dei requisiti di merito e distanza previsti dal bando.
+
+Le studentesse e gli studenti borsisti che rispettano i requisiti previsti dal bando non pagano la retta mensile; il costo dell’alloggio è coperto dalla borsa di studio.
+
+Le studentesse e gli studenti in possesso di un ISEE entro i limiti previsti per la borsa di studio hanno la priorità in graduatoria.
+
+Le studentesse e gli studenti con invalidità pari o superiore al 66%, o che usufruiscono dei benefici previsti dalla L.104/92, hanno la priorità nell’assegnazione dell’alloggio ed è possibile che vengano riconosciuti idonei anche se hanno fino al 40% in meno dei CFU o del voto di maturità richiesti.
+
+**Come richiederlo?**
+
+Puoi richiedere l'alloggio, tramite il [bando di concorso](https://www.unibg.it/vivere-unibg/spazi-e-servizi/alloggi "Alloggi") pubblicato dall'Ateneo nel mese di luglio, compilando la domanda online entro le scadenze previste dall'avviso. Dovrai rispondere al bando per ogni anno di corso.
+
+### Accommodation Service
+
+![Image 9: Stanza di uno studente universitario con letto, scrivania e PC](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-29/News_360x250-2022-10-diritto-allo-studio-accomodation-service.png?itok=t-fU1DHw)
+
+**Di cosa si tratta?**
+
+L'**[Accommodation Service](https://www.unibg.it/vivere-unibg/spazi-e-servizi/alloggi/accommodation-service)** è un'offerta di mediazione gratuita che ti aiuta a trovare una soluzione abitativa a Bergamo, Dalmine e dintorni, supportandoti per le pratiche di stipulazione di un regolare contratto di locazione. **[Cerco Alloggio](https://www.cercoalloggio.com/bergamo "Cerco Alloggio")**, gestore del servizio, mette a tua disposizione una piattaforma dove consultare tutte le possibilità di alloggio, con profili completi di fotografie, video tour, indirizzi e contatti dei proprietari.
+
+L'unico costo extra a tuo carico è il compenso per la registrazione del contratto e per le pulizie finali.
+
+**Chi sono i destinatari?**
+
+Puoi utilizzare il servizio se:
+
+*   sei iscritto a una Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico o Corso di Dottorato in corso o fuori corso,
+*   sei uno studente o studentessa Erasmus in ingresso da altri Atenei
+
+**Come richiederlo?**
+
+Accedi alla piattaforma**[Cerco Alloggio](https://www.cercoalloggio.com/bergamo "Cerco Alloggio")**con le credenziali di Ateneo.
+
+### Servizio Ristorazione
+
+![Image 10: Studenti UniBg nella mensa della sede di Dalmine](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-29/News_360x250-2022-10-diritto-allo-studio-ristorazione.png?itok=VHUuV_Eg)
+
+**Di cosa si tratta?**
+
+Il **[Servizio Ristorazione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/mense-e-caffetterie)**ti dà accesso a sconstistiche per mangiare nelle mense universitarie di Caniana, Dalmine e Città Alta (San Lorenzo).
+
+**Chi sono i destinatari?**
+
+Se sei una studentessa o uno studente UniBg, Erasmus incoming inclusi, puoi sempre utilizzare il Servizio Ristorazione. Se hai determinati requisiti di merito o reddito puoi accedere auna speciale scontistica:
+
+*   sconto del 20,50% garantito a tutti gli studenti anche in assenza di ISEE presentato;
+*   sconto del 48,10% per chi è collocato in fascia C;
+*   sconto del 56,60% per chi è collocato in fascia B;
+*   sconto del 65,30% per chi è collocato in fascia A.
+
+Sei sei un borsista hai diritto al pasto gratuito, il cui costo è parzialmente coperto dalla Borsa di studio.
+
+Sei sei una studentessa o studente Erasmus incoming benefici di uno sconto del 48,10% a prescindere dalla fascia di reddito.
+
+**Come richiederlo?**
+
+Per ricevere lo sconto dedicato a tutti gli studenti, o personalizzato in base alla fascia di reddito assegnata considerando ISEE universitario acquisito dall’Ateneo per l’anno accademico in corso, dovrai scaricare la App Unibg.EAT e associare il tuo profilo studente seguendo le istruzioni pubblicate alla pagina dedicata alle [Mense e caffetterie](https://www.unibg.it/vivere-unibg/spazi-e-risorse/mense-e-caffetterie).
+
+L'app ti consentirà di creare un Qr code dinamico da presentare alla cassa al momento del pagamento.
+
+L'ISEE universitario acquisito entro il 31 dicembre di ogni anno garantisce lo sconto per l’anno solare successivo.
+
+### Convenzione trasporti
+
+![Image 11: Autobus ATB che porta gli studenti UniBg in Città Alta](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-29/News_360x250-2022-10-diritto-allo-studio-sconti-convenzioni_0.png?itok=4FDy077A)
+
+**Di cosa si tratta?**
+
+Puoi viaggiare, beneficiando di sconti speciali per i seguenti abbonamenti:
+
+*   annuale per pullman ATB, Bergamo Trasporti, la BiGi
+*   mensile per treni Trenord
+
+L'Ateneo copre sia il costo dello sconto sia dell'emissione della tessera IoViaggio.
+
+**Chi sono i destinatari?**
+
+Puoi accedere agli **[sconti e alle convenzioni trasporti](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti "Convenzioni e sconti")**se sei una studentessa o studente iscritto a una Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico o Corso di Dottorato in corso o fuori corso.
+
+**Come richiederla?**
+
+*   Treno: richiedi l’emissione di una tessera IoViaggio tramite lo Sportello internet studenti e ritirarla presso lo sportello del Diritto allo studio personalmente o tramite delegato.La tessera con la quale si usufruisce degli sconti vale 3 anni e deve essere riconsegnata in caso di laurea, rinuncia agli studi o mancato rinnovo dell’iscrizione presso UniBg.
+*   Pullman: acquista direttamente l’abbonamento presso l'ATB point, mostrando la ricevuta di pagamento della tassa d’iscrizione.
+
+### Centro stampa e copie gratuite
+
+![Image 12: studenti UniBg in un corridoio della sede di Dalmine](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2024-02-29/News_360x250-2022-10-diritto-allo-studio-stampe.png?itok=pLL1lwof)
+
+**Di cosa si tratta?**
+
+L’Ateneo ti offre un servizio di stampa e fotocopie di documenti, stampa e rilegatura tesi con invio dei file via email, gestito da una società esterna e a listino prezzi concordato. La stampa della tesi avviene in automatico seguendo le regole tipografiche e di impaginazione richieste dall’università.
+
+L’Ateneo garantisce alle studentesse e agli studenti 250 copie gratuite ogni anno.
+
+**Chi sono i destinatari?**
+
+Puoi usufruire del **[Centro stampa e copie gratuite](https://www.unibg.it/vivere-unibg/spazi-e-servizi/servizio-stampe)** se sei in possesso della tessera universitaria.
+
+**Come richiederlo?**
+
+Utilizza la tua tessera presso i centri stampa nelle sedi di Caniana, Sant'Agostino e Dalmine, le postazioni self service di tutte le sedi e dei laboratori indicati sul sito alla sezione **[Centro stampa e copie gratuite](https://www.unibg.it/vivere-unibg/spazi-e-servizi/servizio-stampe)**.
+
+### Vuoi maggiori info? Sfoglia la brochure!
+
+### Contatti
+
+**Settore Diritto allo studio**
+
+ via F.lli Calvi 10
+
+ 24122 Bergamo
+
+ T+39 035 205 2870
+
+**[Ticket Diritto allo studio](https://helpdesk.unibg.it/helpdesksegrestud/login.php)**
+
+**Orari di apertura sportello (solo su prenotazione, a questo[link](https://logistica.unibg.it/PortalePlanning/UNIBG-servizi/index.php)**)
+
+ Lunedì 13:30 -15:30
+
+ Giovedì 10:00 -12:00
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/dsu#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+
+>>> USER PROMPT:
+Che convenzioni ho con i trasporti?
+
+>>> RISPOSTA:
+Ciao Raphael,
+
+In quanto studente del primo anno della Laurea Magistrale in Ingegneria Informatica, hai accesso a diverse convenzioni per i trasporti che l'Università degli Studi di Bergamo mette a disposizione per agevolare la mobilità sostenibile.
+
+Ecco un riepilogo delle opportunità:
+
+### 1. Convenzione TRENORD
+L'Università ha una convenzione con Trenord S.p.A. che ti permette di ottenere una **riduzione del 10%** sul costo dell'abbonamento mensile del treno. È prevista anche l'attribuzione automatica di un bonus se Trenord non rispetta gli standard minimi di affidabilità.
+
+*   **Come richiederla:**
+    1.  Richiedi la Tessera TRENORD (validità 3 anni/36 mesi) accedendo alla tua area personale dello [Sportello Internet Studenti](https://sportello.unibg.it/Home.do), nella sezione **Segreteria > Altri Servizi > Trenord** (scegliendo tra "Nuova Richiesta" e "Possiedo già la tessera"), e clicca su "Invia Richiesta Trenord".
+    2.  L'Università, dopo aver verificato la tua fotografia in formato JPEG, invierà l'elenco a Trenord.
+    3.  Dopo aver ricevuto la mail di notifica dell'arrivo della tessera, potrai ritirarla presso il **Servizio Diritto allo Studio di via dei Caniana, 2 - Bergamo**.
+    4.  Successivamente, potrai acquistare l'Abbonamento Speciale studenti mensile presso le biglietterie e i distributori automatici Trenord.
+*   **Importante:** La tessera ha validità di 3 anni dalla data del rilascio e dovrà essere riconsegnata all'Ateneo (Servizio Diritto allo Studio) al cessare dell'iscrizione.
+*   **Calendario:** Il calendario per le richieste e le spedizioni delle tessere è aggiornato periodicamente. Ti consiglio di consultare la documentazione più recente o lo Sportello Internet Studenti per le date valide per l'anno accademico 2025/2026.
+
+### 2. Convenzione ATB e Bergamo Trasporti
+L'Università ha rinnovato l'accordo con ATB e Bergamo Trasporti per la mobilità urbana ed extraurbana, garantendo tariffe agevolate.
+
+*   **Abbonamento annuale ATB (urbano):** Puoi acquistare l'abbonamento annuale per i trasporti urbani al prezzo speciale di **€ 200,00**. Se risiedi in uno dei comuni convenzionati, la tariffa può essere ulteriormente ridotta a € 165,00.
+*   **Abbonamento annuale ATB e Bergamo Trasporti (urbano ed extraurbano):** Puoi stipulare un abbonamento annuale che integra il trasporto in area urbana e quello in ambito provinciale ad una tariffa flat di **€ 470,00**.
+*   **Come richiederli:**
+    1.  Gli abbonamenti si possono richiedere o rinnovare presso l'**ATB Point di Porta Nuova BG**.
+    2.  Per l'abbonamento integrato (urbano ed extraurbano), puoi richiederlo anche presso lo Sportello interno alla Stazione Autolinee BG, gli Autoservizi Locatelli di via Toscanini, 6 a Bonate Sopra, oppure in via Furietti, 17 Bergamo.
+    3.  Dovrai esibire la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre-iscrizione previsto per la Laurea Magistrale.
+
+### 3. Servizio di Bike Sharing BiGi
+L'Università incentiva l'utilizzo della bicicletta, offrendo agevolazioni per il servizio di bike sharing BiGi.
+
+*   **Vantaggi:**
+    1.  Puoi usufruire di **100 corse gratuite** per "sperimentare" il servizio.
+    2.  Una volta esaurite le corse gratuite, puoi attivare l'**abbonamento annuale** al servizio BiGi (per biciclette normali e a pedalata assistita) al prezzo agevolato di soli **€ 10,00** (contro la tariffa di € 40,00).
+*   **Come richiederlo:** Per attivare l'abbonamento annuale a €10,00, dovrai richiedere il codice sconto all'ATB Point, a condizione che tu abbia già un abbonamento attivo al servizio di trasporto urbano ATB.
+
+**Destinatari:** Tutte queste convenzioni sono accessibili a studenti come te, iscritti a una Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico o Corso di Dottorato, sia in corso che fuori corso.
+
+Per maggiori dettagli e per consultare la documentazione più aggiornata, ti invito a visitare le pagine dedicate:
+
+*   [Informazioni sulla convenzione Trenord (ITA TRENORD 2026.pdf)](https://www.unibg.it/sites/default/files/media/documents/2026-01-14/ITA%20TRENORD%202026.pdf)
+*   [Informazioni sulla convenzione ATB (ITA - ATB 2025.pdf)](https://www.unibg.it/sites/default/files/media/documents/2025-09-01/ITA%20-%20ATB%202025.pdf)
+
+Pagina di riferimento: [Convenzioni e sconti | Università degli studi di Bergamo - UniBg](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti)
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Contesto conversazione:
+- Studente: Quali sono le ultime news dell'universita?
+- Assistente: Ultime news e opportunità dall'Università di Bergamo, aggiornate al 04 marzo 2026, per studenti del primo anno di Ingegneria Informatica Magistrale:
+
+
+
+Domanda originale: Che convenzioni ho con i trasporti?
+Categoria: servizi
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Raphael,
+
+In quanto studente del primo anno della Laurea Magistrale in Ingegneria Informatica, hai accesso a diverse convenzioni per i trasporti che l'Università degli Studi di Bergamo mette a disposizione per agevolare la mobilità sostenibile.
+
+Ecco un riepilogo delle opportunità:
+
+### 1. Convenzione TRENORD
+L'Università ha una convenzione con Trenord S.p.A. che ti permette di ottenere una **riduzione del 10%** sul costo dell'abbonamento mensile del treno. È prevista anche l'attribuzione automatica di un bonus se Trenord non rispetta gli standard minimi di affidabilità.
+
+*   **Come richiederla:**
+    1.  Richiedi la Tessera TRENORD (validità 3 anni/36 mesi) accedendo alla tua area personale dello [Sportello Internet Studenti](https://sportello.unibg.it/Home.do), nella sezione **Segreteria > Altri Servizi > Trenord** (scegliendo tra "Nuova Richiesta" e "Possiedo già la tessera"), e clicca su "Invia Richiesta Trenord".
+    2.  L'Università, dopo aver verificato la tua fotografia in formato JPEG, invierà l'elenco a Trenord.
+    3.  Dopo aver ricevuto la mail di notifica dell'arrivo della tessera, potrai ritirarla presso il **Servizio Diritto allo Studio di via dei Caniana, 2 - Bergamo**.
+    4.  Successivamente, potrai acquistare l'Abbonamento Speciale studenti mensile presso le biglietterie e i distributori automatici Trenord.
+*   **Importante:** La tessera ha validità di 3 anni dalla data del rilascio e dovrà essere riconsegnata all'Ateneo (Servizio Diritto allo Studio) al cessare dell'iscrizione.
+*   **Calendario:** Il calendario per le richieste e le spedizioni delle tessere è aggiornato periodicamente. Ti consiglio di consultare la documentazione più recente o lo Sportello Internet Studenti per le date valide per l'anno accademico 2025/2026.
+
+### 2. Convenzione ATB e Bergamo Trasporti
+L'Università ha rinnovato l'accordo con ATB e Bergamo Trasporti per la mobilità urbana ed extraurbana, garantendo tariffe agevolate.
+
+*   **Abbonamento annuale ATB (urbano):** Puoi acquistare l'abbonamento annuale per i trasporti urbani al prezzo speciale di **€ 200,00**. Se risiedi in uno dei comuni convenzionati, la tariffa può essere ulteriormente ridotta a € 165,00.
+*   **Abbonamento annuale ATB e Bergamo Trasporti (urbano ed extraurbano):** Puoi stipulare un abbonamento annuale che integra il trasporto in area urbana e quello in ambito provinciale ad una tariffa flat di **€ 470,00**.
+*   **Come richiederli:**
+    1.  Gli abbonamenti si possono richiedere o rinnovare presso l'**ATB Point di Porta Nuova BG**.
+    2.  Per l'abbonamento integrato (urbano ed extraurbano), puoi richiederlo anche presso lo Sportello interno alla Stazione Autolinee BG, gli Autoservizi Locatelli di via Toscanini, 6 a Bonate Sopra, oppure in via Furietti, 17 Bergamo.
+    3.  Dovrai esibire la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre-iscrizione previsto per la Laurea Magistrale.
+
+### 3. Servizio di Bike Sharing BiGi
+L'Università incentiva l'utilizzo della bicicletta, offrendo agevolazioni per il servizio di bike sharing BiGi.
+
+*   **Vantaggi:**
+    1.  Puoi usufruire di **100 corse gratuite** per "sperimentare" il servizio.
+    2.  Una volta esaurite le corse gratuite, puoi attivare l'**abbonamento annuale** al servizio BiGi (per biciclette normali e a pedalata assistita) al prezzo agevolato di soli **€ 10,00** (contro la tariffa di € 40,00).
+*   **Come richiederlo:** Per attivare l'abbonamento annuale a €10,00, dovrai richiedere il codice sconto all'ATB Point, a condizione che tu abbia già un abbonamento attivo al servizio di trasporto urbano ATB.
+
+**Destinatari:** Tutte queste convenzioni sono accessibili a studenti come te, iscritti a una Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico o Corso di Dottorato, sia in corso che fuori corso.
+
+Per maggiori dettagli e per consultare la documentazione più aggiornata, ti invito a visitare le pagine dedicate:
+
+*   [Informazioni sulla convenzione Trenord (ITA TRENORD 2026.pdf)](https://www.unibg.it/sites/default/files/media/documents/2026-01-14/ITA%20TRENORD%202026.pdf)
+*   [Informazioni sulla convenzione ATB (ITA - ATB 2025.pdf)](https://www.unibg.it/sites/default/files/media/documents/2025-09-01/ITA%20-%20ATB%202025.pdf)
+
+Pagina di riferimento: [Convenzioni e sconti | Università degli studi di Bergamo - UniBg](https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti)
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RISPOSTA:
+In quanto studente del primo anno della Laurea Magistrale in Ingegneria Informatica, hai accesso alle seguenti convenzioni per i trasporti:
+
+1.  Convenzione TRENORD
+    -   RIDUZIONE del 10% sul costo dell'abbonamento mensile del treno.
+    -   Previsto bonus automatico se Trenord non rispetta gli standard minimi di affidabilità.
+    -   Come richiederla:
+        1.  Richiedi la Tessera TRENORD (validità 3 anni/36 mesi) dalla tua area personale dello Sportello Internet Studenti (https://sportello.unibg.it/Home.do), sezione Segreteria > Altri Servizi > Trenord (scegliendo tra "Nuova Richiesta" e "Possiedo già la tessera"), e clicca "Invia Richiesta Trenord".
+        2.  L'Università verificherà la tua fotografia in formato JPEG e invierà l'elenco a Trenord.
+        3.  Dopo aver ricevuto la mail di notifica, ritira la tessera presso il Servizio Diritto allo Studio di via dei Caniana, 2 - Bergamo.
+        4.  Acquista l'Abbonamento Speciale studenti mensile presso biglietterie e distributori automatici Trenord.
+    -   La tessera ha validità di 3 anni dalla data del rilascio e deve essere riconsegnata all'Ateneo (Servizio Diritto allo Studio) al cessare dell'iscrizione.
+    -   Per il calendario delle richieste e spedizioni delle tessere, consulta la documentazione più recente o lo Sportello Internet Studenti per le date valide per l'anno accademico 2025/2026.
+
+2.  Convenzione ATB e Bergamo Trasporti
+    -   Tariffe agevolate per mobilità urbana ed extraurbana.
+    -   Abbonamento annuale ATB (urbano): € 200,00. Se risiedi in un comune convenzionato, la tariffa è € 165,00.
+    -   Abbonamento annuale ATB e Bergamo Trasporti (urbano ed extraurbano): € 470,00.
+    -   Come richiederli:
+        1.  Richiedi o rinnova gli abbonamenti presso l'ATB Point di Porta Nuova BG.
+        2.  Per l'abbonamento integrato (urbano ed extraurbano), puoi richiederlo anche presso lo Sportello interno alla Stazione Autolinee BG, gli Autoservizi Locatelli di via Toscanini, 6 a Bonate Sopra, oppure in via Furietti, 17 Bergamo.
+        3.  Esibisci la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre-iscrizione per la Laurea Magistrale.
+
+3.  Servizio di Bike Sharing BiGi
+    -   Vantaggi:
+        1.  100 corse gratuite per sperimentare il servizio.
+        2.  Abbonamento annuale BiGi (biciclette normali e a pedalata assistita) a € 10,00 (anziché € 40,00) dopo le corse gratuite.
+    -   Come richiederlo: Richiedi il codice sconto all'ATB Point per l'abbonamento annuale a € 10,00, a condizione di avere un abbonamento attivo al servizio di trasporto urbano ATB.
+
+Destinatari: Tutte le convenzioni sono accessibili a studenti iscritti a Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico o Corso di Dottorato, sia in corso che fuori corso.
+
+Per maggiori dettagli, consulta le pagine dedicate:
+- Informazioni sulla convenzione Trenord (ITA TRENORD 2026.pdf) (https://www.unibg.it/sites/default/files/media/documents/2026-01-14/ITA%20TRENORD%202026.pdf)
+- Informazioni sulla convenzione ATB (ITA - ATB 2025.pdf) (https://www.unibg.it/sites/default/files/media/documents/2025-09-01/ITA%20-%20ATB%202025.pdf)
+
+Pagina di riferimento: https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti
+
+================================================================================
+RISPOSTA FINALE
+================================================================================
+In quanto studente del primo anno della Laurea Magistrale in Ingegneria Informatica, hai accesso alle seguenti convenzioni per i trasporti:
+
+1.  Convenzione TRENORD
+    -   RIDUZIONE del 10% sul costo dell'abbonamento mensile del treno.
+    -   Previsto bonus automatico se Trenord non rispetta gli standard minimi di affidabilità.
+    -   Come richiederla:
+        1.  Richiedi la Tessera TRENORD (validità 3 anni/36 mesi) dalla tua area personale dello Sportello Internet Studenti (https://sportello.unibg.it/Home.do), sezione Segreteria > Altri Servizi > Trenord (scegliendo tra "Nuova Richiesta" e "Possiedo già la tessera"), e clicca "Invia Richiesta Trenord".
+        2.  L'Università verificherà la tua fotografia in formato JPEG e invierà l'elenco a Trenord.
+        3.  Dopo aver ricevuto la mail di notifica, ritira la tessera presso il Servizio Diritto allo Studio di via dei Caniana, 2 - Bergamo.
+        4.  Acquista l'Abbonamento Speciale studenti mensile presso biglietterie e distributori automatici Trenord.
+    -   La tessera ha validità di 3 anni dalla data del rilascio e deve essere riconsegnata all'Ateneo (Servizio Diritto allo Studio) al cessare dell'iscrizione.
+    -   Per il calendario delle richieste e spedizioni delle tessere, consulta la documentazione più recente o lo Sportello Internet Studenti per le date valide per l'anno accademico 2025/2026.
+
+2.  Convenzione ATB e Bergamo Trasporti
+    -   Tariffe agevolate per mobilità urbana ed extraurbana.
+    -   Abbonamento annuale ATB (urbano): € 200,00. Se risiedi in un comune convenzionato, la tariffa è € 165,00.
+    -   Abbonamento annuale ATB e Bergamo Trasporti (urbano ed extraurbano): € 470,00.
+    -   Come richiederli:
+        1.  Richiedi o rinnova gli abbonamenti presso l'ATB Point di Porta Nuova BG.
+        2.  Per l'abbonamento integrato (urbano ed extraurbano), puoi richiederlo anche presso lo Sportello interno alla Stazione Autolinee BG, gli Autoservizi Locatelli di via Toscanini, 6 a Bonate Sopra, oppure in via Furietti, 17 Bergamo.
+        3.  Esibisci la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre-iscrizione per la Laurea Magistrale.
+
+3.  Servizio di Bike Sharing BiGi
+    -   Vantaggi:
+        1.  100 corse gratuite per sperimentare il servizio.
+        2.  Abbonamento annuale BiGi (biciclette normali e a pedalata assistita) a € 10,00 (anziché € 40,00) dopo le corse gratuite.
+    -   Come richiederlo: Richiedi il codice sconto all'ATB Point per l'abbonamento annuale a € 10,00, a condizione di avere un abbonamento attivo al servizio di trasporto urbano ATB.
+
+Destinatari: Tutte le convenzioni sono accessibili a studenti iscritti a Laurea triennale, Laurea magistrale, Laurea magistrale a ciclo unico o Corso di Dottorato, sia in corso che fuori corso.
+
+Per maggiori dettagli, consulta le pagine dedicate:
+- Informazioni sulla convenzione Trenord (ITA TRENORD 2026.pdf) (https://www.unibg.it/sites/default/files/media/documents/2026-01-14/ITA%20TRENORD%202026.pdf)
+- Informazioni sulla convenzione ATB (ITA - ATB 2025.pdf) (https://www.unibg.it/sites/default/files/media/documents/2025-09-01/ITA%20-%20ATB%202025.pdf)
+
+Pagina di riferimento: https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti
+
+------------------------------------------------------------
+TEMPI DI ESECUZIONE
+------------------------------------------------------------
+  Classifier Agent         : 0.641s
+  Query Agent              : 1.891s
+  Web Agent                : 12.892s
+  Generator Agent          : 17.754s
+  Revision Agent           : 16.815s
+
+  TEMPO TOTALE             : 49.997s
+
+================================================================================
+FINE DEL LOG
+================================================================================

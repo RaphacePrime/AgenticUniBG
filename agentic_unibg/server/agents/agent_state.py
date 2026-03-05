@@ -31,6 +31,7 @@ class AgentState(TypedDict):
     # Risultati web agent
     web_results: Optional[List[Dict]]
     web_context: Optional[str]
+    calendar_context: Optional[str]
     
     # Risultati generazione
     generated_response: Optional[str]

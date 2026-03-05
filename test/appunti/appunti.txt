@@ -1,0 +1,30 @@
+Da aggiungere timestamp a generator (anche a query forse) come riferimento temporale
+
+Per gli esami:
+
+Link padre: "https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it"
+
+Scuola di ingegneria: 
+"Già conclusa" (invernale) 
+"https://www.unibg.it/sites/default/files/media/documents/2026-02-09/appelli25-26_aprile.pdf" (intermedie /aprile straordinaria)
+"https://www.unibg.it/sites/default/files/media/documents/2026-02-23/estiva%202026.pdf" (estiva)
+"https://www.unibg.it/sites/default/files/media/documents/2026-02-23/autunno%2026.pdf" (autunnale)
+
+Polo Economico/Giuridico:
+(invernale)
+"https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/628/ttTotalHtml.html" (intermedie /aprile straordinaria)
+"https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/606/ttPdf.pdf" (estiva)
+"https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/607/ttPdf.pdf" (autunnale)
+
+Polo Linguistico:
+"Già conclusa" (invernale)
+"Non ancora disponibile" (intermedie /aprile straordinaria)
+"https://logistica.unibg.it/Esami/Calendario/Polo_di_Lingue_e_culture_straniere/614/ttPdf.pdf" (estiva)
+"https://logistica.unibg.it/Esami/Calendario/Polo_di_Lingue_e_culture_straniere/615/ttPdf.pdf" (autunnale)
+
+Polo Umanistico:
+(invernale)
+"https://logistica.unibg.it/Esami/Calendario/Polo_Umanistico/617/ttPdf.pdf" (intermedie / primaverile)
+"https://logistica.unibg.it/Esami/Calendario/Polo_Umanistico/618/ttPdf.pdf" (sessione scienze formazione primaria/ fine maggio)
+"https://logistica.unibg.it/Esami/Calendario/Polo_Umanistico/619/ttPdf.pdf" (estiva)
+"https://logistica.unibg.it/Esami/Calendario/Polo_Umanistico/620/ttPdf.pdf" (autunnale)

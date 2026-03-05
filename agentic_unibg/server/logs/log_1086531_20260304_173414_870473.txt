@@ -1,0 +1,3258 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-04 17:34:14
+Status    : success
+
+------------------------------------------------------------
+INFORMAZIONI UTENTE
+------------------------------------------------------------
+Tipo utente   : loggato
+Nome          : Raphael Mazzoleni
+Matricola     : 1086531
+Dipartimento  : Scuola di Ingegneria
+Corso         : Ingegneria informatica
+Tipologia     : Magistrale
+Anno          : 1
+
+------------------------------------------------------------
+QUERY ORIGINALE DELL'UTENTE
+------------------------------------------------------------
+Attualmente dove posso studiare all'estero?
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: generale
+Description: Domande generiche sull'università
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, ricevimenti
+- date_esami: Richieste su date e orari degli esami, sessioni d'esame, quando si svolge un esame
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+- "Quando è l'esame di analisi?" -> date_esami
+- "Che esami ho alla prossima sessione?" -> date_esami
+- "In che date sono gli esami della sessione estiva?" -> date_esami
+- "Quando posso dare l'esame di basi di dati?" -> date_esami
+
+
+>>> USER PROMPT:
+Attualmente dove posso studiare all'estero?
+
+>>> RISPOSTA:
+generale
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: opportunità studio estero unibg
+Original Query: Attualmente dove posso studiare all'estero?
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+DATA ODIERNA: 04 marzo 2026 (Anno accademico 2025/2026)
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE FONDAMENTALI:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- La query deve essere in italiano
+- Massimo 8 parole
+- Quando la domanda riguarda date, sessioni o periodi temporali, includi l'anno accademico (2025/2026) o il periodo specifico (es. "marzo 2026", "sessione estiva 2026") nella query
+
+REGOLA CRITICA - CONTESTO CONVERSAZIONE:
+Il contesto della conversazione ha SEMPRE la priorità sul profilo dello studente.
+Se la conversazione indica che l'utente sta chiedendo informazioni su un corso/dipartimento DIVERSO dal proprio, la query DEVE riferirsi al corso/dipartimento menzionato nella conversazione, NON a quello del profilo.
+
+Esempio critico:
+- Profilo studente: Ingegneria informatica, Magistrale
+- Conversazione precedente: lo studente chiedeva degli esami di Giurisprudenza
+- Nuova domanda: "invece nella sessione estiva?"
+- Query CORRETTA: date esami giurisprudenza sessione estiva 2025/2026 unibg
+- Query SBAGLIATA: esami sessione estiva ingegneria informatica magistrale unibg
+Motivo: dalla conversazione è chiaro che "invece" si riferisce sempre a Giurisprudenza, non al suo corso.
+
+QUANDO USARE LE INFORMAZIONI DEL PROFILO STUDENTE:
+INCLUDI le info del profilo SOLO quando:
+- La domanda riguarda esplicitamente il PROPRIO corso dello studente (es. "che materie ho?", "i miei esami")
+- Non c'è contesto conversazionale che indichi un argomento diverso
+- La domanda usa pronomi possessivi ("mio", "miei", "il mio corso")
+
+NON INCLUDERE le info del profilo quando:
+- La conversazione indica un argomento/corso diverso dal profilo
+- La domanda è generica (procedure, servizi, docenti, mensa, erasmus)
+- La domanda menziona esplicitamente un altro corso o dipartimento
+- La domanda è un follow-up ("e nella sessione X?", "invece per...", "e gli orari?") e il contesto conversazionale indica un corso diverso
+
+ESEMPI CON PROFILO (corso: ingegneria informatica, anno: 1, magistrale):
+- "che materie ho al secondo anno?" → materie secondo anno ingegneria informatica magistrale unibg
+- "i miei esami della prossima sessione" → esami prossima sessione ingegneria informatica magistrale 2025/2026 unibg
+
+ESEMPI SENZA PROFILO:
+- "come faccio a iscrivermi al test di ammissione?" → iscrizione test ammissione unibg
+- "chi è il docente di algoritmi?" → docente algoritmi unibg
+- "dove si trova la mensa?" → mensa universitaria unibg
+- "esami giurisprudenza terzo anno" → date esami giurisprudenza terzo anno 2025/2026 unibg
+
+ESEMPIO FOLLOW-UP (contesto: si parlava di esami di giurisprudenza):
+- "invece nella sessione estiva?" → date esami giurisprudenza sessione estiva 2025/2026 unibg
+- "e quelli del quarto anno?" → date esami giurisprudenza quarto anno 2025/2026 unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+
+Informazioni studente:
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Ultima richiesta dello studente: Attualmente dove posso studiare all'estero?
+
+Genera la query di ricerca web:
+
+>>> RISPOSTA:
+opportunità studio estero unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status              : success
+Query di ricerca    : opportunità studio estero unibg
+Totale risultati    : 19
+Risultati usati     : 5
+
+>>> RISULTATI PRINCIPALI:
+  [1] Score: 0.9999
+      Titolo   : BORSE DI STUDIO PER MOBILITÀ ALL'ESTERO DI BREVE ... - UniBg
+      URL      : https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-1
+      Contenuto: BORSE DI STUDIO PER MOBILITÀ ALL’ESTERO DI BREVE DURATA A FAVORE DI STUDENTI DELL’UNIVERSITÀ DEGLI STUDI DI BERGAMO | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-1#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-1#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-1#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+BORSE DI STUDIO PER MOBILITÀ ALL’ESTERO DI BREVE DURATA A FAVORE DI STUDENTI DELL’UNIVERSITÀ DEGLI STUDI DI BERGAMO
+===================================================================================================================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.    Bandi 
+3.   [BORSE DI STUDIO PER MOBILITÀ ALL’ESTERO DI BREVE DURATA A FAVORE DI STUDENTI DELL’UNIVERSITÀ DEGLI STUDI DI BERGAMO](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-1)
+
+[](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-1)
+
+Al fine di incrementare le opportunità di internazionalizzazione dell’ateneo e di sostenere i propri studenti nei percorsi di mobilità breve per studio (non tirocinio) in occasione, ad esempio, di Summer o Winter School, è promosso un programma pluriennale che istituisce borse per le mobilità all’estero di breve durata a favore di studenti iscritti ad uno dei Dipartimenti in cui si articola la didattica presso l’Università degli Studi di Bergamo.
+
+Per l'anno accademico 2024/2025 sono finanziate borse per un importo complessivo di €35.000. Le borse avranno un valore forfettario di €500 o di €1.500 cadauno (si rimanda alla voce “Contributi Finanziari” per i dettagli) e sono esenti da Irpef e Irap.
+
+Le candidature possono essere presentate entro le seguenti scadenze: → 14.04.2025 per attività frequentate entro il 30.03.2025 → 13.10.2025 per attività frequentate entro il 30.09.2025
+
+[Bando per mobilità brevi](https://www.unibg.it/sites/default/files/media/documents/2025-02-24/Bando%20Mobilit_%20Brevi%202024-2025%20%281%29.pdf "Bando Mobilit_ Brevi 2024-2025 (1).pdf")
+
+Esito
+-----
+
+[Graduatoria I^ Selezione](https://www.unibg.it/sites/default/files/media/documents/2025-05-06/Determina%20Approvazione%20graduatoria%20borse%20mobilit_%20breve%201_%20scadenza%20Bando%202425%282%29.pdf "Determina Approvazione graduatoria borse mobilit_ breve 1_ scadenza Bando 2425(2).pdf")
+
+[Graduatoria II Selezione](https://www.unibg.it/sites/default/files/media/documents/2025-12-02/Determina%20approvazione%20graduatoria%20borse%20di%20studio%20mobilit_%20brevi%20_%20II%20scadenza%20del%20Bando%20a.a.%202024_2025.pdf "Determina approvazione graduatoria borse di studio mobilit_ brevi _ II scadenza del Bando a.a. 2024_2025.pdf")
+
+Data di pubblicazione bando
+
+24 Febbraio 2025
+
+Data di scadenza bando
+
+30 Settembre 2025
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-1#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+  [2] Score: 0.9999
+      Titolo   : Bando per mobilità per studio presso sedi Extra UE - a.a. 2025-2026
+      URL      : https://www.unibg.it/bandi/bando-mobilita-studio-presso-sedi-extra-ue-aa-2025-2026
+      Contenuto: Bando per mobilità per studio presso sedi Extra UE - a.a. 2025-2026 | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/bandi/bando-mobilita-studio-presso-sedi-extra-ue-aa-2025-2026#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/bandi/bando-mobilita-studio-presso-sedi-extra-ue-aa-2025-2026#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/bandi/bando-mobilita-studio-presso-sedi-extra-ue-aa-2025-2026#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Bando per mobilità per studio presso sedi Extra UE - a.a. 2025-2026
+===================================================================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.    Bandi 
+3.   [Bando per mobilità per studio presso sedi Extra UE - a.a. 2025-2026](https://www.unibg.it/bandi/bando-mobilita-studio-presso-sedi-extra-ue-aa-2025-2026)
+
+[](https://www.unibg.it/bandi/bando-mobilita-studio-presso-sedi-extra-ue-aa-2025-2026)
+
+Per l'a.a. 2025-2026, l'Università degli studi di Bergamo mette a disposizione borse di mobilità per studio presso atenei partner con sede nei seguenti paesi extraeuropei: Argentina, Australia, Brasile, Cile, China, Corea del Sud, Emirati Arabi Uniti, Etiopia, Giappone, Marocco, Messico, Tunisia, USA.
+
+La scadenza per la presentazione della propria candidatura è il 24 febbraio 2025 alle ore 08:00 a.m.
+
+[Bando in italiano](https://www.unibg.it/sites/default/files/media/documents/2025-02-03/Bando%20ExtraUE%202025-2026_it_DEF_0.pdf "Bando ExtraUE 2025-2026_it_DEF_0.pdf")
+
+[Bando in inglese](https://www.unibg.it/sites/default/files/media/documents/2025-02-03/Bando%20ExtraUE%202025-2026_eng_DEF.pdf "Bando ExtraUE 2025-2026_eng_DEF.pdf")
+
+### Formula calcolo punteggio
+
+[Formula calcolo punteggio graduatoria](https://www.unibg.it/sites/default/files/media/documents/2025-02-03/Formula%20calcolo%20punteggio%20graduatoria_rev310125_Extra%20UE.pdf "Formula calcolo punteggio graduatoria_rev310125_Extra UE.pdf")
+
+Data di pubblicazione bando
+
+3 Febbraio 2025
+
+Data di scadenza bando
+
+24 Febbraio 2025
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/bandi/bando-mobilita-studio-presso-sedi-extra-ue-aa-2025-2026#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+  [3] Score: 0.9998
+      Titolo   : Studiare all'estero | UniBG Culture Umanistiche
+      URL      : https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero
+      Contenuto: Studiare all'estero | UniBG Culture Umanistiche
+===============
+
+[Salta al contenuto principale](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#main-content)
+
+Menu top
+========
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+
+Form di ricerca
+---------------
+
+*   [](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+[![Image 1](https://ls-cmc.unibg.it/sites/all/themes/b3unibgcdl/images/sigillo.svg)](https://ls-cmc.unibg.it/it "Home")
+=======================================================================================================================
+
+Corso di laurea magistrale
+
+[Culture Umanistiche](https://ls-cmc.unibg.it/it "Torna alla home page di Culture Umanistiche")
+===============================================================================================
+
+[Dipartimento di Lettere, Filosofia, Comunicazione](http://www.unibg.it/dlam "Vai al sito del dipartimento")
+
+Toggle navigation
+
+*   [IT](https://ls-cmc.unibg.it/it "IT")
+*   [EN](https://ls-cmc.unibg.it/en "EN")
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+*   [](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+Form di ricerca
+---------------
+
+*   [Il corso](https://ls-cmc.unibg.it/it/il-corso)
+    *           *   [Scegliere](https://ls-cmc.unibg.it/it/il-corso/scegliere)
+        *   [Piano di studio](https://ls-cmc.unibg.it/it/il-corso/piano-di-studio)
+        *   [Requisiti di accesso](https://ls-cmc.unibg.it/it/il-corso/requisiti-di-accesso)
+        *   [Obiettivi e figure professionali](https://ls-cmc.unibg.it/it/il-corso/obiettivi-e-figure-professionali)
+        *   [Statistiche del corso](https://ls-cmc.unibg.it/it/il-corso/statistiche-del-corso)
+        *   [Organizzazione e Assicurazione Qualità](https://ls-cmc.unibg.it/it/il-corso/organizzazione-e-assicurazione-qualita)
+
+*   [Studiare](https://ls-cmc.unibg.it/it/studiare)
+    *           *   [Insegnamenti attivi](https://ls-cmc.unibg.it/it/studiare/insegnamenti-attivi)
+        *   [Docenti](https://ls-cmc.unibg.it/it/studiare/docenti)
+        *   [Calendario didattico](https://ls-cmc.unibg.it/it/studiare/calendario-didattico-0)
+        *   [Riconoscimento certificazioni](https://ls-cmc.unibg.it/it/studiare/riconoscimento-certificazioni)
+        *   [Orario lezioni](https://ls-cmc.unibg.it/it/studiare/orario-lezioni)
+        *   [Esami](https://ls-cmc.unibg.it/it/studiare/esami)
+        *   [Esercitazioni](https://ls-cmc.unibg.it/it/studiare/esercitazioni)
+        *   [Tirocinio](https://ls-cmc.unibg.it/it/studiare/tirocinio)
+
+*   [Opportunità e studi all'estero](https://ls-cmc.unibg.it/it/opportunita-ed-esperienze)
+    *           *   [Studiare all'estero](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+        *   [Summer school](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/summer-school)
+
+*   [Come fare per](https://ls-cmc.unibg.it/it/come-fare)
+    *           *   [Iscriversi](https://ls-cmc.unibg.it/it/come-fare/iscriversi)
+        *   [Laurearsi](https://ls-cmc.unibg.it/it/come-fare/laurearsi)
+
+*   [Contatti](https://ls-cmc.unibg.it/it/contatti)
+*   [Sempre utili](https://ls-cmc.unibg.it/it/sempre-utili)
+    *           *   [Orari del Dipartimento di LFC](https://logistica.unibg.it/PortaleStudenti/index.php?view=easycourse&include=corso&scuola=Dipartimento_di_Lettere-_Filosofia-_Comunicazione)
+        *   [Sportello internet](http://sportello.unibg.it/esse3/Home.do)
+        *   [E-learning](https://elearning15.unibg.it/course/index.php?categoryid=7)
+        *   [Universitaly](https://www.universitaly.com/index.php/offerta/search/id_struttura/54/azione/ricerca)
+
+1.   [Home](https://ls-cmc.unibg.it/it)
+2.   [Opportunità e studi all'estero](https://ls-cmc.unibg.it/it/opportunita-ed-esperienze)
+
+[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+Studiare all'estero
+===================
+
+Durante il biennio è possibile trascorrere un periodo di studio all’estero nel quadro del programma comunitario [Erasmus +](https://www.unibg.it/internazionale/andare-allestero/erasmus), di mobilità di [breve durata](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-0) (in particolare Winter School o Summer School) o di convenzioni analoghe con [Paesi extraeuropei](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue).
+
+I programmi di mobilità offrono la possibilità di svolgere parte del proprio percorso formativo nell'università di un altro Paese, con il pieno e integrale riconoscimento degli esami sostenuti, e prevedono delle borse di studio a parziale copertura delle spese di viaggio e soggiorno.
+
+Maggiori dettagli sulle università coinvolte e i periodi di mobilità proposti alla [pagina dedicata](https://www.unibg.it/sites/default/files/media/documents/2023-01-24/Tabella%20LFC%202023-2024.pdf).
+
+Per partecipare ai bandi di mobilità Erasmus + o extraeuropei è richiesto il possesso di una competenza linguistica il cui livello varia secondo la sede ospitante. Le modalità e le tempistiche dell’[accertamento del livello linguistico](https://www.unibg.it/node/4332) proposte dall’Università di Bergamo sono pubblicate sul sito di Ateneo all’esordio dell’anno accademico. È possibile approfondire lo studio delle lingue attraverso le svariate attività proposte dal [Centro Competenza Lingue di Ateneo.](https://ccl.unibg.it/it/apprendimento-lingue/servizi-studenti)
+
+[Mobilità per tesi di laurea](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#)
+
+Grazie al generoso lascito della Sig.ra Lucia Maria Teresa Previtali Radici, le studentesse e gli studenti del corso di laurea magistrale c possono svolgere un periodo di mobilità presso un ateneo estero al fine di elaborare la loro tesi di laurea, beneficiando di una borsa di 2.000 euro. Maggiori informazioni alla [pagina dedicata](https://www.unibg.it/bandi/bando-memoria-gianni-e-luciana-radici-redazione-tesi-magistrali-allestero-1).
+
+[Doppio titolo](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#)
+
+**Bergamo e Varsavia: Corso di laurea magistrale in Culture moderne comparate / Dyplom ukończenia studiów II stopnia magisterskich**
+
+A partire dall’anno accademico 2023-2024 le studentesse e gli studenti iscritti al primo anno del Corso di laurea magistrale in Culture moderne comparate avranno la possibilità di ottenere un doppio titolo, il Dyplom ukończenia studiów II stopnia magisterskich, erogato dal Dipartimento di Studi italiani dell’Università di Varsavia.
+
+Le studentesse e gli studenti selezionati seguiranno (in italiano e inglese) i corsi del secondo anno in mobilità presso l’Università di Varsavia, senza ulteriori tasse di iscrizione. Potranno beneficiare di una borsa Erasmus + in base alla normativa vigente.
+
+La tesi magistrale sarà redatta in italiano sotto la guida di due relatori (uno di Bergamo e uno di Varsavia).
+
+Il piano di studi e altre informazioni saranno visibili sul bando, all’atto della pubblicazione.
+
+Referente: prof.ssa[Amelia Valtolina (link sends e-mail)](mailto:amelia.valtolina@unibg.it).
+
+Contatti
+--------
+
+Contatti di riferimento:
+
+T +39 035 205 2830-831-833-468;
+
+[relint@unibg.it (link sends e-mail)](mailto:relint@unibg.it)
+
+*   [Facebook](https://www.facebook.com/UniBergamo "facebook")
+*   [Twitter](https://twitter.com/@UniBergamo "twitter")
+*   [Youtube](https://www.youtube.com/user/UniBgTube/playlists "youtube")
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6 "linkedin")
+*   [Instagram](https://www.instagram.com/unibergamo/ "instagram")
+
+*   [Mappa del sito](https://ls-cmc.unibg.it/it/mappa-del-sito)
+*   [Normativa cookie](https://ls-cmc.unibg.it/it/normativa-cookie)
+*   [Informativa privacy](http://www.unibg.it/privacy)
+*   [Cookie settings](https://ls-cmc.unibg.it/it/cookiesettings)
+
+*   [Wi-fi](http://www.unibg.it/wi-fi)
+*   [Webmail](http://www.unibg.it/evidenza/web-mail)
+
+[![Image 2: logo](https://ls-cmc.unibg.it/sites/all/themes/b3unibg/images/sigillo-bianco.svg)](https://www.unibg.it/)
+
+**Università degli studi di Bergamo**
+
+ via Salvecchio 19
+
+ 24129 Bergamo
+
+ Cod. Fiscale 80004350163
+
+ P.IVA 01612800167
+
+ Centralino 035 2052111 
+
+Back to top
+
+Questo sito utilizza cookie tecnici e di profilazione, propri e di terze parti, per garantire la corretta navigazione, analizzare il traffico e misurare l'efficacia delle attività di comunicazione istituzionale.
+
+Puoi rifiutare i cookie non necessari e di profilazione cliccando su **“Solo cookie tecnici”**.
+
+Puoi scegliere di acconsentirne l’utilizzo cliccando su **“Accetta tutti”** oppure puoi personalizzare le tue scelte cliccando su **“Personalizza”**.
+
+Per maggiori informazioni leggi la nostra [Privacy e cookie policy](http://www.unibg.it/privacy)
+
+Solo cookie tecnici Accetta tutti Personalizza
+
+in caricamento
+
+[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Chiudi")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Avanti")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Play")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Pausa")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Indietro")
+
+  [4] Score: 0.9998
+      Titolo   : Bandi tirocini e studio all'estero | Università degli studi di Bergamo
+      URL      : https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero
+      Contenuto: Bandi tirocini e studio all'estero | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Bandi tirocini e studio all'estero
+==================================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Ateneo](https://www.unibg.it/ateneo)
+3.   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+4.   [Concorsi e Selezioni](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni)
+5.   [Bandi tirocini e studio all'estero](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero)
+
+[](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero)
+
+Quando il bando raggiunge la data di scadenza(**data****oltre la quale non è più possibile presentare domanda di partecipazione**) le informazioni sono raccolte nella sezione "[**Tirocini e studio all'estero - in espletamento**](https://www.unibg.it/universita/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero/tirocini-e-studio)", raggiungibile dal menu **Naviga la sezione**in questa pagina.
+
+Dall’elenco dei bandi in espletamento occorre scegliere quello di proprio interesse e consultare tutti i documenti allegati (esiti, graduatorie...).
+
+### [Avviso di selezione per l'assegnazione di borse di mobilità per tirocini curriculari all'estero per studenti/esse della laurea magistrale a ciclo unico in Scienze della Formazione Primaria](https://www.unibg.it/bandi/avviso-selezione-lassegnazione-borse-mobilita-tirocini-curriculari-allestero-studentiesse-0)
+
+**PRIMA SCADENZA:**ORE 12 DI VENERDÌ 30 GENNAIO 2026
+
+**SECONDA SCADENZA:**ORE 12 DI VENERDÌ 29 MAGGIO 2026 - qualora ci fossero ancora
+
+ borse disponibili.
+
+Data di pubblicazione bando
+
+23 Gennaio 2026
+
+Data di scadenza bando
+
+29 Maggio 2026
+
+### [BORSE DI STUDIO PER LA REDAZIONE DI TESI MAGISTRALI ALL’ESTERO A FAVORE DI LAUREANDI DELL’UNIVERSITÀ DEGLI STUDI DI BERGAMO A.A. 2025/2026 / Funding Opportunities for Master's Thesis Research Abroad](https://www.unibg.it/bandi/borse-studio-redazione-tesi-magistrali-allestero-favore-laureandi-delluniversita-studi-0)
+
+Per l'anno accademico 2025-2026 sono finanziate borse, esenti da Irpef e Irap, per un importo complessivo di €10.000, sino ad esaurimento fondi. Le borse avranno un valore forfettario variabile da un minimo di €500 sino ad un massimo di €2.000 cadauna
+
+Possono presentare domanda tutti gli studenti di laurea magistrale regolarmente iscritti presso l’Università degli studi di Bergamo che prevedano di conseguire il titolo nelle sessioni di laurea relative all’a.a. 2025/2026, inclusa la sessione straordinaria dei mesi di marzo/aprile 2027
+
+I termini entro cui presentare la propria candidatura sono stabiliti come segue:
+
+**Scadenze:**
+
+Data di pubblicazione bando
+
+19 Dicembre 2025
+
+Data di scadenza bando
+
+30 Giugno 2026
+
+### [Bando Erasmus Traineeship / Call for Erasmus+ Traineeship Mobilities 2024/2025 and 2025/2026](https://www.unibg.it/bandi/bando-erasmus-traineeship-call-for-erasmus-traineeship-mobilities-20242025-and-20252026)
+
+Le borse sono assegnate per /_Grants are assigned for_:
+
+- tirocini curriculari riconosciuti quale parte integrante del piano di studi dello studente/ Curricular internships;
+
+- tirocini con crediti a scelta libera o sovrannumerari, ammissibili solo laddove non fosse presente un tirocinio in piano/ I _nternships with elective credits or additional credits, only eligible if there is no internship listed in the study plan;_
+
+*Non sono ammessi tirocini extra-curriculari/Extra-curricular internships with no academic credit are excluded
+
+**Sono esclusi i laureati / Graduates are not eligible to apply _;_
+
+Le scadenze per candidarsi sono le seguenti/ Deadlines to apply are as follows:
+
+Data di pubblicazione bando
+
+15 Luglio 2025
+
+Data di scadenza bando
+
+7 Aprile 2026
+
+### [Bando di Mobilità Erasmus+ Traineeship per mobilità ExtraUE - Call 2024](https://www.unibg.it/bandi/bando-mobilita-erasmus-traineeship-mobilita-extraue-call-2024)
+
+La candidatura dovrà essere presentata entro le ore 12:00 nelle date indicate da bando.
+
+Per la seconda scadenza non sono pervenute candidature.
+
+Data di pubblicazione bando
+
+26 Febbraio 2025
+
+Data di scadenza bando
+
+15 Aprile 2026
+
+### Naviga la sezione
+
+*   [Tirocini e studio all'estero - in espletamento](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero/tirocini-e-studio)
+*   [Tirocini e studio all'estero - archiviati](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero/tirocini-e-studio-0)
+
+### Potrebbe interessarti
+
+*   [Prima di partire](https://www.unibg.it/internazionale/andare-allestero/partire)  
+*   [Accertamento conoscenza linguistica](https://www.unibg.it/internazionale/andare-allestero/partire/accertamento-conoscenza-linguistica)  
+*   [Riconoscimento certificazioni linguistiche](https://www.unibg.it/studiare/frequentare/apprendimento-linguistico/riconoscimento-certificazioni-linguistiche)  
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+  [5] Score: 0.9997
+      Titolo   : Mobilità Extra-UE e TNE | Università degli studi di Bergamo - UniBg
+      URL      : https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne
+      Contenuto: Mobilità Extra-UE e TNE | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7608 "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7608 "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Mobilità Extra-UE e TNE
+=======================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Internazionale](https://www.unibg.it/internazionale)
+3.   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+4.   [Mobilità Extra-UE e TNE](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne)
+
+[](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne)
+
+### Overseas Mobility
+
+Gli studenti UniBg che intendono frequentare corsi di studio e sostenere i relativi esami in Paesi al di fuori dell'Unione Europea, possono scegliere tra le seguenti Università:
+
+*   University of Technology - UTS (Sydney, Australia)
+*   Universidade Tecnologica Federal do Paraná (Curitiba, Brasile)
+*   Pontificia Universidade Catòlica do Paraná – PUCPR (Curitiba, Brasile)
+*   Universidade federal do Rio Grande do Sul (Porto Alegre, Brasile)
+*   Universidad de Belgrano (Buenos Aires, Argentina)
+*   Universidad de Chile (Santiago de Chile, Cile)
+*   Université Internationale de Rabat (Rabat, Marocco)
+*   Parul University (Vadodara, India)
+*   Dalian University of Foreign Languages (Dalian, Cina)
+*   Hebei Normal University of Science and Technology (Qinhuangdao, Cina)
+*   Nanjing Normal University (Nanjing, Cina)
+*   Peking University HSBC Business School (Shenzhen,Cina)
+*   Xi'An Jiaotong Liverpool University (Suzhou, Cina)
+*   Inha University (Incheon,Corea del sud)
+*   Kyungpook National University (Daegu, Corea del Sud)
+*   Ritsumeikan University College (Kyoto, Giappone)
+*   Kanagawa University (Yokohama, Giappone)
+*   Kwansei Gakuin University (Nishinomiya, Giappone)
+*   Kanazawa University (Kanazawa, Giappone)
+*   Nanzan University (Nagoya, Giappone)
+*   CETYS Universidad (Mexicali, B.C., Messico)
+*   Tecnológico de Monterrey (Monterrey, Messico)
+*   National Research University Higher School of Economics (Nizhny Novgorod e S. Pietroburgo - Russia)
+*   Pushkin Leningrad State University (S. Pietroburgo, Russia)
+*   Colorado State University Pueblo (Pueblo CO, U.S.A.)
+*   Fairleigh Dickinson University - FDU (Madison NJ, U.S.A.)
+*   University of Missouri (Columbia, U.S.A.)
+*   Wayne State University (Detroit, U.S.A.)
+
+L'Università, negli specifici bandi, indica l'importo dei contributi destinati agli studenti selezionati che partecipano con buon esito al programma di mobilità. Gli importi e le condizioni per l'erogazione dei contributi insieme alle tempistiche di pagamento sono indicate nei singoli bandi.
+
+Per gli studenti che ne hanno diritto, è inoltre previsto un **contributo integrativo alla mobilità internazionale**: è possibile concorrere per tale contributo partecipando all'apposito bando del Servizio per il Diritto allo studio.
+
+Le informazioni riguardanti i singoli bandi saranno pubblicate nella sezione AVVISI della presente pagina web e affisse agli albi.
+
+### Diari di viaggio - Travel diaries (info generali dagli studenti rientrati dalle mobilità per studio)
+
+Nell'allegato sono disponibili le informazioni fornite da studentesse e studenti che hanno partecipato ai programmi di scambio negli anni scorsi in merito all’alloggio, trasporti, costo della vita e sui pro e contro dell’università ospitante. Le indicazioni contenute non intendono essere esaustive, ma vogliono essere un ulteriore aiuto e supporto a chi intende trascorrere un periodo di mobilità per studio.
+
+Essendo appunto basate sulle esperienze soggettive l’Ateneo non è responsabile delle informazioni qui riportate.
+
+Ovviamente nel caso di più mobilità verso la stessa sede le informazioni potrebbero essere diverse o replicate.
+
+Ringraziamo le studentesse e gli studenti che hanno contribuito alla creazione di questo documento.
+
+Le informazioni sono state catalogate in ordine di nazione.
+
+Buon Viaggio!
+
+[Diari di viaggio - Travel diaries - agg. 04.03.2024](https://www.unibg.it/sites/default/files/media/documents/2024-03-04/2024_Your%20travel%20diary_0.pdf "2024_Your travel diary_0.pdf")
+
+### Bando per mobilità per studio presso sedi Extra UE - a.a. 2026-2027
+
+[Bando per mobilità per studio presso sedi Extra UE - a.a. 2026-2027](https://www.unibg.it/bandi/bando-selezione-mobilita-internazionale-extra-europea-fini-studio-aa-20262027)
+
+### Ahmedabad University - Invito Presentazione sede: online 13.01.26 h. 11.00
+
+L'università indiana di Ahmedabad, nuova sede disponibile, si presenterà in un incontro online il 13.01.2026 alle ore 11.00.
+
+Di seguito il link per partecipare all'evento:
+
+Join Zoom Meeting[https://zoom.us/j/97527230485?pwd=FSnV4tpixKRef0kaiizmWRImCvfSpp.1](https://www.google.com/url?q=https://zoom.us/j/97527230485?pwd%3DFSnV4tpixKRef0kaiizmWRImCvfSpp.1&sa=D&source=calendar&ust=1768632207979347&usg=AOvVaw0gIqd07VtS4zv1H2iSCn1_)
+
+Meeting ID: 975 2723 0485
+
+Passcode: 368483
+
+### Bando per mobilità presso sedi asiatiche Progetto PNRR TNE Asia LEGO - a.a. 2025-2026
+
+[Bando per mobilità presso sedi asiatiche Progetto PNRR TNE Asia LEGO - a.a. 2025-2026](https://www.unibg.it/bandi/bando-mobilita-presso-sedi-asiatiche-progetto-pnrr-tne-asia-lego-aa-2025-2026)
+
+### Contatti
+
+**Ufficio programmi internazionali**
+
+ via S. Bernardino, 72/e
+
+ 24122 Bergamo
+
+Per informazioni relative al bando Extra Ue inviare un ticket selezionando l'indirizzo **"Erasmus in uscita (Outgoing)"**>**servizio ticket [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud/)**
+
+Per prendere un appuntamento presso l'ufficio programmi internazionali**[Prenota un appuntamento](https://logistica.unibg.it/PortalePlanning/UNIBG-servizi/index.php)**
+
+Per contattare l'ufficio telefonicamente:
+
+Studenti di LLCS
+
+ T +39 035 205 2831
+
+Studenti di LFC e SUS
+
+ T +39 035 205 2830
+
+Studenti Scuola di Economia e Management
+
+ T +39 035 205 2833
+
+Studenti Scuola di Ingegneria
+
+ T +39 035 205 2109
+
+Studenti di Giurisprudenza e info riguardo a borse di studio
+
+ T +39 035 205 2468
+
+Erasmus KA 107
+
+ T +39 035 205 2290
+
+**Attenzione:** negli orari di apertura la reperibilità telefonica potrebbe non essere garantita.
+
+### Potrebbe interessarti
+
+*   [Bandi tirocini e studio all'estero](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero)  
+*   [Diritto allo studio](https://www.unibg.it/studiare/iscriversi/tasse-e-agevolazioni/borse-studio)  
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: generale
+
+>>> SYSTEM PROMPT:
+Sei un assistente generale dell'Università di Bergamo.
+Fornisci informazioni utili e orientamento agli studenti e visitatori.
+
+
+DATA ODIERNA: 04 marzo 2026 (Anno accademico 2025/2026)
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+8. Alcune fonti sono documenti PDF: in quel caso vengono forniti anche i link ipertestuali estratti direttamente dal PDF con la pagina di provenienza. Se uno di questi link è rilevante per la risposta dello studente, includilo nella risposta in forma cliccabile (formato Markdown: [testo](url)) indicando anche da quale parte del documento proviene.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: BORSE DI STUDIO PER MOBILITÀ ALL'ESTERO DI BREVE ... - UniBg
+URL: https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-1
+Contenuto: BORSE DI STUDIO PER MOBILITÀ ALL’ESTERO DI BREVE DURATA A FAVORE DI STUDENTI DELL’UNIVERSITÀ DEGLI STUDI DI BERGAMO | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-1#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-1#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-1#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+BORSE DI STUDIO PER MOBILITÀ ALL’ESTERO DI BREVE DURATA A FAVORE DI STUDENTI DELL’UNIVERSITÀ DEGLI STUDI DI BERGAMO
+===================================================================================================================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.    Bandi 
+3.   [BORSE DI STUDIO PER MOBILITÀ ALL’ESTERO DI BREVE DURATA A FAVORE DI STUDENTI DELL’UNIVERSITÀ DEGLI STUDI DI BERGAMO](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-1)
+
+[](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-1)
+
+Al fine di incrementare le opportunità di internazionalizzazione dell’ateneo e di sostenere i propri studenti nei percorsi di mobilità breve per studio (non tirocinio) in occasione, ad esempio, di Summer o Winter School, è promosso un programma pluriennale che istituisce borse per le mobilità all’estero di breve durata a favore di studenti iscritti ad uno dei Dipartimenti in cui si articola la didattica presso l’Università degli Studi di Bergamo.
+
+Per l'anno accademico 2024/2025 sono finanziate borse per un importo complessivo di €35.000. Le borse avranno un valore forfettario di €500 o di €1.500 cadauno (si rimanda alla voce “Contributi Finanziari” per i dettagli) e sono esenti da Irpef e Irap.
+
+Le candidature possono essere presentate entro le seguenti scadenze: → 14.04.2025 per attività frequentate entro il 30.03.2025 → 13.10.2025 per attività frequentate entro il 30.09.2025
+
+[Bando per mobilità brevi](https://www.unibg.it/sites/default/files/media/documents/2025-02-24/Bando%20Mobilit_%20Brevi%202024-2025%20%281%29.pdf "Bando Mobilit_ Brevi 2024-2025 (1).pdf")
+
+Esito
+-----
+
+[Graduatoria I^ Selezione](https://www.unibg.it/sites/default/files/media/documents/2025-05-06/Determina%20Approvazione%20graduatoria%20borse%20mobilit_%20breve%201_%20scadenza%20Bando%202425%282%29.pdf "Determina Approvazione graduatoria borse mobilit_ breve 1_ scadenza Bando 2425(2).pdf")
+
+[Graduatoria II Selezione](https://www.unibg.it/sites/default/files/media/documents/2025-12-02/Determina%20approvazione%20graduatoria%20borse%20di%20studio%20mobilit_%20brevi%20_%20II%20scadenza%20del%20Bando%20a.a.%202024_2025.pdf "Determina approvazione graduatoria borse di studio mobilit_ brevi _ II scadenza del Bando a.a. 2024_2025.pdf")
+
+Data di pubblicazione bando
+
+24 Febbraio 2025
+
+Data di scadenza bando
+
+30 Settembre 2025
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-1#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Fonte 2: Bando per mobilità per studio presso sedi Extra UE - a.a. 2025-2026
+URL: https://www.unibg.it/bandi/bando-mobilita-studio-presso-sedi-extra-ue-aa-2025-2026
+Contenuto: Bando per mobilità per studio presso sedi Extra UE - a.a. 2025-2026 | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/bandi/bando-mobilita-studio-presso-sedi-extra-ue-aa-2025-2026#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/bandi/bando-mobilita-studio-presso-sedi-extra-ue-aa-2025-2026#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/bandi/bando-mobilita-studio-presso-sedi-extra-ue-aa-2025-2026#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Bando per mobilità per studio presso sedi Extra UE - a.a. 2025-2026
+===================================================================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.    Bandi 
+3.   [Bando per mobilità per studio presso sedi Extra UE - a.a. 2025-2026](https://www.unibg.it/bandi/bando-mobilita-studio-presso-sedi-extra-ue-aa-2025-2026)
+
+[](https://www.unibg.it/bandi/bando-mobilita-studio-presso-sedi-extra-ue-aa-2025-2026)
+
+Per l'a.a. 2025-2026, l'Università degli studi di Bergamo mette a disposizione borse di mobilità per studio presso atenei partner con sede nei seguenti paesi extraeuropei: Argentina, Australia, Brasile, Cile, China, Corea del Sud, Emirati Arabi Uniti, Etiopia, Giappone, Marocco, Messico, Tunisia, USA.
+
+La scadenza per la presentazione della propria candidatura è il 24 febbraio 2025 alle ore 08:00 a.m.
+
+[Bando in italiano](https://www.unibg.it/sites/default/files/media/documents/2025-02-03/Bando%20ExtraUE%202025-2026_it_DEF_0.pdf "Bando ExtraUE 2025-2026_it_DEF_0.pdf")
+
+[Bando in inglese](https://www.unibg.it/sites/default/files/media/documents/2025-02-03/Bando%20ExtraUE%202025-2026_eng_DEF.pdf "Bando ExtraUE 2025-2026_eng_DEF.pdf")
+
+### Formula calcolo punteggio
+
+[Formula calcolo punteggio graduatoria](https://www.unibg.it/sites/default/files/media/documents/2025-02-03/Formula%20calcolo%20punteggio%20graduatoria_rev310125_Extra%20UE.pdf "Formula calcolo punteggio graduatoria_rev310125_Extra UE.pdf")
+
+Data di pubblicazione bando
+
+3 Febbraio 2025
+
+Data di scadenza bando
+
+24 Febbraio 2025
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/bandi/bando-mobilita-studio-presso-sedi-extra-ue-aa-2025-2026#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Fonte 3: Studiare all'estero | UniBG Culture Umanistiche
+URL: https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero
+Contenuto: Studiare all'estero | UniBG Culture Umanistiche
+===============
+
+[Salta al contenuto principale](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#main-content)
+
+Menu top
+========
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+
+Form di ricerca
+---------------
+
+*   [](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+[![Image 1](https://ls-cmc.unibg.it/sites/all/themes/b3unibgcdl/images/sigillo.svg)](https://ls-cmc.unibg.it/it "Home")
+=======================================================================================================================
+
+Corso di laurea magistrale
+
+[Culture Umanistiche](https://ls-cmc.unibg.it/it "Torna alla home page di Culture Umanistiche")
+===============================================================================================
+
+[Dipartimento di Lettere, Filosofia, Comunicazione](http://www.unibg.it/dlam "Vai al sito del dipartimento")
+
+Toggle navigation
+
+*   [IT](https://ls-cmc.unibg.it/it "IT")
+*   [EN](https://ls-cmc.unibg.it/en "EN")
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+*   [](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+Form di ricerca
+---------------
+
+*   [Il corso](https://ls-cmc.unibg.it/it/il-corso)
+    *           *   [Scegliere](https://ls-cmc.unibg.it/it/il-corso/scegliere)
+        *   [Piano di studio](https://ls-cmc.unibg.it/it/il-corso/piano-di-studio)
+        *   [Requisiti di accesso](https://ls-cmc.unibg.it/it/il-corso/requisiti-di-accesso)
+        *   [Obiettivi e figure professionali](https://ls-cmc.unibg.it/it/il-corso/obiettivi-e-figure-professionali)
+        *   [Statistiche del corso](https://ls-cmc.unibg.it/it/il-corso/statistiche-del-corso)
+        *   [Organizzazione e Assicurazione Qualità](https://ls-cmc.unibg.it/it/il-corso/organizzazione-e-assicurazione-qualita)
+
+*   [Studiare](https://ls-cmc.unibg.it/it/studiare)
+    *           *   [Insegnamenti attivi](https://ls-cmc.unibg.it/it/studiare/insegnamenti-attivi)
+        *   [Docenti](https://ls-cmc.unibg.it/it/studiare/docenti)
+        *   [Calendario didattico](https://ls-cmc.unibg.it/it/studiare/calendario-didattico-0)
+        *   [Riconoscimento certificazioni](https://ls-cmc.unibg.it/it/studiare/riconoscimento-certificazioni)
+        *   [Orario lezioni](https://ls-cmc.unibg.it/it/studiare/orario-lezioni)
+        *   [Esami](https://ls-cmc.unibg.it/it/studiare/esami)
+        *   [Esercitazioni](https://ls-cmc.unibg.it/it/studiare/esercitazioni)
+        *   [Tirocinio](https://ls-cmc.unibg.it/it/studiare/tirocinio)
+
+*   [Opportunità e studi all'estero](https://ls-cmc.unibg.it/it/opportunita-ed-esperienze)
+    *           *   [Studiare all'estero](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+        *   [Summer school](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/summer-school)
+
+*   [Come fare per](https://ls-cmc.unibg.it/it/come-fare)
+    *           *   [Iscriversi](https://ls-cmc.unibg.it/it/come-fare/iscriversi)
+        *   [Laurearsi](https://ls-cmc.unibg.it/it/come-fare/laurearsi)
+
+*   [Contatti](https://ls-cmc.unibg.it/it/contatti)
+*   [Sempre utili](https://ls-cmc.unibg.it/it/sempre-utili)
+    *           *   [Orari del Dipartimento di LFC](https://logistica.unibg.it/PortaleStudenti/index.php?view=easycourse&include=corso&scuola=Dipartimento_di_Lettere-_Filosofia-_Comunicazione)
+        *   [Sportello internet](http://sportello.unibg.it/esse3/Home.do)
+        *   [E-learning](https://elearning15.unibg.it/course/index.php?categoryid=7)
+        *   [Universitaly](https://www.universitaly.com/index.php/offerta/search/id_struttura/54/azione/ricerca)
+
+1.   [Home](https://ls-cmc.unibg.it/it)
+2.   [Opportunità e studi all'estero](https://ls-cmc.unibg.it/it/opportunita-ed-esperienze)
+
+[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+Studiare all'estero
+===================
+
+Durante il biennio è possibile trascorrere un periodo di studio all’estero nel quadro del programma comunitario [Erasmus +](https://www.unibg.it/internazionale/andare-allestero/erasmus), di mobilità di [breve durata](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-0) (in particolare Winter School o Summer School) o di convenzioni analoghe con [Paesi extraeuropei](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue).
+
+I programmi di mobilità offrono la possibilità di svolgere parte del proprio percorso formativo nell'università di un altro Paese, con il pieno e integrale riconoscimento degli esami sostenuti, e prevedono delle borse di studio a parziale copertura delle spese di viaggio e soggiorno.
+
+Maggiori dettagli sulle università coinvolte e i periodi di mobilità proposti alla [pagina dedicata](https://www.unibg.it/sites/default/files/media/documents/2023-01-24/Tabella%20LFC%202023-2024.pdf).
+
+Per partecipare ai bandi di mobilità Erasmus + o extraeuropei è richiesto il possesso di una competenza linguistica il cui livello varia secondo la sede ospitante. Le modalità e le tempistiche dell’[accertamento del livello linguistico](https://www.unibg.it/node/4332) proposte dall’Università di Bergamo sono pubblicate sul sito di Ateneo all’esordio dell’anno accademico. È possibile approfondire lo studio delle lingue attraverso le svariate attività proposte dal [Centro Competenza Lingue di Ateneo.](https://ccl.unibg.it/it/apprendimento-lingue/servizi-studenti)
+
+[Mobilità per tesi di laurea](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#)
+
+Grazie al generoso lascito della Sig.ra Lucia Maria Teresa Previtali Radici, le studentesse e gli studenti del corso di laurea magistrale c possono svolgere un periodo di mobilità presso un ateneo estero al fine di elaborare la loro tesi di laurea, beneficiando di una borsa di 2.000 euro. Maggiori informazioni alla [pagina dedicata](https://www.unibg.it/bandi/bando-memoria-gianni-e-luciana-radici-redazione-tesi-magistrali-allestero-1).
+
+[Doppio titolo](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#)
+
+**Bergamo e Varsavia: Corso di laurea magistrale in Culture moderne comparate / Dyplom ukończenia studiów II stopnia magisterskich**
+
+A partire dall’anno accademico 2023-2024 le studentesse e gli studenti iscritti al primo anno del Corso di laurea magistrale in Culture moderne comparate avranno la possibilità di ottenere un doppio titolo, il Dyplom ukończenia studiów II stopnia magisterskich, erogato dal Dipartimento di Studi italiani dell’Università di Varsavia.
+
+Le studentesse e gli studenti selezionati seguiranno (in italiano e inglese) i corsi del secondo anno in mobilità presso l’Università di Varsavia, senza ulteriori tasse di iscrizione. Potranno beneficiare di una borsa Erasmus + in base alla normativa vigente.
+
+La tesi magistrale sarà redatta in italiano sotto la guida di due relatori (uno di Bergamo e uno di Varsavia).
+
+Il piano di studi e altre informazioni saranno visibili sul bando, all’atto della pubblicazione.
+
+Referente: prof.ssa[Amelia Valtolina (link sends e-mail)](mailto:amelia.valtolina@unibg.it).
+
+Contatti
+--------
+
+Contatti di riferimento:
+
+T +39 035 205 2830-831-833-468;
+
+[relint@unibg.it (link sends e-mail)](mailto:relint@unibg.it)
+
+*   [Facebook](https://www.facebook.com/UniBergamo "facebook")
+*   [Twitter](https://twitter.com/@UniBergamo "twitter")
+*   [Youtube](https://www.youtube.com/user/UniBgTube/playlists "youtube")
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6 "linkedin")
+*   [Instagram](https://www.instagram.com/unibergamo/ "instagram")
+
+*   [Mappa del sito](https://ls-cmc.unibg.it/it/mappa-del-sito)
+*   [Normativa cookie](https://ls-cmc.unibg.it/it/normativa-cookie)
+*   [Informativa privacy](http://www.unibg.it/privacy)
+*   [Cookie settings](https://ls-cmc.unibg.it/it/cookiesettings)
+
+*   [Wi-fi](http://www.unibg.it/wi-fi)
+*   [Webmail](http://www.unibg.it/evidenza/web-mail)
+
+[![Image 2: logo](https://ls-cmc.unibg.it/sites/all/themes/b3unibg/images/sigillo-bianco.svg)](https://www.unibg.it/)
+
+**Università degli studi di Bergamo**
+
+ via Salvecchio 19
+
+ 24129 Bergamo
+
+ Cod. Fiscale 80004350163
+
+ P.IVA 01612800167
+
+ Centralino 035 2052111 
+
+Back to top
+
+Questo sito utilizza cookie tecnici e di profilazione, propri e di terze parti, per garantire la corretta navigazione, analizzare il traffico e misurare l'efficacia delle attività di comunicazione istituzionale.
+
+Puoi rifiutare i cookie non necessari e di profilazione cliccando su **“Solo cookie tecnici”**.
+
+Puoi scegliere di acconsentirne l’utilizzo cliccando su **“Accetta tutti”** oppure puoi personalizzare le tue scelte cliccando su **“Personalizza”**.
+
+Per maggiori informazioni leggi la nostra [Privacy e cookie policy](http://www.unibg.it/privacy)
+
+Solo cookie tecnici Accetta tutti Personalizza
+
+in caricamento
+
+[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Chiudi")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Avanti")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Play")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Pausa")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Indietro")
+
+Fonte 4: Bandi tirocini e studio all'estero | Università degli studi di Bergamo
+URL: https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero
+Contenuto: Bandi tirocini e studio all'estero | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Bandi tirocini e studio all'estero
+==================================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Ateneo](https://www.unibg.it/ateneo)
+3.   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+4.   [Concorsi e Selezioni](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni)
+5.   [Bandi tirocini e studio all'estero](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero)
+
+[](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero)
+
+Quando il bando raggiunge la data di scadenza(**data****oltre la quale non è più possibile presentare domanda di partecipazione**) le informazioni sono raccolte nella sezione "[**Tirocini e studio all'estero - in espletamento**](https://www.unibg.it/universita/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero/tirocini-e-studio)", raggiungibile dal menu **Naviga la sezione**in questa pagina.
+
+Dall’elenco dei bandi in espletamento occorre scegliere quello di proprio interesse e consultare tutti i documenti allegati (esiti, graduatorie...).
+
+### [Avviso di selezione per l'assegnazione di borse di mobilità per tirocini curriculari all'estero per studenti/esse della laurea magistrale a ciclo unico in Scienze della Formazione Primaria](https://www.unibg.it/bandi/avviso-selezione-lassegnazione-borse-mobilita-tirocini-curriculari-allestero-studentiesse-0)
+
+**PRIMA SCADENZA:**ORE 12 DI VENERDÌ 30 GENNAIO 2026
+
+**SECONDA SCADENZA:**ORE 12 DI VENERDÌ 29 MAGGIO 2026 - qualora ci fossero ancora
+
+ borse disponibili.
+
+Data di pubblicazione bando
+
+23 Gennaio 2026
+
+Data di scadenza bando
+
+29 Maggio 2026
+
+### [BORSE DI STUDIO PER LA REDAZIONE DI TESI MAGISTRALI ALL’ESTERO A FAVORE DI LAUREANDI DELL’UNIVERSITÀ DEGLI STUDI DI BERGAMO A.A. 2025/2026 / Funding Opportunities for Master's Thesis Research Abroad](https://www.unibg.it/bandi/borse-studio-redazione-tesi-magistrali-allestero-favore-laureandi-delluniversita-studi-0)
+
+Per l'anno accademico 2025-2026 sono finanziate borse, esenti da Irpef e Irap, per un importo complessivo di €10.000, sino ad esaurimento fondi. Le borse avranno un valore forfettario variabile da un minimo di €500 sino ad un massimo di €2.000 cadauna
+
+Possono presentare domanda tutti gli studenti di laurea magistrale regolarmente iscritti presso l’Università degli studi di Bergamo che prevedano di conseguire il titolo nelle sessioni di laurea relative all’a.a. 2025/2026, inclusa la sessione straordinaria dei mesi di marzo/aprile 2027
+
+I termini entro cui presentare la propria candidatura sono stabiliti come segue:
+
+**Scadenze:**
+
+Data di pubblicazione bando
+
+19 Dicembre 2025
+
+Data di scadenza bando
+
+30 Giugno 2026
+
+### [Bando Erasmus Traineeship / Call for Erasmus+ Traineeship Mobilities 2024/2025 and 2025/2026](https://www.unibg.it/bandi/bando-erasmus-traineeship-call-for-erasmus-traineeship-mobilities-20242025-and-20252026)
+
+Le borse sono assegnate per /_Grants are assigned for_:
+
+- tirocini curriculari riconosciuti quale parte integrante del piano di studi dello studente/ Curricular internships;
+
+- tirocini con crediti a scelta libera o sovrannumerari, ammissibili solo laddove non fosse presente un tirocinio in piano/ I _nternships with elective credits or additional credits, only eligible if there is no internship listed in the study plan;_
+
+*Non sono ammessi tirocini extra-curriculari/Extra-curricular internships with no academic credit are excluded
+
+**Sono esclusi i laureati / Graduates are not eligible to apply _;_
+
+Le scadenze per candidarsi sono le seguenti/ Deadlines to apply are as follows:
+
+Data di pubblicazione bando
+
+15 Luglio 2025
+
+Data di scadenza bando
+
+7 Aprile 2026
+
+### [Bando di Mobilità Erasmus+ Traineeship per mobilità ExtraUE - Call 2024](https://www.unibg.it/bandi/bando-mobilita-erasmus-traineeship-mobilita-extraue-call-2024)
+
+La candidatura dovrà essere presentata entro le ore 12:00 nelle date indicate da bando.
+
+Per la seconda scadenza non sono pervenute candidature.
+
+Data di pubblicazione bando
+
+26 Febbraio 2025
+
+Data di scadenza bando
+
+15 Aprile 2026
+
+### Naviga la sezione
+
+*   [Tirocini e studio all'estero - in espletamento](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero/tirocini-e-studio)
+*   [Tirocini e studio all'estero - archiviati](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero/tirocini-e-studio-0)
+
+### Potrebbe interessarti
+
+*   [Prima di partire](https://www.unibg.it/internazionale/andare-allestero/partire)  
+*   [Accertamento conoscenza linguistica](https://www.unibg.it/internazionale/andare-allestero/partire/accertamento-conoscenza-linguistica)  
+*   [Riconoscimento certificazioni linguistiche](https://www.unibg.it/studiare/frequentare/apprendimento-linguistico/riconoscimento-certificazioni-linguistiche)  
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Fonte 5: Mobilità Extra-UE e TNE | Università degli studi di Bergamo - UniBg
+URL: https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne
+Contenuto: Mobilità Extra-UE e TNE | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7608 "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7608 "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Mobilità Extra-UE e TNE
+=======================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Internazionale](https://www.unibg.it/internazionale)
+3.   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+4.   [Mobilità Extra-UE e TNE](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne)
+
+[](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne)
+
+### Overseas Mobility
+
+Gli studenti UniBg che intendono frequentare corsi di studio e sostenere i relativi esami in Paesi al di fuori dell'Unione Europea, possono scegliere tra le seguenti Università:
+
+*   University of Technology - UTS (Sydney, Australia)
+*   Universidade Tecnologica Federal do Paraná (Curitiba, Brasile)
+*   Pontificia Universidade Catòlica do Paraná – PUCPR (Curitiba, Brasile)
+*   Universidade federal do Rio Grande do Sul (Porto Alegre, Brasile)
+*   Universidad de Belgrano (Buenos Aires, Argentina)
+*   Universidad de Chile (Santiago de Chile, Cile)
+*   Université Internationale de Rabat (Rabat, Marocco)
+*   Parul University (Vadodara, India)
+*   Dalian University of Foreign Languages (Dalian, Cina)
+*   Hebei Normal University of Science and Technology (Qinhuangdao, Cina)
+*   Nanjing Normal University (Nanjing, Cina)
+*   Peking University HSBC Business School (Shenzhen,Cina)
+*   Xi'An Jiaotong Liverpool University (Suzhou, Cina)
+*   Inha University (Incheon,Corea del sud)
+*   Kyungpook National University (Daegu, Corea del Sud)
+*   Ritsumeikan University College (Kyoto, Giappone)
+*   Kanagawa University (Yokohama, Giappone)
+*   Kwansei Gakuin University (Nishinomiya, Giappone)
+*   Kanazawa University (Kanazawa, Giappone)
+*   Nanzan University (Nagoya, Giappone)
+*   CETYS Universidad (Mexicali, B.C., Messico)
+*   Tecnológico de Monterrey (Monterrey, Messico)
+*   National Research University Higher School of Economics (Nizhny Novgorod e S. Pietroburgo - Russia)
+*   Pushkin Leningrad State University (S. Pietroburgo, Russia)
+*   Colorado State University Pueblo (Pueblo CO, U.S.A.)
+*   Fairleigh Dickinson University - FDU (Madison NJ, U.S.A.)
+*   University of Missouri (Columbia, U.S.A.)
+*   Wayne State University (Detroit, U.S.A.)
+
+L'Università, negli specifici bandi, indica l'importo dei contributi destinati agli studenti selezionati che partecipano con buon esito al programma di mobilità. Gli importi e le condizioni per l'erogazione dei contributi insieme alle tempistiche di pagamento sono indicate nei singoli bandi.
+
+Per gli studenti che ne hanno diritto, è inoltre previsto un **contributo integrativo alla mobilità internazionale**: è possibile concorrere per tale contributo partecipando all'apposito bando del Servizio per il Diritto allo studio.
+
+Le informazioni riguardanti i singoli bandi saranno pubblicate nella sezione AVVISI della presente pagina web e affisse agli albi.
+
+### Diari di viaggio - Travel diaries (info generali dagli studenti rientrati dalle mobilità per studio)
+
+Nell'allegato sono disponibili le informazioni fornite da studentesse e studenti che hanno partecipato ai programmi di scambio negli anni scorsi in merito all’alloggio, trasporti, costo della vita e sui pro e contro dell’università ospitante. Le indicazioni contenute non intendono essere esaustive, ma vogliono essere un ulteriore aiuto e supporto a chi intende trascorrere un periodo di mobilità per studio.
+
+Essendo appunto basate sulle esperienze soggettive l’Ateneo non è responsabile delle informazioni qui riportate.
+
+Ovviamente nel caso di più mobilità verso la stessa sede le informazioni potrebbero essere diverse o replicate.
+
+Ringraziamo le studentesse e gli studenti che hanno contribuito alla creazione di questo documento.
+
+Le informazioni sono state catalogate in ordine di nazione.
+
+Buon Viaggio!
+
+[Diari di viaggio - Travel diaries - agg. 04.03.2024](https://www.unibg.it/sites/default/files/media/documents/2024-03-04/2024_Your%20travel%20diary_0.pdf "2024_Your travel diary_0.pdf")
+
+### Bando per mobilità per studio presso sedi Extra UE - a.a. 2026-2027
+
+[Bando per mobilità per studio presso sedi Extra UE - a.a. 2026-2027](https://www.unibg.it/bandi/bando-selezione-mobilita-internazionale-extra-europea-fini-studio-aa-20262027)
+
+### Ahmedabad University - Invito Presentazione sede: online 13.01.26 h. 11.00
+
+L'università indiana di Ahmedabad, nuova sede disponibile, si presenterà in un incontro online il 13.01.2026 alle ore 11.00.
+
+Di seguito il link per partecipare all'evento:
+
+Join Zoom Meeting[https://zoom.us/j/97527230485?pwd=FSnV4tpixKRef0kaiizmWRImCvfSpp.1](https://www.google.com/url?q=https://zoom.us/j/97527230485?pwd%3DFSnV4tpixKRef0kaiizmWRImCvfSpp.1&sa=D&source=calendar&ust=1768632207979347&usg=AOvVaw0gIqd07VtS4zv1H2iSCn1_)
+
+Meeting ID: 975 2723 0485
+
+Passcode: 368483
+
+### Bando per mobilità presso sedi asiatiche Progetto PNRR TNE Asia LEGO - a.a. 2025-2026
+
+[Bando per mobilità presso sedi asiatiche Progetto PNRR TNE Asia LEGO - a.a. 2025-2026](https://www.unibg.it/bandi/bando-mobilita-presso-sedi-asiatiche-progetto-pnrr-tne-asia-lego-aa-2025-2026)
+
+### Contatti
+
+**Ufficio programmi internazionali**
+
+ via S. Bernardino, 72/e
+
+ 24122 Bergamo
+
+Per informazioni relative al bando Extra Ue inviare un ticket selezionando l'indirizzo **"Erasmus in uscita (Outgoing)"**>**servizio ticket [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud/)**
+
+Per prendere un appuntamento presso l'ufficio programmi internazionali**[Prenota un appuntamento](https://logistica.unibg.it/PortalePlanning/UNIBG-servizi/index.php)**
+
+Per contattare l'ufficio telefonicamente:
+
+Studenti di LLCS
+
+ T +39 035 205 2831
+
+Studenti di LFC e SUS
+
+ T +39 035 205 2830
+
+Studenti Scuola di Economia e Management
+
+ T +39 035 205 2833
+
+Studenti Scuola di Ingegneria
+
+ T +39 035 205 2109
+
+Studenti di Giurisprudenza e info riguardo a borse di studio
+
+ T +39 035 205 2468
+
+Erasmus KA 107
+
+ T +39 035 205 2290
+
+**Attenzione:** negli orari di apertura la reperibilità telefonica potrebbe non essere garantita.
+
+### Potrebbe interessarti
+
+*   [Bandi tirocini e studio all'estero](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero)  
+*   [Diritto allo studio](https://www.unibg.it/studiare/iscriversi/tasse-e-agevolazioni/borse-studio)  
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+
+>>> USER PROMPT:
+Attualmente dove posso studiare all'estero?
+
+>>> RISPOSTA:
+Ciao Raphael, in quanto studente del primo anno della Magistrale in Ingegneria Informatica per l'anno accademico 2025/2026, ci sono alcune opportunità per studiare all'estero.
+
+Ecco le informazioni basate sui bandi attualmente disponibili o rilevanti per l'anno accademico in corso:
+
+1.  **Borse di studio per la redazione di tesi magistrali all'estero (A.A. 2025/2026):**
+    È attivo un bando per borse di studio destinate alla redazione di tesi magistrali all'estero. Questo programma è pensato per studenti di laurea magistrale che prevedono di conseguire il titolo nelle sessioni di laurea relative all'a.a. 2025/2026, inclusa la sessione straordinaria di marzo/aprile 2027. Le borse hanno un valore forfettario variabile da €500 a €2.000 e sono esenti da Irpef e Irap.
+    *   **Scadenza per la candidatura:** 30 Giugno 2026.
+    *   Pagina di riferimento: [BORSE DI STUDIO PER LA REDAZIONE DI TESI MAGISTRALI ALL’ESTERO A FAVORE DI LAUREANDI DELL’UNIVERSITÀ DEGLI STUDI DI BERGAMO A.A. 2025/2026](https://www.unibg.it/bandi/borse-studio-redazione-tesi-magistrali-allestero-favore-laureandi-delluniversita-studi-0) (Fonte 4)
+
+2.  **Bando per mobilità presso sedi asiatiche Progetto PNRR TNE Asia LEGO (A.A. 2025-2026):**
+    È disponibile un bando specifico per mobilità di studio presso sedi asiatiche nell'ambito del Progetto PNRR TNE Asia LEGO per l'anno accademico 2025-2026. Ti consiglio di consultare il bando per tutti i dettagli e le scadenze.
+    *   Pagina di riferimento: [Bando per mobilità presso sedi asiatiche Progetto PNRR TNE Asia LEGO - a.a. 2025-2026](https://www.unibg.it/bandi/bando-mobilita-presso-sedi-asiatiche-progetto-pnrr-tne-asia-lego-aa-2025-2026) (Fonte 5)
+
+**Opportunità con scadenze passate per l'A.A. 2025/2026:**
+
+*   Il bando generale per mobilità per studio presso sedi Extra UE per l'a.a. 2025-2026 aveva una scadenza il 24 febbraio 2025, quindi non è più possibile candidarsi per questa specifica opportunità. (Fonte 2)
+*   Le borse di studio per mobilità all'estero di breve durata (es. Summer o Winter School) menzionate per l'a.a. 2024/2025 avevano scadenze nel 2025, e non sono state pubblicate nuove scadenze per l'a.a. 2025/2026. (Fonte 1)
+
+**Università partner Extra-UE:**
+L'Università di Bergamo ha convenzioni con diverse università in Paesi extraeuropei per la mobilità di studio. Tra queste figurano atenei in Argentina, Australia, Brasile, Cile, Cina, Corea del Sud, Emirati Arabi Uniti, Etiopia, Giappone, Marocco, Messico, Tunisia, USA. Gli importi e le condizioni dei contributi sono indicati nei singoli bandi. È anche previsto un contributo integrativo alla mobilità internazionale tramite un bando del Servizio per il Diritto allo studio. (Fonte 5)
+
+Per maggiori dettagli sui bandi e per chiarimenti, ti suggerisco di contattare l'Ufficio Programmi Internazionali. Per gli studenti della Scuola di Ingegneria, il numero di telefono è +39 035 205 2109. Puoi anche inviare un ticket selezionando l'indirizzo "Erasmus in uscita (Outgoing)" tramite l'[Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud/). (Fonte 5)
+
+Pagina di riferimento: [Bandi tirocini e studio all'estero](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero) e [Mobilità Extra-UE e TNE](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne)
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Domanda originale: Attualmente dove posso studiare all'estero?
+Categoria: generale
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Raphael, in quanto studente del primo anno della Magistrale in Ingegneria Informatica per l'anno accademico 2025/2026, ci sono alcune opportunità per studiare all'estero.
+
+Ecco le informazioni basate sui bandi attualmente disponibili o rilevanti per l'anno accademico in corso:
+
+1.  **Borse di studio per la redazione di tesi magistrali all'estero (A.A. 2025/2026):**
+    È attivo un bando per borse di studio destinate alla redazione di tesi magistrali all'estero. Questo programma è pensato per studenti di laurea magistrale che prevedono di conseguire il titolo nelle sessioni di laurea relative all'a.a. 2025/2026, inclusa la sessione straordinaria di marzo/aprile 2027. Le borse hanno un valore forfettario variabile da €500 a €2.000 e sono esenti da Irpef e Irap.
+    *   **Scadenza per la candidatura:** 30 Giugno 2026.
+    *   Pagina di riferimento: [BORSE DI STUDIO PER LA REDAZIONE DI TESI MAGISTRALI ALL’ESTERO A FAVORE DI LAUREANDI DELL’UNIVERSITÀ DEGLI STUDI DI BERGAMO A.A. 2025/2026](https://www.unibg.it/bandi/borse-studio-redazione-tesi-magistrali-allestero-favore-laureandi-delluniversita-studi-0) (Fonte 4)
+
+2.  **Bando per mobilità presso sedi asiatiche Progetto PNRR TNE Asia LEGO (A.A. 2025-2026):**
+    È disponibile un bando specifico per mobilità di studio presso sedi asiatiche nell'ambito del Progetto PNRR TNE Asia LEGO per l'anno accademico 2025-2026. Ti consiglio di consultare il bando per tutti i dettagli e le scadenze.
+    *   Pagina di riferimento: [Bando per mobilità presso sedi asiatiche Progetto PNRR TNE Asia LEGO - a.a. 2025-2026](https://www.unibg.it/bandi/bando-mobilita-presso-sedi-asiatiche-progetto-pnrr-tne-asia-lego-aa-2025-2026) (Fonte 5)
+
+**Opportunità con scadenze passate per l'A.A. 2025/2026:**
+
+*   Il bando generale per mobilità per studio presso sedi Extra UE per l'a.a. 2025-2026 aveva una scadenza il 24 febbraio 2025, quindi non è più possibile candidarsi per questa specifica opportunità. (Fonte 2)
+*   Le borse di studio per mobilità all'estero di breve durata (es. Summer o Winter School) menzionate per l'a.a. 2024/2025 avevano scadenze nel 2025, e non sono state pubblicate nuove scadenze per l'a.a. 2025/2026. (Fonte 1)
+
+**Università partner Extra-UE:**
+L'Università di Bergamo ha convenzioni con diverse università in Paesi extraeuropei per la mobilità di studio. Tra queste figurano atenei in Argentina, Australia, Brasile, Cile, Cina, Corea del Sud, Emirati Arabi Uniti, Etiopia, Giappone, Marocco, Messico, Tunisia, USA. Gli importi e le condizioni dei contributi sono indicati nei singoli bandi. È anche previsto un contributo integrativo alla mobilità internazionale tramite un bando del Servizio per il Diritto allo studio. (Fonte 5)
+
+Per maggiori dettagli sui bandi e per chiarimenti, ti suggerisco di contattare l'Ufficio Programmi Internazionali. Per gli studenti della Scuola di Ingegneria, il numero di telefono è +39 035 205 2109. Puoi anche inviare un ticket selezionando l'indirizzo "Erasmus in uscita (Outgoing)" tramite l'[Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud/). (Fonte 5)
+
+Pagina di riferimento: [Bandi tirocini e studio all'estero](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero) e [Mobilità Extra-UE e TNE](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne)
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RISPOSTA:
+OPPORTUNITÀ PER STUDIARE ALL'ESTERO:
+
+1.  BORSE DI STUDIO PER LA REDAZIONE DI TESI MAGISTRALI ALL'ESTERO (A.A. 2025/2026):
+    È attivo un bando per borse di studio destinate alla redazione di tesi magistrali all'estero. Questo programma è pensato per studenti di laurea magistrale che prevedono di conseguire il titolo nelle sessioni di laurea relative all'a.a. 2025/2026, inclusa la sessione straordinaria di marzo/aprile 2027. Le borse hanno un valore forfettario variabile da €500 a €2.000 e sono esenti da Irpef e Irap.
+    - SCADENZA PER LA CANDIDATURA: 30 Giugno 2026.
+    Pagina di riferimento: [BORSE DI STUDIO PER LA REDAZIONE DI TESI MAGISTRALI ALL’ESTERO A FAVORE DI LAUREANDI DELL’UNIVERSITÀ DEGLI STUDI DI BERGAMO A.A. 2025/2026](https://www.unibg.it/bandi/borse-studio-redazione-tesi-magistrali-allestero-favore-laureandi-delluniversita-studi-0)
+
+2.  BANDO PER MOBILITÀ PRESSO SEDI ASIATICHE PROGETTO PNRR TNE ASIA LEGO (A.A. 2025-2026):
+    È disponibile un bando specifico per mobilità di studio presso sedi asiatiche nell'ambito del Progetto PNRR TNE Asia LEGO per l'anno accademico 2025-2026. Consulta il bando per tutti i dettagli e le scadenze.
+    Pagina di riferimento: [Bando per mobilità presso sedi asiatiche Progetto PNRR TNE Asia LEGO - a.a. 2025-2026](https://www.unibg.it/bandi/bando-mobilita-presso-sedi-asiatiche-progetto-pnrr-tne-asia-lego-aa-2025-2026)
+
+OPPORTUNITÀ CON SCADENZE PASSATE PER L'A.A. 2025/2026:
+- Il bando generale per mobilità per studio presso sedi Extra UE per l'a.a. 2025-2026 aveva una scadenza il 24 febbraio 2025, quindi non è più possibile candidarsi per questa specifica opportunità.
+- Le borse di studio per mobilità all'estero di breve durata (es. Summer o Winter School) menzionate per l'a.a. 2024/2025 avevano scadenze nel 2025, e non sono state pubblicate nuove scadenze per l'a.a. 2025/2026.
+
+UNIVERSITÀ PARTNER EXTRA-UE:
+L'Università di Bergamo ha convenzioni con diverse università in Paesi extraeuropei per la mobilità di studio. Tra queste figurano atenei in Argentina, Australia, Brasile, Cile, Cina, Corea del Sud, Emirati Arabi Uniti, Etiopia, Giappone, Marocco, Messico, Tunisia, USA. Importi e condizioni dei contributi sono indicati nei singoli bandi. È previsto un contributo integrativo alla mobilità internazionale tramite un bando del Servizio per il Diritto allo studio.
+
+CONTATTI:
+Per dettagli e chiarimenti, contatta l'Ufficio Programmi Internazionali.
+- Per gli studenti della Scuola di Ingegneria, il numero di telefono è +39 035 205 2109.
+- Puoi anche inviare un ticket selezionando l'indirizzo "Erasmus in uscita (Outgoing)" tramite l'[Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud/).
+
+PAGINE DI RIFERIMENTO GENERALI:
+- [Bandi tirocini e studio all'estero](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero)
+- [Mobilità Extra-UE e TNE](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne)
+
+================================================================================
+RISPOSTA FINALE
+================================================================================
+OPPORTUNITÀ PER STUDIARE ALL'ESTERO:
+
+1.  BORSE DI STUDIO PER LA REDAZIONE DI TESI MAGISTRALI ALL'ESTERO (A.A. 2025/2026):
+    È attivo un bando per borse di studio destinate alla redazione di tesi magistrali all'estero. Questo programma è pensato per studenti di laurea magistrale che prevedono di conseguire il titolo nelle sessioni di laurea relative all'a.a. 2025/2026, inclusa la sessione straordinaria di marzo/aprile 2027. Le borse hanno un valore forfettario variabile da €500 a €2.000 e sono esenti da Irpef e Irap.
+    - SCADENZA PER LA CANDIDATURA: 30 Giugno 2026.
+    Pagina di riferimento: [BORSE DI STUDIO PER LA REDAZIONE DI TESI MAGISTRALI ALL’ESTERO A FAVORE DI LAUREANDI DELL’UNIVERSITÀ DEGLI STUDI DI BERGAMO A.A. 2025/2026](https://www.unibg.it/bandi/borse-studio-redazione-tesi-magistrali-allestero-favore-laureandi-delluniversita-studi-0)
+
+2.  BANDO PER MOBILITÀ PRESSO SEDI ASIATICHE PROGETTO PNRR TNE ASIA LEGO (A.A. 2025-2026):
+    È disponibile un bando specifico per mobilità di studio presso sedi asiatiche nell'ambito del Progetto PNRR TNE Asia LEGO per l'anno accademico 2025-2026. Consulta il bando per tutti i dettagli e le scadenze.
+    Pagina di riferimento: [Bando per mobilità presso sedi asiatiche Progetto PNRR TNE Asia LEGO - a.a. 2025-2026](https://www.unibg.it/bandi/bando-mobilita-presso-sedi-asiatiche-progetto-pnrr-tne-asia-lego-aa-2025-2026)
+
+OPPORTUNITÀ CON SCADENZE PASSATE PER L'A.A. 2025/2026:
+- Il bando generale per mobilità per studio presso sedi Extra UE per l'a.a. 2025-2026 aveva una scadenza il 24 febbraio 2025, quindi non è più possibile candidarsi per questa specifica opportunità.
+- Le borse di studio per mobilità all'estero di breve durata (es. Summer o Winter School) menzionate per l'a.a. 2024/2025 avevano scadenze nel 2025, e non sono state pubblicate nuove scadenze per l'a.a. 2025/2026.
+
+UNIVERSITÀ PARTNER EXTRA-UE:
+L'Università di Bergamo ha convenzioni con diverse università in Paesi extraeuropei per la mobilità di studio. Tra queste figurano atenei in Argentina, Australia, Brasile, Cile, Cina, Corea del Sud, Emirati Arabi Uniti, Etiopia, Giappone, Marocco, Messico, Tunisia, USA. Importi e condizioni dei contributi sono indicati nei singoli bandi. È previsto un contributo integrativo alla mobilità internazionale tramite un bando del Servizio per il Diritto allo studio.
+
+CONTATTI:
+Per dettagli e chiarimenti, contatta l'Ufficio Programmi Internazionali.
+- Per gli studenti della Scuola di Ingegneria, il numero di telefono è +39 035 205 2109.
+- Puoi anche inviare un ticket selezionando l'indirizzo "Erasmus in uscita (Outgoing)" tramite l'[Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud/).
+
+PAGINE DI RIFERIMENTO GENERALI:
+- [Bandi tirocini e studio all'estero](https://www.unibg.it/ateneo/amministrazione/concorsi-e-selezioni/bandi-tirocini-e-studio-allestero)
+- [Mobilità Extra-UE e TNE](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue-e-tne)
+
+------------------------------------------------------------
+TEMPI DI ESECUZIONE
+------------------------------------------------------------
+  Classifier Agent         : 6.209s
+  Query Agent              : 4.236s
+  Web Agent                : 7.569s
+  Generator Agent          : 14.078s
+  Revision Agent           : 19.809s
+
+  TEMPO TOTALE             : 51.905s
+
+================================================================================
+FINE DEL LOG
+================================================================================

@@ -108,11 +108,16 @@ class PipelineLogger:
             extra_fields=["search_query", "original_query"]
         ))
 
-        # 3. WEB AGENT
-        lines.extend(self._format_web_agent_section(
-            step_map.get("web_search", {}),
-            state.get("web_results", [])
-        ))
+        # 3. WEB AGENT o EXAM EXTRACT (mutuamente esclusivi)
+        if "exam_extract" in step_map:
+            lines.extend(self._format_exam_extract_section(
+                step_map.get("exam_extract", {})
+            ))
+        else:
+            lines.extend(self._format_web_agent_section(
+                step_map.get("web_search", {}),
+                state.get("web_results", [])
+            ))
 
         # 4. GENERATOR AGENT
         lines.extend(self._format_agent_section(
@@ -238,6 +243,63 @@ class PipelineLogger:
 
         return lines
 
+    def _format_exam_extract_section(self, step_data: Dict) -> List[str]:
+        """
+        Formatta la sezione dell'Exam Extract mostrando la selezione del link,
+        il contenuto estratto e le fonti web aggiuntive.
+        """
+        sep = "-" * 60
+        lines = []
+        lines.append(sep)
+        lines.append("STEP 3 - WEB AGENT (Exam Calendar Extract)")
+        lines.append(sep)
+
+        result = step_data.get("result", {})
+        lines.append(f"Status              : {result.get('status', 'N/A')}")
+        lines.append(f"Query di ricerca    : {result.get('search_query', 'N/A')}")
+        lines.append("")
+
+        # Selezione link
+        lines.append(">>> SELEZIONE CALENDARIO:")
+        lines.append(f"  Polo/Dipartimento : {result.get('selected_polo', 'N/A')}")
+        lines.append(f"  Sessione          : {result.get('selected_sessione', 'N/A')}")
+        lines.append(f"  URL selezionato   : {result.get('selected_url', 'N/A')}")
+        lines.append(f"  Motivazione       : {result.get('selection_reasoning', 'N/A')}")
+        lines.append("")
+
+        # LLM prompt e risposta per la selezione
+        sel_prompt = result.get("selection_llm_prompt", "")
+        if sel_prompt:
+            lines.append(">>> PROMPT SELEZIONE LINK:")
+            lines.append(sel_prompt)
+            lines.append("")
+
+        sel_response = result.get("selection_llm_response", "")
+        if sel_response:
+            lines.append(">>> RISPOSTA LLM SELEZIONE:")
+            lines.append(sel_response)
+            lines.append("")
+
+        # Extract
+        lines.append(">>> TAVILY EXTRACT:")
+        lines.append(f"  URL estratto      : {result.get('extract_url', 'N/A')}")
+        lines.append(f"  Status extract    : {result.get('extract_status', 'N/A')}")
+        lines.append(f"  Lunghezza content : {result.get('extract_content_length', 0)} caratteri")
+        lines.append("")
+
+        extract_content = result.get("extract_content", "")
+        if extract_content:
+            lines.append(">>> CONTENUTO ESTRATTO DAL CALENDARIO:")
+            lines.append(extract_content)
+            lines.append("")
+
+        # Fonti web aggiuntive
+        web_count = result.get("web_results_count", 0)
+        lines.append(f"  Fonti web aggiuntive: {web_count}")
+        lines.append("")
+
+        return lines
+
     def _format_timing_section(self, workflow_steps: List[Dict], total_time: float = None) -> List[str]:
         """
         Formatta la sezione riepilogativa dei tempi di esecuzione di ogni agente e il tempo totale.
@@ -255,6 +317,7 @@ class PipelineLogger:
             "classification": "Classifier Agent",
             "query_generation": "Query Agent",
             "web_search": "Web Agent",
+            "exam_extract": "Web Agent (Exam Extract)",
             "generation": "Generator Agent",
             "revision": "Revision Agent",
         }

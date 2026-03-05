@@ -11,7 +11,8 @@ class ClassifierAgent:
     
     CATEGORIES = {
         "informazioni_corso": "Richieste su corsi, programmi, docenti",
-        "orari": "Richieste su orari delle lezioni, esami, ricevimenti",
+        "orari": "Richieste su orari delle lezioni, ricevimenti",
+        "date_esami": "Richieste su date e orari degli esami, sessioni d'esame, quando si svolge un esame",
         "procedure": "Richieste su procedure amministrative, iscrizioni, tasse",
         "servizi": "Richieste su servizi universitari (mensa, biblioteche, aule studio)",
         "generale": "Domande generiche sull'università",
@@ -41,6 +42,10 @@ Esempi:
 - "Come faccio a iscrivermi all'esame?" -> procedure
 - "Chi è il docente di algoritmi?" -> informazioni_corso
 - "Dove si trova la mensa?" -> servizi
+- "Quando è l'esame di analisi?" -> date_esami
+- "Che esami ho alla prossima sessione?" -> date_esami
+- "In che date sono gli esami della sessione estiva?" -> date_esami
+- "Quando posso dare l'esame di basi di dati?" -> date_esami
 """
     
     async def classify(self, query: str, user_context: str = "", conversation_history: List[Dict] = None) -> Dict[str, str]:

@@ -35,7 +35,7 @@ class OrchestratorAgent:
         # Inizializza gli agenti specializzati
         self.classifier = ClassifierAgent(self.llm)
         self.query_agent = QueryAgent(self.llm)
-        self.web_agent = WebAgent()
+        self.web_agent = WebAgent(self.llm)
         self.generator = GeneratorAgent(self.llm)
         self.reviser = RevisionAgent(self.llm)
         self.logger = PipelineLogger()
@@ -54,19 +54,40 @@ class OrchestratorAgent:
         workflow.add_node("classify", self._classify_node)
         workflow.add_node("query", self._query_node)
         workflow.add_node("web_search", self._web_search_node)
+        workflow.add_node("exam_extract", self._exam_extract_node)
         workflow.add_node("generate", self._generate_node)
         workflow.add_node("revise", self._revise_node)
         
         # Definisci il flusso
         workflow.set_entry_point("classify")
         workflow.add_edge("classify", "query")
-        workflow.add_edge("query", "web_search")
+
+        # Routing condizionale dopo query: se date_esami -> exam_extract, altrimenti -> web_search
+        workflow.add_conditional_edges(
+            "query",
+            self._route_after_query,
+            {
+                "web_search": "web_search",
+                "exam_extract": "exam_extract",
+            }
+        )
+
         workflow.add_edge("web_search", "generate")
+        workflow.add_edge("exam_extract", "generate")
         workflow.add_edge("generate", "revise")
         workflow.add_edge("revise", END)
         
         # Compila il grafo
         return workflow.compile()
+
+    def _route_after_query(self, state: AgentState) -> str:
+        """
+        Decide se andare al web_search standard o all'exam_extract
+        in base alla categoria classificata.
+        """
+        if state.get("category") == "date_esami":
+            return "exam_extract"
+        return "web_search"
     
     async def _classify_node(self, state: AgentState) -> AgentState:
         """
@@ -160,6 +181,62 @@ class OrchestratorAgent:
             state["web_context"] = ""
             state["error"] = f"Web search error: {str(e)}"
         
+        return state
+    
+    async def _exam_extract_node(self, state: AgentState) -> AgentState:
+        """
+        Nodo per la ricerca date esami:
+        1. Scelta link calendario tramite LLM
+        2. Tavily extract del calendario
+        3. Tavily search per fonti aggiuntive (top 3)
+        """
+        try:
+            start = time.time()
+            user_ctx = build_user_context(state)
+            search_query = state.get("search_query", state["query"])
+
+            result = await self.web_agent.search_and_extract_exams(
+                query=search_query,
+                user_department=state.get("user_department"),
+                user_context=user_ctx
+            )
+            elapsed = time.time() - start
+
+            state["web_results"] = result.get("web_results", [])
+            state["web_context"] = result.get("formatted_context", "")
+            state["calendar_context"] = result.get("formatted_context", "")
+            state["current_step"] = "exam_extract"
+
+            # Aggiungi al workflow tracking
+            link_sel = result.get("link_selection", {})
+            extract_res = result.get("extract_result", {})
+            state["workflow_steps"].append({
+                "step": "exam_extract",
+                "agent": "WebAgent (Exam Extract)",
+                "result": {
+                    "search_query": search_query,
+                    "selected_polo": link_sel.get("polo", "N/D"),
+                    "selected_sessione": link_sel.get("sessione", "N/D"),
+                    "selected_url": link_sel.get("url", "N/D"),
+                    "selection_reasoning": link_sel.get("reasoning", "N/D"),
+                    "selection_llm_prompt": link_sel.get("prompt", ""),
+                    "selection_llm_response": link_sel.get("llm_response", ""),
+                    "extract_status": extract_res.get("status", "N/D"),
+                    "extract_url": extract_res.get("url", "N/D"),
+                    "extract_content_length": len(extract_res.get("content", "")),
+                    "extract_content": extract_res.get("content", ""),
+                    "web_results_count": len(result.get("web_results", [])),
+                    "status": result.get("status", "unknown")
+                },
+                "elapsed_time": elapsed
+            })
+
+        except Exception as e:
+            state["web_results"] = []
+            state["web_context"] = ""
+            state["calendar_context"] = ""
+            state["error"] = f"Exam extract error: {str(e)}"
+
         return state
     
     async def _generate_node(self, state: AgentState) -> AgentState:
@@ -275,6 +352,7 @@ class OrchestratorAgent:
                 "search_query": None,
                 "web_results": None,
                 "web_context": None,
+                "calendar_context": None,
                 "generated_response": None,
                 "generation_status": None,
                 "final_response": None,

@@ -1,0 +1,862 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-04 15:58:46
+Status    : success
+
+------------------------------------------------------------
+INFORMAZIONI UTENTE
+------------------------------------------------------------
+Tipo utente   : loggato
+Nome          : Raphael Mazzoleni
+Matricola     : 1086531
+Dipartimento  : Scuola di Ingegneria
+Corso         : Ingegneria informatica
+Tipologia     : Magistrale
+Anno          : 1
+
+------------------------------------------------------------
+QUERY ORIGINALE DELL'UTENTE
+------------------------------------------------------------
+ dimmi le date degli esami di giurisprudenza del terzo anno
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: date_esami
+Description: Richieste su date e orari degli esami, sessioni d'esame, quando si svolge un esame
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, ricevimenti
+- date_esami: Richieste su date e orari degli esami, sessioni d'esame, quando si svolge un esame
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+- "Quando è l'esame di analisi?" -> date_esami
+- "Che esami ho alla prossima sessione?" -> date_esami
+- "In che date sono gli esami della sessione estiva?" -> date_esami
+- "Quando posso dare l'esame di basi di dati?" -> date_esami
+
+
+>>> USER PROMPT:
+ dimmi le date degli esami di giurisprudenza del terzo anno
+
+>>> RISPOSTA:
+date_esami
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: date esami giurisprudenza terzo anno 2025/2026 unibg
+Original Query:  dimmi le date degli esami di giurisprudenza del terzo anno
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+DATA ODIERNA: 04 marzo 2026 (Anno accademico 2025/2026)
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE FONDAMENTALI:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- La query deve essere in italiano
+- Massimo 12 parole
+- Quando la domanda riguarda date, sessioni o periodi temporali, includi l'anno accademico (2025/2026) o il periodo specifico (es. "marzo 2026", "sessione estiva 2026") nella query
+
+REGOLA CRITICA - CONTESTO CONVERSAZIONE:
+Il contesto della conversazione ha SEMPRE la priorità sul profilo dello studente.
+Se la conversazione indica che l'utente sta chiedendo informazioni su un corso/dipartimento DIVERSO dal proprio, la query DEVE riferirsi al corso/dipartimento menzionato nella conversazione, NON a quello del profilo.
+
+Esempio critico:
+- Profilo studente: Ingegneria informatica, Magistrale
+- Conversazione precedente: lo studente chiedeva degli esami di Giurisprudenza
+- Nuova domanda: "invece nella sessione estiva?"
+- Query CORRETTA: date esami giurisprudenza sessione estiva 2025/2026 unibg
+- Query SBAGLIATA: esami sessione estiva ingegneria informatica magistrale unibg
+Motivo: dalla conversazione è chiaro che "invece" si riferisce sempre a Giurisprudenza, non al suo corso.
+
+QUANDO USARE LE INFORMAZIONI DEL PROFILO STUDENTE:
+INCLUDI le info del profilo SOLO quando:
+- La domanda riguarda esplicitamente il PROPRIO corso dello studente (es. "che materie ho?", "i miei esami")
+- Non c'è contesto conversazionale che indichi un argomento diverso
+- La domanda usa pronomi possessivi ("mio", "miei", "il mio corso")
+
+NON INCLUDERE le info del profilo quando:
+- La conversazione indica un argomento/corso diverso dal profilo
+- La domanda è generica (procedure, servizi, docenti, mensa, erasmus)
+- La domanda menziona esplicitamente un altro corso o dipartimento
+- La domanda è un follow-up ("e nella sessione X?", "invece per...", "e gli orari?") e il contesto conversazionale indica un corso diverso
+
+ESEMPI CON PROFILO (corso: ingegneria informatica, anno: 1, magistrale):
+- "che materie ho al secondo anno?" → materie secondo anno ingegneria informatica magistrale unibg
+- "i miei esami della prossima sessione" → esami prossima sessione ingegneria informatica magistrale 2025/2026 unibg
+
+ESEMPI SENZA PROFILO:
+- "come faccio a iscrivermi al test di ammissione?" → iscrizione test ammissione unibg
+- "chi è il docente di algoritmi?" → docente algoritmi unibg
+- "dove si trova la mensa?" → mensa universitaria unibg
+- "esami giurisprudenza terzo anno" → date esami giurisprudenza terzo anno 2025/2026 unibg
+
+ESEMPIO FOLLOW-UP (contesto: si parlava di esami di giurisprudenza):
+- "invece nella sessione estiva?" → date esami giurisprudenza sessione estiva 2025/2026 unibg
+- "e quelli del quarto anno?" → date esami giurisprudenza quarto anno 2025/2026 unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+
+Informazioni studente:
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Ultima richiesta dello studente:  dimmi le date degli esami di giurisprudenza del terzo anno
+
+Genera la query di ricerca web:
+
+>>> RISPOSTA:
+date esami giurisprudenza terzo anno 2025/2026 unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Exam Calendar Extract)
+------------------------------------------------------------
+Status              : success
+Query di ricerca    : date esami giurisprudenza terzo anno 2025/2026 unibg
+
+>>> SELEZIONE CALENDARIO:
+  Polo/Dipartimento : Polo Economico-Giuridico
+  Sessione          : intermedia/aprile straordinaria
+  URL selezionato   : https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/628/ttTotalHtml.html
+  Motivazione       : NUMERO: 4
+MOTIVO: L'utente ha chiesto le date degli esami di Giurisprudenza. Il Polo Economico-Giuridico è il dipartimento corretto. La sessione intermedia/aprile straordinaria è la più prossima e pertinente rispetto alla data odierna (04 marzo 2026).
+
+>>> PROMPT SELEZIONE LINK:
+Oggi è il 04 marzo 2026. Anno accademico 2025/2026.
+
+L'utente ha chiesto: "date esami giurisprudenza terzo anno 2025/2026 unibg"
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Ecco i link ai calendari esami disponibili:
+(non disponibile) Scuola di Ingegneria - sessione invernale: Già conclusa
+1. Scuola di Ingegneria - sessione intermedia/aprile straordinaria → https://www.unibg.it/sites/default/files/media/documents/2026-02-09/appelli25-26_aprile.pdf
+2. Scuola di Ingegneria - sessione estiva → https://www.unibg.it/sites/default/files/media/documents/2026-02-23/estiva%202026.pdf
+3. Scuola di Ingegneria - sessione autunnale → https://www.unibg.it/sites/default/files/media/documents/2026-02-23/autunno%2026.pdf
+(non disponibile) Polo Economico-Giuridico - sessione invernale: Non disponibile
+4. Polo Economico-Giuridico - sessione intermedia/aprile straordinaria → https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/628/ttTotalHtml.html
+5. Polo Economico-Giuridico - sessione estiva → https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/606/ttPdf.pdf
+6. Polo Economico-Giuridico - sessione autunnale → https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/607/ttPdf.pdf
+(non disponibile) Polo Linguistico - sessione invernale: Già conclusa
+(non disponibile) Polo Linguistico - sessione intermedia/aprile straordinaria: Non ancora disponibile
+7. Polo Linguistico - sessione estiva → https://logistica.unibg.it/Esami/Calendario/Polo_di_Lingue_e_culture_straniere/614/ttPdf.pdf
+8. Polo Linguistico - sessione autunnale → https://logistica.unibg.it/Esami/Calendario/Polo_di_Lingue_e_culture_straniere/615/ttPdf.pdf
+(non disponibile) Polo Umanistico - sessione invernale: Non disponibile
+9. Polo Umanistico - sessione intermedia/primaverile → https://logistica.unibg.it/Esami/Calendario/Polo_Umanistico/617/ttPdf.pdf
+10. Polo Umanistico - sessione scienze formazione primaria/fine maggio → https://logistica.unibg.it/Esami/Calendario/Polo_Umanistico/618/ttPdf.pdf
+11. Polo Umanistico - sessione estiva → https://logistica.unibg.it/Esami/Calendario/Polo_Umanistico/619/ttPdf.pdf
+12. Polo Umanistico - sessione autunnale → https://logistica.unibg.it/Esami/Calendario/Polo_Umanistico/620/ttPdf.pdf
+
+Portale generale esami: https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it
+
+Scegli IL NUMERO del link più appropriato da cui estrarre le date degli esami per rispondere alla domanda dell'utente.
+IMPORTANTE: Scegli il calendario del POLO/DIPARTIMENTO che corrisponde alla domanda dell'utente, NON necessariamente quello del suo profilo.
+Per esempio, se l'utente è iscritto a Ingegneria ma chiede degli esami di Giurisprudenza, scegli il calendario del Polo Economico-Giuridico.
+Considera quale sessione è più vicina o pertinente alla domanda.
+Se la domanda dice "prossima sessione", scegli la sessione più prossima tra quelle disponibili rispetto alla data odierna.
+
+Rispondi con questo formato esatto:
+NUMERO: <numero>
+MOTIVO: <breve spiegazione>
+
+>>> RISPOSTA LLM SELEZIONE:
+NUMERO: 4
+MOTIVO: L'utente ha chiesto le date degli esami di Giurisprudenza. Il Polo Economico-Giuridico è il dipartimento corretto. La sessione intermedia/aprile straordinaria è la più prossima e pertinente rispetto alla data odierna (04 marzo 2026).
+
+>>> TAVILY EXTRACT:
+  URL estratto      : https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/628/ttTotalHtml.html
+  Status extract    : success
+  Lunghezza content : 18229 caratteri
+
+>>> CONTENUTO ESTRATTO DAL CALENDARIO:
+|  |  |  |
+| --- | --- | --- |
+| *Universit degli Studi di Bergamo*  Polo Economico-Giuridico | | Calendario degli esami |
+
+|  |
+| --- |
+| * [Vai all'indice generale](../index.html) * [Calendario docenti](#)   + [A](#)     - [Alsayed A.](Docenti/AlsayedAhmed_021274.html)     - [Andreini D.](Docenti/AndreiniDaniela_000586.html)     - [Anselmi M.](Docenti/AnselmiManuel_018669.html)     - [Aprile R.](Docenti/AprileRoberto_009165.html)     - [Argiento R.](Docenti/ArgientoRaffaele_017585.html)     - [Astorina Marino P.](Docenti/Astorina_MarinoPierpaolo_015916.html)     - [Azzalini M.](Docenti/AzzaliniMarco_003459.html)   + [B](#)     - [Banfi A.](Docenti/BanfiAntonio_Mario_003366.html)     - [Bani E.](Docenti/BaniElisabetta_008027.html)     - [Barassi M.](Docenti/BarassiMarco_000290.html)     - [Barattucci M.](Docenti/BarattucciMassimiliano_018514.html)     - [Barbera C.](Docenti/BarberaCarmela_010338.html)     - [Barbierato D.](Docenti/BarbieratoDaniela_001028.html)     - [Baruffi M.](Docenti/BaruffiMaria_Caterina_017583.html)     - [Basaglia S.](Docenti/BasagliaStefano_002651.html)     - [Bassani G.](Docenti/BassaniGaia_Viviana_002421.html)     - [Bastianon S.](Docenti/BastianonStefano_002230.html)     - [Battaggion M.](Docenti/BattaggionMaria_Rosa_001166.html)     - [Bello P.](Docenti/BelloPiera_017832.html)     - [Belotti U.](Docenti/BelottiUlisse_000447.html)     - [Bergamaschi M.](Docenti/BergamaschiMara_002037.html)     - [Berlanda A.](Docenti/BerlandaAndrea_027493.html)     - [Bertini C.](Docenti/BertiniCesarino_000397.html)     - [Bertoli Barsotti L.](Docenti/Bertoli_BarsottiLucio_001180.html)     - [Bettinelli C.](Docenti/BettinelliCristina_001962.html)     - [Bianchi A.](Docenti/BianchiAnnamaria_002162.html)     - [Binda L.](Docenti/BindaLaurenzia_001307.html)     - [Bizioli G.](Docenti/BizioliGianluigi_000493.html)     - [Boatto S.](Docenti/BoattoStefano_005355.html)     - [Bodellini M.](Docenti/BodelliniMarco_017843.html)     - [Bonfiglioli A.](Docenti/BonfiglioliAlessandra_019668.html)     - [Bonomelli M.](Docenti/BonomelliMarco_003821.html)     - [Bordiga F.](Docenti/BordigaFrancesco_003062.html)     - [Bosio A.](Docenti/BosioAndrea_022941.html)     - [Brambilla P.](Docenti/BrambillaPaola_007671.html)     - [Brignoli V.](Docenti/BrignoliValentina_1002076.html)     - [Brugnoli A.](Docenti/BrugnoliAlberto_000289.html)     - [Brunelli M.](Docenti/BrunelliMichele_001963.html)     - [Buonanno P.](Docenti/BuonannoPaolo_001602.html)     - [Burini F.](Docenti/BuriniFederica_000712.html)   + [C](#)     - [Calderoni G.](Docenti/CalderoniGiulia_023374.html)     - [Cameletti M.](Docenti/CamelettiMichela_001841.html)     - [Campus D.](Docenti/CampusDonatella_016798.html)     - [Capo F.](Docenti/CapoFrancesca_026448.html)     - [Carminati N.](Docenti/CarminatiNadia_Gesemi_016511.html)     - [Carollo L.](Docenti/CarolloLuca_009049.html)     - [Carrer M.](Docenti/CarrerMatteo_002195.html)     - [Castellani D.](Docenti/CastellaniDavide_002508.html)     - [Castellini B.](Docenti/CastelliniBruno_004719.html)     - [Cattaneo C.](Docenti/CattaneoCristiana_000190.html)     - [Caviezel V.](Docenti/CaviezelValeria_001073.html)     - [Cefis E.](Docenti/CefisElena_000616.html)     - [Ceraolo S.](Docenti/CeraoloSilvia_Adele_004337.html)     - [Cerea F.](Docenti/CereaFrancesca_009000.html)     - [Cincinelli P.](Docenti/CincinelliPeter_003782.html)     - [Cinnirella F.](Docenti/CinnirellaFrancesco_014655.html)     - [Coletti P.](Docenti/ColettiPaola_025161.html)     - [Colzani E.](Docenti/ColzaniEdoardo_003010.html)     - [Comi E.](Docenti/ComiEmanuele_002800.html)     - [Coniglio S.](Docenti/ConiglioStefano_019663.html)     - [Conti A.](Docenti/ContiAndrea_018013.html)     - [Contu F.](Docenti/ContuFederico_026435.html)     - [Cornacchia L.](Docenti/CornacchiaLuigi_013637.html)     - [Cortesi E.](Docenti/CortesiEmanuele_022989.html)     - [Cosma A.](Docenti/CosmaAntonio_*0.html)     - [Costa S.](Docenti/CostaSebastiano_003676.html)     - [Crepaldi G.](Docenti/CrepaldiGabriella_001944.html)     - [Crino' R.](Docenti/CrinoRosario_012064.html)     - [Cristini A.](Docenti/CristiniAnnalisa_000086.html)     - [Cugnata F.](Docenti/CugnataFederica_cugnatafederica.html)   + [D](#)     - [D'Adamo D.](Docenti/DAdamoDaniela_001638.html)     - [Da Definire D.](Docenti/Da_DefinireDocente_undefined.html)     - [Dallera G.](Docenti/DalleraGiovanni_Stefano_009412.html)     - [Danovi A.](Docenti/DanoviAlessandro_002231.html)     - [De Stasio V.](Docenti/De_StasioVincenzo_002463.html)     - [Del Bo' C.](Docenti/Del_BoCorrado_017835.html)     - [Del Maschio N.](Docenti/Del_MaschioNicola_Alessandro_nicolaalessandrodelmaschio.html)     - [Doni M.](Docenti/DoniMartino_001426.html)     - [Dossena G.](Docenti/DossenaGiovanna_000988.html)   + [E](#)     - [Edigati D.](Docenti/EdigatiDaniele_003264.html)   + [F](#)     - [Fallucchi F.](Docenti/FallucchiFrancesco_Pio_019667.html)     - [Falzoni A.](Docenti/FalzoniAnna_Maria_000288.html)     - [Far L.](Docenti/FareLuca_020981.html)     - [Fausti P.](Docenti/FaustiPier_Luigi_024150.html)     - [Favara G.](Docenti/FavaraGreta_000110103.html)     - [Fedeli G.](Docenti/FedeliGiancarlo_022318.html)     - [Fiocco R.](Docenti/FioccoRaffaele_013119.html)     - [Floris M.](Docenti/FlorisMara_0011586.html)     - [Foglia M.](Docenti/FogliaMassimo_003348.html)     - [Forlani F.](Docenti/ForlaniFederica_020892.html)   + [G](#)     - [Gaffi F.](Docenti/GaffiFrancesco_026572.html)     - [Galizzi G.](Docenti/GalizziGiovanna_000305.html)     - [Gamba S.](Docenti/GambaSimone_019007.html)     - [GANDELLI F.](Docenti/GANDELLIFederica_014587.html)     - [Gandolfi P.](Docenti/GandolfiPaola_001903.html)     - [Garrido Rodriguez M.](Docenti/Garrido_RodriguezMaria_Dolores_001327.html)     - [Geranio M.](Docenti/GeranioManuela_015907.html)     - [Gervasio D.](Docenti/GervasioDaniele_001601.html)     - [Giacometti R.](Docenti/GiacomettiRosella_000287.html)     - [Ginevra E.](Docenti/GinevraEnrico_001908.html)     - [Giorgetti M.](Docenti/GiorgettiMariacarla_000952.html)     - [Grasseni M.](Docenti/GrasseniMara_001411.html)   + [H](#)     - [Harka E.](Docenti/HarkaElona_015762.html)     - [Hocine A.](Docenti/HocineAmin_020713.html)   + [I](#)     - [Imberti L.](Docenti/ImbertiLucio_015625.html)   + [J](#)     - [Jacquart A.](Docenti/JacquartAlain_001983.html)   + [K](#)     - [Kawai N.](Docenti/KawaiNorifumi_006779.html)     - [Kingshott S.](Docenti/KingshottSusan_004110.html)   + [L](#)     - [Lahmar O.](Docenti/LahmarOumaima_022493.html)     - [Lally C.](Docenti/LallyCatherina_002684.html)     - [Lando T.](Docenti/LandoTommaso_003146.html)     - [Lauria D.](Docenti/LauriaDavide_003848.html)     - [Lecce G.](Docenti/LecceGiampaolo_022890.html)     - [Legramanti S.](Docenti/LegramantiSirio_018500.html)     - [Leporini R.](Docenti/LeporiniRoberto_001724.html)     - [Licini S.](Docenti/LiciniStefania_000663.html)     - [Locatelli F.](Docenti/LocatelliFrancesca_001897.html)     - [Lomazzi V.](Docenti/LomazziVera_017837.html)     - [Lorenzetti A.](Docenti/LorenzettiAnna_003571.html)     - [Lucarelli S.](Docenti/LucarelliStefano_002229.html)     - [Lusardi R.](Docenti/LusardiRoberto_001924.html)   + [M](#)     - [Maci S.](Docenti/MaciStefania_Maria_001473.html)     - [Maestroni A.](Docenti/MaestroniAngelo_001902.html)     - [Maggioni F.](Docenti/MaggioniFrancesca_001750.html)     - [Magno F.](Docenti/MagnoFrancesca_002297.html)     - [Manfredonia B.](Docenti/ManfredoniaBenedetta_003458.html)     - [Mangio' F.](Docenti/MangioFederico_012467.html)     - [Manoli A.](Docenti/ManoliArgyro_Elisavet_021727.html)     - [Manzoni E.](Docenti/ManzoniElena_017587.html)     - [Marelli E.](Docenti/MarelliElena_009966.html)     - [Mariani L.](Docenti/MarianiLaura_013638.html)     - [Martini C.](Docenti/MartiniCarlo_0011585.html)     - [Martini G.](Docenti/MartiniGianmaria_000311.html)     - [Marzano M.](Docenti/MarzanoMarco_001178.html)     - [Mazza M.](Docenti/MazzaMauro_002232.html)     - [Mazzara D.](Docenti/MazzaraDaniela_danielamazzara.html)     - [Melis R.](Docenti/MelisRoberto_018271.html)     - [Merisio F.](Docenti/MerisioFrancesco_002057.html)     - [Meschitti V.](Docenti/MeschittiViviana_017836.html)     - [Migliorati L.](Docenti/MiglioratiLorenzo_015875.html)     - [Molinari M.](Docenti/MolinariMatteo_022832.html)     - [Montani D.](Docenti/MontaniDamiano_001717.html)     - [Monzani E.](Docenti/MonzaniElisa_004170.html)     - [Monzani S.](Docenti/MonzaniSaul_002094.html)     - [MORDACCI R.](Docenti/MORDACCIRoberto_Gino_023000.html)     - [Moretti L.](Docenti/MorettiLuigi_018517.html)     - [Mori S.](Docenti/MoriSimona_Maria_Francesca_002417.html)     - [Moriggia V.](Docenti/MoriggiaVittorio_000356.html)     - [Morini A.](Docenti/MoriniAlessandro_000286.html)     - [Morzenti Pellegrini R.](Docenti/Morzenti_PellegriniRemo_000527.html)     - [Myftiu J.](Docenti/MyftiuJurgena_024512.html)   + [N](#)     - [Nardelli C.](Docenti/NardelliCarla_001629.html)     - [Nicoli R.](Docenti/NicoliRoberto_CCL15.html)     - [Nocera I.](Docenti/NoceraIvan_Libero_022092.html)   + [O](#)     - [Ogliari L.](Docenti/OgliariLaura_018469.html)     - [Oppi C.](Docenti/OppiChiara_015559.html)     - [Origo F.](Docenti/OrigoFederica_Maria_001727.html)     - [Ortobelli Lozza S.](Docenti/Ortobelli_LozzaSergio_000593.html)   + [P](#)     - [Pantaleo G.](Docenti/PantaleoGiuseppe_giuseppepantaleo.html)     - [Pasta A.](Docenti/PastaAlessandro_005782.html)     - [Patane' A.](Docenti/PataneAndrea_015208.html)     - [Pedeliento G.](Docenti/PedelientoGiuseppe_002985.html)     - [Pedroni M.](Docenti/PedroniMarco_001644.html)     - [Pellegrinelli P.](Docenti/PellegrinelliPiera_002581.html)     - [Pellegrini L.](Docenti/PellegriniLaura_019670.html)     - [Peraro C.](Docenti/PeraroCinzia_017318.html)     - [Perazzoli J.](Docenti/PerazzoliJacopo_015691.html)     - [Perego G.](Docenti/PeregoGaia_gaiaperego.html)     - [Persano F.](Docenti/PersanoFederica_002201.html)     - [Pezzini B.](Docenti/PezziniBarbara_000072.html)     - [Pezzotta G.](Docenti/PezzottaGiuditta_001342.html)     - [Piatti D.](Docenti/PiattiDomenico_001020.html)     - [Piccolo S.](Docenti/PiccoloSalvatore_003418.html)     - [Pilonato S.](Docenti/PilonatoSilvia_016799.html)     - [Pisanelli E.](Docenti/PisanelliElena_004981.html)     - [Pongiglione F.](Docenti/PongiglioneFrancesca_026176.html)     - [Principe F.](Docenti/PrincipeFrancesco_020572.html)     - [Pucella R.](Docenti/PucellaRoberto_001382.html)     - [Pulcher S.](Docenti/PulcherSimone_023164.html)     - [Pulcini A.](Docenti/PulciniAndrea_005565.html)   + [R](#)     - [Reggi L.](Docenti/ReggiLuigi_020692.html)     - [Restelli A.](Docenti/Restelli_Andrea_022997.html)     - [Ricci A.](Docenti/RicciAlessandro_016624.html)     - [Ricci M.](Docenti/RicciMaria_024191.html)     - [Rimella L.](Docenti/RimellaLorenzo_025303.html)     - [RIVELLO P.](Docenti/RIVELLOPierpaolo_012929.html)     - [Rizzoli L.](Docenti/RizzoliLaura_024719.html)     - [Romagnoli M.](Docenti/RomagnoliManuel_026211.html)     - [Romolo F.](Docenti/RomoloFrancesco_Saverio_013712.html)     - [Rossetti A.](Docenti/RossettiAndrea_008865.html)     - [Rossi C.](Docenti/RossiClaudia_000120.html)     - [Rota I.](Docenti/RotaIvana_000668.html)     - [RUGGERI F.](Docenti/RUGGERIFederico_023038.html)     - [RUSSO M.](Docenti/RUSSOMaria_026177.html)     - [Russo V.](Docenti/RussoVincenzo_002789.html)   + [S](#)     - [Sabbi L.](Docenti/SabbiLuca_002539.html)     - [Sala R.](Docenti/SalaRoberta_000110102.html)     - [SALA R.](Docenti/SALARoberta_023002.html)     - [Sammarco P.](Docenti/SammarcoPieremilio_007739.html)     - [Sanasi S.](Docenti/SanasiSilvia_027534.html)     - [Sandona' A.](Docenti/SandonaAlan_019958.html)     - [Savo D.](Docenti/SavoDomenico_Fabio_013361.html)     - [Scalia R.](Docenti/ScaliaRoberto_003212.html)     - [Scarlata M.](Docenti/ScarlataMaria_Rosa_Giovanna_014649.html)     - [Scevi P.](Docenti/SceviPaola_002495.html)     - [Sciara S.](Docenti/SciaraSimona_simonasciara.html)     - [Scollo L.](Docenti/ScolloLuigi_017529.html)     - [Sconti A.](Docenti/ScontiAlessia_024312.html)     - [Scotti D.](Docenti/ScottiDavide_002559.html)     - [Scotto Di Luzio A.](Docenti/Scotto_Di_LuzioAdolfo_001628.html)     - [Seghezzi F.](Docenti/SeghezziFrancesco_004146.html)     - [Servalli S.](Docenti/ServalliStefania_000680.html)     - [Sherwood K.](Docenti/SherwoodKatharine_012114.html)     - [Sicilia M.](Docenti/SiciliaMariafrancesca_003303.html)     - [Signori S.](Docenti/SignoriSilvana_000947.html)     - [Signorini E.](Docenti/SignoriniElena_000771.html)     - [STANGHELLINI A.](Docenti/STANGHELLINIAlberto_018958.html)     - [Stea G.](Docenti/SteaGaetano_015385.html)   + [T](#)     - [Tavani A.](Docenti/TavaniAnnarita_013692.html)     - [Tedoldi L.](Docenti/TedoldiLeonida_014726.html)     - [Tira A.](Docenti/TiraAlessandro_012867.html)     - [TODESCHINI D.](Docenti/TODESCHINIDemis_019717.html)     - [Tomelleri S.](Docenti/TomelleriStefano_001022.html)     - [Toninelli D.](Docenti/ToninelliDaniele_001330.html)     - [Torri G.](Docenti/TorriGabriele_007820.html)     - [Trocini F.](Docenti/TrociniFederico_019666.html)     - [Troilo S.](Docenti/TroiloSilvio_000317.html)   + [V](#)     - [Vaccari F.](Docenti/VaccariFederico_021799.html)     - [Vaglio A.](Docenti/VaglioAlessandro_Giovanni_Maria_001167.html)     - [Valesi R.](Docenti/ValesiRiccardo_018478.html)     - [Variato A.](Docenti/VariatoAnna_Maria_Grazia_000284.html)     - [Vertova P.](Docenti/VertovaPietro_002204.html)     - [Verzaro M.](Docenti/VerzaroMatteo_019565.html)     - [Vespucci M.](Docenti/VespucciMaria_Teresa_000146.html)     - [Vigano' L.](Docenti/ViganoLaura_000191.html)     - [Vignati R.](Docenti/VignatiRinaldo_rinaldovignati.html)     - [Vismara S.](Docenti/VismaraSilvio_000998.html)     - [Vitali S.](Docenti/VitaliSebastiano_002830.html)     - [VOLPE A.](Docenti/VOLPEAlessandro_022999.html)   + [W](#)     - [Wassler P.](Docenti/WasslerPhilipp_018152.html)     - [Watt G.](Docenti/WattGary_007172.html)   + [Z](#)     - [Zanetti Chini E.](Docenti/Zanetti_ChiniEmilio_017545.html)     - [Zanichelli M.](Docenti/ZanichelliMaria_022889.html)     - [Zanotti G.](Docenti/ZanottiGiovanna_001615.html)     - [Zinesi A.](Docenti/ZinesiAlice_016509.html)     - [Zucchelli G.](Docenti/ZucchelliGiovanni_004189.html) * [Calendario esami](#)   + [Complessivo](ttTotalHtml.html) |
+
+|  |
+| --- |
+|  |
+| Pubblicato il 19/2/2026 17:05 |
+|  |
+| |  | | --- | | **Sessione d'esame**: SESS. PROVE INT. APRILE 2026 2025/2026  **Calendario degli esami visualizzato**: SESS. PROVE INT. APRILE 2026  **Calendario complessivo** | |
+|  |
+| |  |  |  |  |  |  |  |  | | --- | --- | --- | --- | --- | --- | --- | --- | |  |  |  |  |  |  | sabato | domenica | | Aprile | |  | | --- | | 20-4-2026 | | |  | | --- | | 21-4-2026 | | |  | | --- | | 22-4-2026 | | |  | | --- | | 23-4-2026 | | |  | | --- | | **ECONOMIA INDUSTRIALE** | | [Laura Ogliari](./Docenti/OgliariLaura_018469.html) | | I appello | | 09:00 | | Aula 1 Caniana | | 2A - S2 | | esame scritto |  ---  |  | | --- | | **FINANCIAL ACCOUNTING** | | [Matteo Molinari](./Docenti/MolinariMatteo_022832.html) | | I appello | | 14:30 | | Aula 1 Caniana | | 1A - S2 | | esame scritto | | | |  | | --- | | 24-4-2026 | | |  | | --- | | **ECONOMIA INTERNAZIONALE - Integrato** | | [Anna Maria Falzoni](./Docenti/FalzoniAnna_Maria_000288.html) | | I appello | | 09:00 | | Aula 1 Caniana | | 2A - S2 | | esame scritto | | | |  | | --- | | 25-4-2026 | | |  | | --- | | 26-4-2026 | | |
+|  |
+| |  |  | | --- | --- | | **LEGENDA:** | | | |  | | --- | |  | | Esame correlato di un accorpamento di esami | |
+|  |
+
+|  |
+| --- |
+| **Sessione d'esame**: SESS. PROVE INT. APRILE 2026 2025/2026  **Calendario degli esami visualizzato**: SESS. PROVE INT. APRILE 2026  **Calendario complessivo** |
+
+|  |  |  |  |  |  |  |  |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  | sabato | domenica |
+| Aprile | |  | | --- | | 20-4-2026 | | |  | | --- | | 21-4-2026 | | |  | | --- | | 22-4-2026 | | |  | | --- | | 23-4-2026 | | |  | | --- | | **ECONOMIA INDUSTRIALE** | | [Laura Ogliari](./Docenti/OgliariLaura_018469.html) | | I appello | | 09:00 | | Aula 1 Caniana | | 2A - S2 | | esame scritto |  ---  |  | | --- | | **FINANCIAL ACCOUNTING** | | [Matteo Molinari](./Docenti/MolinariMatteo_022832.html) | | I appello | | 14:30 | | Aula 1 Caniana | | 1A - S2 | | esame scritto | | | |  | | --- | | 24-4-2026 | | |  | | --- | | **ECONOMIA INTERNAZIONALE - Integrato** | | [Anna Maria Falzoni](./Docenti/FalzoniAnna_Maria_000288.html) | | I appello | | 09:00 | | Aula 1 Caniana | | 2A - S2 | | esame scritto | | | |  | | --- | | 25-4-2026 | | |  | | --- | | 26-4-2026 | |
+
+|  |
+| --- |
+| 20-4-2026 |
+
+|  |
+| --- |
+| 21-4-2026 |
+
+|  |
+| --- |
+| 22-4-2026 |
+
+|  |
+| --- |
+| 23-4-2026 |
+| |  | | --- | | **ECONOMIA INDUSTRIALE** | | [Laura Ogliari](./Docenti/OgliariLaura_018469.html) | | I appello | | 09:00 | | Aula 1 Caniana | | 2A - S2 | | esame scritto |  ---  |  | | --- | | **FINANCIAL ACCOUNTING** | | [Matteo Molinari](./Docenti/MolinariMatteo_022832.html) | | I appello | | 14:30 | | Aula 1 Caniana | | 1A - S2 | | esame scritto | |
+
+|  |
+| --- |
+| **ECONOMIA INDUSTRIALE** |
+| [Laura Ogliari](./Docenti/OgliariLaura_018469.html) |
+| I appello |
+| 09:00 |
+| Aula 1 Caniana |
+| 2A - S2 |
+| esame scritto |
+
+|  |
+| --- |
+| **FINANCIAL ACCOUNTING** |
+| [Matteo Molinari](./Docenti/MolinariMatteo_022832.html) |
+| I appello |
+| 14:30 |
+| Aula 1 Caniana |
+| 1A - S2 |
+| esame scritto |
+
+|  |
+| --- |
+| 24-4-2026 |
+| |  | | --- | | **ECONOMIA INTERNAZIONALE - Integrato** | | [Anna Maria Falzoni](./Docenti/FalzoniAnna_Maria_000288.html) | | I appello | | 09:00 | | Aula 1 Caniana | | 2A - S2 | | esame scritto | |
+
+|  |
+| --- |
+| **ECONOMIA INTERNAZIONALE - Integrato** |
+| [Anna Maria Falzoni](./Docenti/FalzoniAnna_Maria_000288.html) |
+| I appello |
+| 09:00 |
+| Aula 1 Caniana |
+| 2A - S2 |
+| esame scritto |
+
+|  |
+| --- |
+| 25-4-2026 |
+
+|  |
+| --- |
+| 26-4-2026 |
+
+|  |  |
+| --- | --- |
+| **LEGENDA:** | |
+| |  | | --- | |  | | Esame correlato di un accorpamento di esami |
+
+|  |
+| --- |
+|  |
+
+|  |
+| --- |
+| Powered by [EasyStaff](http://www.easystaff.it) |
+
+  Fonti web aggiuntive: 3
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: date_esami
+
+>>> SYSTEM PROMPT:
+Sei un assistente specializzato nelle date e orari degli esami dell'Università di Bergamo.
+Aiuta gli studenti a trovare quando si svolgono gli esami, in quale sessione e in quali date.
+Ti vengono fornite informazioni estratte dai calendari ufficiali degli esami.
+Cerca le date degli esami specifici richiesti dallo studente all'interno del contenuto fornito.
+Se non trovi l'esame specifico, indica chiaramente che non è presente nel calendario fornito e suggerisci di controllare il portale esami.
+Se lo studente è un ospite e non sai il suo corso, chiedigli gentilmente quale corso frequenta per poterti aiutare meglio.
+
+
+DATA ODIERNA: 04 marzo 2026 (Anno accademico 2025/2026)
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+8. Alcune fonti sono documenti PDF: in quel caso vengono forniti anche i link ipertestuali estratti direttamente dal PDF con la pagina di provenienza. Se uno di questi link è rilevante per la risposta dello studente, includilo nella risposta in forma cliccabile (formato Markdown: [testo](url)) indicando anche da quale parte del documento proviene.
+
+Informazioni aggiuntive:
+DATA ODIERNA: 04 marzo 2026
+
+═══ CALENDARIO ESAMI ESTRATTO ═══
+Polo/Dipartimento: Polo Economico-Giuridico
+Sessione: intermedia/aprile straordinaria
+URL: https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/628/ttTotalHtml.html
+Motivo della scelta: NUMERO: 4
+MOTIVO: L'utente ha chiesto le date degli esami di Giurisprudenza. Il Polo Economico-Giuridico è il dipartimento corretto. La sessione intermedia/aprile straordinaria è la più prossima e pertinente rispetto alla data odierna (04 marzo 2026).
+
+Contenuto del calendario:
+|  |  |  |
+| --- | --- | --- |
+| *Universit degli Studi di Bergamo*  Polo Economico-Giuridico | | Calendario degli esami |
+
+|  |
+| --- |
+| * [Vai all'indice generale](../index.html) * [Calendario docenti](#)   + [A](#)     - [Alsayed A.](Docenti/AlsayedAhmed_021274.html)     - [Andreini D.](Docenti/AndreiniDaniela_000586.html)     - [Anselmi M.](Docenti/AnselmiManuel_018669.html)     - [Aprile R.](Docenti/AprileRoberto_009165.html)     - [Argiento R.](Docenti/ArgientoRaffaele_017585.html)     - [Astorina Marino P.](Docenti/Astorina_MarinoPierpaolo_015916.html)     - [Azzalini M.](Docenti/AzzaliniMarco_003459.html)   + [B](#)     - [Banfi A.](Docenti/BanfiAntonio_Mario_003366.html)     - [Bani E.](Docenti/BaniElisabetta_008027.html)     - [Barassi M.](Docenti/BarassiMarco_000290.html)     - [Barattucci M.](Docenti/BarattucciMassimiliano_018514.html)     - [Barbera C.](Docenti/BarberaCarmela_010338.html)     - [Barbierato D.](Docenti/BarbieratoDaniela_001028.html)     - [Baruffi M.](Docenti/BaruffiMaria_Caterina_017583.html)     - [Basaglia S.](Docenti/BasagliaStefano_002651.html)     - [Bassani G.](Docenti/BassaniGaia_Viviana_002421.html)     - [Bastianon S.](Docenti/BastianonStefano_002230.html)     - [Battaggion M.](Docenti/BattaggionMaria_Rosa_001166.html)     - [Bello P.](Docenti/BelloPiera_017832.html)     - [Belotti U.](Docenti/BelottiUlisse_000447.html)     - [Bergamaschi M.](Docenti/BergamaschiMara_002037.html)     - [Berlanda A.](Docenti/BerlandaAndrea_027493.html)     - [Bertini C.](Docenti/BertiniCesarino_000397.html)     - [Bertoli Barsotti L.](Docenti/Bertoli_BarsottiLucio_001180.html)     - [Bettinelli C.](Docenti/BettinelliCristina_001962.html)     - [Bianchi A.](Docenti/BianchiAnnamaria_002162.html)     - [Binda L.](Docenti/BindaLaurenzia_001307.html)     - [Bizioli G.](Docenti/BizioliGianluigi_000493.html)     - [Boatto S.](Docenti/BoattoStefano_005355.html)     - [Bodellini M.](Docenti/BodelliniMarco_017843.html)     - [Bonfiglioli A.](Docenti/BonfiglioliAlessandra_019668.html)     - [Bonomelli M.](Docenti/BonomelliMarco_003821.html)     - [Bordiga F.](Docenti/BordigaFrancesco_003062.html)     - [Bosio A.](Docenti/BosioAndrea_022941.html)     - [Brambilla P.](Docenti/BrambillaPaola_007671.html)     - [Brignoli V.](Docenti/BrignoliValentina_1002076.html)     - [Brugnoli A.](Docenti/BrugnoliAlberto_000289.html)     - [Brunelli M.](Docenti/BrunelliMichele_001963.html)     - [Buonanno P.](Docenti/BuonannoPaolo_001602.html)     - [Burini F.](Docenti/BuriniFederica_000712.html)   + [C](#)     - [Calderoni G.](Docenti/CalderoniGiulia_023374.html)     - [Cameletti M.](Docenti/CamelettiMichela_001841.html)     - [Campus D.](Docenti/CampusDonatella_016798.html)     - [Capo F.](Docenti/CapoFrancesca_026448.html)     - [Carminati N.](Docenti/CarminatiNadia_Gesemi_016511.html)     - [Carollo L.](Docenti/CarolloLuca_009049.html)     - [Carrer M.](Docenti/CarrerMatteo_002195.html)     - [Castellani D.](Docenti/CastellaniDavide_002508.html)     - [Castellini B.](Docenti/CastelliniBruno_004719.html)     - [Cattaneo C.](Docenti/CattaneoCristiana_000190.html)     - [Caviezel V.](Docenti/CaviezelValeria_001073.html)     - [Cefis E.](Docenti/CefisElena_000616.html)     - [Ceraolo S.](Docenti/CeraoloSilvia_Adele_004337.html)     - [Cerea F.](Docenti/CereaFrancesca_009000.html)     - [Cincinelli P.](Docenti/CincinelliPeter_003782.html)     - [Cinnirella F.](Docenti/CinnirellaFrancesco_014655.html)     - [Coletti P.](Docenti/ColettiPaola_025161.html)     - [Colzani E.](Docenti/ColzaniEdoardo_003010.html)     - [Comi E.](Docenti/ComiEmanuele_002800.html)     - [Coniglio S.](Docenti/ConiglioStefano_019663.html)     - [Conti A.](Docenti/ContiAndrea_018013.html)     - [Contu F.](Docenti/ContuFederico_026435.html)     - [Cornacchia L.](Docenti/CornacchiaLuigi_013637.html)     - [Cortesi E.](Docenti/CortesiEmanuele_022989.html)     - [Cosma A.](Docenti/CosmaAntonio_*0.html)     - [Costa S.](Docenti/CostaSebastiano_003676.html)     - [Crepaldi G.](Docenti/CrepaldiGabriella_001944.html)     - [Crino' R.](Docenti/CrinoRosario_012064.html)     - [Cristini A.](Docenti/CristiniAnnalisa_000086.html)     - [Cugnata F.](Docenti/CugnataFederica_cugnatafederica.html)   + [D](#)     - [D'Adamo D.](Docenti/DAdamoDaniela_001638.html)     - [Da Definire D.](Docenti/Da_DefinireDocente_undefined.html)     - [Dallera G.](Docenti/DalleraGiovanni_Stefano_009412.html)     - [Danovi A.](Docenti/DanoviAlessandro_002231.html)     - [De Stasio V.](Docenti/De_StasioVincenzo_002463.html)     - [Del Bo' C.](Docenti/Del_BoCorrado_017835.html)     - [Del Maschio N.](Docenti/Del_MaschioNicola_Alessandro_nicolaalessandrodelmaschio.html)     - [Doni M.](Docenti/DoniMartino_001426.html)     - [Dossena G.](Docenti/DossenaGiovanna_000988.html)   + [E](#)     - [Edigati D.](Docenti/EdigatiDaniele_003264.html)   + [F](#)     - [Fallucchi F.](Docenti/FallucchiFrancesco_Pio_019667.html)     - [Falzoni A.](Docenti/FalzoniAnna_Maria_000288.html)     - [Far L.](Docenti/FareLuca_020981.html)     - [Fausti P.](Docenti/FaustiPier_Luigi_024150.html)     - [Favara G.](Docenti/FavaraGreta_000110103.html)     - [Fedeli G.](Docenti/FedeliGiancarlo_022318.html)     - [Fiocco R.](Docenti/FioccoRaffaele_013119.html)     - [Floris M.](Docenti/FlorisMara_0011586.html)     - [Foglia M.](Docenti/FogliaMassimo_003348.html)     - [Forlani F.](Docenti/ForlaniFederica_020892.html)   + [G](#)     - [Gaffi F.](Docenti/GaffiFrancesco_026572.html)     - [Galizzi G.](Docenti/GalizziGiovanna_000305.html)     - [Gamba S.](Docenti/GambaSimone_019007.html)     - [GANDELLI F.](Docenti/GANDELLIFederica_014587.html)     - [Gandolfi P.](Docenti/GandolfiPaola_001903.html)     - [Garrido Rodriguez M.](Docenti/Garrido_RodriguezMaria_Dolores_001327.html)     - [Geranio M.](Docenti/GeranioManuela_015907.html)     - [Gervasio D.](Docenti/GervasioDaniele_001601.html)     - [Giacometti R.](Docenti/GiacomettiRosella_000287.html)     - [Ginevra E.](Docenti/GinevraEnrico_001908.html)     - [Giorgetti M.](Docenti/GiorgettiMariacarla_000952.html)     - [Grasseni M.](Docenti/GrasseniMara_001411.html)   + [H](#)     - [Harka E.](Docenti/HarkaElona_015762.html)     - [Hocine A.](Docenti/HocineAmin_020713.html)   + [I](#)     - [Imberti L.](Docenti/ImbertiLucio_015625.html)   + [J](#)     - [Jacquart A.](Docenti/JacquartAlain_001983.html)   + [K](#)     - [Kawai N.](Docenti/KawaiNorifumi_006779.html)     - [Kingshott S.](Docenti/KingshottSusan_004110.html)   + [L](#)     - [Lahmar O.](Docenti/LahmarOumaima_022493.html)     - [Lally C.](Docenti/LallyCatherina_002684.html)     - [Lando T.](Docenti/LandoTommaso_003146.html)     - [Lauria D.](Docenti/LauriaDavide_003848.html)     - [Lecce G.](Docenti/LecceGiampaolo_022890.html)     - [Legramanti S.](Docenti/LegramantiSirio_018500.html)     - [Leporini R.](Docenti/LeporiniRoberto_001724.html)     - [Licini S.](Docenti/LiciniStefania_000663.html)     - [Locatelli F.](Docenti/LocatelliFrancesca_001897.html)     - [Lomazzi V.](Docenti/LomazziVera_017837.html)     - [Lorenzetti A.](Docenti/LorenzettiAnna_003571.html)     - [Lucarelli S.](Docenti/LucarelliStefano_002229.html)     - [Lusardi R.](Docenti/LusardiRoberto_001924.html)   + [M](#)     - [Maci S.](Docenti/MaciStefania_Maria_001473.html)     - [Maestroni A.](Docenti/MaestroniAngelo_001902.html)     - [Maggioni F.](Docenti/MaggioniFrancesca_001750.html)     - [Magno F.](Docenti/MagnoFrancesca_002297.html)     - [Manfredonia B.](Docenti/ManfredoniaBenedetta_003458.html)     - [Mangio' F.](Docenti/MangioFederico_012467.html)     - [Manoli A.](Docenti/ManoliArgyro_Elisavet_021727.html)     - [Manzoni E.](Docenti/ManzoniElena_017587.html)     - [Marelli E.](Docenti/MarelliElena_009966.html)     - [Mariani L.](Docenti/MarianiLaura_013638.html)     - [Martini C.](Docenti/MartiniCarlo_0011585.html)     - [Martini G.](Docenti/MartiniGianmaria_000311.html)     - [Marzano M.](Docenti/MarzanoMarco_001178.html)     - [Mazza M.](Docenti/MazzaMauro_002232.html)     - [Mazzara D.](Docenti/MazzaraDaniela_danielamazzara.html)     - [Melis R.](Docenti/MelisRoberto_018271.html)     - [Merisio F.](Docenti/MerisioFrancesco_002057.html)     - [Meschitti V.](Docenti/MeschittiViviana_017836.html)     - [Migliorati L.](Docenti/MiglioratiLorenzo_015875.html)     - [Molinari M.](Docenti/MolinariMatteo_022832.html)     - [Montani D.](Docenti/MontaniDamiano_001717.html)     - [Monzani E.](Docenti/MonzaniElisa_004170.html)     - [Monzani S.](Docenti/MonzaniSaul_002094.html)     - [MORDACCI R.](Docenti/MORDACCIRoberto_Gino_023000.html)     - [Moretti L.](Docenti/MorettiLuigi_018517.html)     - [Mori S.](Docenti/MoriSimona_Maria_Francesca_002417.html)     - [Moriggia V.](Docenti/MoriggiaVittorio_000356.html)     - [Morini A.](Docenti/MoriniAlessandro_000286.html)     - [Morzenti Pellegrini R.](Docenti/Morzenti_PellegriniRemo_000527.html)     - [Myftiu J.](Docenti/MyftiuJurgena_024512.html)   + [N](#)     - [Nardelli C.](Docenti/NardelliCarla_001629.html)     - [Nicoli R.](Docenti/NicoliRoberto_CCL15.html)     - [Nocera I.](Docenti/NoceraIvan_Libero_022092.html)   + [O](#)     - [Ogliari L.](Docenti/OgliariLaura_018469.html)     - [Oppi C.](Docenti/OppiChiara_015559.html)     - [Origo F.](Docenti/OrigoFederica_Maria_001727.html)     - [Ortobelli Lozza S.](Docenti/Ortobelli_LozzaSergio_000593.html)   + [P](#)     - [Pantaleo G.](Docenti/PantaleoGiuseppe_giuseppepantaleo.html)     - [Pasta A.](Docenti/PastaAlessandro_005782.html)     - [Patane' A.](Docenti/PataneAndrea_015208.html)     - [Pedeliento G.](Docenti/PedelientoGiuseppe_002985.html)     - [Pedroni M.](Docenti/PedroniMarco_001644.html)     - [Pellegrinelli P.](Docenti/PellegrinelliPiera_002581.html)     - [Pellegrini L.](Docenti/PellegriniLaura_019670.html)     - [Peraro C.](Docenti/PeraroCinzia_017318.html)     - [Perazzoli J.](Docenti/PerazzoliJacopo_015691.html)     - [Perego G.](Docenti/PeregoGaia_gaiaperego.html)     - [Persano F.](Docenti/PersanoFederica_002201.html)     - [Pezzini B.](Docenti/PezziniBarbara_000072.html)     - [Pezzotta G.](Docenti/PezzottaGiuditta_001342.html)     - [Piatti D.](Docenti/PiattiDomenico_001020.html)     - [Piccolo S.](Docenti/PiccoloSalvatore_003418.html)     - [Pilonato S.](Docenti/PilonatoSilvia_016799.html)     - [Pisanelli E.](Docenti/PisanelliElena_004981.html)     - [Pongiglione F.](Docenti/PongiglioneFrancesca_026176.html)     - [Principe F.](Docenti/PrincipeFrancesco_020572.html)     - [Pucella R.](Docenti/PucellaRoberto_001382.html)     - [Pulcher S.](Docenti/PulcherSimone_023164.html)     - [Pulcini A.](Docenti/PulciniAndrea_005565.html)   + [R](#)     - [Reggi L.](Docenti/ReggiLuigi_020692.html)     - [Restelli A.](Docenti/Restelli_Andrea_022997.html)     - [Ricci A.](Docenti/RicciAlessandro_016624.html)     - [Ricci M.](Docenti/RicciMaria_024191.html)     - [Rimella L.](Docenti/RimellaLorenzo_025303.html)     - [RIVELLO P.](Docenti/RIVELLOPierpaolo_012929.html)     - [Rizzoli L.](Docenti/RizzoliLaura_024719.html)     - [Romagnoli M.](Docenti/RomagnoliManuel_026211.html)     - [Romolo F.](Docenti/RomoloFrancesco_Saverio_013712.html)     - [Rossetti A.](Docenti/RossettiAndrea_008865.html)     - [Rossi C.](Docenti/RossiClaudia_000120.html)     - [Rota I.](Docenti/RotaIvana_000668.html)     - [RUGGERI F.](Docenti/RUGGERIFederico_023038.html)     - [RUSSO M.](Docenti/RUSSOMaria_026177.html)     - [Russo V.](Docenti/RussoVincenzo_002789.html)   + [S](#)     - [Sabbi L.](Docenti/SabbiLuca_002539.html)     - [Sala R.](Docenti/SalaRoberta_000110102.html)     - [SALA R.](Docenti/SALARoberta_023002.html)     - [Sammarco P.](Docenti/SammarcoPieremilio_007739.html)     - [Sanasi S.](Docenti/SanasiSilvia_027534.html)     - [Sandona' A.](Docenti/SandonaAlan_019958.html)     - [Savo D.](Docenti/SavoDomenico_Fabio_013361.html)     - [Scalia R.](Docenti/ScaliaRoberto_003212.html)     - [Scarlata M.](Docenti/ScarlataMaria_Rosa_Giovanna_014649.html)     - [Scevi P.](Docenti/SceviPaola_002495.html)     - [Sciara S.](Docenti/SciaraSimona_simonasciara.html)     - [Scollo L.](Docenti/ScolloLuigi_017529.html)     - [Sconti A.](Docenti/ScontiAlessia_024312.html)     - [Scotti D.](Docenti/ScottiDavide_002559.html)     - [Scotto Di Luzio A.](Docenti/Scotto_Di_LuzioAdolfo_001628.html)     - [Seghezzi F.](Docenti/SeghezziFrancesco_004146.html)     - [Servalli S.](Docenti/ServalliStefania_000680.html)     - [Sherwood K.](Docenti/SherwoodKatharine_012114.html)     - [Sicilia M.](Docenti/SiciliaMariafrancesca_003303.html)     - [Signori S.](Docenti/SignoriSilvana_000947.html)     - [Signorini E.](Docenti/SignoriniElena_000771.html)     - [STANGHELLINI A.](Docenti/STANGHELLINIAlberto_018958.html)     - [Stea G.](Docenti/SteaGaetano_015385.html)   + [T](#)     - [Tavani A.](Docenti/TavaniAnnarita_013692.html)     - [Tedoldi L.](Docenti/TedoldiLeonida_014726.html)     - [Tira A.](Docenti/TiraAlessandro_012867.html)     - [TODESCHINI D.](Docenti/TODESCHINIDemis_019717.html)     - [Tomelleri S.](Docenti/TomelleriStefano_001022.html)     - [Toninelli D.](Docenti/ToninelliDaniele_001330.html)     - [Torri G.](Docenti/TorriGabriele_007820.html)     - [Trocini F.](Docenti/TrociniFederico_019666.html)     - [Troilo S.](Docenti/TroiloSilvio_000317.html)   + [V](#)     - [Vaccari F.](Docenti/VaccariFederico_021799.html)     - [Vaglio A.](Docenti/VaglioAlessandro_Giovanni_Maria_001167.html)     - [Valesi R.](Docenti/ValesiRiccardo_018478.html)     - [Variato A.](Docenti/VariatoAnna_Maria_Grazia_000284.html)     - [Vertova P.](Docenti/VertovaPietro_002204.html)     - [Verzaro M.](Docenti/VerzaroMatteo_019565.html)     - [Vespucci M.](Docenti/VespucciMaria_Teresa_000146.html)     - [Vigano' L.](Docenti/ViganoLaura_000191.html)     - [Vignati R.](Docenti/VignatiRinaldo_rinaldovignati.html)     - [Vismara S.](Docenti/VismaraSilvio_000998.html)     - [Vitali S.](Docenti/VitaliSebastiano_002830.html)     - [VOLPE A.](Docenti/VOLPEAlessandro_022999.html)   + [W](#)     - [Wassler P.](Docenti/WasslerPhilipp_018152.html)     - [Watt G.](Docenti/WattGary_007172.html)   + [Z](#)     - [Zanetti Chini E.](Docenti/Zanetti_ChiniEmilio_017545.html)     - [Zanichelli M.](Docenti/ZanichelliMaria_022889.html)     - [Zanotti G.](Docenti/ZanottiGiovanna_001615.html)     - [Zinesi A.](Docenti/ZinesiAlice_016509.html)     - [Zucchelli G.](Docenti/ZucchelliGiovanni_004189.html) * [Calendario esami](#)   + [Complessivo](ttTotalHtml.html) |
+
+|  |
+| --- |
+|  |
+| Pubblicato il 19/2/2026 17:05 |
+|  |
+| |  | | --- | | **Sessione d'esame**: SESS. PROVE INT. APRILE 2026 2025/2026  **Calendario degli esami visualizzato**: SESS. PROVE INT. APRILE 2026  **Calendario complessivo** | |
+|  |
+| |  |  |  |  |  |  |  |  | | --- | --- | --- | --- | --- | --- | --- | --- | |  |  |  |  |  |  | sabato | domenica | | Aprile | |  | | --- | | 20-4-2026 | | |  | | --- | | 21-4-2026 | | |  | | --- | | 22-4-2026 | | |  | | --- | | 23-4-2026 | | |  | | --- | | **ECONOMIA INDUSTRIALE** | | [Laura Ogliari](./Docenti/OgliariLaura_018469.html) | | I appello | | 09:00 | | Aula 1 Caniana | | 2A - S2 | | esame scritto |  ---  |  | | --- | | **FINANCIAL ACCOUNTING** | | [Matteo Molinari](./Docenti/MolinariMatteo_022832.html) | | I appello | | 14:30 | | Aula 1 Caniana | | 1A - S2 | | esame scritto | | | |  | | --- | | 24-4-2026 | | |  | | --- | | **ECONOMIA INTERNAZIONALE - Integrato** | | [Anna Maria Falzoni](./Docenti/FalzoniAnna_Maria_000288.html) | | I appello | | 09:00 | | Aula 1 Caniana | | 2A - S2 | | esame scritto | | | |  | | --- | | 25-4-2026 | | |  | | --- | | 26-4-2026 | | |
+|  |
+| |  |  | | --- | --- | | **LEGENDA:** | | | |  | | --- | |  | | Esame correlato di un accorpamento di esami | |
+|  |
+
+|  |
+| --- |
+| **Sessione d'esame**: SESS. PROVE INT. APRILE 2026 2025/2026  **Calendario degli esami visualizzato**: SESS. PROVE INT. APRILE 2026  **Calendario complessivo** |
+
+|  |  |  |  |  |  |  |  |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  | sabato | domenica |
+| Aprile | |  | | --- | | 20-4-2026 | | |  | | --- | | 21-4-2026 | | |  | | --- | | 22-4-2026 | | |  | | --- | | 23-4-2026 | | |  | | --- | | **ECONOMIA INDUSTRIALE** | | [Laura Ogliari](./Docenti/OgliariLaura_018469.html) | | I appello | | 09:00 | | Aula 1 Caniana | | 2A - S2 | | esame scritto |  ---  |  | | --- | | **FINANCIAL ACCOUNTING** | | [Matteo Molinari](./Docenti/MolinariMatteo_022832.html) | | I appello | | 14:30 | | Aula 1 Caniana | | 1A - S2 | | esame scritto | | | |  | | --- | | 24-4-2026 | | |  | | --- | | **ECONOMIA INTERNAZIONALE - Integrato** | | [Anna Maria Falzoni](./Docenti/FalzoniAnna_Maria_000288.html) | | I appello | | 09:00 | | Aula 1 Caniana | | 2A - S2 | | esame scritto | | | |  | | --- | | 25-4-2026 | | |  | | --- | | 26-4-2026 | |
+
+|  |
+| --- |
+| 20-4-2026 |
+
+|  |
+| --- |
+| 21-4-2026 |
+
+|  |
+| --- |
+| 22-4-2026 |
+
+|  |
+| --- |
+| 23-4-2026 |
+| |  | | --- | | **ECONOMIA INDUSTRIALE** | | [Laura Ogliari](./Docenti/OgliariLaura_018469.html) | | I appello | | 09:00 | | Aula 1 Caniana | | 2A - S2 | | esame scritto |  ---  |  | | --- | | **FINANCIAL ACCOUNTING** | | [Matteo Molinari](./Docenti/MolinariMatteo_022832.html) | | I appello | | 14:30 | | Aula 1 Caniana | | 1A - S2 | | esame scritto | |
+
+|  |
+| --- |
+| **ECONOMIA INDUSTRIALE** |
+| [Laura Ogliari](./Docenti/OgliariLaura_018469.html) |
+| I appello |
+| 09:00 |
+| Aula 1 Caniana |
+| 2A - S2 |
+| esame scritto |
+
+|  |
+| --- |
+| **FINANCIAL ACCOUNTING** |
+| [Matteo Molinari](./Docenti/MolinariMatteo_022832.html) |
+| I appello |
+| 14:30 |
+| Aula 1 Caniana |
+| 1A - S2 |
+| esame scritto |
+
+|  |
+| --- |
+| 24-4-2026 |
+| |  | | --- | | **ECONOMIA INTERNAZIONALE - Integrato** | | [Anna Maria Falzoni](./Docenti/FalzoniAnna_Maria_000288.html) | | I appello | | 09:00 | | Aula 1 Caniana | | 2A - S2 | | esame scritto | |
+
+|  |
+| --- |
+| **ECONOMIA INTERNAZIONALE - Integrato** |
+| [Anna Maria Falzoni](./Docenti/FalzoniAnna_Maria_000288.html) |
+| I appello |
+| 09:00 |
+| Aula 1 Caniana |
+| 2A - S2 |
+| esame scritto |
+
+|  |
+| --- |
+| 25-4-2026 |
+
+|  |
+| --- |
+| 26-4-2026 |
+
+|  |  |
+| --- | --- |
+| **LEGENDA:** | |
+| |  | | --- | |  | | Esame correlato di un accorpamento di esami |
+
+|  |
+| --- |
+|  |
+
+|  |
+| --- |
+| Powered by [EasyStaff](http://www.easystaff.it) |
+
+Portale generale esami UniBG: https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it
+
+═══ FONTI WEB AGGIUNTIVE ═══
+Fonte 1: [PDF] CALENDARIO DIDATTICO A.A. 2025/2026
+URL: https://dgiu.unibg.it/sites/dip1/files/didattica/calendario_didattico_25-26_descrittivo_10.09.2025.pdf
+Contenuto: Via Moroni, 255 – 24127 Bergamo CF 80004350163 - P.IVA 01612800167 https://dgiu.unibg.it - giurisprudenza@unibg.it – Pec: giurisprudenza@unibg.legalmail.it T. 035 2052693 -2692 – Fax 035 2052889 CALENDARIO DIDATTICO A.A. 2025/2026 CORSI DI LAUREA E LAUREA MAGISTRALE A CICLO UNICO ACCESSO LIBERO Per informazioni sull’accesso ai corsi in : Diritto per l’impresa nazionale e internazionale (classe L-14) – 1° anno Giurisprudenza (Classe LMG/01) – 1° anno consultare le informazioni pubblicate alla seguente pagina: https://www.unibg.it/node/10591. Assolvere gli OFA I laboratori di recupero per gli studenti che non hanno raggiunto il punteggio minimo relativo alle conoscenze richieste per l’accesso, sono organizzati dal Dipartimento nel periodo febbraio/marzo 2026. Le informazioni sull’avvio dei laboratori saranno pubblicate alla seguente pagina: Assolvere gli OFA CORSI DI LAUREA MAGISTRALE ACCESSO LIBERO Per informazioni sull’accesso ai corsi in : Diritti umani, migrazioni e cooperazione internazionale (classe LM-81) consultare le informazioni pubblicate alla seguente pagina: https://www.unibg.it/node/9359 L'adeguatezza della preparazione dello studente sarà verificata tramite colloquio orale. La data del colloquio iniziale sarà resa nota alla pagina del corso di laurea https://ls-dumci.unibg.it/it Per maggiori informazioni consultare la pagina del corso Come fare per iscriversi https://ls-dumci.unibg.it/it/come-fare/iscriversi CALENDARIO ATTIVITA’ DIDATTICHE (lezioni, esami e ricevimento studenti) PRIMO SEMESTRE: 15 settembre 2025 - 6 gennaio 2026 Sospensione attività didattiche: 10 – 22 novembre 2025 22 dicembre 2025 – 6 gennaio 2026 Esami - sospensione lezioni Sospensione attività didattiche - Festività natalizie SECONDO SEMESTRE: 16 febbraio 2026 - 30 maggio 2026 Sospensione attività didattiche: 2 aprile – 8 aprile 2026 Sospensione attività didattiche – Festività pasquali 25 aprile 2026 Festività - Chiusura sede Via Moroni, 255 – 24127 Bergamo CF 80004350163 - P.IVA 01612800167 https://dgiu.unibg.it - giurisprudenza@unibg.it – Pec: giurisprudenza@unibg.legalmail.it T. 035 2052693 -2692 – Fax 035 2052889 1- 2 maggio 2026 Festività - Chiusura sede Per tutto il mese di agosto è sospeso il ricevimento studenti Per gli orari di ricevimento consultare la pagina personale del docente. Per conoscere gli orari delle lezioni consultare la pagina: Orari CALENDARIO ESAMI dal 10 al 22 novembre 2025 Un appello per debitori d’esame dal 7 gennaio al 24 gennaio 2026* Un appello per gli esami del primo semestre a.a. 2025/2026 e debitori d’esame dal 26 gennaio al 14 febbraio 2026 Un appello per primo semestre a.a. 2025/2026 e debitori d’esame dal 3 giugno al 27 giugno 2026 Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame dal 29 giugno al 31 luglio 2026 Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame dal 31 agosto al 12 settembre 2026 Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame Il calendario annuale degli esami di profitto sarà pubblicato sul sito web nell’area didattica del Dipartimento di Giurisprudenza alla pagina Calendario didattico e appelli . * Lo svolgimento dell'appello straordinario d'esame nella sessione invernale riservato a studenti in mobilità internazionale - qualora previsto - potrà svolgersi negli ultimi 10 giorni prima della fine del semestre. PROVE FINALI/TESI DI LAUREA Sessione autunnale a.a. 2024/2025 15-16 ottobre 2025 Sessione marzo a.a. 2024/2025 9–10 marzo 2026 Sessione aprile a.a. 2024/2025 15-16 aprile 2026 Sessione estiva a.a. 2025/2026 15-16 luglio 2026 Per informazioni dettagliate sul calendario tesi e relative scadenze consultare la pagina - Prove finali/ tesi di laurea.
+
+Fonte 2: Piano di studio | UniBG Giurisprudenza
+URL: https://lm-giu.unibg.it/it/il-corso/piano-di-studio
+Contenuto: [Salta al contenuto principale](#main-content)
+
+# Menu top
+
+Corso di laurea magistrale a ciclo unico
+
+# [Giurisprudenza](/it "Torna alla home page di Giurisprudenza")
+
+[Dipartimento di Giurisprudenza](https://dgiu.unibg.it/it "Vai al sito del dipartimento")
+
+* [IT](/it "IT")
+* [EN](/en "EN")
+
+1. [Home](/it)
+2. [Il corso](/it/il-corso)
+
+# Piano di studio
+
+PIANO DI STUDIO
+
+Il piano di studi del Corso è disponibile in [**Course Catalogue**](https://unibg.coursecatalogue.cineca.it/). Nel filtro di ricerca seleziona il tuo anno di iscrizione, il dipartimento e il corso di laurea. Selezionando il pulsante ‘Piani di studio e insegnamenti'  e l'eventuale curriculum  per ogni insegnamento troverai le informazioni relative al docente, gli obiettivi formativi, i metodi didattici e i testi di riferimento.
+
+Per accedere rapidamente, scegli il piano di studio aggiornato per l'a.a. 2025/2026 selezionando il tuo anno di immatricolazione dall'elenco sottoriportato.
+
+[**Piano di studio I anno - Coorte 2025**](https://unibg.coursecatalogue.cineca.it/corsi/2025/1394)
+
+[**Piano di studio II anno - Coorte 2024**](https://unibg.coursecatalogue.cineca.it/corsi/2024/70)
+
+[**Piano di studio III anno - Coorte 2023**](https://unibg.coursecatalogue.cineca.it/corsi/2023/70?codicione=0160107051400002)
+
+[**Piano di studio IV anno - Coorte 2022**](https://unibg.coursecatalogue.cineca.it/corsi/2022/70?codicione=0160107051400002)
+
+[**Piano di studio V anno - Coorte 2021**](https://unibg.coursecatalogue.cineca.it/corsi/2021/70?codicione=0160107051400002)
+
+**Piano di studio: documento stampabile**
+
+[Piano di studio a.a. 2025-2026 - Giurisprudenza\_1° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2025-2026_coorte_2025_1.pdf "piano_di_studio_lmg_2025-2026_coorte_2025.pdf (327.07kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio a.a. 2025-2026 - Giurisprudenza\_ 2° e 3° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2025-2026_coorte_2024_e_2023_2.pdf "piano_di_studio_lmg_2025-2026_coorte_2024_e_2023.pdf (324.07kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio a.a. 2025-2026 - Giurisprudenza \_4° e 5° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2025-2026_coorte_2022_e_2021_1.pdf "piano_di_studio_lmg_2025-2026_coorte_2022_e_2021.pdf (343.05kb) - Il documento si apre in una nuova finestra")
+
+STUDENTI PART-TIME
+
+Gli studenti part-time iscritti al corso di laurea magistrale quinquennale in Giurisprudenza (classe LMG/01) (ordinamento 2020) sono vincolati a costruire i loro piani di studio attenendosi alle seguenti indicazioni:
+
+1) al  **1° e  2°  anno di corso “part-time”** possono essere inseriti in piano insegnamenti scelti liberamente\*\* tra quelli previsti al **1° anno**  del piano per gli studenti a tempo pieno;
+
+* al 1° anno di corso il piano di studi deve prevedere un numero di crediti compreso tra  **27 CFU** e **34 CFU**
+
+2) al  **3° e  4°  anno di corso “part-time”** possono essere inseriti in piano insegnamenti scelti liberamente\*\* tra quelli previsti al **2° anno**  del piano per gli studenti a tempo pieno;
+
+* al 3° anno di corso il piano di studi deve prevedere un numero di crediti pari a  di crediti compreso tra  **27 CFU** e **34 CFU**
+
+3) al **5° e 6°** **anno di corso “part-time”** possono essere inseriti in piano insegnamenti scelti liberamente\*\* tra quelli previsti al **3° anno** del piano per gli studenti a tempo pieno;
+
+* al 5° anno di corso il piano di studi deve prevedere un numero di crediti compreso tra:  **26 CFU** e **36 CFU**.
+
+4) al **7° e 8°** **anno di corso “part-time”** possono essere inseriti in piano insegnamenti scelti liberamente\*\* tra quelli previsti al **4° anno** del piano per gli studenti a tempo pieno;
+
+* al 7° anno di corso il piano di studi deve prevedere un numero di crediti compreso tra **24 CFU** e **30 CFU.**
+
+5) al **9° e 10°** **anno di corso “part-time” :**
+
+* possono essere inseriti in piano insegnamenti scelti liberamente\*\* tra quelli previsti al **5° anno** per gli studenti a tempo pieno prevedendo al 9° anno di corso un numero di crediti  compreso tra **15 CFU** **e  28 CFU**
+* i **17 CFU** della prova finale sono collocati obbligatoriamente al **10° anno** di corso part-time.
+
+  *(Aggiornamento a.a.2025/2026)*
+
+[Piano di studio per studenti PART-TIME a.a. 2018/2019 valide anche per a.a. 2019/2020](https://lm-giu.unibg.it/sites/cl01/files/piano_studenti_part-time_18-19_lmg.pdf "piano_studenti_part-time_18-19_lmg.pdf (337.87kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio per studenti PART-TIME a.a. 2017/2018](https://lm-giu.unibg.it/sites/cl01/files/piano_studenti_part-time_17-18_lmg_0.pdf "piano_studenti_part-time_17-18_lmg.pdf (338.56kb) - Il documento si apre in una nuova finestra")
+
+PROPEDEUTICITA'
+
+Le propedeuticità per l'a.a. 2024/2025 e 2025/2026 sono le stesse previste per l'a.a. 2023/2024.
+
+[Propedeuticità insegnamenti - per studenti immatricolati dall'a.a. 2023-2024](https://lm-giu.unibg.it/sites/cl01/files/2023-2024_propedeuticita_-_lmg.pdf "2023-2024_propedeuticita_-_lmg.pdf (108.6kb) - Il documento si apre in una nuova finestra")
+
+[Propedeuticità insegnamenti - per studenti immatricolati dall'a.a. 2019/2020](https://lm-giu.unibg.it/sites/cl01/files/2019-2020_propedeuticita_-_lmg.pdf "2019-2020_propedeuticita_-_lmg.pdf (256.76kb) - Il documento si apre in una nuova finestra")
+
+[Propedeuticità insegnamenti - per studenti immatricolati fino all'a.a. 2018/2019](https://lm-giu.unibg.it/sites/cl01/files/2017-2018_propedeuticita_-_lmg_1.pdf "2017-2018_propedeuticita_-_lmg.pdf (346.48kb) - Il documento si apre in una nuova finestra")
+
+ANNI ACCADEMICI PRECEDENTI
+
+[Piano di studio a.a. 2024-2025 - Giurisprudenza - 1° 2° 3° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2024-2025_1deg_2dege_3deg_anno_ott_24_0.pdf "piano_di_studio_lmg_2024-2025_1deg_2dege_3deg_anno_ott_24.pdf (292.82kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio a.a. 2024-2025 - Giurisprudenza - 4° - 5° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2024-2025_4deg_e_5deg_anno_ott_24_new.pdf "piano_di_studio_lmg_2024-2025_4deg_e_5deg_anno_ott_24_new.pdf (305.77kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio - a.a. 2023-2024 - Giurisprudenza 1°, 2°, 3° e 4° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2023-2024_1deg-2_-_3deg-4deganno_rev1_0.pdf "piano_di_studio_lmg_2023-2024_1deg-2_-_3deg-4deganno_rev1.pdf (288.28kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio - a.a. 2023-2024 - Giurisprudenza - 5° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2023-2024_5deganno_rev1_0.pdf "piano_di_studio_lmg_2023-2024_5deganno_rev1.pdf (273.82kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio - a.a. 2022-2023 - Giurisprudenza - 4° - 5° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2022-2023_4dege_5deg_anno_1_0.pdf "piano_di_studio_lmg_2022-2023_4dege_5deg_anno_1.pdf (294.24kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio - a.a. 2022-2023 - Giurisprudenza 1° , 2° e 3° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2022-2023_1deg-2deg_-_3deganno_rev_0.pdf "piano_di_studio_lmg_2022-2023_1deg-2deg_-_3deganno_rev.pdf (285.34kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio - a.a. 2021-2022 - Giurisprudenza - 5° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2021-2022_5deg_anno_0.pdf "piano_di_studio_lmg_2021-2022_5deg_anno.pdf (274.03kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio - a.a. 2021-2022 - Giurisprudenza - 3° e 4° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2021-2022_3deg_4deg_anno_1_0.pdf "piano_di_studio_lmg_2021-2022_3deg_4deg_anno_1.pdf (295.13kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio - a.a. 2021-2022 - Giurisprudenza 1° e 2° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2021-2022_1deg_2deg_anno_0.pdf "piano_di_studio_lmg_2021-2022_1deg_2deg_anno.pdf (308.3kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio - a.a. 2019-2020 - Giurisprudenza - 5° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2019-2020_sito_5-anno_0.pdf "piano_di_studio_lmg_2019-2020_sito_5-anno.pdf (288.55kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio - a.a. 2019-2020 - Giurisprudenza - 4° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2019-2020_sito_4-anno_0.pdf "piano_di_studio_lmg_2019-2020_sito_4-anno.pdf (156.31kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio - a.a. 2019-2020 - Giurisprudenza 1°, 2° e 3° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2019-2020_sito_1-2-_3-anno1_0.pdf "piano_di_studio_lmg_2019-2020_sito_1-2-_3-anno1.pdf (327.87kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio - a.a. 2018-2019 - Giurisprudenza - 5° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2018-2019_coorte_2014_5deganno_0.pdf "piano_di_studio_lmg_2018-2019_coorte_2014_5deganno.pdf (321.87kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio - a.a. 2018-2019 - Giurisprudenza - 3° e 4° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2018-2019_coorte_2017_2016_3deg_e_4deg_anno_0.pdf "piano_di_studio_lmg_2018-2019_coorte_2017_2016_3deg_e_4deg_anno.pdf (325.34kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio - a.a. 2018-2019 - Giurisprudenza - 2° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2018-2019_coorte_2017_2deganno_0.pdf "piano_di_studio_lmg_2018-2019_coorte_2017_2deganno.pdf (339.2kb) - Il documento si apre in una nuova finestra")
+
+[Piano di studio - a.a. 2018-2019 - Giurisprudenza - 1° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2018-2019_coorte_2018_sua_cds_1deg_anno_0.pdf "piano_di_studio_lmg_2018-2019_coorte_2018_sua_cds_1deg_anno.pdf (339.83kb) - Il documento si apre in una nuova finestra")
+
+[Piano di Studio a.a. 2017-2018: Corso di Laurea Magistrale quinquennale a ciclo unico in Giurisprudenza - 1° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2017-2018_coorte_2017_1deg_anno.pdf "piano_di_studio_lmg_2017-2018_coorte_2017_1deg_anno.pdf (335.35kb) - Il documento si apre in una nuova finestra")
+
+[Piano di Studio a.a. 2017-2018: Corso di Laurea Magistrale quinquennale a ciclo unico in Giurisprudenza - 2° e 3° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2017-2018_coorte_2016_e_2015_2deg_e_3deg_anno.pdf "piano_di_studio_lmg_2017-2018_coorte_2016_e_2015_2deg_e_3deg_anno.pdf (324.65kb) - Il documento si apre in una nuova finestra")
+
+[Piano di Studio a.a. 2017-2018: Corso di Laurea Magistrale quinquennale a ciclo unico in Giurisprudenza - 4°anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2017-2018_coorte_2014_4deg_anno.pdf "piano_di_studio_lmg_2017-2018_coorte_2014_4deg_anno.pdf (324.21kb) - Il documento si apre in una nuova finestra")
+
+[Piano di Studio a.a. 2017-2018: Corso di Laurea Magistrale quinquennale a ciclo unico in Giurisprudenza - 5° anno](https://lm-giu.unibg.it/sites/cl01/files/piano_di_studio_lmg_2017-2018_coorte_2013_5deg_anno.pdf "piano_di_studio_lmg_2017-2018_coorte_2013_5deg_anno.pdf (322.58kb) - Il documento si apre in una nuova finestra")
+
+INSEGNAMENTI A SCELTA LIBERA
+
+**Insegnamenti a scelta libera  (15 cfu)**
+
+Gli insegnamenti possono essere scelti liberamente tra tutti gli insegnamenti attivati dall'Ateneo che non siano già presenti nel proprio piano di studio.
+
+Gli insegnamenti a scelta libera saranno automaticamente approvati **se scelti tra gli insegnamenti consigliati**coerenti e integrativi al progetto formativo scelto, già individuati dal Consiglio di corso di studio.
+
+L'inserimento tra le scelte libere di insegnamenti attivati da altri Dipartimenti dell'Ateneo non presenti nella lista degli insegnamenti consigliati è possibile ma è subordinato all'approvazione da parte dal Consiglio di corso di studio che verifica la coerenza al progetto formativo.
+
+L’elenco degli insegnamenti a scelta libera consigliati per il corso di laurea in Giurisprudenza per l'a.a. 2025-2026 è consultabile nel [Course Catalogue](https://unibg.coursecatalogue.cineca.it/corsi/2020/70/insegnamenti/2154?schemaid=77304)  (Piano di studio relativo alla coorte di studenti immatricolati nell’a.a. 2021-2022).
+
+[**Insegnamenti a scelta libera consigliati a.a. 2025-2026**](https://unibg.coursecatalogue.cineca.it/corsi/2021/1394?codicione=0160107051400002)
+
+Oltre all'elenco degli insegnamenti/attività a scelta libera sopra indicati, alle studentesse e agli studenti è offerta la possibiità di inserire tra le scelte libere uno dei laboraotori denominati [CREO-LAB](https://creo.unibg.it/opportunita/tipologia/creo-lab/) per 6 cfu. Si tratta di laboratori innovativi, partecipativi e multidisciplinari attraverso cui gli studenti proveranno ad affrontare le attuali sfide socio-economiche per imparare a disegnare soluzioni originali.
+
+La  partecipazione ai CREO -LAB è disciplinata da apposito bando consultabile alla seguente pagina: <https://creo.unibg.it/opportunita/tipologia/creo-lab>
+
+Dopo aver presentato domanda di partecipazione e ottenuto riscontro positivo, per il riconoscimento in carriera dell'attività è necessario consultare le istruzioni di compilazione del piano di studio.
+
+*(Aggiornamento 5 agosto 2025)*
+
+## Avvisi
+
+* 16 Ottobre 2025
+
+  ## Compilazione piani di studio a.a. 2025-2026
+
+  Periodo di presentazione dei piani di studio:
+
+  **15 ottobre - 17 novembre 2025**
+
+  La presentazione del piano di studio deve essere effettuata in **modalità telematica.**
+
+  **Per gli studenti iscritti al 1° , 2° e 3° anno di corso la scelta del percorso è puramente indicativa poiché gli insegnamenti previsti nei primi tre anni sono comuni a tutti i percorsi.**
+
+  Il percorso andrà effettivamente individuato con la compilazione del piano al 4° anno.
+
+  Solo in casi particolari il piano di studio dovrà essere presentata in modalità cartacea.
+
+  [Istruzioni per la compilazione dei piani di studio](https://lm-giu.unibg.it/sites/cl01/files/avvisi/avviso_presentaz_2025-26_lmg_nuova_carta_int.pdf "avviso_presentaz_2025-26_lmg_nuova_carta_int.pdf (190.53kb) - Il documento si apre in una nuova finestra")
+
+  [Modulo A - Variazione piano di studio per studenti fuori corso](https://lm-giu.unibg.it/sites/cl01/files/avvisi/mod_a_-_studenti_fuori_corso_-_2025-26.pdf "mod_a_-_studenti_fuori_corso_-_2025-26.pdf (145.25kb) - Il documento si apre in una nuova finestra")
+
+  [Modulo E - Piano di studio cartaceo - 1° anno](https://lm-giu.unibg.it/sites/cl01/files/mod_e_-_pds_lmg_-_primo_-_2025-26.pdf "mod_e_-_pds_lmg_-_primo_-_2025-26.pdf (98.75kb) - Il documento si apre in una nuova finestra")
+
+  [Modulo F - Piano di studio cartaceo - 2° e 3° anno](https://lm-giu.unibg.it/sites/cl01/files/avvisi/mod_f_-_pds_lmg_-_secondo_e_terzo_-_2025-26.pdf "mod_f_-_pds_lmg_-_secondo_e_terzo_-_2025-26.pdf (116.99kb) - Il documento si apre in una nuova finestra")
+
+  [Modulo G - Piano di studio cartaceo - 4° anno](https://lm-giu.unibg.it/sites/cl01/files/avvisi/mod_g_-_pds_lmg_-_quarto_-_2025-26.pdf "mod_g_-_pds_lmg_-_quarto_-_2025-26.pdf (157.49kb) - Il documento si apre in una nuova finestra")
+
+  [Modulo H - Piano di studio cartaceo - 5° anno](https://lm-giu.unibg.it/sites/cl01/files/avvisi/mod_h_-_pds_lmg_-_quinto_-_2025-26.pdf "mod_h_-_pds_lmg_-_quinto_-_2025-26.pdf (172.51kb) - Il documento si apre in una nuova finestra")
+
+  [Modulo - istanza al Consiglio di corso di studio](https://lm-giu.unibg.it/sites/cl01/files/avvisi/application_to_the_committee.pdf "application_to_the_committee.pdf (144.52kb) - Il documento si apre in una nuova finestra")
+
+## Contatti
+
+Docenti referenti per i piani di studio:
+
+[prof. Enrico Ginevra](https://unibg.unifind.cineca.it/individual?uri=http%3A%2F%2Firises.unibg.it%2Fresource%2Fperson%2F653)  
+[prof.ssa Daniela D'Adamo](https://unibg.unifind.cineca.it/individual?uri=http%3A%2F%2Firises.unibg.it%2Fresource%2Fperson%2F671)  
+[prof.](https://unibg.unifind.cineca.it/individual?uri=http%3A%2F%2Firises.unibg.it%2Fresource%2Fperson%2F3144)[Massimo Foglia](https://unibg.unifind.cineca.it/individual?uri=http%3A%2F%2Firises.unibg.it%2Fresource%2Fperson%2F3144)
+
+Fonte 3: [PDF] calendario lezioni – aa 2025-2026 - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2025-03-21/Calendario%20accademico%202025-2026.pdf
+Contenuto: 1 CALENDARIO LEZIONI – A.A. 2025-2026 PRIMO SEMESTRE dal 15.09.2025 al 25.10.2025 Lezioni dal 27.10.2025 al 31.10.2025 Prove in itinere Lezioni sospese solo per CL Triennali dal 03.11.2025 al 20.12.2025 Lezioni dal 22.12.2025 al 06.01.2026 Vacanze natalizie dal 07.01.2026 al 10.01.2026 Recupero lezioni/Prove in itinere SECONDO SEMESTRE dal 23.02.2026 al 01.04.2026 Lezioni 27.03.2026 sospensione di tutte le lezioni per lauree magistrali dal 02.04.2026 al 08.04.2026 Vacanze pasquali dal 09.04.2026 al 18.04.2026 Prove in itinere Lezioni sospese solo per CL Triennali dal 20.04.2026 al 06.06.2026 Lezioni dal 08.06.2026 al 13.06.2026 Recupero lezioni/Prove in itinere Festività: 01.11.2025 – 08.12.2025-25.04.2026 - 01.05.2026 – 02.06.2026 CALENDARIO CORSI E PROVE DI VALUTAZIONE PER L’ASSOLVIMENTO OBBLIGHI FORMATIVI AGGIUNTIVI (OFA)– A.A .2025-2026 (*) (*) Per ulteriori informazioni consultare la pagina OFA del proprio corso di Laurea CALENDARIO ESAMI SESSIONE STRAORDINARIA DI NOVEMBRE a.a. 2024-2025 Riservata esclusivamente agli studenti iscritti fuori corso ed ai laureandi dal 27.10.2025 al 15.11.2025 1 appello SESSIONE INVERNALE dal 12.01.2026 al 21.02.2026 2 appelli dal 01.09.2025 al 13.09.2025 (corsi + prove di verifica) dal 09.12.2025 al 10.01.2026 (corsi + prove di verifica) dal 08.06.2026 al 13.06.2026 (solo prove di verifica) 2 SESSIONE STRAORDINARIA DI APRILE Riservata agli studenti iscritti nell’a.a. 2025-26 nelle condizioni di: fuori corso, iscritti al terzo anno dei corsi di laurea triennale e al secondo anno dei corsi di laurea magistrale per esami relativi all’a.a. 2024-25 (studenti “in debito di prova”) dal 30.03.2026 al 30.04.2026 1 appello SESSIONE ESTIVA dal 15.06.2026 al 25.07.2025 2 appelli SESSIONE AUTUNNALE dal 17.08.2026 al 12.09.2026 1 appello CALENDARIO TESI SCADENZA DOMANDA DI LAUREA DEFINITIVA SESSIONE AUTUNNALE A.A. 2024-2025 30.09.2025 Lauree triennali 270/2004 29.09.2025 Lauree magistrali 270/2004 e degli ordinamenti precedenti 18.08.2025 (domanda definitiva) Per le scadenze di tutte le fasi consultare > Pagina WEB SESSIONE INVERNALE A.A. 2024-2025 10.12.2025 Lauree triennali 270/2004 19.12.2025 Lauree magistrali 270/2004 e degli ordinamenti precedenti 27.10.2025 (domanda definitiva) Per le scadenze di tutte le fasi consultare > Pagina WEB SESSIONE STRAORDINARIA A.A. 2024-2025 23.03.2026 Lauree triennali 270/2004 27.03.2026 Lauree magistrali 270/2004 e degli ordinamenti precedenti 06.02.2026 (domanda definitiva) Per le scadenze di tutte le fasi consultare > Pagina WEB SESSIONE ESTIVA A.A. 2025-2026 06.07.2026 Lauree triennali 270/2004 17.07.2026 Lauree magistrali 270/2004 e degli ordinamenti precedenti 22.05.2026 (domanda definitiva) Per le scadenze di tutte le fasi consultare > Pagina WEB
+
+
+>>> USER PROMPT:
+ dimmi le date degli esami di giurisprudenza del terzo anno
+
+>>> RISPOSTA:
+Ciao Raphael,
+
+Hai chiesto le date degli esami di Giurisprudenza del terzo anno.
+
+Ho notato che il tuo corso di laurea registrato è "Ingegneria informatica". Se la tua richiesta riguarda esami di un corso di laurea diverso dal tuo, ti consiglio di verificare attentamente la compatibilità e le procedure per sostenere esami fuori piano di studi, se applicabile.
+
+Per quanto riguarda gli esami di Giurisprudenza, il calendario del Polo Economico-Giuridico per la sessione di aprile 2026, che ho a disposizione, non elenca esami specifici per il corso di laurea in Giurisprudenza del terzo anno. Gli esami presenti in questa sessione sono:
+
+*   **ECONOMIA INDUSTRIALE** con la Prof.ssa Laura Ogliari: 23 aprile 2026, ore 09:00, Aula 1 Caniana (esame scritto)
+*   **FINANCIAL ACCOUNTING** con il Prof. Matteo Molinari: 23 aprile 2026, ore 14:30, Aula 1 Caniana (esame scritto)
+*   **ECONOMIA INTERNAZIONALE - Integrato** con la Prof.ssa Anna Maria Falzoni: 24 aprile 2026, ore 09:00, Aula 1 Caniana (esame scritto)
+
+Questi esami sono generalmente associati a corsi di economia, non specificamente a Giurisprudenza.
+
+Tuttavia, posso fornirti le sessioni d'esame generali previste per il Dipartimento di Giurisprudenza per l'Anno Accademico 2025/2026, come indicato nel calendario didattico:
+
+*   **Sessione estiva:**
+    *   Dal 3 giugno al 27 giugno 2026: Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame.
+    *   Dal 29 giugno al 31 luglio 2026: Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame.
+*   **Sessione autunnale:**
+    *   Dal 31 agosto al 12 settembre 2026: Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame.
+
+Per le date specifiche degli esami di Giurisprudenza del terzo anno, ti suggerisco di consultare il portale esami ufficiale dell'Università di Bergamo, dove vengono pubblicati i calendari dettagliati per ogni corso di studio e anno.
+
+Pagina di riferimento:
+*   [CALENDARIO DIDATTICO A.A. 2025/2026](https://dgiu.unibg.it/sites/dip1/files/didattica/calendario_didattico_25-26_descrittivo_10.09.2025.pdf) (pagina 2 per il calendario esami)
+*   [Calendario Esami Polo Economico-Giuridico - SESS. PROVE INT. APRILE 2026](https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/628/ttTotalHtml.html)
+*   [Portale generale esami UniBG](https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it)
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Domanda originale:  dimmi le date degli esami di giurisprudenza del terzo anno
+Categoria: date_esami
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Raphael,
+
+Hai chiesto le date degli esami di Giurisprudenza del terzo anno.
+
+Ho notato che il tuo corso di laurea registrato è "Ingegneria informatica". Se la tua richiesta riguarda esami di un corso di laurea diverso dal tuo, ti consiglio di verificare attentamente la compatibilità e le procedure per sostenere esami fuori piano di studi, se applicabile.
+
+Per quanto riguarda gli esami di Giurisprudenza, il calendario del Polo Economico-Giuridico per la sessione di aprile 2026, che ho a disposizione, non elenca esami specifici per il corso di laurea in Giurisprudenza del terzo anno. Gli esami presenti in questa sessione sono:
+
+*   **ECONOMIA INDUSTRIALE** con la Prof.ssa Laura Ogliari: 23 aprile 2026, ore 09:00, Aula 1 Caniana (esame scritto)
+*   **FINANCIAL ACCOUNTING** con il Prof. Matteo Molinari: 23 aprile 2026, ore 14:30, Aula 1 Caniana (esame scritto)
+*   **ECONOMIA INTERNAZIONALE - Integrato** con la Prof.ssa Anna Maria Falzoni: 24 aprile 2026, ore 09:00, Aula 1 Caniana (esame scritto)
+
+Questi esami sono generalmente associati a corsi di economia, non specificamente a Giurisprudenza.
+
+Tuttavia, posso fornirti le sessioni d'esame generali previste per il Dipartimento di Giurisprudenza per l'Anno Accademico 2025/2026, come indicato nel calendario didattico:
+
+*   **Sessione estiva:**
+    *   Dal 3 giugno al 27 giugno 2026: Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame.
+    *   Dal 29 giugno al 31 luglio 2026: Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame.
+*   **Sessione autunnale:**
+    *   Dal 31 agosto al 12 settembre 2026: Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame.
+
+Per le date specifiche degli esami di Giurisprudenza del terzo anno, ti suggerisco di consultare il portale esami ufficiale dell'Università di Bergamo, dove vengono pubblicati i calendari dettagliati per ogni corso di studio e anno.
+
+Pagina di riferimento:
+*   [CALENDARIO DIDATTICO A.A. 2025/2026](https://dgiu.unibg.it/sites/dip1/files/didattica/calendario_didattico_25-26_descrittivo_10.09.2025.pdf) (pagina 2 per il calendario esami)
+*   [Calendario Esami Polo Economico-Giuridico - SESS. PROVE INT. APRILE 2026](https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/628/ttTotalHtml.html)
+*   [Portale generale esami UniBG](https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it)
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RISPOSTA:
+NOTA BENE: Il tuo corso di laurea registrato è INGEGNERIA INFORMATICA. La richiesta riguarda esami di GIURISPRUDENZA. Verifica la compatibilità e le procedure per sostenere esami fuori piano di studi, se applicabile.
+
+Il calendario del Polo Economico-Giuridico per la sessione di aprile 2026 NON elenca esami specifici per il corso di laurea in Giurisprudenza del terzo anno. Gli esami presenti in questa sessione, generalmente associati a corsi di economia, sono:
+- ECONOMIA INDUSTRIALE con la Prof.ssa Laura Ogliari: 23 aprile 2026, ore 09:00, Aula 1 Caniana (esame scritto)
+- FINANCIAL ACCOUNTING con il Prof. Matteo Molinari: 23 aprile 2026, ore 14:30, Aula 1 Caniana (esame scritto)
+- ECONOMIA INTERNAZIONALE - Integrato con la Prof.ssa Anna Maria Falzoni: 24 aprile 2026, ore 09:00, Aula 1 Caniana (esame scritto)
+
+SESSIONI D'ESAME GENERALI previste per il Dipartimento di Giurisprudenza per l'Anno Accademico 2025/2026:
+- Sessione estiva:
+  - Dal 3 giugno al 27 giugno 2026: Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame.
+  - Dal 29 giugno al 31 luglio 2026: Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame.
+- Sessione autunnale:
+  - Dal 31 agosto al 12 settembre 2026: Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame.
+
+Per le date SPECIFICHE degli esami di Giurisprudenza del terzo anno, consulta il portale esami ufficiale dell'Università di Bergamo.
+
+Pagina di riferimento:
+- CALENDARIO DIDATTICO A.A. 2025/2026 (https://dgiu.unibg.it/sites/dip1/files/didattica/calendario_didattico_25-26_descrittivo_10.09.2025.pdf) (pagina 2 per il calendario esami)
+- Calendario Esami Polo Economico-Giuridico - SESS. PROVE INT. APRILE 2026 (https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/628/ttTotalHtml.html)
+- Portale generale esami UniBG (https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it)
+
+================================================================================
+RISPOSTA FINALE
+================================================================================
+NOTA BENE: Il tuo corso di laurea registrato è INGEGNERIA INFORMATICA. La richiesta riguarda esami di GIURISPRUDENZA. Verifica la compatibilità e le procedure per sostenere esami fuori piano di studi, se applicabile.
+
+Il calendario del Polo Economico-Giuridico per la sessione di aprile 2026 NON elenca esami specifici per il corso di laurea in Giurisprudenza del terzo anno. Gli esami presenti in questa sessione, generalmente associati a corsi di economia, sono:
+- ECONOMIA INDUSTRIALE con la Prof.ssa Laura Ogliari: 23 aprile 2026, ore 09:00, Aula 1 Caniana (esame scritto)
+- FINANCIAL ACCOUNTING con il Prof. Matteo Molinari: 23 aprile 2026, ore 14:30, Aula 1 Caniana (esame scritto)
+- ECONOMIA INTERNAZIONALE - Integrato con la Prof.ssa Anna Maria Falzoni: 24 aprile 2026, ore 09:00, Aula 1 Caniana (esame scritto)
+
+SESSIONI D'ESAME GENERALI previste per il Dipartimento di Giurisprudenza per l'Anno Accademico 2025/2026:
+- Sessione estiva:
+  - Dal 3 giugno al 27 giugno 2026: Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame.
+  - Dal 29 giugno al 31 luglio 2026: Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame.
+- Sessione autunnale:
+  - Dal 31 agosto al 12 settembre 2026: Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame.
+
+Per le date SPECIFICHE degli esami di Giurisprudenza del terzo anno, consulta il portale esami ufficiale dell'Università di Bergamo.
+
+Pagina di riferimento:
+- CALENDARIO DIDATTICO A.A. 2025/2026 (https://dgiu.unibg.it/sites/dip1/files/didattica/calendario_didattico_25-26_descrittivo_10.09.2025.pdf) (pagina 2 per il calendario esami)
+- Calendario Esami Polo Economico-Giuridico - SESS. PROVE INT. APRILE 2026 (https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/628/ttTotalHtml.html)
+- Portale generale esami UniBG (https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it)
+
+------------------------------------------------------------
+TEMPI DI ESECUZIONE
+------------------------------------------------------------
+  Classifier Agent         : 1.147s
+  Query Agent              : 1.887s
+  Web Agent (Exam Extract) : 9.743s
+  Generator Agent          : 11.081s
+  Revision Agent           : 9.036s
+
+  TEMPO TOTALE             : 32.961s
+
+================================================================================
+FINE DEL LOG
+================================================================================

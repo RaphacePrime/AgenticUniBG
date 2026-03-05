@@ -2,6 +2,7 @@ from typing import Dict, List, Optional
 # from langchain_groq import ChatGroq
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
+from .web_agent import get_italian_timestamp
 
 
 class GeneratorAgent:
@@ -30,7 +31,14 @@ Indica orari di apertura e location quando possibile.""",
 Fornisci informazioni utili e orientamento agli studenti e visitatori.""",
         
         "altro": """Sei un assistente dell'Università di Bergamo.
-Cerca di comprendere la richiesta e fornire una risposta utile o indirizzare l'utente verso la risorsa giusta."""
+Cerca di comprendere la richiesta e fornire una risposta utile o indirizzare l'utente verso la risorsa giusta.""",
+
+        "date_esami": """Sei un assistente specializzato nelle date e orari degli esami dell'Università di Bergamo.
+Aiuta gli studenti a trovare quando si svolgono gli esami, in quale sessione e in quali date.
+Ti vengono fornite informazioni estratte dai calendari ufficiali degli esami.
+Cerca le date degli esami specifici richiesti dallo studente all'interno del contenuto fornito.
+Se non trovi l'esame specifico, indica chiaramente che non è presente nel calendario fornito e suggerisci di controllare il portale esami.
+Se lo studente è un ospite e non sai il suo corso, chiedigli gentilmente quale corso frequenta per poterti aiutare meglio."""
     }
 
     # Istruzioni comuni per l'uso delle fonti web
@@ -56,6 +64,10 @@ REGOLE FONDAMENTALI:
         """
         base_prompt = self.CATEGORY_PROMPTS.get(category, self.CATEGORY_PROMPTS["altro"])
         
+        # Timestamp italiano
+        today = get_italian_timestamp()
+        timestamp_section = f"\n\nDATA ODIERNA: {today} (Anno accademico 2025/2026)"
+        
         additional_context = ""
         if context and "additional_info" in context:
             additional_context = f"\n\nInformazioni aggiuntive:\n{context['additional_info']}"
@@ -73,6 +85,7 @@ Se è un ospite, fornisci risposte generiche e orientative."""
         source_instructions = self.SOURCE_INSTRUCTIONS if additional_context else ""
 
         return f"""{base_prompt}
+{timestamp_section}
 {user_section}
 Rispondi in italiano in modo chiaro, conciso e professionale.
 Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.{source_instructions}{additional_context}"""
