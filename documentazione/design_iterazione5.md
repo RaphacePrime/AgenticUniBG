@@ -50,19 +50,20 @@ OUTPUT: system_prompt arricchito con data odierna
 ```
 
 **Agenti che utilizzano il timestamp:**
+
 - **QueryAgent**: per includere riferimenti temporali nelle search query (es. "sessione estiva 2026 unibg ingegneria").
 - **GeneratorAgent**: per determinare il contesto temporale nella risposta (es. "la prossima sessione è...").
 - **WebAgent** (`_format_exam_results`): per includere la data odierna nel contesto del calendario esami.
 
 ### 2.4 Analisi di Complessità
 
-| Operazione | Complessità |
-|---|---|
-| `datetime.now()` | $O(1)$ — chiamata di sistema |
-| Accesso array mesi | $O(1)$ — indice diretto |
-| Formattazione stringa | $O(1)$ — lunghezza fissa |
-| Concatenazione al prompt | $O(1)$ — append |
-| **Totale** | $O(1)$ |
+| Operazione               | Complessità                  |
+| ------------------------ | ---------------------------- |
+| `datetime.now()`         | $O(1)$ — chiamata di sistema |
+| Accesso array mesi       | $O(1)$ — indice diretto      |
+| Formattazione stringa    | $O(1)$ — lunghezza fissa     |
+| Concatenazione al prompt | $O(1)$ — append              |
+| **Totale**               | $O(1)$                       |
 
 La funzione è deterministica, priva di effetti collaterali e non può fallire. L'overhead della doppia invocazione (QueryAgent + GeneratorAgent) è trascurabile.
 
@@ -149,7 +150,7 @@ COSTANTI:
 
 ### 3.3 Pseudocodice — Prompt RevisionAgent con Regole di Formato
 
-```
+````
 ALGORITHM BuildRevisionPrompt(query, draft, category, user_context, history)
 
 INPUT:  query (stringa), draft (risposta generata), category (stringa),
@@ -159,18 +160,18 @@ OUTPUT: messages (lista di messaggi LLM)
 COSTANTI:
     REVISION_SYSTEM_PROMPT ← "
         Sei un revisore esperto dell'Università di Bergamo.
-        
+
         REGOLE DI FORMATO:
         - Testo semplice compatibile con tag <p> HTML
         - MAI usare Markdown (**, *, #, ```)
         - MAI usare emoji o caratteri speciali
         - Usa MAIUSCOLE per enfatizzare parole importanti
-        
+
         LUNGHEZZA TARGET:
         - Risposte semplici: 1-3 frasi
         - Risposte articolate: max 10-15 punti
         - Date e scadenze NON vengono MAI compresse o rimosse
-        
+
         PRIORITÀ ACCURATEZZA:
         - Le date, scadenze, URL e dati specifici NON vanno MAI rimossi
         - Preserva SEMPRE 'Pagina di riferimento: [URL]'
@@ -198,25 +199,26 @@ COSTANTI:
     messages.append(HumanMessage(user_message))
 
 4.  RETURN messages
-```
+````
 
 ### 3.4 Analisi di Complessità
 
 Sia:
+
 - $H$ = numero di messaggi nella history (max 6 usati dal Generator, max 4 dal Reviser)
 - $W$ = dimensione del web_context in caratteri
 - $P$ = dimensione del prompt di categoria
 
-| Operazione | Complessità |
-|---|---|
-| Lookup CATEGORY_PROMPTS | $O(1)$ — dizionario |
-| GetItalianTimestamp() | $O(1)$ |
-| Concatenazione user_context | $O(|user\_context|)$ |
-| Concatenazione SOURCE_INSTRUCTIONS | $O(1)$ — stringa costante |
-| Costruzione messaggi history | $O(H)$ = $O(1)$ con $H \leq 6$ |
-| Costruzione messaggio utente con web_context | $O(W)$ |
-| **Totale GeneratorAgent** | $O(W)$ |
-| **Totale RevisionAgent** | $O(|draft|)$ |
+| Operazione                                   | Complessità                    |
+| -------------------------------------------- | ------------------------------ | ------------ | --- |
+| Lookup CATEGORY_PROMPTS                      | $O(1)$ — dizionario            |
+| GetItalianTimestamp()                        | $O(1)$                         |
+| Concatenazione user_context                  | $O(                            | user_context | )$  |
+| Concatenazione SOURCE_INSTRUCTIONS           | $O(1)$ — stringa costante      |
+| Costruzione messaggi history                 | $O(H)$ = $O(1)$ con $H \leq 6$ |
+| Costruzione messaggio utente con web_context | $O(W)$                         |
+| **Totale GeneratorAgent**                    | $O(W)$                         |
+| **Totale RevisionAgent**                     | $O(                            | draft        | )$  |
 
 La complessità è dominata dalla dimensione del contenuto testuale (web context o draft da revisionare), che è già limitato a 5 risultati web dal WebAgent.
 
@@ -313,35 +315,36 @@ OUTPUT: success_message (dict)
 ### 4.4 Analisi di Complessità
 
 Sia:
+
 - $V$ = numero di campi nel body della richiesta (max 6)
 
 **UpdateProfile:**
 
-| Operazione | Complessità |
-|---|---|
-| Validazione JWT | $O(1)$ — decodifica token |
-| findById (MongoDB) | $O(1)$ — lookup per chiave primaria |
-| Filtro campi validi | $O(V)$ = $O(1)$ con $V \leq 6$ |
+| Operazione           | Complessità                                |
+| -------------------- | ------------------------------------------ |
+| Validazione JWT      | $O(1)$ — decodifica token                  |
+| findById (MongoDB)   | $O(1)$ — lookup per chiave primaria        |
+| Filtro campi validi  | $O(V)$ = $O(1)$ con $V \leq 6$             |
 | update_one (MongoDB) | $O(1)$ — aggiornamento per chiave primaria |
-| findById (recupero) | $O(1)$ |
-| **Totale** | $O(1)$ |
+| findById (recupero)  | $O(1)$                                     |
+| **Totale**           | $O(1)$                                     |
 
 **ChangePassword:**
 
-| Operazione | Complessità |
-|---|---|
-| Validazione JWT | $O(1)$ |
-| findById (MongoDB) | $O(1)$ |
-| bcrypt.checkpw | $O(B)$ — $B$ = fattore di costo bcrypt (tipicamente 12 round) |
-| bcrypt.hashpw | $O(B)$ |
-| update_one (MongoDB) | $O(1)$ |
-| **Totale** | $O(B)$ |
+| Operazione           | Complessità                                                   |
+| -------------------- | ------------------------------------------------------------- |
+| Validazione JWT      | $O(1)$                                                        |
+| findById (MongoDB)   | $O(1)$                                                        |
+| bcrypt.checkpw       | $O(B)$ — $B$ = fattore di costo bcrypt (tipicamente 12 round) |
+| bcrypt.hashpw        | $O(B)$                                                        |
+| update_one (MongoDB) | $O(1)$                                                        |
+| **Totale**           | $O(B)$                                                        |
 
 Il costo dominante del cambio password è il double hashing bcrypt (~100ms per round 12), che è intenzionale come misura di sicurezza.
 
 ---
 
-## 5. Algoritmo 4: Timing nel PipelineLogger (_format_timing_section)
+## 5. Algoritmo 4: Timing nel PipelineLogger (\_format_timing_section)
 
 ### 5.1 Descrizione
 
@@ -426,15 +429,16 @@ TEMPI DI ESECUZIONE
 ### 5.5 Analisi di Complessità
 
 Sia:
+
 - $S$ = numero di step nel workflow (costante, $S = 5$)
 
-| Operazione | Complessità |
-|---|---|
-| `time.time()` per step (2 × S chiamate) | $O(S)$ = $O(1)$ |
-| Iterazione su workflow_steps | $O(S)$ = $O(1)$ |
-| Lookup STEP_LABELS | $O(1)$ — dizionario |
-| Formattazione stringa per step | $O(1)$ |
-| **Totale** | $O(1)$ |
+| Operazione                              | Complessità         |
+| --------------------------------------- | ------------------- |
+| `time.time()` per step (2 × S chiamate) | $O(S)$ = $O(1)$     |
+| Iterazione su workflow_steps            | $O(S)$ = $O(1)$     |
+| Lookup STEP_LABELS                      | $O(1)$ — dizionario |
+| Formattazione stringa per step          | $O(1)$              |
+| **Totale**                              | $O(1)$              |
 
 L'overhead introdotto dal timing è strettamente $O(1)$ e non introduce latenza misurabile nella pipeline. Le chiamate `time.time()` sono operazioni di sistema con costo nell'ordine dei nanosecondi.
 
@@ -507,16 +511,17 @@ COSTANTI:
 ### 6.3 Analisi di Complessità
 
 Sia:
+
 - $D$ = numero di dipartimenti (costante, ~8)
 - $C$ = numero di corsi per dipartimento (max ~10)
 
-| Operazione | Complessità |
-|---|---|
-| Lookup dipartimento | $O(1)$ — chiave dict |
-| Ricerca corso nel dipartimento | $O(C)$ — scansione lineare |
-| Lookup tipologia | $O(1)$ — chiave dict |
-| Calcolo anno massimo | $O(1)$ — chiave dict |
-| **Totale** | $O(C)$ = $O(1)$ con $C \leq 10$ |
+| Operazione                     | Complessità                     |
+| ------------------------------ | ------------------------------- |
+| Lookup dipartimento            | $O(1)$ — chiave dict            |
+| Ricerca corso nel dipartimento | $O(C)$ — scansione lineare      |
+| Lookup tipologia               | $O(1)$ — chiave dict            |
+| Calcolo anno massimo           | $O(1)$ — chiave dict            |
+| **Totale**                     | $O(C)$ = $O(1)$ con $C \leq 10$ |
 
 ---
 

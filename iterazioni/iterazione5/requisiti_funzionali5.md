@@ -24,7 +24,7 @@ L'Iterazione 5 consolida e raffina la pipeline multi-agente con interventi trasv
 
 ---
 
-### UC-01 – UC-13 *(confermati dall'Iterazione 4)*
+### UC-01 – UC-13 _(confermati dall'Iterazione 4)_
 
 Tutti i use case UC-01 (Registrazione), UC-02 (Login), UC-04 (Invia Richiesta), UC-05 (Ricevi Risposta), UC-06 (Recupero Profilo), UC-07 (Risposta Personalizzata), UC-08 (Ripristino Sessione), UC-09 (Logout Sicuro), UC-10 (Richiesta Contestuale), UC-11 (Risposta con Dati Reali da UniBG), UC-12 (Logging della Pipeline) e UC-13 (Risposta su Date Esami con Calendario Ufficiale) rimangono validi e invariati rispetto all'Iterazione 4.
 
@@ -129,35 +129,44 @@ Tutti i use case UC-01 (Registrazione), UC-02 (Login), UC-04 (Invia Richiesta), 
 
 ## Requisiti Non Funzionali
 
-### RNF-1 – RNF-13 *(confermati dall'Iterazione 4)*
+### RNF-1 – RNF-13 _(confermati dall'Iterazione 4)_
 
 Tutti i requisiti non funzionali dell'Iterazione 4 rimangono validi e vincolanti.
 
 ---
 
 ### RNF-14 – Validazione Lato Client dei Dati Profilo
+
 La `SettingsPage` deve validare localmente che i campi dipartimento/corso siano selezionati dal dizionario `DIPARTIMENTI_CORSI`. La tipologia deve essere derivata automaticamente dal tipo del corso selezionato e non editabile manualmente. L'anno massimo deve essere calcolato in base alla tipologia (Triennale: 3, Magistrale: 2, Ciclo Unico: 5).
 
 ### RNF-15 – Sicurezza Cambio Password
+
 Il cambio password deve sempre richiedere la verifica della password corrente tramite `bcrypt.checkpw()` prima di accettare la nuova password. La nuova password deve essere hashata con `bcrypt.hashpw()` e `bcrypt.gensalt()` prima della persistenza. La lunghezza minima della password è di 6 caratteri (validata sia lato client sia lato server).
 
 ### RNF-16 – Idempotenza della Modifica Profilo
+
 L'endpoint `PUT /api/auth/profile` deve essere idempotente: inviare gli stessi dati più volte produce lo stesso risultato senza effetti collaterali. Solo i campi presenti nel body vengono aggiornati (`$set` selettivo).
 
 ### RNF-17 – Precisione Temporale
+
 La funzione `get_italian_timestamp()` deve restituire la data del server in formato "dd mese yyyy" con il nome del mese in italiano minuscolo. La precisione richiesta è al giorno (non ore/minuti). L'anno accademico deve essere hardcoded nel prompt e aggiornato manualmente ad ogni cambio di anno accademico.
 
 ### RNF-18 – Performance della Pipeline con Timing
+
 La registrazione dei tempi di esecuzione (`time.time()`) non deve introdurre overhead misurabile nella pipeline. Il tempo totale della pipeline deve rimanere sotto i **30 secondi** (invariato da RNF-2).
 
 ### RNF-19 – Formato Log con Timing
+
 La sezione "TEMPI DI ESECUZIONE" nel log deve riportare il tempo di ogni agente con 3 cifre decimali (secondi) e il tempo totale della pipeline. Gli step labels devono essere tradotti in etichette leggibili (es. `classification` → `Classifier Agent`).
 
 ### RNF-20 – Prompt Engineering — Regole di Formato
+
 Tutte le risposte prodotte dal `RevisionAgent` devono essere in **testo semplice** compatibile con tag HTML `<p>`. Non è ammesso Markdown (`**`, `*`, `#`, `` ` ``), emoji o caratteri speciali di formattazione. L'enfasi è espressa esclusivamente tramite MAIUSCOLE.
 
 ### RNF-21 – Prompt Engineering — Priorità Contesto Conversazionale
+
 Il `QueryAgent` e il `GeneratorAgent` devono dare **sempre** priorità al contesto della conversazione rispetto al profilo studente. Se la conversazione menziona un corso diverso dal profilo, la query e la risposta devono riferirsi al corso menzionato nella conversazione.
 
 ### RNF-22 – Prompt Engineering — Gestione Fonti Web
+
 Quando il `GeneratorAgent` riceve `web_context`, deve seguire le `SOURCE_INSTRUCTIONS`: non inventare informazioni, non modificare URL, gestire link PDF estratti, e aggiungere in fondo "Pagina di riferimento: [URL]". Il `RevisionAgent` deve preservare gli URL in fondo alla risposta.

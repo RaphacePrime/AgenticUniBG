@@ -16,13 +16,13 @@ L'obiettivo dell'Iterazione 5 è raffinare e consolidare la pipeline multi-agent
 
 ## 2. User Stories Incluse
 
-| ID | Descrizione | Ruolo |
-|----|-------------|-------|
+| ID    | Descrizione                                                                                                                                                    | Ruolo    |
+| ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | US-15 | Come studente, voglio che il sistema conosca la data odierna così da ricevere risposte temporalmente accurate (es. "prossima sessione", "scadenza iscrizione") | Studente |
-| US-16 | Come studente, voglio poter modificare i miei dati personali (nome, cognome, dipartimento, corso, anno) dalla pagina impostazioni senza dovermi re-iscrivere | Studente |
-| US-17 | Come studente, voglio poter cambiare la mia password dall'interfaccia web in modo sicuro | Studente |
-| US-18 | Come studente, voglio risposte più precise e meglio strutturate grazie a prompt ottimizzati che gestiscano correttamente il contesto della conversazione | Studente |
-| US-19 | Come sviluppatore, voglio monitorare i tempi di esecuzione di ogni agente nei log per identificare colli di bottiglia nella pipeline | Sistema |
+| US-16 | Come studente, voglio poter modificare i miei dati personali (nome, cognome, dipartimento, corso, anno) dalla pagina impostazioni senza dovermi re-iscrivere   | Studente |
+| US-17 | Come studente, voglio poter cambiare la mia password dall'interfaccia web in modo sicuro                                                                       | Studente |
+| US-18 | Come studente, voglio risposte più precise e meglio strutturate grazie a prompt ottimizzati che gestiscano correttamente il contesto della conversazione       | Studente |
+| US-19 | Come sviluppatore, voglio monitorare i tempi di esecuzione di ogni agente nei log per identificare colli di bottiglia nella pipeline                           | Sistema  |
 
 ---
 
@@ -30,21 +30,21 @@ L'obiettivo dell'Iterazione 5 è raffinare e consolidare la pipeline multi-agent
 
 ### 3.1 Novità Rispetto all'Iterazione 4
 
-| Funzionalità | Iterazione 4 | Iterazione 5 |
-|---|---|---|
-| Consapevolezza temporale | Assente nei prompt | `get_italian_timestamp()` in QueryAgent, GeneratorAgent; data iniettata in system prompt |
-| Gestione profilo utente | Assente (solo registrazione) | SettingsPage con modifica profilo e cambio password |
-| Endpoint profilo | Assenti | `PUT /api/auth/profile`, `PUT /api/auth/password` |
-| Prompt ClassifierAgent | Esempi base | Prompt esteso con contesto conversazionale (ultimi 2 turni) |
-| Prompt QueryAgent | Prompt generico | Prompt con regola critica contesto > profilo, esempi follow-up, gestione date/sessioni |
-| Prompt GeneratorAgent | Prompt per categoria | Aggiunta `SOURCE_INSTRUCTIONS` per uso fonti web, prompt specializzato `date_esami`, history come messaggi LLM nativi |
-| Prompt RevisionAgent | Prompt generico di revisione | Prompt con regole di formato (no Markdown, no emoji), lunghezza target, preservazione date/URL |
-| Logger | Senza tempi di esecuzione | Sezione "TEMPI DI ESECUZIONE" con `elapsed_time` per agente + `total_time` pipeline |
-| Routing `date_esami` | Presente (Iterazione 4) | Consolidato con gestione caso ospite (NUMERO: 0) e fallback robusto |
-| Dizionario corsi | Assente | `DIPARTIMENTI_CORSI` nel frontend con mapping dipartimento → corsi → tipologia |
-| `AuthService` | Solo authenticate/createUser | Aggiunta `updateProfile()` e `changePassword()` |
-| `AuthController` | Solo login/register | Aggiunta `update_profile()` e `change_password()` |
-| `ProfileRepository` | Solo findById/save/exists | Aggiunta `updateProfile()` |
+| Funzionalità             | Iterazione 4                 | Iterazione 5                                                                                                          |
+| ------------------------ | ---------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Consapevolezza temporale | Assente nei prompt           | `get_italian_timestamp()` in QueryAgent, GeneratorAgent; data iniettata in system prompt                              |
+| Gestione profilo utente  | Assente (solo registrazione) | SettingsPage con modifica profilo e cambio password                                                                   |
+| Endpoint profilo         | Assenti                      | `PUT /api/auth/profile`, `PUT /api/auth/password`                                                                     |
+| Prompt ClassifierAgent   | Esempi base                  | Prompt esteso con contesto conversazionale (ultimi 2 turni)                                                           |
+| Prompt QueryAgent        | Prompt generico              | Prompt con regola critica contesto > profilo, esempi follow-up, gestione date/sessioni                                |
+| Prompt GeneratorAgent    | Prompt per categoria         | Aggiunta `SOURCE_INSTRUCTIONS` per uso fonti web, prompt specializzato `date_esami`, history come messaggi LLM nativi |
+| Prompt RevisionAgent     | Prompt generico di revisione | Prompt con regole di formato (no Markdown, no emoji), lunghezza target, preservazione date/URL                        |
+| Logger                   | Senza tempi di esecuzione    | Sezione "TEMPI DI ESECUZIONE" con `elapsed_time` per agente + `total_time` pipeline                                   |
+| Routing `date_esami`     | Presente (Iterazione 4)      | Consolidato con gestione caso ospite (NUMERO: 0) e fallback robusto                                                   |
+| Dizionario corsi         | Assente                      | `DIPARTIMENTI_CORSI` nel frontend con mapping dipartimento → corsi → tipologia                                        |
+| `AuthService`            | Solo authenticate/createUser | Aggiunta `updateProfile()` e `changePassword()`                                                                       |
+| `AuthController`         | Solo login/register          | Aggiunta `update_profile()` e `change_password()`                                                                     |
+| `ProfileRepository`      | Solo findById/save/exists    | Aggiunta `updateProfile()`                                                                                            |
 
 ### 3.2 Workflow LangGraph (Invariato)
 
@@ -61,6 +61,7 @@ Il workflow LangGraph rimane strutturalmente identico all'Iterazione 4. Le modif
 ## 4. Timestamp Temporale per gli Agenti
 
 ### 4.1 Funzione `get_italian_timestamp()`
+
 Definita in `web_agent.py` e importata da `QueryAgent` e `GeneratorAgent`:
 
 ```python
@@ -72,11 +73,13 @@ def get_italian_timestamp() -> str:
 Restituisce la data corrente in formato italiano (es. "06 marzo 2026").
 
 ### 4.2 Iniezione nei Prompt
+
 - **QueryAgent**: il system prompt include `DATA ODIERNA: {today} (Anno accademico 2025/2026)` e istruisce l'agente a includere il periodo temporale nelle query quando la domanda riguarda date o sessioni.
 - **GeneratorAgent**: il system prompt include `DATA ODIERNA: {today} (Anno accademico 2025/2026)` per consentire al modello di determinare "prossima sessione", "scadenza imminente" ecc.
 - **WebAgent** (`_format_exam_results`): include `DATA ODIERNA: {today}` nel contesto formattato per il calendario esami.
 
 ### 4.3 Motivazione
+
 Senza il timestamp, il modello LLM non ha consapevolezza della data corrente e non può rispondere correttamente a domande come "quando è la prossima sessione?", "la scadenza per l'iscrizione è già passata?" o "in quale sessione siamo?". L'iniezione del timestamp risolve questa limitazione.
 
 ---
@@ -86,6 +89,7 @@ Senza il timestamp, il modello LLM non ha consapevolezza della data corrente e n
 ### 5.1 Frontend — Componente `SettingsPage`
 
 #### 5.1.1 Struttura
+
 Il componente `SettingsPage` è un pannello overlay accessibile tramite il pulsante ⚙ nell'header, visibile solo per utenti autenticati (`userInfo.status === "loggato"`). Il pannello contiene tre sezioni:
 
 1. **Stato del Server**: indicatore visuale di connessione (connesso/disconnesso).
@@ -93,6 +97,7 @@ Il componente `SettingsPage` è un pannello overlay accessibile tramite il pulsa
 3. **Cambia Password**: form per il cambio password (password corrente, nuova password, conferma).
 
 #### 5.1.2 Dizionario `DIPARTIMENTI_CORSI`
+
 Struttura dati nel frontend che mappa ogni dipartimento dell'Università di Bergamo ai rispettivi corsi di laurea, con indicazione della tipologia:
 
 ```javascript
@@ -109,6 +114,7 @@ const DIPARTIMENTI_CORSI = {
 ```
 
 La tipologia viene derivata automaticamente tramite `tipoToTipology()`:
+
 - `"Laurea"` → `"Triennale"`
 - `"Laurea Magistrale"` → `"Magistrale"`
 - `"Laurea Magistrale a ciclo unico (5 anni)"` → `"Ciclo Unico"`
@@ -116,9 +122,11 @@ La tipologia viene derivata automaticamente tramite `tipoToTipology()`:
 L'anno massimo selezionabile dipende dalla tipologia (3, 2 o 5).
 
 #### 5.1.3 Logica di Selezione Corso
+
 Quando l'utente cambia dipartimento, il campo corso viene resettato e il dropdown mostra solo i corsi di quel dipartimento. Quando l'utente seleziona un corso, la tipologia viene impostata automaticamente e il campo anno viene resettato a 1.
 
 #### 5.1.4 Propagazione al Parent
+
 Il componente riceve la callback `onProfileUpdate` che aggiorna lo stato `userInfo` in `App.jsx`, propagando immediatamente le modifiche a tutti i componenti che utilizzano il profilo utente (header, prompt degli agenti).
 
 ### 5.2 Backend — Endpoint `PUT /api/auth/profile`
@@ -149,42 +157,48 @@ Il componente riceve la callback `onProfileUpdate` che aggiorna lo stato `userIn
 
 ### 5.4 Aggiornamenti all'Auth Layer
 
-| Classe | Metodo Aggiunto | Descrizione |
-|---|---|---|
-| `ProfileRepository` | `updateProfile(matricola, fields)` | Esegue `update_one` con `$set` su MongoDB |
-| `AuthService` | `updateProfile(matricola, fields)` | Valida esistenza utente e delega al repository |
-| `AuthService` | `changePassword(matricola, current, new)` | Verifica password corrente, hasha nuova, aggiorna MongoDB |
-| `AuthController` | `update_profile(matricola, fields)` | Delega a service, restituisce profilo pubblico |
-| `AuthController` | `change_password(matricola, current, new)` | Delega a service, restituisce messaggio successo |
+| Classe              | Metodo Aggiunto                            | Descrizione                                               |
+| ------------------- | ------------------------------------------ | --------------------------------------------------------- |
+| `ProfileRepository` | `updateProfile(matricola, fields)`         | Esegue `update_one` con `$set` su MongoDB                 |
+| `AuthService`       | `updateProfile(matricola, fields)`         | Valida esistenza utente e delega al repository            |
+| `AuthService`       | `changePassword(matricola, current, new)`  | Verifica password corrente, hasha nuova, aggiorna MongoDB |
+| `AuthController`    | `update_profile(matricola, fields)`        | Delega a service, restituisce profilo pubblico            |
+| `AuthController`    | `change_password(matricola, current, new)` | Delega a service, restituisce messaggio successo          |
 
 ---
 
 ## 6. Prompt Engineering
 
 ### 6.1 Approccio
+
 Il prompt engineering in questa iterazione è stato un processo iterativo e manuale:
+
 1. Esecuzione di test con domande reali diverse (chiusure, materie, sedi, esami, servizi).
 2. Analisi delle risposte tramite i log della pipeline (system prompt + raw response).
 3. Identificazione di pattern di errore (allucinazioni, contesto ignorato, formattazione errata).
 4. Modifica mirata del prompt e nuovo ciclo di test.
 
 ### 6.2 ClassifierAgent — Modifiche al Prompt
+
 - Aggiunto contesto conversazionale: la `query_text` viene arricchita con gli ultimi 2 turni di conversazione per una classificazione più accurata nei follow-up.
 - Aggiunti esempi dettagliati per la categoria `date_esami`: 4 esempi specifici per guidare la classificazione di domande su date e sessioni d'esame.
 
 ### 6.3 QueryAgent — Modifiche al Prompt
+
 - **Regola critica "contesto > profilo"**: il contesto della conversazione ha SEMPRE la priorità sulle informazioni del profilo studente. Se la conversazione indica un corso diverso dal profilo, la query deve riferirsi al corso menzionato nella conversazione.
 - **Gestione date e periodi temporali**: quando la domanda riguarda date o sessioni, l'agente include l'anno accademico (2025/2026) nella query generata.
 - **Esempi dettagliati**: aggiunti esempi con e senza profilo, esempi di follow-up con contesto divergente dal profilo.
 - **Massimo 8 parole**: limite esplicito per mantenere le query compatte.
 
 ### 6.4 GeneratorAgent — Modifiche al Prompt
+
 - **`SOURCE_INSTRUCTIONS`**: blocco testuale aggiunto al system prompt quando il contesto web è presente. Contiene 8 regole fondamentali per l'uso delle fonti, inclusa la gestione di link PDF estratti e il formato "Pagina di riferimento: [URL]".
 - **History come messaggi LLM nativi**: la `conversation_history` non è più una stringa testuale nel prompt, ma viene iniettata come sequenza di `HumanMessage` / `AIMessage`, sfruttando la memoria nativa del modello per risposte più coerenti nei follow-up.
 - **Prompt specializzato `date_esami`**: istruzioni specifiche per cercare date all'interno del calendario fornito, gestire il caso ospite, non esporre metadati interni.
 - **Timestamp nel prompt**: `DATA ODIERNA: {today} (Anno accademico 2025/2026)` per consapevolezza temporale.
 
 ### 6.5 RevisionAgent — Modifiche al Prompt
+
 - **Regole di formato esplicite**: testo semplice compatibile con tag `<p>` HTML; niente Markdown (`**`, `*`, `#`), niente emoji, uso di MAIUSCOLE per enfasi.
 - **Lunghezza target**: risposte semplici in 1-3 frasi; risposte articolate in max 10-15 punti. Date e scadenze NON vengono compresse.
 - **Priorità ACCURATEZZA**: le date, scadenze, URL e dati specifici non vengono MAI rimossi durante la revisione.
@@ -196,6 +210,7 @@ Il prompt engineering in questa iterazione è stato un processo iterativo e manu
 ## 7. Tempi di Esecuzione nel Logger
 
 ### 7.1 Raccolta dei Tempi
+
 Ogni nodo del workflow LangGraph misura il proprio tempo di esecuzione tramite `time.time()`:
 
 ```python
@@ -219,6 +234,7 @@ total_time = time.time() - pipeline_start
 ```
 
 ### 7.2 Sezione nel Log
+
 Il `PipelineLogger` include ora una sezione "TEMPI DI ESECUZIONE" alla fine del file di log:
 
 ```
@@ -235,6 +251,7 @@ TEMPI DI ESECUZIONE
 ```
 
 ### 7.3 Metodo `_format_timing_section()`
+
 Il metodo utilizza una mappa `step_labels` per tradurre i nomi tecnici degli step in etichette leggibili, e formatta ogni tempo con 3 decimali.
 
 ---
@@ -242,6 +259,7 @@ Il metodo utilizza una mappa `step_labels` per tradurre i nomi tecnici degli ste
 ## 8. Analisi Dinamica
 
 ### 8.1 Flusso di Modifica Profilo
+
 1. L'utente clicca ⚙ nell'header della chat.
 2. Si apre il pannello `SettingsPage` come overlay.
 3. L'utente modifica i campi desiderati e clicca "Salva Modifiche".
@@ -251,6 +269,7 @@ Il metodo utilizza una mappa `step_labels` per tradurre i nomi tecnici degli ste
 7. Tutte le successive query invieranno il profilo aggiornato agli agenti.
 
 ### 8.2 Flusso di Cambio Password
+
 1. L'utente compila il form "Cambia Password" nella `SettingsPage`.
 2. Il frontend valida che la nuova password abbia almeno 6 caratteri e che la conferma corrisponda.
 3. `PUT /api/auth/password` invia password corrente e nuova con il cookie JWT.
@@ -258,6 +277,7 @@ Il metodo utilizza una mappa `step_labels` per tradurre i nomi tecnici degli ste
 5. Il frontend mostra il messaggio di successo e resetta i campi.
 
 ### 8.3 Flusso Pipeline con Timestamp (invariato nella struttura)
+
 1. Query dell'utente entra nel workflow LangGraph.
 2. Il `ClassifierAgent` classifica la query usando il contesto conversazionale.
 3. Il `QueryAgent` genera la search query con data odierna se pertinente.
@@ -271,6 +291,7 @@ Il metodo utilizza una mappa `step_labels` per tradurre i nomi tecnici degli ste
 ## 9. Analisi Statica — Aggiornamenti
 
 ### 9.1 `AgentState` (invariato)
+
 Nessun campo aggiunto allo stato. I campi `calendar_context`, `web_context` e `workflow_steps` (con `elapsed_time`) erano già presenti nell'Iterazione 4.
 
 ### 9.2 Nuovi Modelli Pydantic
@@ -290,6 +311,7 @@ class ChangePasswordRequest(BaseModel):
 ```
 
 ### 9.3 `ProfileRepository` — Metodo Aggiunto
+
 ```python
 async def updateProfile(self, matricola: str, fields: dict) -> dict:
     await self._collection.update_one(
@@ -299,20 +321,24 @@ async def updateProfile(self, matricola: str, fields: dict) -> dict:
 ```
 
 ### 9.4 `AuthService` — Metodi Aggiunti
+
 - `updateProfile(matricola, fields)`: valida esistenza, delega a `ProfileRepository.updateProfile()`.
 - `changePassword(matricola, current, new)`: verifica password corrente con bcrypt, hasha nuova password, aggiorna MongoDB.
 
 ### 9.5 `AuthController` — Metodi Aggiunti
+
 - `update_profile(matricola, fields)`: delega a service, filtra profilo pubblico.
 - `change_password(matricola, current, new)`: delega a service, restituisce messaggio.
 
 ### 9.6 Frontend — Nuovo Componente `SettingsPage`
+
 - File: `src/SettingsPage.jsx` + `src/SettingsPage.css`
 - Props: `userInfo`, `connectionStatus`, `onClose`, `onProfileUpdate`
 - Stato locale: `profileData`, `passwordData`, messaggi feedback, loading
 - Utilizza `DIPARTIMENTI_CORSI` per la selezione gerarchica dipartimento → corso → tipologia
 
 ### 9.7 Frontend — Aggiornamenti a `App.jsx`
+
 - Aggiunto stato `showSettings` e toggle tramite pulsante ⚙ nell'header.
 - Aggiunta callback `handleProfileUpdate` che aggiorna `userInfo` nello stato React.
 - Il pulsante impostazioni è visibile solo per utenti con `status === "loggato"`.
@@ -321,16 +347,16 @@ async def updateProfile(self, matricola: str, fields: dict) -> dict:
 
 ## 10. Endpoint API — Aggiornamenti
 
-| Metodo | Path | Novità | Descrizione |
-|--------|------|--------|-------------|
-| `POST` | `/api/auth/login` | — | Login (invariato) |
-| `POST` | `/api/auth/register` | — | Registrazione (invariato) |
-| `GET` | `/api/auth/verify` | — | Verifica sessione (invariato) |
-| `POST` | `/api/auth/logout` | — | Logout (invariato) |
-| `PUT` | `/api/auth/profile` | **Nuovo** | Aggiorna dati profilo utente |
-| `PUT` | `/api/auth/password` | **Nuovo** | Cambia password utente |
-| `POST` | `/api/agent/query` | Aggiornato | Prompt interni migliorati (trasparente per l'API) |
-| `GET` | `/api/agents` | — | Lista agenti (invariato) |
+| Metodo | Path                 | Novità     | Descrizione                                       |
+| ------ | -------------------- | ---------- | ------------------------------------------------- |
+| `POST` | `/api/auth/login`    | —          | Login (invariato)                                 |
+| `POST` | `/api/auth/register` | —          | Registrazione (invariato)                         |
+| `GET`  | `/api/auth/verify`   | —          | Verifica sessione (invariato)                     |
+| `POST` | `/api/auth/logout`   | —          | Logout (invariato)                                |
+| `PUT`  | `/api/auth/profile`  | **Nuovo**  | Aggiorna dati profilo utente                      |
+| `PUT`  | `/api/auth/password` | **Nuovo**  | Cambia password utente                            |
+| `POST` | `/api/agent/query`   | Aggiornato | Prompt interni migliorati (trasparente per l'API) |
+| `GET`  | `/api/agents`        | —          | Lista agenti (invariato)                          |
 
 ---
 
@@ -351,39 +377,39 @@ async def updateProfile(self, matricola: str, fields: dict) -> dict:
 
 Tutti i diagrammi sono in formato PlantUML (`.puml`).
 
-| Diagramma | File | Descrizione |
-|---|---|---|
-| Use Case | `usecase_diagram5.puml` | Casi d'uso UC-01 — UC-16 (include UC-14 Modifica Profilo, UC-15 Cambio Password, UC-16 Timestamp) |
-| Activity | `activity_diagram5.puml` | Flusso attività pipeline completa con timestamp e logging tempi |
-| Sequence | `sequence_diagram5.puml` | Pipeline end-to-end con timestamp e tempi logging |
-| Sequence (Settings) | `sequence_settings5.puml` | Flusso modifica profilo e cambio password |
-| Class (Auth) | `class_auth_diagram5.puml` | Package `auth` aggiornato con updateProfile e changePassword |
-| Class (Agents + Logger) | `class_agents_diagram5.puml` | Package `agents` + `logger` con timestamp e timing |
-| Class (Frontend) | `class_frontend_diagram5.puml` | Package `frontend` con SettingsPage e DIPARTIMENTI_CORSI |
-| Component (Overview) | `component5.puml` | Architettura a 4 tier (invariata nella struttura) |
-| Component (Auth) | `component_auth_diagram5.puml` | Dettaglio Auth Layer con nuovi endpoint profile/password |
-| Component (Agents) | `component_agents_diagram5.puml` | Dettaglio Agent Layer con timestamp e prompt engineering |
+| Diagramma               | File                             | Descrizione                                                                                       |
+| ----------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Use Case                | `usecase_diagram5.puml`          | Casi d'uso UC-01 — UC-16 (include UC-14 Modifica Profilo, UC-15 Cambio Password, UC-16 Timestamp) |
+| Activity                | `activity_diagram5.puml`         | Flusso attività pipeline completa con timestamp e logging tempi                                   |
+| Sequence                | `sequence_diagram5.puml`         | Pipeline end-to-end con timestamp e tempi logging                                                 |
+| Sequence (Settings)     | `sequence_settings5.puml`        | Flusso modifica profilo e cambio password                                                         |
+| Class (Auth)            | `class_auth_diagram5.puml`       | Package `auth` aggiornato con updateProfile e changePassword                                      |
+| Class (Agents + Logger) | `class_agents_diagram5.puml`     | Package `agents` + `logger` con timestamp e timing                                                |
+| Class (Frontend)        | `class_frontend_diagram5.puml`   | Package `frontend` con SettingsPage e DIPARTIMENTI_CORSI                                          |
+| Component (Overview)    | `component5.puml`                | Architettura a 4 tier (invariata nella struttura)                                                 |
+| Component (Auth)        | `component_auth_diagram5.puml`   | Dettaglio Auth Layer con nuovi endpoint profile/password                                          |
+| Component (Agents)      | `component_agents_diagram5.puml` | Dettaglio Agent Layer con timestamp e prompt engineering                                          |
 
 ---
 
 ## 13. Obiettivi Raggiunti
 
-| Obiettivo | Stato |
-|---|---|
-| Timestamp temporale per tutti gli agenti | ✅ Completato |
-| Routing `date_esami` con Extract consolidato | ✅ Completato |
-| Pagina impostazioni profilo utente (SettingsPage) | ✅ Completato |
-| Endpoint PUT /api/auth/profile | ✅ Completato |
-| Endpoint PUT /api/auth/password | ✅ Completato |
-| Dizionario DIPARTIMENTI_CORSI nel frontend | ✅ Completato |
-| Prompt engineering ClassifierAgent | ✅ Completato |
-| Prompt engineering QueryAgent (contesto > profilo) | ✅ Completato |
+| Obiettivo                                                               | Stato         |
+| ----------------------------------------------------------------------- | ------------- |
+| Timestamp temporale per tutti gli agenti                                | ✅ Completato |
+| Routing `date_esami` con Extract consolidato                            | ✅ Completato |
+| Pagina impostazioni profilo utente (SettingsPage)                       | ✅ Completato |
+| Endpoint PUT /api/auth/profile                                          | ✅ Completato |
+| Endpoint PUT /api/auth/password                                         | ✅ Completato |
+| Dizionario DIPARTIMENTI_CORSI nel frontend                              | ✅ Completato |
+| Prompt engineering ClassifierAgent                                      | ✅ Completato |
+| Prompt engineering QueryAgent (contesto > profilo)                      | ✅ Completato |
 | Prompt engineering GeneratorAgent (SOURCE_INSTRUCTIONS, history nativa) | ✅ Completato |
-| Prompt engineering RevisionAgent (formato, lunghezza, accuratezza) | ✅ Completato |
-| Tempi di esecuzione nel PipelineLogger | ✅ Completato |
-| Test manuali iterativi | ✅ Completato |
-| Re-ranking semantico risultati web | ⏳ Rimandato |
-| Log consultabili via API / MongoDB | ⏳ Rimandato |
-| Refresh token JWT | ⏳ Rimandato |
-| Persistenza conversazione su backend | ⏳ Rimandato |
-| Validazione server-side dei dati profilo | ⏳ Rimandato |
+| Prompt engineering RevisionAgent (formato, lunghezza, accuratezza)      | ✅ Completato |
+| Tempi di esecuzione nel PipelineLogger                                  | ✅ Completato |
+| Test manuali iterativi                                                  | ✅ Completato |
+| Re-ranking semantico risultati web                                      | ⏳ Rimandato  |
+| Log consultabili via API / MongoDB                                      | ⏳ Rimandato  |
+| Refresh token JWT                                                       | ⏳ Rimandato  |
+| Persistenza conversazione su backend                                    | ⏳ Rimandato  |
+| Validazione server-side dei dati profilo                                | ⏳ Rimandato  |
