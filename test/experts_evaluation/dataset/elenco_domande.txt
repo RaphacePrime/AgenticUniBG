@@ -126,7 +126,8 @@ Boh
 https://www.unibg.it/internazionale/andare-allestero/destinazioni
 
 15) Quali sono i passi per laurearesi?
+Spiegazione passo passo per laurearsi
+16) Quale è la mail del professore di Programmazione, algoritmi e computabilità?
+patrizia.scandurra@unibg.it
 
-16) Quale è la mail del professore di PAC?
-
-17)
+17) chi è il rettore dell'università? Sergio Cavalieri

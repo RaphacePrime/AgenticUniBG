@@ -300,3 +300,96 @@ Per dettagli e chiarimenti, contatta l'Ufficio Programmi Internazionali.
 PAGINE DI RIFERIMENTO GENERALI:
 - Bandi tirocini e studio all'estero
 - MobilitÃ  Extra-UE e TNE
+
+15)Per conseguire il titolo di laurea all'Università di Bergamo nell'anno accademico 2025/2026, devi seguire questi passaggi fondamentali:
+
+ 
+
+1. Essere in regola con il pagamento delle tasse:
+
+- Devi aver saldato tutte le tasse universitarie fino all'ultimo anno di iscrizione.
+
+- Se intendi conseguire il titolo entro la sessione di laurea straordinaria di MARZO/APRILE 2026, non sei tenuto al versamento della tassa regionale o del contributo onnicomprensivo per l'a.a. 2025-2026. Le quote eventualmente pagate saranno considerate valide per l'immatricolazione a un corso di laurea magistrale o rimborsate d'ufficio (ad eccezione dell'imposta di bollo di € 16,00).
+
+- Se non conseguirai il titolo entro tale sessione e intenderai laurearti in una sessione dell'a.a. 2025-2026, dovrai corrispondere la tassa regionale, l'imposta di bollo e l'eventuale contributo onnicomprensivo dovuto, con le maggiorazioni relative ai ritardati pagamenti.
+
+2. Aver sostenuto tutti gli esami:
+
+- Devi aver superato tutti gli esami previsti dal tuo ultimo piano di studi approvato, entro le scadenze stabilite.
+
+3. Presentare la Domanda di assegnazione titolo provvisorio (se prevista):
+
+- Per alcuni corsi (come OGI, DINI e LMG), è necessario presentare la domanda di assegnazione del titolo provvisorio della tesi/prova finale o l'argomento, se previsti, entro i termini fissati dalle strutture didattiche competenti. Consulta il Calendario didattico del tuo Dipartimento per le modalità e le scadenze.
+
+4. Presentare la domanda di laurea online e pagare la tassa di laurea:
+
+- Accedi allo SPORTELLO INTERNET UniBg (https://sportello.unibg.it/Home.do) e vai alla sezione "Laurea".
+
+- Attendi che il tuo relatore abbia approvato online la tesi. Riceverai una e-mail di avviso nella tua casella di posta istituzionale.
+
+- Procedi con l'inserimento della domanda definitiva entro la scadenza prevista dal Calendario didattico del tuo Dipartimento.
+
+- Il contributo per il rilascio del diploma, pari a € 32,00 (comprensivo del bollo virtuale sull'istanza e sul diploma originale), sarà disponibile nella sezione "Pagamenti" dello Sportello Internet e dovrà essere pagato tramite PAGOPA entro la scadenza di presentazione della domanda.
+
+5. Compilare il Questionario laureandi:
+
+- L'Università degli studi di Bergamo aderisce al Consorzio AlmaLaurea. Le informazioni necessarie vengono raccolte tramite il questionario laureandi al momento della compilazione della domanda di ammissione alla prova finale. La registrazione al portale AlmaLaurea avviene tramite lo Sportello Internet.
+
+6. Allegare l'elaborato di prova finale/tesi di laurea:
+
+- L'elaborato deve essere allegato in formato PDF alla domanda di prova finale/tesi di laurea (nella sezione "Laurea" dello Sportello Internet), dopo l'approvazione della domanda online da parte della Segreteria studenti, entro la scadenza indicata nel Calendario didattico del Dipartimento di riferimento. Non è più prevista la consegna in formato cartaceo alla Segreteria studenti.
+
+7. Rispettare tutte le procedure e le scadenze:
+
+- È fondamentale consultare gli avvisi pubblicati alla pagina "Prove finali/Tesi di laurea" del tuo Dipartimento e rispettare tutte le scadenze amministrative specifiche per ogni sessione.
+
+ 
+
+INFORMAZIONI AGGIUNTIVE:
+
+- Normativa e verifica antiplagio: Il docente relatore può controllare gli elaborati tramite il software Magister di Compilatio.net. In caso di rilevazione di similarità significative, verranno valutate eventuali anomalie.
+
+- Norme di comportamento durante le sedute di laurea: Le sedute di laurea e i festeggiamenti devono svolgersi nel rispetto della normativa vigente e del decoro universitario. Sono vietati comportamenti come il lancio di petardi, l'uso di fumogeni, schiamazzi e l'abbandono di rifiuti. L'Università si riserva di agire legalmente in caso di violazioni.
+
+- Regole tipografiche per la tesi: Generalmente si consiglia formato A4, carattere Times New Roman o Courier (corpo 12 o superiore), testo giustificato, margini di 3 cm, interlinea 1,5, numerazione automatica delle pagine. L'elaborato va termorilegato con copertine trasparenti.
+
+- Ritiro della pergamena di laurea: Il diploma originale viene consegnato ai laureati triennali durante la cerimonia di proclamazione e ai laureati magistrali/a ciclo unico durante il Graduation Day. In alternativa, puoi ritirarla agli sportelli della Segreteria (su appuntamento) o richiederne la spedizione a domicilio (con contributo per la spedizione).
+
+- Rinvio della discussione: In caso di rinvio, devi informare tempestivamente la Segreteria studenti via Ticket (https://helpdesk.unibg.it/helpdesksegrestud/?lang=it). Dovrai ricompilare la domanda definitiva e, se avevi già pagato i € 32,00, dovrai versare solo l'imposta di bollo di € 16,00.
+
+ 
+
+Per maggiori informazioni, consulta la pagina dedicata sul sito dell'Ateneo.
+
+ 
+
+Pagina di riferimento: https://www.unibg.it/studiare/laurearsi/laurearsi-note-operative
+
+16)
+Per il corso di Programmazione, algoritmi e computabilità (PAC), le informazioni disponibili indicano quanto segue per gli anni accademici precedenti:
+
+ 
+
+- Il PROFESSOR MARIO VERDICCHIO ha tenuto il corso di "Progettazione, Algoritmi e Computabilità" (6 crediti) dal 2020 al 2023. La sua email è: MARIO.VERDICCHIO@UNIBG.IT.
+
+- La PROFESSORESSA PATRIZIA SCANDURRA è indicata come docente del corso "Progettazione, algoritmi e computabilità (PAC) a.a. 2022-23" sulla piattaforma e-learning.
+
+ 
+
+Dato che l'anno accademico attuale è il 2025/2026, e le informazioni si riferiscono ad anni precedenti, si consiglia di consultare la pagina ufficiale del corso sul sito dell'Università di Bergamo per verificare il docente assegnato per l'anno accademico 2025/2026 e i relativi contatti aggiornati.
+
+ 
+
+Pagina di riferimento:
+
+https://cs.unibg.it/verdicchio/MV_CV_ita.pdf (Fonte 1)
+
+https://elearning15.unibg.it/course/view.php?id=3416 (Fonte 2)
+
+17) Il Rettore dell'Università degli studi di Bergamo è il PROF. SERGIO CAVALIERI.
+
+Il suo mandato copre il sessennio dal 15 novembre 2021 al 14 novembre 2027. È anche professore ordinario presso il Dipartimento di Ingegneria Gestionale, dell’Informazione e della Produzione.
+
+Puoi contattare il Rettore all'indirizzo email sergio.cavalieri@unibg.it o al numero di telefono +39 035 205 2242.
+
+Pagina di riferimento: https://www.unibg.it/node/12850, https://www.unibg.it/rubrica/universita-studi-bergamo-0, https://www.unibg.it/ateneo/organizzazione-e-struttura/organi-e-governance
