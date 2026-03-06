@@ -46,16 +46,13 @@ Data Tier           →   MongoDB Atlas (Motor async)
 | `Web / Mobile App` | React + Vite | Interfaccia login e chat |
 | `API Gateway` (FastAPI) | Python / uvicorn | Routing HTTP, CORS, endpoint REST |
 | `Auth Controller` | FastAPI routes | Gestione `/api/auth/login` e `/api/auth/register` |
-| `Auth Service` (implicito) | bcrypt | Hashing e verifica password |
-| `JWT Manager` | (non presente in iter. 2 – rimandato) | — |
+| `Auth Service` | bcrypt | Hashing e verifica password |
 | `OrchestratorAgent` | LangGraph | Coordinamento pipeline classify → generate → revise |
 | `ClassifierAgent` | LangChain + Groq | Classificazione intento della query |
 | `GeneratorAgent` | LangChain + Groq | Generazione risposta contestualizzata |
 | `RevisionAgent` | LangChain + Groq | Revisione e raffinamento risposta |
 | `ProfileRepository` | Motor / MongoDB | Persistenza e recupero profilo studente |
 | `MongoDB` | MongoDB Atlas | Storage documenti utente |
-
-> **Nota**: il JWT Manager è presente nel class diagram e nel component diagram come componente progettato, ma la sua implementazione (token stateless) è pianificata per una iterazione successiva. In questa iterazione il login restituisce direttamente i dati del profilo, e il frontend li gestisce in memoria.
 
 ---
 
@@ -201,7 +198,6 @@ Il backend utilizza `uvicorn` con `motor` per la connessione asincrona a MongoDB
 
 ## 11. Limitazioni dell'Iterazione 2
 
-- **JWT non implementato**: il token di sessione non è ancora presente; il profilo è mantenuto lato frontend in memoria. Previsto nelle iterazioni successive.
 - **Nessun accesso a dati reali UniBG**: le risposte sono generate dall'LLM senza recupero da fonti strutturate (orari, corsi, documenti ufficiali).
 - **Conversation history in memoria**: la cronologia delle conversazioni non è persistita su MongoDB ma mantenuta nell'istanza dell'`OrchestratorAgent`.
 
@@ -215,10 +211,10 @@ Tutti i diagrammi sono in formato PlantUML (`.puml`).
 |---|---|---|
 | Use Case | `usecase_diagram2.puml` | Casi d'uso: registrazione, login, query, risposta personalizzata |
 | Activity | `activity_diagram2.puml` | Flusso attività della pipeline classify → generate → revise |
-| Sequence | `sequence_diagram2.puml` | Processo di login: Frontend → Gateway → Auth → MongoDB → JWT |
+| Sequence | `sequence_diagram2.puml` | Processo di login: Frontend → Gateway → Auth → MongoDB |
 | Class | `class_diagram2.puml` | Diagramma classi completo (Auth Layer + Agent Layer + modelli) |
 | Component (Overview) | `component_diagram2.puml` | Architettura a 3 tier con porte e interfacce cross-tier |
-| Component (Auth Layer) | `component2_auth.puml` | Dettaglio Authentication Layer: AuthCtrl → AuthSvc → JWT |
+| Component (Auth Layer) | `component2_auth.puml` | Dettaglio Authentication Layer: AuthCtrl → AuthSvc |
 | Component (Agent Layer) | `component2_agents.puml` | Dettaglio Agent Layer: Orchestrator → Classifier, Generator, Revision |
 
 ---
@@ -234,6 +230,5 @@ Tutti i diagrammi sono in formato PlantUML (`.puml`).
 | Persistenza su MongoDB Atlas | ✅ Completato |
 | Frontend React con login e chat | ✅ Completato |
 | Containerizzazione Docker + Docker Compose | ✅ Completato |
-| JWT stateless per sessioni | ⏳ Rimandato |
 | Accesso a dati reali UniBG | ⏳ Rimandato |
 | Persistenza cronologia conversazioni | ⏳ Rimandato |

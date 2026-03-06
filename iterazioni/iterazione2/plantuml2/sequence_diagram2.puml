@@ -8,7 +8,6 @@ participant "Auth Controller"   as AC
 participant "Auth Service"      as AS
 participant "Profile Repository" as PR
 participant "MongoDB"           as DB
-participant "JWT Manager"       as JWT
 
 U  -> FE  : Inserisce credenziali
 FE -> GW  : POST /login
@@ -18,10 +17,9 @@ AS -> PR  : Cerca utente per matricola
 PR -> DB  : query
 DB --> PR : user data
 PR --> AS : User
-AS -> JWT : Generazione token 
-JWT --> AS : JWT
-AS --> AC : token
-AC --> GW : token
-GW --> FE : token
+AS -> AS  : Verifica password (bcrypt)
+AS --> AC : profilo studente
+AC --> GW : profilo studente
+GW --> FE : profilo studente
 
 @enduml

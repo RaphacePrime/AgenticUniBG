@@ -23,18 +23,8 @@ class AuthController {
 
 class AuthService {
   -_repo: ProfileRepository
-  -_jwt: JWTManager
   +authenticate(matricola: String, password: String): dict
   +createUser(name: String, surname: String, matricola: String, password: String, department: String, course: String, tipology: String, year: int): dict
-}
-
-class JWTManager {
-  +secret_key: String
-  +algorithm: String
-  +expire_minutes: int
-  +generateToken(data: dict): String
-  +validateToken(token: String): dict
-  +validateFromRequest(request: Request): dict
 }
 
 class ProfileRepository {
@@ -105,7 +95,6 @@ class RevisionAgent {
 
 ' ─── Relazioni Authentication Layer ──────────────────────────
 AuthController --> AuthService       : delega
-AuthService    --> JWTManager        : genera/valida token
 AuthService    --> ProfileRepository : gestisce profilo
 ProfileRepository "1" --> "0..1" User : persiste
 

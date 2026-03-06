@@ -13,11 +13,9 @@ component "Authentication Layer" {
 
     component [Auth Controller] <<component>> as AuthCtrl
     component [Auth Service]    <<component>> as AuthSvc
-    component [JWT Manager]     <<component>> as JWT
 
     interface "IAuthAPI"     as IAuthAPI
     interface "IAuthService" as IAuthSvc
-    interface "IJWTManager"  as IJWT
 
     ' ─── Ingresso dal Gateway ─────────────────────────────────
     pAuthIn --> IAuthAPI
@@ -26,10 +24,6 @@ component "Authentication Layer" {
     ' ─── Controller → Service ─────────────────────────────────
     AuthCtrl --( IAuthSvc
     IAuthSvc  -  AuthSvc
-
-    ' ─── Service → JWT Manager ────────────────────────────────
-    AuthSvc --( IJWT
-    IJWT     -  JWT
 
     ' ─── Service → Data Tier ──────────────────────────────────
     AuthSvc --> pDataOut
