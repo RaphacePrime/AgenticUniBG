@@ -1,0 +1,94 @@
+@startuml
+
+frame "Browser" as BR{
+ [localstorage] AS LS
+ [httpCookie] AS CK
+ port p6
+
+ LS<.. p6 : delegate
+ CK<.. p6 : delegate
+}
+
+frame "Client" as CL {
+ [web-app/react] as react
+ port p7
+ portout p8
+ react ..> p8 :  delegate
+ react ..> p7 :  delegate
+}
+p8 --( ILocalStorage
+ILocalStorage --p6 
+
+p8 --( ICookie
+ICookie --p6 
+
+
+frame "Backend" as BA{ 
+ 
+ [API gateway] as API 
+ API --down( IOrchestrator
+ component Agent {
+  [Orchestrator] as OR
+  [Classifier] as C
+  [Generator] as G
+  [Revisioner] as R
+  [AgentState] as AS
+  [WebAgent] as WA
+  [QueryAgent] as QA
+  
+  OR -left- AS
+  OR --( classify
+  OR --( generate
+  OR --( revision
+  OR --( query
+  OR --( web_search
+  C -up- classify
+  G -up- generate
+  R -up- revision
+  WA -up- web_search
+  QA -up- query
+  port p1
+ }
+ OR <.. p1 : delegate
+ IOrchestrator -- p1
+ API --right( IAuthController
+ component Auth {
+  [Controller] AS AC
+  [ProfileRepo] AS PR
+  [Service] AS SR
+  [JWTManager] AS JW
+  port p2
+  port p3
+ SR -- IService
+ AC --( IService
+ PR -up- IProfile
+ SR -up-( IProfile
+ JW-- IJWT
+ SR --( IJWT
+ }
+
+ AC <.. p2 : delegate
+ PR .right.> p3 : delegate
+ IAuthController -- p2
+ component Models{
+  [User] 
+ }
+ port p4
+ portout p5
+ API <.up. p4 : delegate
+ API ..> Models : use
+ p3 .down.> p5 : delegate
+}
+
+frame "Data Tier" as DB {
+ [MongoDB] as Mdb
+}
+
+interface "HTTP/REST" as HTTP
+p7--(HTTP
+p4 -up- HTTP
+
+
+Mdb -down- IMongoDB
+p5-right-( IMongoDB
+@enduml
