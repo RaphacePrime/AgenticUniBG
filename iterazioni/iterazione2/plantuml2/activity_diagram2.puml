@@ -3,13 +3,12 @@ title Activity Diagram - Iterazione 2
 
 |Utente|
 start
-:Inserisce domanda + JWT;
+:Inserisce domanda;
 
 |API Gateway|
-:Riceve richiesta + JWT;
-:Valida token JWT;
+:Riceve richiesta;
 
-if (Token JWT valido?) then (Sì)
+if (Utente autenticato?) then (Sì)
   |MongoDB|
   :Cerca profilo utente\nper matricola;
   :Restituisce profilo;

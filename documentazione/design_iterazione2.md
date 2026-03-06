@@ -2,19 +2,19 @@
 
 ## 1. Obiettivo dell'iterazione
 
-Implementare il sistema di autenticazione (registrazione e login con JWT httpOnly cookie) e integrare le informazioni del profilo utente nell'`AgentState` per personalizzare le risposte degli agenti. Non è prevista memoria conversazionale in questa iterazione.
+Implementare il sistema di autenticazione (registrazione e login con bcrypt) e integrare le informazioni del profilo utente nell'`AgentState` per personalizzare le risposte degli agenti. Non è prevista memoria conversazionale in questa iterazione.
 
 ---
 
-## 2. Algoritmo 1: Autenticazione con JWT e bcrypt (AuthService)
+## 2. Algoritmo 1: Autenticazione con bcrypt (AuthService)
 
 ### 2.1 Descrizione
 
-Il flusso di autenticazione implementa un pattern **stateless authentication** con JSON Web Token memorizzato in un httpOnly cookie. La password è protetta con hashing bcrypt (cost factor = 12 round di default). Il flusso è:
+Il flusso di autenticazione implementa la verifica delle credenziali con hashing bcrypt (cost factor = 12 round di default). La password è protetta con hashing bcrypt. Il flusso è:
 1. L'utente invia matricola + password
 2. Il server cerca l'utente in MongoDB
 3. Verifica la password con `bcrypt.checkpw()`
-4. Se valida, genera un JWT e lo imposta come httpOnly cookie
+4. Se valida, restituisce il profilo dello studente
 
 ### 2.2 Pseudocodice
 
@@ -22,7 +22,7 @@ Il flusso di autenticazione implementa un pattern **stateless authentication** c
 ALGORITHM Authenticate(matricola, password)
 
 INPUT:  matricola (stringa), password (stringa)
-OUTPUT: {student, token} oppure HTTPException 401
+OUTPUT: {student} oppure HTTPException 401
 
 1.  // Lookup utente nel database
     student ← ProfileRepository.findById(matricola)
@@ -36,29 +36,14 @@ OUTPUT: {student, token} oppure HTTPException 401
     IF NOT is_valid:
         RAISE HTTPException(401, "Password errata")
 
-3.  // Genera JWT token
-    payload ← { matricola: student.matricola, status: "loggato" }
-    expire  ← NOW() + EXPIRE_MINUTES
-    payload.exp ← expire
-    token ← jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-
-4.  // Imposta il cookie httpOnly nella response HTTP
-    response.set_cookie(
-        key="access_token",
-        value=token,
-        httponly=True,
-        samesite="lax",
-        max_age=COOKIE_MAX_AGE
-    )
-
-5.  RETURN { student: student, token: token }
+3.  RETURN { student: student }
 ```
 
 ```
 ALGORITHM Register(name, surname, matricola, password, department, course, tipology, year)
 
 INPUT:  dati di registrazione completi
-OUTPUT: {student, token} oppure HTTPException 409
+OUTPUT: {student} oppure HTTPException 409
 
 1.  // Verifica unicità matricola
     IF ProfileRepository.exists(matricola):
@@ -76,11 +61,7 @@ OUTPUT: {student, token} oppure HTTPException 409
     }
     saved ← ProfileRepository.save(student_doc)
 
-4.  // Genera JWT e imposta cookie
-    token ← JWTManager.generateToken({matricola, status: "loggato"})
-    response.set_cookie(...)
-
-5.  RETURN { student: saved, token: token }
+4.  RETURN { student: saved }
 ```
 
 ### 2.3 Analisi di Complessità
@@ -94,7 +75,6 @@ Sia:
 | `findById(matricola)` — lookup per chiave indexed | $O(D)$ — $O(\log N)$ su B-tree MongoDB |
 | `bcrypt.checkpw()` — verifica hash | $O(B)$ — costante, ~100ms |
 | `bcrypt.hashpw()` — generazione hash (solo registrazione) | $O(B)$ — costante, ~100ms |
-| `jwt.encode()` — firma HMAC-SHA256 | $O(1)$ — operazione crittografica costante |
 | `exists()` — lookup per chiave | $O(D)$ — $O(\log N)$ |
 | `save()` — insert in MongoDB | $O(D)$ |
 | **Totale Login** | $O(D + B)$ |
@@ -102,7 +82,7 @@ Sia:
 
 **Nota di sicurezza**: il costo $O(B)$ di bcrypt è intenzionalmente elevato (design by intent) per resistere ad attacchi brute-force. Con cost factor 12, ogni verifica richiede ~100ms, rendendo impraticabile un attacco a forza bruta online.
 
-**Complessità spaziale**: $O(1)$ — solo il documento utente e il token JWT vengono mantenuti in memoria.
+**Complessità spaziale**: $O(1)$ — solo il documento utente viene mantenuto in memoria.
 
 ---
 
@@ -153,12 +133,10 @@ La funzione è puramente computazionale e a costo costante. Viene chiamata una v
 ### Pattern architetturale: Controller → Service → Repository
 
 ```
-AuthController (HTTP layer, cookie management)
+AuthController (HTTP layer)
     └──→ AuthService (business logic, bcrypt, validation)
             └──→ ProfileRepository (MongoDB persistence)
                     └──→ AsyncIOMotorCollection (driver MongoDB)
-
-JWTManager (token generation/validation, cross-cutting)
 ```
 
 ### Flusso dati per l'integrazione con gli agenti
