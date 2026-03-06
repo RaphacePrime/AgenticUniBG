@@ -1,0 +1,124 @@
+@startuml
+title Activity Diagram - Iterazione 5
+
+|Browser|
+start
+:Caricamento applicazione React;
+
+|API Gateway|
+:Verifica cookie JWT\n(GET /api/auth/verify);
+
+if (Cookie valido?) then (Sì)
+  :Recupera profilo da MongoDB;
+  |Browser|
+  :Ripristina sessione e\nconversazione da localStorage;
+else (No)
+  |Browser|
+  :Mostra pagina di Login;
+  :Utente si autentica / registra;
+endif
+
+|Browser|
+:Mostra interfaccia chat;
+
+if (Utente clicca ⚙?) then (Sì)
+  :Mostra SettingsPage (overlay);
+  if (Modifica profilo?) then (Sì)
+    |API Gateway|
+    :PUT /api/auth/profile\n(cookie + campi aggiornati);
+    :Aggiorna profilo su MongoDB;
+    |Browser|
+    :Aggiorna userInfo nello stato React;
+  elseif (Cambio password?) then (Sì)
+    |API Gateway|
+    :PUT /api/auth/password\n(cookie + old + new password);
+    :Verifica password corrente (bcrypt);
+    :Aggiorna hash su MongoDB;
+    |Browser|
+    :Mostra messaggio successo;
+  else (Chiude)
+  endif
+  :Chiude SettingsPage;
+endif
+
+|Browser|
+:Utente inserisce domanda;
+:Costruisce conversation_history\n(ultimi 10 messaggi);
+
+|API Gateway|
+:Riceve POST /api/agent/query\n(cookie + query + user_info + history);
+
+|Orchestrator Agent|
+:Inizializza AgentState\n(profilo + query + history);
+:Avvia timer pipeline (time.time());
+
+|Classifier Agent|
+:Classifica intento della query\n(con history[-4:] e profilo);
+:Restituisce categoria e confidence;
+:Registra elapsed_time classificazione;
+
+|Query Agent|
+:Inietta timestamp (get_italian_timestamp())\nnel system prompt;
+:Analizza query + history + profilo\n(contesto > profilo);
+:Genera search query ottimizzata\n(max 6-8 parole chiave);
+:Registra elapsed_time query;
+
+if (Categoria = date_esami?) then (Sì)
+  |Web Agent|
+  :Presenta EXAM_CALENDAR_LINKS all'LLM;
+  :L'LLM seleziona calendario corretto\n(o NUMERO: 0 per ospiti);
+  :Extract contenuto calendario\ntramite Tavily Extract;
+  :Search aggiuntiva top 3 risultati;
+  :Formatta calendar_context;
+  :Registra elapsed_time exam_extract;
+else (No)
+  |Web Agent|
+  :Esegue ricerca su Tavily API\n(domini: unibg.it, coursecatalogue);
+  :Recupera fino a 30 risultati;
+  :Ordina per score e seleziona top 5;
+
+  if (Risultato è PDF?) then (Sì)
+    :Estrae link ipertestuali\ndal PDF (PyMuPDF);
+  else (No)
+    :Estrae contenuto testuale;
+  endif
+
+  :Formatta web_context;
+  :Registra elapsed_time web_search;
+endif
+
+|Generator Agent|
+:Inietta timestamp (get_italian_timestamp())\nnel system prompt;
+:Inietta SOURCE_INSTRUCTIONS\n(se web_context presente);
+:Inietta conversation_history\ncome messaggi LLM nativi;
+:Genera risposta contestualizzata\n(query + categoria + context\n+ profilo + history);
+:Registra elapsed_time generazione;
+
+|Revision Agent|
+:Revisiona risposta applicando\nregole formato (no Markdown, no emoji)\ne lunghezza target;
+:Preserva date, URL, fonti;
+:Restituisce risposta finale;
+:Registra elapsed_time revisione;
+
+|Orchestrator Agent|
+:Calcola total_time pipeline;
+:Raccoglie workflow_steps con elapsed_time;
+
+|Pipeline Logger|
+:Scrive log file (txt) nella cartella logs/;
+:Include sezione TEMPI DI ESECUZIONE\n(per agente + totale);
+
+|Orchestrator Agent|
+:Restituisce risposta all'API Gateway;
+
+|API Gateway|
+:Invia risposta al browser;
+
+|Browser|
+:Aggiunge messaggio alla conversazione;
+:Salva conversazione aggiornata\nin localStorage;
+:Visualizza risposta all'utente;
+
+stop
+
+@enduml

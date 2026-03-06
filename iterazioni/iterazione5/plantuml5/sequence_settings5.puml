@@ -1,0 +1,97 @@
+@startuml
+title Sequence Diagram (Settings: Modifica Profilo e Cambio Password) - Iterazione 5
+
+actor Utente                          as U
+participant "Browser\n(React App)"    as FE
+participant "SettingsPage"            as SP
+participant "API Gateway\n(FastAPI)"   as GW
+participant "Auth Controller"          as Ctrl
+participant "Auth Service"             as Svc
+participant "Profile Repository"       as Repo
+participant "MongoDB Atlas"            as DB
+
+' ─── 1. Apertura impostazioni ─────────────────────────────────
+U   -> FE   : Clicca pulsante ⚙
+FE  -> FE   : showSettings = true
+FE  -> SP   : Render SettingsPage\n(userInfo, connectionStatus)
+SP  -> SP   : Precompila form\ncon dati userInfo correnti
+
+' ─── 2. Modifica Profilo ─────────────────────────────────────
+U   -> SP   : Modifica campi\n(nome, cognome, dipartimento, corso, anno)
+SP  -> SP   : Selezione dipartimento →\nfiltra corsi da DIPARTIMENTI_CORSI
+SP  -> SP   : Selezione corso →\nauto-imposta tipologia
+
+U   -> SP   : Clicca "Salva Modifiche"
+
+SP  -> GW   : PUT /api/auth/profile\n[Cookie: access_token=<JWT>]\n{ name, surname, department,\ncourse, tipology, year }
+
+GW  -> GW   : verify_token(cookie)\n→ estrae matricola
+GW  -> Ctrl : update_profile(matricola, update_fields)
+Ctrl -> Svc : updateProfile(matricola, update_fields)
+Svc  -> Repo : findById(matricola)
+Repo -> DB   : findOne({ matricola })
+DB   --> Repo : user_doc
+Repo --> Svc : user_doc
+
+alt Utente trovato
+  Svc  -> Repo : updateProfile(matricola, fields)
+  Repo -> DB   : updateOne({ matricola },\n{ $set: fields })
+  DB   --> Repo : result
+  Repo -> DB   : findOne({ matricola })
+  DB   --> Repo : updated_user
+  Repo --> Svc : updated_user
+  Svc  --> Ctrl : updated_user
+  Ctrl -> Ctrl : _public_profile()\n(rimuove passwordHash)
+  Ctrl --> GW  : { user (senza passwordHash) }
+  GW   --> SP  : 200 OK + profilo aggiornato
+
+  SP   -> FE   : onProfileUpdate(updatedData)
+  FE   -> FE   : Aggiorna userInfo nello stato React
+  SP   -> SP   : Mostra "Profilo aggiornato con successo!"
+
+else Utente non trovato
+  Svc  --> Ctrl : raise HTTPException(404)
+  Ctrl --> GW  : 404 Not Found
+  GW   --> SP  : errore
+  SP   -> SP   : Mostra messaggio errore
+end
+
+' ─── 3. Cambio Password ──────────────────────────────────────
+U   -> SP   : Compila form password\n(corrente, nuova, conferma)
+SP  -> SP   : Validazione locale:\n- tutti i campi compilati\n- nuova password >= 6 char\n- nuova == conferma
+
+U   -> SP   : Clicca "Cambia Password"
+
+SP  -> GW   : PUT /api/auth/password\n[Cookie: access_token=<JWT>]\n{ current_password, new_password }
+
+GW  -> GW   : verify_token(cookie)\n→ estrae matricola
+GW  -> Ctrl : change_password(matricola, current, new)
+Ctrl -> Svc : changePassword(matricola, current, new)
+Svc  -> Repo : findById(matricola)
+Repo -> DB   : findOne({ matricola })
+DB   --> Repo : user_doc
+Repo --> Svc : user_doc
+
+alt Password corrente valida
+  Svc  -> Svc  : bcrypt.checkpw(current, hash) → True
+  Svc  -> Svc  : new_hash = bcrypt.hashpw(new, gensalt())
+  Svc  -> Repo : updateProfile(matricola,\n{ passwordHash: new_hash })
+  Repo -> DB   : updateOne({ matricola },\n{ $set: { passwordHash } })
+  DB   --> Repo : result
+  Repo --> Svc : result
+  Svc  --> Ctrl : success
+  Ctrl --> GW  : { status: "success",\nmessage: "Password aggiornata" }
+  GW   --> SP  : 200 OK
+
+  SP   -> SP   : Mostra "Password aggiornata con successo!"
+  SP   -> SP   : Reset campi password
+
+else Password corrente errata
+  Svc  -> Svc  : bcrypt.checkpw(current, hash) → False
+  Svc  --> Ctrl : raise HTTPException(401)
+  Ctrl --> GW  : 401 Unauthorized
+  GW   --> SP  : errore
+  SP   -> SP   : Mostra "Password corrente non corretta"
+end
+
+@enduml

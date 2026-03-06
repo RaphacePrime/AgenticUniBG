@@ -1,0 +1,138 @@
+@startuml
+title Class Diagram - Iterazione 5 (Agents & Logging Package)
+
+package "agents" <<folder>> {
+
+    class AgentState <<TypedDict>> {
+        +query: String
+        +context: dict
+        +conversation_history: List<dict>
+        +user_status: String
+        +user_name: String
+        +user_surname: String
+        +user_department: String
+        +user_course: String
+        +user_tipology: String
+        +user_year: int
+        +user_matricola: String
+        +category: String
+        +category_description: String
+        +confidence: String
+        +search_query: String
+        +web_results: List<dict>
+        +web_context: String
+        +calendar_context: String
+        +generated_response: String
+        +generation_status: String
+        +final_response: String
+        +has_revisions: bool
+        +workflow_steps: List<dict>
+        +current_step: String
+        +error: String
+        +status: String
+    }
+
+    abstract class Agent {
+        +{abstract} execute(state: AgentState): AgentState
+    }
+
+    class OrchestratorAgent {
+        -llm: ChatGoogleGenerativeAI
+        -classifier: ClassifierAgent
+        -queryAgent: QueryAgent
+        -webAgent: WebAgent
+        -generator: GeneratorAgent
+        -reviser: RevisionAgent
+        -logger: PipelineLogger
+        -workflow: StateGraph
+        +process_query(query: String, context: dict, user_info: dict, conversation_history: List): dict
+        +get_available_agents(): List<dict>
+        +analyze_query(query: String): dict
+        -_build_workflow(): StateGraph
+        -_classify_node(state: AgentState): AgentState
+        -_query_node(state: AgentState): AgentState
+        -_web_search_node(state: AgentState): AgentState
+        -_exam_extract_node(state: AgentState): AgentState
+        -_generate_node(state: AgentState): AgentState
+        -_revise_node(state: AgentState): AgentState
+        -_route_after_query(state: AgentState): String
+    }
+
+    class ClassifierAgent {
+        -CATEGORIES: dict
+        -llm: ChatGoogleGenerativeAI
+        +classify(query: String, user_context: String, conversation_history: List): dict
+        +execute(state: AgentState): AgentState
+    }
+
+    class QueryAgent {
+        -llm: ChatGoogleGenerativeAI
+        +generate_query(query: String, conversation_history: List, user_context: String): dict
+        -_build_system_prompt(): String
+    }
+
+    class WebAgent {
+        -client: TavilyClient
+        -{static} SEARCH_DOMAINS: List<String>
+        -{static} EXAM_CALENDAR_LINKS: dict
+        -{static} MESI_ITALIANI: List<String>
+        +search(search_query: String): dict
+        +extract(url: String): dict
+        +search_and_extract_exams(query: String, user_context: String, search_query: String): dict
+        +{static} get_italian_timestamp(): String
+        -_is_pdf_url(url: String): bool
+        -_extract_pdf_links(pdf_url: String): List<dict>
+        -_format_results(results: List<dict>): String
+        -_format_exam_results(calendar: dict, search_results: List, query: String): String
+        -_select_calendar_link(query: String, user_context: String): dict
+    }
+
+    class GeneratorAgent {
+        -{static} CATEGORY_PROMPTS: dict
+        -{static} SOURCE_INSTRUCTIONS: String
+        -llm: ChatGoogleGenerativeAI
+        +generate(query: String, category: String, context: dict, user_context: String, conversation_history: List): dict
+        +execute(state: AgentState): AgentState
+    }
+
+    class RevisionAgent {
+        -llm: ChatGoogleGenerativeAI
+        -system_prompt: String
+        +revise(original_query: String, generated_response: String, category: String, user_context: String, conversation_history: List): dict
+        +execute(state: AgentState): AgentState
+    }
+}
+
+package "logger" <<folder>> {
+
+    class PipelineLogger {
+        -{static} LOGS_DIR: String
+        +write_log(state: dict, workflow_steps: List<dict>, timestamp: datetime, total_time: float): String
+        -_build_filename(matricola: String, timestamp: datetime): String
+        -_build_log_content(state: dict, workflow_steps: List<dict>, timestamp: datetime, total_time: float): List<String>
+        -_format_agent_section(title: String, step: dict, extra_fields: dict): List<String>
+        -_format_web_agent_section(step: dict, web_results: List): List<String>
+        -_format_timing_section(workflow_steps: List<dict>, total_time: float): List<String>
+    }
+}
+
+
+' ─── Ereditarietà ────────────────────────────────────────────
+Agent <|-- ClassifierAgent
+Agent <|-- GeneratorAgent
+Agent <|-- RevisionAgent
+
+' ─── Composizione Orchestrator ────────────────────────────────
+OrchestratorAgent "1" *--> "1" ClassifierAgent : classifier
+OrchestratorAgent "1" *--> "1" QueryAgent      : queryAgent
+OrchestratorAgent "1" *--> "1" WebAgent        : webAgent
+OrchestratorAgent "1" *--> "1" GeneratorAgent  : generator
+OrchestratorAgent "1" *--> "1" RevisionAgent   : reviser
+OrchestratorAgent "1" *--> "1" PipelineLogger  : logger
+OrchestratorAgent --> AgentState                : crea/aggiorna
+
+' ─── Dipendenza Timestamp ─────────────────────────────────────
+QueryAgent ..> WebAgent      : <<uses>>\nget_italian_timestamp()
+GeneratorAgent ..> WebAgent  : <<uses>>\nget_italian_timestamp()
+
+@enduml

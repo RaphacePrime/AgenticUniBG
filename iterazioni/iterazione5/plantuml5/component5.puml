@@ -1,0 +1,99 @@
+@startuml
+skinparam componentStyle uml2
+left to right direction
+skinparam nodesep 80
+skinparam ranksep 60
+skinparam padding 10
+
+title Component Diagram - Iterazione 5 (Overview)
+
+' ─── Client Tier ─────────────────────────────────────────────
+component "Client Tier" as ClientTier {
+    portout pHttpOut
+    component [Web App\n(React + Vite)]          <<component>> as Client
+    component [SettingsPage]                      <<component>> as Settings
+    component [Conversation Store\n(localStorage)] <<component>> as LS
+    Client --> pHttpOut
+    Client --> LS
+    Client --> Settings
+    Settings --> pHttpOut
+}
+
+' ─── Interfaccia Client ↔ Backend ────────────────────────────
+interface "HTTP/REST\nhttpOnly Cookie" as IHTTP
+
+' ─── Backend Tier ────────────────────────────────────────────
+component "Backend Tier" as BackendTier {
+    portin  pHttpIn
+    portout pDataOut
+    portout pExtOut
+
+    interface "IAuthAPI"      as IAuthAPI
+    interface "IOrchestrator" as IOrch
+
+    component [API Gateway\n(FastAPI)]        <<component>> as Gateway
+    component [Authentication Layer]          <<component>> as AuthLayer
+    component [Agent Layer]                   <<component>> as AgentLayer
+    component [Pipeline Logger]               <<component>> as Logger
+
+    pHttpIn --> Gateway
+
+    Gateway --( IAuthAPI
+    IAuthAPI  -  AuthLayer
+
+    Gateway --( IOrch
+    IOrch    -  AgentLayer
+
+    AgentLayer --> Logger
+    AgentLayer --> pExtOut
+
+    AuthLayer  --> pDataOut
+    AgentLayer --> pDataOut
+    Logger     --> pDataOut
+}
+
+' ─── Interfaccia Backend ↔ Data ──────────────────────────────
+interface "IProfileRepo"  as IProfile
+interface "ITavilySearch" as ITavily
+
+' ─── Data Tier ───────────────────────────────────────────────
+component "Data Tier" as DataTier {
+    portin pDataIn
+
+    interface "IMongoDriver" as IMongo
+    interface "IFileSystem"  as IFS
+
+    component [Profile Repository] <<component>> as ProfileRepo
+    component [MongoDB Atlas]      <<component>> as DB
+    component [File System\n(logs/)] <<component>> as FS
+
+    pDataIn --> ProfileRepo
+    pDataIn --> FS
+
+    ProfileRepo --( IMongo
+    IMongo       -  DB
+
+    FS - IFS
+}
+
+' ─── External Services ───────────────────────────────────────
+component "External Services" as ExtSvc {
+    portin pExtIn
+    component [Tavily Search API]                  <<service>> as Tavily
+    component [Google Gemini\n(gemini-2.5-flash)]  <<service>> as Gemini
+
+    pExtIn --> Tavily
+    pExtIn --> Gemini
+}
+
+' ─── Connessioni cross-tier ──────────────────────────────────
+pHttpOut  --> IHTTP
+IHTTP     --> pHttpIn
+
+pDataOut  --> IProfile
+IProfile  --> pDataIn
+
+pExtOut   --> ITavily
+ITavily   --> pExtIn
+
+@enduml

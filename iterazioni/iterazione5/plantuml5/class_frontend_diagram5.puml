@@ -1,0 +1,64 @@
+@startuml
+title Class Diagram - Iterazione 5 (Frontend Package)
+
+package "frontend" <<folder>> {
+
+    class App <<component>> {
+        -userInfo: dict
+        -showSettings: bool
+        -connectionStatus: String
+        -messages: List<Message>
+        +handleProfileUpdate(updatedData: dict): void
+        +handleLogin(userData: dict): void
+        +handleLogout(): void
+        +handleSendMessage(message: String): void
+        -toggleSettings(): void
+    }
+
+    class SettingsPage <<component>> {
+        -profileData: dict
+        -passwordData: dict
+        -profileMessage: String
+        -passwordMessage: String
+        -loading: bool
+        -{static} DIPARTIMENTI_CORSI: dict
+        +handleProfileSave(): void
+        +handlePasswordChange(): void
+        -tipoToTipology(tipo: String): String
+        -tipologyToTipo(tipology: String): String
+        -handleDepartmentChange(dept: String): void
+        -handleCourseChange(course: String): void
+    }
+
+    class LoginPage <<component>> {
+        -isRegistering: bool
+        -formData: dict
+        -errorMessage: String
+        +handleLogin(): void
+        +handleRegister(): void
+    }
+
+    class ConversationStore <<boundary>> {
+        -storageKey: String
+        +load(matricola: String): List<Message>
+        +save(matricola: String, history: List<Message>): void
+        +clear(matricola: String): void
+    }
+
+    class Message {
+        +type: String
+        +content: String
+        +timestamp: Date
+        +category: String
+        +metadata: dict
+    }
+}
+
+' ─── Relazioni ────────────────────────────────────────────────
+App "1" *--> "0..1" SettingsPage       : showSettings
+App "1" *--> "0..1" LoginPage          : non autenticato
+App "1" --> "1" ConversationStore       : gestisce persistenza
+ConversationStore "1" o--> "*" Message  : memorizza
+SettingsPage ..> App                    : onProfileUpdate()
+
+@enduml

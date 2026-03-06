@@ -1,0 +1,83 @@
+@startuml
+title Class Diagram - Iterazione 5 (Authentication Package)
+
+package "auth" <<folder>> {
+
+    class AuthController {
+        -_service: AuthService
+        -_cookie_max_age: int
+        +login(matricola: String, password: String, response: Response): dict
+        +register(name: String, surname: String, matricola: String, password: String, department: String, course: String, tipology: String, year: int, response: Response): dict
+        +update_profile(matricola: String, update_fields: dict): dict
+        +change_password(matricola: String, current_password: String, new_password: String): dict
+        -_set_auth_cookie(response: Response, token: String): void
+        -_public_profile(student: dict): dict
+    }
+
+    class AuthService {
+        -_repo: ProfileRepository
+        -_jwt: JWTManager
+        +authenticate(matricola: String, password: String): dict
+        +createUser(name: String, surname: String, matricola: String, password: String, department: String, course: String, tipology: String, year: int): dict
+        +updateProfile(matricola: String, update_fields: dict): dict
+        +changePassword(matricola: String, current_password: String, new_password: String): void
+    }
+
+    class JWTManager {
+        -secret_key: String
+        -algorithm: String
+        -expire_minutes: int
+        +generateToken(data: dict): String
+        +validateToken(token: String): dict
+        +validateFromRequest(request: Request): dict
+    }
+
+    class ProfileRepository {
+        -_collection: AsyncIOMotorCollection
+        +findById(matricola: String): dict
+        +findByEmail(email: String): dict
+        +save(user_doc: dict): dict
+        +exists(matricola: String): bool
+        +updateProfile(matricola: String, fields: dict): dict
+    }
+}
+
+package "models" <<folder>> {
+
+    class User {
+        +name: String
+        +surname: String
+        +matricola: String
+        +department: String
+        +course: String
+        +tipology: String
+        +year: int
+        -passwordHash: String
+    }
+
+    class UpdateProfileRequest {
+        +name: Optional<String>
+        +surname: Optional<String>
+        +department: Optional<String>
+        +course: Optional<String>
+        +tipology: Optional<String>
+        +year: Optional<int>
+    }
+
+    class ChangePasswordRequest {
+        +current_password: String
+        +new_password: String
+    }
+}
+
+' ─── Relazioni ────────────────────────────────────────────────
+AuthController --> AuthService           : delega
+AuthService    --> JWTManager            : genera/valida token
+AuthService    --> ProfileRepository     : gestisce profilo
+ProfileRepository "1" --> "0..1" User    : persiste
+
+' ─── Modelli richiesta ────────────────────────────────────────
+AuthController ..> UpdateProfileRequest  : riceve
+AuthController ..> ChangePasswordRequest : riceve
+
+@enduml

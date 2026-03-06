@@ -1,0 +1,33 @@
+@startuml
+skinparam componentStyle uml2
+top to bottom direction
+skinparam nodesep 70
+skinparam ranksep 50
+
+title Component Diagram - Iterazione 5 (Logging Layer)
+
+component "Logging Layer" {
+
+    portin  pLogIn
+    portout pFSOut
+
+    component [Pipeline Logger] <<component>> as Logger
+
+    interface "IPipelineLogger" as ILog
+
+    ' ─── Ingresso dall'Orchestrator ───────────────────────────
+    pLogIn --> ILog
+    ILog    -  Logger
+
+    ' ─── Logger → File System ─────────────────────────────────
+    Logger --> pFSOut
+
+    note right of Logger
+        Novità Iterazione 5:
+        _format_timing_section()
+        per-agent elapsed_time
+        + total_time pipeline
+    end note
+}
+
+@enduml
