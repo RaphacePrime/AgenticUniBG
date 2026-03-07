@@ -106,10 +106,9 @@ class WebAgent:
     async def search(self, search_query: str) -> Dict:
         """
         Esegue una ricerca web con Tavily sulla query fornita,
-        recupera 10 risultati e restituisce i top 5 per score.
+        recupera 30 risultati e restituisce i top 5 per score.
         """
         try:
-            # Esegui la ricerca Tavily (sincrona, wrappata)
             response = self.client.search(
                 query=search_query,
                 search_depth="advanced",
