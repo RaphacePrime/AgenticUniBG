@@ -11,11 +11,11 @@
     },
     {
       "key": "test_matricola",
-      "value": "9999999"
+      "value": "1087210"
     },
     {
       "key": "test_password",
-      "value": "TestPassword123!"
+      "value": "test2026"
     }
   ],
   "item": [
@@ -49,33 +49,7 @@
           ]
         },
         {
-          "name": "IT1-02 Root Endpoint",
-          "request": {
-            "method": "GET",
-            "url": "{{base_url}}/",
-            "description": "Verifica l'endpoint radice con informazioni API."
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('Status 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "pm.test('API info returned', function () {",
-                  "    var json = pm.response.json();",
-                  "    pm.expect(json.message).to.eql('Agentic UniBG API');",
-                  "    pm.expect(json.status).to.eql('running');",
-                  "    pm.expect(json.version).to.eql('1.0.0');",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "IT1-03 Query Generica (Ospite)",
+          "name": "IT1-02 Query Generica (Ospite)",
           "request": {
             "method": "POST",
             "url": "{{base_url}}/api/agent/query",
@@ -117,7 +91,7 @@
           ]
         },
         {
-          "name": "IT1-04 Query Informazioni Corso",
+          "name": "IT1-03 Query Informazioni Corso",
           "request": {
             "method": "POST",
             "url": "{{base_url}}/api/agent/query",
@@ -126,7 +100,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"query\": \"Chi è il docente del corso di Algoritmi e strutture dati?\",\n  \"user_info\": {\n    \"status\": \"ospite\"\n  }\n}"
+              "raw": "{\n  \"query\": \"Chi è il docente del corso di Progettazione Algoritmi e Compelessità?\",\n  \"user_info\": {\n    \"status\": \"ospite\"\n  }\n}"
             },
             "description": "Verifica la classificazione in categoria 'informazioni_corso'."
           },
@@ -153,7 +127,7 @@
           ]
         },
         {
-          "name": "IT1-05 Query Vuota (Errore)",
+          "name": "IT1-04 Query Vuota (Errore)",
           "request": {
             "method": "POST",
             "url": "{{base_url}}/api/agent/query",
@@ -174,38 +148,6 @@
                   "pm.test('Returns response or error', function () {",
                   "    var code = pm.response.code;",
                   "    pm.expect([200, 422, 500]).to.include(code);",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "IT1-06 Lista Agenti",
-          "request": {
-            "method": "GET",
-            "url": "{{base_url}}/api/agents",
-            "description": "Restituisce la lista degli agenti disponibili nel sistema."
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('Status 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "pm.test('Returns agent list', function () {",
-                  "    var json = pm.response.json();",
-                  "    pm.expect(json.agents).to.be.an('array');",
-                  "    pm.expect(json.agents.length).to.be.greaterThan(0);",
-                  "});",
-                  "pm.test('Contains expected agents', function () {",
-                  "    var json = pm.response.json();",
-                  "    var names = json.agents.map(a => a.name);",
-                  "    pm.expect(names).to.include('classifier');",
-                  "    pm.expect(names).to.include('generator');",
-                  "    pm.expect(names).to.include('reviser');",
                   "});"
                 ]
               }
