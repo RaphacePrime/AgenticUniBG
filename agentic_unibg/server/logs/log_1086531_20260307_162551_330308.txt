@@ -1,0 +1,2244 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-07 16:25:51
+Status    : success
+
+------------------------------------------------------------
+INFORMAZIONI UTENTE
+------------------------------------------------------------
+Tipo utente   : loggato
+Nome          : Raphael Mazzoleni
+Matricola     : 1086531
+Dipartimento  : Scuola di Ingegneria
+Corso         : Ingegneria informatica
+Tipologia     : Magistrale
+Anno          : 1
+
+------------------------------------------------------------
+QUERY ORIGINALE DELL'UTENTE
+------------------------------------------------------------
+chi è il rettore dell'università?
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: generale
+Description: Domande generiche sull'università
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, ricevimenti
+- date_esami: Richieste su date e orari degli esami, sessioni d'esame, quando si svolge un esame
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+- "Quando è l'esame di analisi?" -> date_esami
+- "Che esami ho alla prossima sessione?" -> date_esami
+- "In che date sono gli esami della sessione estiva?" -> date_esami
+- "Quando posso dare l'esame di basi di dati?" -> date_esami
+
+
+>>> USER PROMPT:
+chi è il rettore dell'università?
+
+>>> RISPOSTA:
+generale
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: rettore università unibg
+Original Query: chi è il rettore dell'università?
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+DATA ODIERNA: 07 marzo 2026 (Anno accademico 2025/2026)
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE FONDAMENTALI:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- La query deve essere in italiano
+- Massimo 8 parole
+- Quando la domanda riguarda date, sessioni o periodi temporali, includi l'anno accademico (2025/2026) o il periodo specifico (es. "marzo 2026", "sessione estiva 2026") nella query
+
+REGOLA CRITICA - CONTESTO CONVERSAZIONE:
+Il contesto della conversazione ha SEMPRE la priorità sul profilo dello studente.
+Se la conversazione indica che l'utente sta chiedendo informazioni su un corso/dipartimento DIVERSO dal proprio, la query DEVE riferirsi al corso/dipartimento menzionato nella conversazione, NON a quello del profilo.
+
+Esempio critico:
+- Profilo studente: Ingegneria informatica, Magistrale
+- Conversazione precedente: lo studente chiedeva degli esami di Giurisprudenza
+- Nuova domanda: "invece nella sessione estiva?"
+- Query CORRETTA: date esami giurisprudenza sessione estiva 2025/2026 unibg
+- Query SBAGLIATA: esami sessione estiva ingegneria informatica magistrale unibg
+Motivo: dalla conversazione è chiaro che "invece" si riferisce sempre a Giurisprudenza, non al suo corso.
+
+QUANDO USARE LE INFORMAZIONI DEL PROFILO STUDENTE:
+INCLUDI le info del profilo SOLO quando:
+- La domanda riguarda esplicitamente il PROPRIO corso dello studente (es. "che materie ho?", "i miei esami")
+- Non c'è contesto conversazionale che indichi un argomento diverso
+- La domanda usa pronomi possessivi ("mio", "miei", "il mio corso")
+
+NON INCLUDERE le info del profilo quando:
+- La conversazione indica un argomento/corso diverso dal profilo
+- La domanda è generica (procedure, servizi, docenti, mensa, erasmus)
+- La domanda menziona esplicitamente un altro corso o dipartimento
+- La domanda è un follow-up ("e nella sessione X?", "invece per...", "e gli orari?") e il contesto conversazionale indica un corso diverso
+
+ESEMPI CON PROFILO (corso: ingegneria informatica, anno: 1, magistrale):
+- "che materie ho al secondo anno?" → materie secondo anno ingegneria informatica magistrale unibg
+- "i miei esami della prossima sessione" → esami prossima sessione ingegneria informatica magistrale 2025/2026 unibg
+
+ESEMPI SENZA PROFILO:
+- "come faccio a iscrivermi al test di ammissione?" → iscrizione test ammissione unibg
+- "chi è il docente di algoritmi?" → docente algoritmi unibg
+- "dove si trova la mensa?" → mensa universitaria unibg
+- "esami giurisprudenza terzo anno" → date esami giurisprudenza terzo anno 2025/2026 unibg
+
+ESEMPIO FOLLOW-UP (contesto: si parlava di esami di giurisprudenza):
+- "invece nella sessione estiva?" → date esami giurisprudenza sessione estiva 2025/2026 unibg
+- "e quelli del quarto anno?" → date esami giurisprudenza quarto anno 2025/2026 unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+
+Informazioni studente:
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Ultima richiesta dello studente: chi è il rettore dell'università?
+
+Genera la query di ricerca web:
+
+>>> RISPOSTA:
+rettore università unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status              : success
+Query di ricerca    : rettore università unibg
+Totale risultati    : 11
+Risultati usati     : 5
+
+>>> RISULTATI PRINCIPALI:
+  [1] Score: 0.9975
+      Titolo   : Segreteria del Rettore e del Direttore Generale - UniBg
+      URL      : https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/segreteria-rettore-e-direttore-generale
+      Contenuto: Segreteria del Rettore e del Direttore Generale | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/segreteria-rettore-e-direttore-generale#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/segreteria-rettore-e-direttore-generale#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/segreteria-rettore-e-direttore-generale#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Segreteria del Rettore e del Direttore Generale
+===============================================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Ateneo](https://www.unibg.it/ateneo)
+3.   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+4.   [Uffici e contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+5.   [Segreteria del Rettore e del Direttore Generale](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/segreteria-rettore-e-direttore-generale)
+
+[](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/segreteria-rettore-e-direttore-generale)
+
+### Funzioni
+
+*   Segreteria e assistenza all’attività del Rettore e al Direttore Generale: gestione dell’agenda, della firma e degli account [rettore@unibg.it](mailto:rettore@unibg.it), [rettorato@unibg.it](mailto:rettorato@unibg.it)[direttoregenerale@unibg.it](mailto:direttoregenerale@unibg.it)
+*   Organizzazione missioni in Italia e all’estero del Rettore, dei Prorettori e del Direttore Generale 
+*   Accoglienza in occasione di visite ufficiali di esponenti politici, di governo e istituzionali 
+*   Relazioni con altri organismi istituzionali e con l’utenza di riferimento 
+*   Gestione dei patrocini e convenzioni di Ateneo 
+*   Gestione dell’Aula Magna Sant'Agostino e delle autorizzazioni del Rettore alle richieste di aule nelle sedi universitarie da parte di utenti esterni
+*   Gestione spazi dedicati a riunioni
+*   Collaborazione gestione eventi istituzionali e relativo cerimoniale 
+*   Elaborazione e gestione budget economico per la parte di competenza
+*   Aggiornamento della Intranet documentale e del portale della Trasparenza per quanto di competenza
+
+### Contatti
+
+**Sede**
+
+via Salvecchio, 19
+
+ 24129 Bergamo
+
+T +39 035 205 2242
+
+ F +39 035 243 054
+
+[rettorato@unibg.it](mailto:rettorato@unibg.it)
+
+Responsabile
+
+**dott.ssa Amelia Ramelli**
+
+**[Rubrica](https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale)**
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/segreteria-rettore-e-direttore-generale#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+  [2] Score: 0.9961
+      Titolo   : Documenti e informazioni relative al Rettore (in carica e cessato)
+      URL      : https://trasparenza.unibg.it/amministrazione-trasparente/organizzazione/titolari-incarichi-politici-amministrazione-direzione-o-1
+      Contenuto: [Salta al contenuto principale](#main-content)
+
+# Menu top
+
+* [www.unibg.it](https://www.unibg.it)
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+
+* [EN](https://en.unibg.it "EN")
+
+1. [Amministrazione trasparente](https://trasparenza.unibg.it/amministrazione-trasparente)
+2. [Organizzazione](https://trasparenza.unibg.it/amministrazione-trasparente/organizzazione)
+3. [Titolari di incarichi politici, di amministrazione, di direzione o di governo](https://trasparenza.unibg.it/amministrazione-trasparente/organizzazione/titolari-incarichi-politici-amministrazione-direzione-o-2)
+4. Documenti e informazioni relative al Rettore (in carica e cessato)
+
+# Documenti e informazioni relative al Rettore (in carica e cessato)
+
+Titolari di incarichi di amministrazione, di direzione o di governo di cui all'art. 14, comma1-bis del Decreto legislativo 33/2013.
+
+## Rettore in carica
+
+Prof. Sergio Cavalieri
+
+Data pubblicazione: **16 novembre 2021**
+
+[Decreto di nomina - Rettore Prof. Sergio Cavalieri](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/decreto_nomina_rettore_univ_di_bergamo-con_prot_ministero_2.pdf "decreto_nomina_rettore_univ_di_bergamo-con_prot_ministero_2.pdf (202.84kb) - Il documento si apre in una nuova finestra")
+
+Allegati:
+
+[Cavalieri Sergio - CV](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/rettore_-_cv_pubb_gen_23.pdf "rettore_-_cv_pubb_gen_23.pdf (301.8kb) - Il documento si apre in una nuova finestra")
+
+[Compensi - viaggi e missioni - dichiarazione coniuge/parenti 2021/2027](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/3._compensi_-_viaggi_e_missioni_-_dichiarazione_coniuge_parenti_56.pdf "compensi_-_viaggi_e_missioni_-_dichiarazione_coniuge_parenti.pdf (101.92kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione altre cariche e incarichi - anno 2021](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_a_pubb_febb_22.pdf "cavalieri_-_mod_a_pubb_febb_22.pdf (52.8kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione patrimoniale - anno 2021](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_b_pubb_febb_22.pdf "cavalieri_-_mod_b_pubb_febb_22.pdf (73.12kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione di inconferibilità e incompatibilità - anno 2021](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_modello_c_pubb_2021_.pdf "cavalieri_-_modello_c_pubb_2021_.pdf (52.97kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione reddituale e patrimoniale coniuge/parenti - anno 2021](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_d_pubb_febb_22.pdf "cavalieri_-_mod_d_pubb_febb_22.pdf (358.55kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione redditi 2021](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_reddito_pubb_febb_22.pdf "cavalieri_-_reddito_pubb_febb_22.pdf (5320.82kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione altre cariche e incarichi - anno 2023](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/rettore_mod._a_pubb_aprile_2023.pdf "rettore_mod._a_pubb_aprile_2023.pdf (50.11kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione patrimoniale - anno 2022](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/rettore_mod._b_pubb_genn_23.pdf "rettore_mod._b_pubb_genn_23.pdf (52.97kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione incompatibilità - anno 2022](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/rettore_mod._c_pubb_genn_23.pdf "rettore_mod._c_pubb_genn_23.pdf (45.82kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione reddituale e patrimoniale coniuge/parenti - anno 2022](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/rettore_mod._d_pubb_genn_23.pdf "rettore_mod._d_pubb_genn_23.pdf (48.28kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione redditi 2022](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_redditi_pubb_dic_2022.pdf "cavalieri_-_redditi_pubb_dic_2022.pdf (4817.71kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione altre cariche e incarichi - anno 2023](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_a_pubb_dic_23.pdf "cavalieri_-_mod_a_pubb_dic_23.pdf (50.14kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione patrimoniale - anno 2023](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_b_pubb_gennaio_2024.pdf "cavalieri_-_mod_b_pubb_gennaio_2024.pdf (54.66kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione incompatibilità - anno 2023](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_c_pubb_dic_23.pdf "cavalieri_-_mod_c_pubb_dic_23.pdf (43.59kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione reddituale e patrimoniale coniuge/parenti - anno 2023](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_d_pubb_dic_23.pdf "cavalieri_-_mod_d_pubb_dic_23.pdf (45.88kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione redditi 2023](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_redditi_pubb_dic_23.pdf "cavalieri_-_redditi_pubb_dic_23.pdf (416.78kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione altre cariche e incarichi - anno 2024](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_a_pubb_dic_24.pdf "cavalieri_-_mod_a_pubb_dic_24.pdf (84.72kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione patrimoniale - anno 2024](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_b_data_corretta_pubb_dic_24.pdf "cavalieri_-_mod_b_data_corretta_pubb_dic_24.pdf (74.54kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione reddituale e patrimoniale coniuge/parenti - anno 2024](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_c_pubb_dic_24.pdf "cavalieri_-_mod_c_pubb_dic_24.pdf (57.21kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione redditi 2024](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_redditi_-_pubb_dic_24.pdf "cavalieri_-_redditi_-_pubb_dic_24.pdf (284.79kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione altre cariche e incarichi - anno 2025](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_a_pubb_dic_25.pdf "cavalieri_-_mod_a_pubb_dic_25.pdf (224.24kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione patrimoniale - anno 2025](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_b_pubb_dic_25.pdf "cavalieri_-_mod_b_pubb_dic_25.pdf (210.54kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione reddituale e patrimoniale coniuge/parenti - anno 2025](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_c_pubb_dic_25.pdf "cavalieri_-_mod_c_pubb_dic_25.pdf (188.96kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione redditi 2025](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_redditi_pubb_dic_25.pdf "cavalieri_-_redditi_pubb_dic_25.pdf (623.99kb) - Il documento si apre in una nuova finestra")
+
+## Rettore non più in carica
+
+­
+
+  [3] Score: 0.9914
+      Titolo   : Sergio Cavalieri - CELS - UniBg
+      URL      : https://cels.unibg.it/sergiocavalieri/
+      Contenuto: [![cropped-Home-e1646219617773-1.png](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/cropped-Home-e1646219617773-1-q5wwpbmu5tqc7cnu607bos4fqw4e4ohwj1t7n4i1gc.png "cropped-Home-e1646219617773-1.png")](https://cels.unibg.it/)
+
+# Sergio Cavalieri
+
+![Cavalieri](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/Cavalieri-1-q5wwprm2s2ya40lwja0mkol3ip1x2ln2m3csqlv80s.jpg "Cavalieri")
+
+**Sergio Cavalieri, Ph.D**  
+Rettore dell’Università degli studi di Bergamo e Professore Ordinario
+
+* [sergio.cavalieri@unibg.it](mailto:sergio.cavalieri@unibg.it)
+* +39 035.205.2242
+
+[![ResearchGate_logo](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/ResearchGate_logo-q5wwpgbza7qemowjy89xmol7cqdvuh6koqxstvuq2c.png "ResearchGate_logo")](https://www.researchgate.net/profile/Sergio-Cavalieri)
+
+[![Orcid_logo](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/Orcid_logo-q5wwpgbza7qemowjy89xmol7cqdvuh6koqxstvuq2c.png "Orcid_logo")](https://orcid.org/0000-0002-7598-0379)
+
+[![google_scholar_logo](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/google_scholar_logo-1-q5wwpckmivl9c920k6nfcpjcz6wezornc8buws0ar8.png "google_scholar_logo")](https://scholar.google.com/citations?user=_MG2DNcAAAAJ&hl=it&oi=ao)
+
+[![Twitter-new-logo-Xquadrato](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/Twitter-new-logo-Xquadrato-e1709719140499-qkt30ean9y3i6gnpm7dwse4xeoszzkatjzlxc9zipg.jpeg "Twitter-new-logo-Xquadrato")](https://twitter.com/cavalieri_ser)
+
+[![linkedin](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/linkedin-1-q5wwppqd6k39usiwfcc7bm7tal3jzg7w21gnmngsc4.png "linkedin")](https://www.linkedin.com/in/sergiocavalieri/)
+
+[![Aisberg](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/Aisberg-1-q5wwprm1k85ui0g64d5gglqqhcuaeufcqarml7dzzo.jpg "Aisberg")](https://aisberg.unibg.it/browse?type=author&order=ASC&rpp=20&authority=rp00467)
+
+Sergio Cavalieri dal 2021 è rettore dell’Università degli studi di Bergamo e professore ordinario presso il Dipartimento di Ingegneria Gestionale, dell’Informazione e della Produzione dell’Università degli studi di Bergamo. È attualmente membro del Consiglio di Amministrazione di U4I – Università per l’Innovazione, già presidente dell’Associazione Italiana Professori in Ingegneria dei Sistemi Industriali, membro di IFAC-TC 5.1 su Advanced Manufacturing Technology, membro di IFIP WG 5.7, ex membro del comitato direttivo per lo sviluppo tecnico del Consiglio per la catena di approvvigionamento, fondatore e coordinatore del Forum per la gestione dei servizi, un’iniziativa comune tra industria e università. E’ direttore del CELS – [Research Group on Industrial Systems Engineering, Logistics and Service Operations](http://cels.unibg.it/), già Coordinatore dell’[ASAP Service Management Forum](http://www.asapsmf.org/), Direttore del [Master Executive in Gestione degli Asset Industriali e  della manutenzione](https://sdm.unibg.it/corso/megmi/) e già Membro del Technical Development Steering Committee del Supply Chain Council. Tra le sue pubblicazioni si segnalano “Orientare al Successo la Supply Chain”, pubblicato da ISEDI, e “Riprogettare il Servizio Post-Vendita”, edito da Hoepli.
+
+Pubblicazioni
+
+1. Jadidi, Omid, Sergio Cavalieri, Fatemeh Firouzi. (2024) [**Supplier selection and order allocation problem under demand and supply uncertainty with return policy**.](https://www.sciencedirect.com/science/article/pii/S0307904X24002403) Applied Mathematical Modelling 133 pp. 65-78 https://doi.org/10.1016/j.apm.2024.05.014
+2. Cimini Chiara, Alexandra Lagorio, Sergio Cavalieri. (2024) [**Development and application of a maturity model for Industrial Agile Working.**](https://www.sciencedirect.com/science/article/pii/S0360835223009014) *Computers & Industrial Engineering, https://doi.org/10.1016/j.cie.2023.109877*
+3. Mattia Galimberti, Chiara Cimini, Sergio Cavalieri (2024) [**Sustainability in Servitization: A Review of Assessment Methodologies for the Steel Sector**](https://www.sciencedirect.com/science/article/pii/S2405896324016562), FAC-Papers On Line, pp. 640-645, https://doi.org/10.1016/j.ifacol.2024.09.228
+4. Galimberti Mattia, Chiara Cimini, Giacomo Copani, Sergio Cavalieri. (2024) [**A sustainability-oriented tool for evaluating servitization business models in the steel sector**](https://www.sciencedirect.com/science/article/pii/S1877050924002928).  Procedia Computer Science 232, pp. 2984-2993 https://doi.org/10.1016/j.procs.2024.02.114
+5. Sala Roberto, Fabiana Pirola, Giuditta Pezzotta, Sergio Cavalieri. (2024) [**Leveraging Natural Language Processing for enhanced remote troubleshooting in Product-Service Systems: A case study.**](https://www.sciencedirect.com/science/article/pii/S1877050924001248)  Procedia Computer Science 232, pp. 1259-1268 https://doi.org/10.1016/j.procs.2024.01.124
+
+[Tutte le pubblicazioni](https://aisberg.unibg.it/browse?authority=rp00467&type=author)
+
+ 
+
+  [4] Score: 0.9910
+      Titolo   : Eletto il nuovo Rettore | Università degli studi di Bergamo - UniBg
+      URL      : https://www.unibg.it/node/12850
+      Contenuto: Eletto il nuovo Rettore | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/node/12850#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/node/12850#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/node/12850#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Eletto il nuovo Rettore
+=======================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.    Node 
+3.   [Eletto il nuovo Rettore](https://www.unibg.it/node/12850)
+
+[](https://www.unibg.it/node/12850)
+
+Il nuovo**Rettore** dell'Università degli studi di Bergamo, per il[sessennio 2021-2027](https://www.unibg.it/ateneo/organizzazione-e-struttura/elezioni), è**[Sergio Cavalieri](https://www.unibg.it/ugov/person/1627)**, professore ordinario presso il[Dipartimento di Ingegneria Gestionale, dell’Informazione e della Produzione](https://digip.unibg.it/it).
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/node/12850#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+  [5] Score: 0.9865
+      Titolo   : Segreteria del Rettore e del Direttore generale - UniBg
+      URL      : https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale
+      Contenuto: Segreteria del Rettore e del Direttore generale | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Segreteria del Rettore e del Direttore generale
+===============================================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Rubrica](https://www.unibg.it/rubrica)
+3.   [Segreteria del Rettore e del Direttore generale](https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale)
+
+[](https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale)
+
+Via Salvecchio, 19 
+
+ 24129 - BERGAMO 
+
+*   Web: [http://www.unibg.it/node/1212](http://www.unibg.it/node/1212) 
+
+### RESPONSABILE DEL SERVIZIO
+
+*   Ramelli Amelia [amelia.ramelli@unibg.it](mailto:amelia.ramelli@unibg.it)  [0352052232](tel:0352052232)  
+
+Personale afferente
+-------------------
+
+### Personale tecnico amministrativo
+
+*    Aquilini giulia  [0352052242](tel:0352052242) [giulia.aquilini@unibg.it](mailto:giulia.aquilini@unibg.it)   PALAZZO TERZI - RETTORATO     
+*    Geroldi paola  [0352052248](tel:0352052248) [paola.geroldi@unibg.it](mailto:paola.geroldi@unibg.it)   PALAZZO TERZI - RETTORATO     
+*    Lucchetti serena  [0352052612](tel:0352052612) [serena.lucchetti@unibg.it](mailto:serena.lucchetti@unibg.it)   VIALE PAPA GIOVANNI XXIII (Palazzo Rezzara)stanza 46 - piano quinto     
+*    Manzoni wilma  [0352052284](tel:0352052284) [wilma.manzoni@unibg.it](mailto:wilma.manzoni@unibg.it)   PALAZZO TERZI - RETTORATO     
+*    Ramelli amelia  [0352052232](tel:0352052232) [amelia.ramelli@unibg.it](mailto:amelia.ramelli@unibg.it)   PALAZZO TERZI - RETTORATO     
+
+### Fa parte di
+
+*   [Direzione Generale](https://www.unibg.it/rubrica/direzione-generale)  
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: generale
+
+>>> SYSTEM PROMPT:
+Sei un assistente generale dell'Università di Bergamo.
+Fornisci informazioni utili e orientamento agli studenti e visitatori.
+
+
+DATA ODIERNA: 07 marzo 2026 (Anno accademico 2025/2026)
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+8. Alcune fonti sono documenti PDF: in quel caso vengono forniti anche i link ipertestuali estratti direttamente dal PDF con la pagina di provenienza. Se uno di questi link è rilevante per la risposta dello studente, includilo nella risposta in forma cliccabile (formato Markdown: [testo](url)) indicando anche da quale parte del documento proviene.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: Segreteria del Rettore e del Direttore Generale - UniBg
+URL: https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/segreteria-rettore-e-direttore-generale
+Contenuto: Segreteria del Rettore e del Direttore Generale | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/segreteria-rettore-e-direttore-generale#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/segreteria-rettore-e-direttore-generale#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/segreteria-rettore-e-direttore-generale#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Segreteria del Rettore e del Direttore Generale
+===============================================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Ateneo](https://www.unibg.it/ateneo)
+3.   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+4.   [Uffici e contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+5.   [Segreteria del Rettore e del Direttore Generale](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/segreteria-rettore-e-direttore-generale)
+
+[](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/segreteria-rettore-e-direttore-generale)
+
+### Funzioni
+
+*   Segreteria e assistenza all’attività del Rettore e al Direttore Generale: gestione dell’agenda, della firma e degli account [rettore@unibg.it](mailto:rettore@unibg.it), [rettorato@unibg.it](mailto:rettorato@unibg.it)[direttoregenerale@unibg.it](mailto:direttoregenerale@unibg.it)
+*   Organizzazione missioni in Italia e all’estero del Rettore, dei Prorettori e del Direttore Generale 
+*   Accoglienza in occasione di visite ufficiali di esponenti politici, di governo e istituzionali 
+*   Relazioni con altri organismi istituzionali e con l’utenza di riferimento 
+*   Gestione dei patrocini e convenzioni di Ateneo 
+*   Gestione dell’Aula Magna Sant'Agostino e delle autorizzazioni del Rettore alle richieste di aule nelle sedi universitarie da parte di utenti esterni
+*   Gestione spazi dedicati a riunioni
+*   Collaborazione gestione eventi istituzionali e relativo cerimoniale 
+*   Elaborazione e gestione budget economico per la parte di competenza
+*   Aggiornamento della Intranet documentale e del portale della Trasparenza per quanto di competenza
+
+### Contatti
+
+**Sede**
+
+via Salvecchio, 19
+
+ 24129 Bergamo
+
+T +39 035 205 2242
+
+ F +39 035 243 054
+
+[rettorato@unibg.it](mailto:rettorato@unibg.it)
+
+Responsabile
+
+**dott.ssa Amelia Ramelli**
+
+**[Rubrica](https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale)**
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/segreteria-rettore-e-direttore-generale#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Fonte 2: Documenti e informazioni relative al Rettore (in carica e cessato)
+URL: https://trasparenza.unibg.it/amministrazione-trasparente/organizzazione/titolari-incarichi-politici-amministrazione-direzione-o-1
+Contenuto: [Salta al contenuto principale](#main-content)
+
+# Menu top
+
+* [www.unibg.it](https://www.unibg.it)
+* [eLearning](https://elearning15.unibg.it/)
+* [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+* [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+* [Sportello internet](https://sportello.unibg.it/Home.do)
+* [Rubrica](https://www.unibg.it/rubrica)
+* [Biblioteche](https://servizibibliotecari.unibg.it)
+
+* [EN](https://en.unibg.it "EN")
+
+1. [Amministrazione trasparente](https://trasparenza.unibg.it/amministrazione-trasparente)
+2. [Organizzazione](https://trasparenza.unibg.it/amministrazione-trasparente/organizzazione)
+3. [Titolari di incarichi politici, di amministrazione, di direzione o di governo](https://trasparenza.unibg.it/amministrazione-trasparente/organizzazione/titolari-incarichi-politici-amministrazione-direzione-o-2)
+4. Documenti e informazioni relative al Rettore (in carica e cessato)
+
+# Documenti e informazioni relative al Rettore (in carica e cessato)
+
+Titolari di incarichi di amministrazione, di direzione o di governo di cui all'art. 14, comma1-bis del Decreto legislativo 33/2013.
+
+## Rettore in carica
+
+Prof. Sergio Cavalieri
+
+Data pubblicazione: **16 novembre 2021**
+
+[Decreto di nomina - Rettore Prof. Sergio Cavalieri](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/decreto_nomina_rettore_univ_di_bergamo-con_prot_ministero_2.pdf "decreto_nomina_rettore_univ_di_bergamo-con_prot_ministero_2.pdf (202.84kb) - Il documento si apre in una nuova finestra")
+
+Allegati:
+
+[Cavalieri Sergio - CV](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/rettore_-_cv_pubb_gen_23.pdf "rettore_-_cv_pubb_gen_23.pdf (301.8kb) - Il documento si apre in una nuova finestra")
+
+[Compensi - viaggi e missioni - dichiarazione coniuge/parenti 2021/2027](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/3._compensi_-_viaggi_e_missioni_-_dichiarazione_coniuge_parenti_56.pdf "compensi_-_viaggi_e_missioni_-_dichiarazione_coniuge_parenti.pdf (101.92kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione altre cariche e incarichi - anno 2021](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_a_pubb_febb_22.pdf "cavalieri_-_mod_a_pubb_febb_22.pdf (52.8kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione patrimoniale - anno 2021](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_b_pubb_febb_22.pdf "cavalieri_-_mod_b_pubb_febb_22.pdf (73.12kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione di inconferibilità e incompatibilità - anno 2021](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_modello_c_pubb_2021_.pdf "cavalieri_-_modello_c_pubb_2021_.pdf (52.97kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione reddituale e patrimoniale coniuge/parenti - anno 2021](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_d_pubb_febb_22.pdf "cavalieri_-_mod_d_pubb_febb_22.pdf (358.55kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione redditi 2021](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_reddito_pubb_febb_22.pdf "cavalieri_-_reddito_pubb_febb_22.pdf (5320.82kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione altre cariche e incarichi - anno 2023](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/rettore_mod._a_pubb_aprile_2023.pdf "rettore_mod._a_pubb_aprile_2023.pdf (50.11kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione patrimoniale - anno 2022](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/rettore_mod._b_pubb_genn_23.pdf "rettore_mod._b_pubb_genn_23.pdf (52.97kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione incompatibilità - anno 2022](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/rettore_mod._c_pubb_genn_23.pdf "rettore_mod._c_pubb_genn_23.pdf (45.82kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione reddituale e patrimoniale coniuge/parenti - anno 2022](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/rettore_mod._d_pubb_genn_23.pdf "rettore_mod._d_pubb_genn_23.pdf (48.28kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione redditi 2022](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_redditi_pubb_dic_2022.pdf "cavalieri_-_redditi_pubb_dic_2022.pdf (4817.71kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione altre cariche e incarichi - anno 2023](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_a_pubb_dic_23.pdf "cavalieri_-_mod_a_pubb_dic_23.pdf (50.14kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione patrimoniale - anno 2023](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_b_pubb_gennaio_2024.pdf "cavalieri_-_mod_b_pubb_gennaio_2024.pdf (54.66kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione incompatibilità - anno 2023](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_c_pubb_dic_23.pdf "cavalieri_-_mod_c_pubb_dic_23.pdf (43.59kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione reddituale e patrimoniale coniuge/parenti - anno 2023](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_d_pubb_dic_23.pdf "cavalieri_-_mod_d_pubb_dic_23.pdf (45.88kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione redditi 2023](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_redditi_pubb_dic_23.pdf "cavalieri_-_redditi_pubb_dic_23.pdf (416.78kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione altre cariche e incarichi - anno 2024](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_a_pubb_dic_24.pdf "cavalieri_-_mod_a_pubb_dic_24.pdf (84.72kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione patrimoniale - anno 2024](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_b_data_corretta_pubb_dic_24.pdf "cavalieri_-_mod_b_data_corretta_pubb_dic_24.pdf (74.54kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione reddituale e patrimoniale coniuge/parenti - anno 2024](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_c_pubb_dic_24.pdf "cavalieri_-_mod_c_pubb_dic_24.pdf (57.21kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione redditi 2024](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_redditi_-_pubb_dic_24.pdf "cavalieri_-_redditi_-_pubb_dic_24.pdf (284.79kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione altre cariche e incarichi - anno 2025](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_a_pubb_dic_25.pdf "cavalieri_-_mod_a_pubb_dic_25.pdf (224.24kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione patrimoniale - anno 2025](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_b_pubb_dic_25.pdf "cavalieri_-_mod_b_pubb_dic_25.pdf (210.54kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione reddituale e patrimoniale coniuge/parenti - anno 2025](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_mod_c_pubb_dic_25.pdf "cavalieri_-_mod_c_pubb_dic_25.pdf (188.96kb) - Il documento si apre in una nuova finestra")
+
+[Dichiarazione redditi 2025](https://trasparenza.unibg.it/sites/trasparenza/files/trasparenza/cavalieri_-_redditi_pubb_dic_25.pdf "cavalieri_-_redditi_pubb_dic_25.pdf (623.99kb) - Il documento si apre in una nuova finestra")
+
+## Rettore non più in carica
+
+­
+
+Fonte 3: Sergio Cavalieri - CELS - UniBg
+URL: https://cels.unibg.it/sergiocavalieri/
+Contenuto: [![cropped-Home-e1646219617773-1.png](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/cropped-Home-e1646219617773-1-q5wwpbmu5tqc7cnu607bos4fqw4e4ohwj1t7n4i1gc.png "cropped-Home-e1646219617773-1.png")](https://cels.unibg.it/)
+
+# Sergio Cavalieri
+
+![Cavalieri](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/Cavalieri-1-q5wwprm2s2ya40lwja0mkol3ip1x2ln2m3csqlv80s.jpg "Cavalieri")
+
+**Sergio Cavalieri, Ph.D**  
+Rettore dell’Università degli studi di Bergamo e Professore Ordinario
+
+* [sergio.cavalieri@unibg.it](mailto:sergio.cavalieri@unibg.it)
+* +39 035.205.2242
+
+[![ResearchGate_logo](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/ResearchGate_logo-q5wwpgbza7qemowjy89xmol7cqdvuh6koqxstvuq2c.png "ResearchGate_logo")](https://www.researchgate.net/profile/Sergio-Cavalieri)
+
+[![Orcid_logo](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/Orcid_logo-q5wwpgbza7qemowjy89xmol7cqdvuh6koqxstvuq2c.png "Orcid_logo")](https://orcid.org/0000-0002-7598-0379)
+
+[![google_scholar_logo](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/google_scholar_logo-1-q5wwpckmivl9c920k6nfcpjcz6wezornc8buws0ar8.png "google_scholar_logo")](https://scholar.google.com/citations?user=_MG2DNcAAAAJ&hl=it&oi=ao)
+
+[![Twitter-new-logo-Xquadrato](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/Twitter-new-logo-Xquadrato-e1709719140499-qkt30ean9y3i6gnpm7dwse4xeoszzkatjzlxc9zipg.jpeg "Twitter-new-logo-Xquadrato")](https://twitter.com/cavalieri_ser)
+
+[![linkedin](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/linkedin-1-q5wwppqd6k39usiwfcc7bm7tal3jzg7w21gnmngsc4.png "linkedin")](https://www.linkedin.com/in/sergiocavalieri/)
+
+[![Aisberg](https://cels.unibg.it/wp-content/uploads/elementor/thumbs/Aisberg-1-q5wwprm1k85ui0g64d5gglqqhcuaeufcqarml7dzzo.jpg "Aisberg")](https://aisberg.unibg.it/browse?type=author&order=ASC&rpp=20&authority=rp00467)
+
+Sergio Cavalieri dal 2021 è rettore dell’Università degli studi di Bergamo e professore ordinario presso il Dipartimento di Ingegneria Gestionale, dell’Informazione e della Produzione dell’Università degli studi di Bergamo. È attualmente membro del Consiglio di Amministrazione di U4I – Università per l’Innovazione, già presidente dell’Associazione Italiana Professori in Ingegneria dei Sistemi Industriali, membro di IFAC-TC 5.1 su Advanced Manufacturing Technology, membro di IFIP WG 5.7, ex membro del comitato direttivo per lo sviluppo tecnico del Consiglio per la catena di approvvigionamento, fondatore e coordinatore del Forum per la gestione dei servizi, un’iniziativa comune tra industria e università. E’ direttore del CELS – [Research Group on Industrial Systems Engineering, Logistics and Service Operations](http://cels.unibg.it/), già Coordinatore dell’[ASAP Service Management Forum](http://www.asapsmf.org/), Direttore del [Master Executive in Gestione degli Asset Industriali e  della manutenzione](https://sdm.unibg.it/corso/megmi/) e già Membro del Technical Development Steering Committee del Supply Chain Council. Tra le sue pubblicazioni si segnalano “Orientare al Successo la Supply Chain”, pubblicato da ISEDI, e “Riprogettare il Servizio Post-Vendita”, edito da Hoepli.
+
+Pubblicazioni
+
+1. Jadidi, Omid, Sergio Cavalieri, Fatemeh Firouzi. (2024) [**Supplier selection and order allocation problem under demand and supply uncertainty with return policy**.](https://www.sciencedirect.com/science/article/pii/S0307904X24002403) Applied Mathematical Modelling 133 pp. 65-78 https://doi.org/10.1016/j.apm.2024.05.014
+2. Cimini Chiara, Alexandra Lagorio, Sergio Cavalieri. (2024) [**Development and application of a maturity model for Industrial Agile Working.**](https://www.sciencedirect.com/science/article/pii/S0360835223009014) *Computers & Industrial Engineering, https://doi.org/10.1016/j.cie.2023.109877*
+3. Mattia Galimberti, Chiara Cimini, Sergio Cavalieri (2024) [**Sustainability in Servitization: A Review of Assessment Methodologies for the Steel Sector**](https://www.sciencedirect.com/science/article/pii/S2405896324016562), FAC-Papers On Line, pp. 640-645, https://doi.org/10.1016/j.ifacol.2024.09.228
+4. Galimberti Mattia, Chiara Cimini, Giacomo Copani, Sergio Cavalieri. (2024) [**A sustainability-oriented tool for evaluating servitization business models in the steel sector**](https://www.sciencedirect.com/science/article/pii/S1877050924002928).  Procedia Computer Science 232, pp. 2984-2993 https://doi.org/10.1016/j.procs.2024.02.114
+5. Sala Roberto, Fabiana Pirola, Giuditta Pezzotta, Sergio Cavalieri. (2024) [**Leveraging Natural Language Processing for enhanced remote troubleshooting in Product-Service Systems: A case study.**](https://www.sciencedirect.com/science/article/pii/S1877050924001248)  Procedia Computer Science 232, pp. 1259-1268 https://doi.org/10.1016/j.procs.2024.01.124
+
+[Tutte le pubblicazioni](https://aisberg.unibg.it/browse?authority=rp00467&type=author)
+
+ 
+
+Fonte 4: Eletto il nuovo Rettore | Università degli studi di Bergamo - UniBg
+URL: https://www.unibg.it/node/12850
+Contenuto: Eletto il nuovo Rettore | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/node/12850#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/node/12850#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/node/12850#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Eletto il nuovo Rettore
+=======================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.    Node 
+3.   [Eletto il nuovo Rettore](https://www.unibg.it/node/12850)
+
+[](https://www.unibg.it/node/12850)
+
+Il nuovo**Rettore** dell'Università degli studi di Bergamo, per il[sessennio 2021-2027](https://www.unibg.it/ateneo/organizzazione-e-struttura/elezioni), è**[Sergio Cavalieri](https://www.unibg.it/ugov/person/1627)**, professore ordinario presso il[Dipartimento di Ingegneria Gestionale, dell’Informazione e della Produzione](https://digip.unibg.it/it).
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/node/12850#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Fonte 5: Segreteria del Rettore e del Direttore generale - UniBg
+URL: https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale
+Contenuto: Segreteria del Rettore e del Direttore generale | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Segreteria del Rettore e del Direttore generale
+===============================================
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Rubrica](https://www.unibg.it/rubrica)
+3.   [Segreteria del Rettore e del Direttore generale](https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale)
+
+[](https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale)
+
+Via Salvecchio, 19 
+
+ 24129 - BERGAMO 
+
+*   Web: [http://www.unibg.it/node/1212](http://www.unibg.it/node/1212) 
+
+### RESPONSABILE DEL SERVIZIO
+
+*   Ramelli Amelia [amelia.ramelli@unibg.it](mailto:amelia.ramelli@unibg.it)  [0352052232](tel:0352052232)  
+
+Personale afferente
+-------------------
+
+### Personale tecnico amministrativo
+
+*    Aquilini giulia  [0352052242](tel:0352052242) [giulia.aquilini@unibg.it](mailto:giulia.aquilini@unibg.it)   PALAZZO TERZI - RETTORATO     
+*    Geroldi paola  [0352052248](tel:0352052248) [paola.geroldi@unibg.it](mailto:paola.geroldi@unibg.it)   PALAZZO TERZI - RETTORATO     
+*    Lucchetti serena  [0352052612](tel:0352052612) [serena.lucchetti@unibg.it](mailto:serena.lucchetti@unibg.it)   VIALE PAPA GIOVANNI XXIII (Palazzo Rezzara)stanza 46 - piano quinto     
+*    Manzoni wilma  [0352052284](tel:0352052284) [wilma.manzoni@unibg.it](mailto:wilma.manzoni@unibg.it)   PALAZZO TERZI - RETTORATO     
+*    Ramelli amelia  [0352052232](tel:0352052232) [amelia.ramelli@unibg.it](mailto:amelia.ramelli@unibg.it)   PALAZZO TERZI - RETTORATO     
+
+### Fa parte di
+
+*   [Direzione Generale](https://www.unibg.it/rubrica/direzione-generale)  
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/rubrica/segreteria-rettore-e-direttore-generale#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+
+>>> USER PROMPT:
+chi è il rettore dell'università?
+
+>>> RISPOSTA:
+Ciao Raphael,
+
+Il Rettore dell'Università degli studi di Bergamo è il **Prof. Sergio Cavalieri**.
+
+È stato eletto per il sessennio 2021-2027 ed è anche professore ordinario presso il Dipartimento di Ingegneria Gestionale, dell’Informazione e della Produzione.
+
+Pagina di riferimento:
+*   https://www.unibg.it/node/12850
+*   https://trasparenza.unibg.it/amministrazione-trasparente/organizzazione/titolari-incarichi-politici-amministrazione-direzione-o-1
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Domanda originale: chi è il rettore dell'università?
+Categoria: generale
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Raphael,
+
+Il Rettore dell'Università degli studi di Bergamo è il **Prof. Sergio Cavalieri**.
+
+È stato eletto per il sessennio 2021-2027 ed è anche professore ordinario presso il Dipartimento di Ingegneria Gestionale, dell’Informazione e della Produzione.
+
+Pagina di riferimento:
+*   https://www.unibg.it/node/12850
+*   https://trasparenza.unibg.it/amministrazione-trasparente/organizzazione/titolari-incarichi-politici-amministrazione-direzione-o-1
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RISPOSTA:
+Il Rettore dell'Università degli studi di Bergamo è il PROF. SERGIO CAVALIERI.
+
+È stato eletto per il sessennio 2021-2027 ed è anche professore ordinario presso il Dipartimento di Ingegneria Gestionale, dell’Informazione e della Produzione.
+
+Pagina di riferimento:
+- https://www.unibg.it/node/12850
+- https://trasparenza.unibg.it/amministrazione-trasparente/organizzazione/titolari-incarichi-politici-amministrazione-direzione-o-1
+
+================================================================================
+RISPOSTA FINALE
+================================================================================
+Il Rettore dell'Università degli studi di Bergamo è il PROF. SERGIO CAVALIERI.
+
+È stato eletto per il sessennio 2021-2027 ed è anche professore ordinario presso il Dipartimento di Ingegneria Gestionale, dell’Informazione e della Produzione.
+
+Pagina di riferimento:
+- https://www.unibg.it/node/12850
+- https://trasparenza.unibg.it/amministrazione-trasparente/organizzazione/titolari-incarichi-politici-amministrazione-direzione-o-1
+
+------------------------------------------------------------
+TEMPI DI ESECUZIONE
+------------------------------------------------------------
+  Classifier Agent         : 0.593s
+  Query Agent              : 1.184s
+  Web Agent                : 1.581s
+  Generator Agent          : 1.968s
+  Revision Agent           : 4.160s
+
+  TEMPO TOTALE             : 9.488s
+
+================================================================================
+FINE DEL LOG
+================================================================================

@@ -18,7 +18,7 @@ Lo sappiamo
 3) Invece al secondo ?
 Lo sappiamo
 
-4) Elencami tutte le sedi dell'università di Bergamo, poi dimmi quale è la mia.
+4) Elencami tutte le sedi dell'università di Bergamo.
 Il campus diffuso
 Le sedi dell’Università degli studi di Bergamo riflettono il modello di campus diffuso dell’ateneo, articolato tra il centro storico della città e il territorio provinciale. Gli spazi universitari ospitano attività didattiche, di ricerca, servizi amministrativi e strutture a supporto della comunità accademica, integrandosi con il contesto urbano e favorendo il dialogo con il territorio.
 Campus umanistico
@@ -80,7 +80,7 @@ paga la quota della tassa regionale per il Diritto allo studio + imposta di boll
 9) Che convenzioni ho con i trasporti?
 https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti
 
-10) Quali sono le ultime news dell'universita?       (04/03/2026)
+10) Quali sono le ultime news dell'universita?       (04/03/2026, prese dalla home)
 Bando Erasmus+ Mobilità Docenti 2026
 erasmus
 Bando BIP Inclusive & Accessible Environments for Disability
@@ -88,7 +88,7 @@ Studenti in Sant'Agostino
 Progetto REINT 2565
 Progetto REINT2565
 
-11) Se sono uscito con 98 come voto di maturità, ho delle esenzioni?
+11) Se sono uscito con 97 come voto di maturità, ho delle esenzioni?
 Il Top Ten Student Program è un riconoscimento su base di merito finalizzato all'esenzione totale o parziale  dal pagamento del contributo onnicomprensivo fino al 10% degli studenti iscritti alle lauree triennali, magistrali e magistrali a ciclo unico che integrino determinati requisiti di merito.
 Non sono oggetto di esenzione i 156,00 € (tassa regionale e imposta di bollo) che andranno pagati entro il termine previsto per evitare l’esclusione dalla selezione.
 Chi può beneficiarne?
@@ -125,9 +125,20 @@ Boh
 14) Attualmente dove posso studiare all'estero?
 https://www.unibg.it/internazionale/andare-allestero/destinazioni
 
+
 15) Quali sono i passi per laurearesi?
 Spiegazione passo passo per laurearsi
-16) Quale è la mail del professore di Programmazione, algoritmi e computabilità?
+
+16) Quale è la mail della professoressa Scandurra? Scrivimi un template di una mail da mandarle per fissare un colloquio.
 patrizia.scandurra@unibg.it
 
-17) chi è il rettore dell'università? Sergio Cavalieri
+17) chi è il rettore dell'università? 
+Sergio Cavalieri
+
+18) quando è il prossimo appello di Modellazione Algoritmi e computabilità? 
+
+19) (OSPITE) che esami ho alla prossima sessione?
+deve chiedere all'ospite che corso e che anno sta frequentando
+
+20) che materie ci sono di giurisprudenza al primo anno? 
+dovrebbe dare gli esami richiesti a prescindere dal proprio corso seguito

@@ -1,0 +1,1532 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-07 16:01:03
+Status    : success
+
+------------------------------------------------------------
+INFORMAZIONI UTENTE
+------------------------------------------------------------
+Tipo utente   : loggato
+Nome          : Raphael Mazzoleni
+Matricola     : 1086531
+Dipartimento  : Scuola di Ingegneria
+Corso         : Ingegneria informatica
+Tipologia     : Magistrale
+Anno          : 1
+
+------------------------------------------------------------
+QUERY ORIGINALE DELL'UTENTE
+------------------------------------------------------------
+Che convenzioni ho con i trasporti?
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: servizi
+Description: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, ricevimenti
+- date_esami: Richieste su date e orari degli esami, sessioni d'esame, quando si svolge un esame
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+- "Quando è l'esame di analisi?" -> date_esami
+- "Che esami ho alla prossima sessione?" -> date_esami
+- "In che date sono gli esami della sessione estiva?" -> date_esami
+- "Quando posso dare l'esame di basi di dati?" -> date_esami
+
+
+>>> USER PROMPT:
+Che convenzioni ho con i trasporti?
+
+>>> RISPOSTA:
+servizi
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: convenzioni trasporti unibg
+Original Query: Che convenzioni ho con i trasporti?
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+DATA ODIERNA: 07 marzo 2026 (Anno accademico 2025/2026)
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE FONDAMENTALI:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- La query deve essere in italiano
+- Massimo 8 parole
+- Quando la domanda riguarda date, sessioni o periodi temporali, includi l'anno accademico (2025/2026) o il periodo specifico (es. "marzo 2026", "sessione estiva 2026") nella query
+
+REGOLA CRITICA - CONTESTO CONVERSAZIONE:
+Il contesto della conversazione ha SEMPRE la priorità sul profilo dello studente.
+Se la conversazione indica che l'utente sta chiedendo informazioni su un corso/dipartimento DIVERSO dal proprio, la query DEVE riferirsi al corso/dipartimento menzionato nella conversazione, NON a quello del profilo.
+
+Esempio critico:
+- Profilo studente: Ingegneria informatica, Magistrale
+- Conversazione precedente: lo studente chiedeva degli esami di Giurisprudenza
+- Nuova domanda: "invece nella sessione estiva?"
+- Query CORRETTA: date esami giurisprudenza sessione estiva 2025/2026 unibg
+- Query SBAGLIATA: esami sessione estiva ingegneria informatica magistrale unibg
+Motivo: dalla conversazione è chiaro che "invece" si riferisce sempre a Giurisprudenza, non al suo corso.
+
+QUANDO USARE LE INFORMAZIONI DEL PROFILO STUDENTE:
+INCLUDI le info del profilo SOLO quando:
+- La domanda riguarda esplicitamente il PROPRIO corso dello studente (es. "che materie ho?", "i miei esami")
+- Non c'è contesto conversazionale che indichi un argomento diverso
+- La domanda usa pronomi possessivi ("mio", "miei", "il mio corso")
+
+NON INCLUDERE le info del profilo quando:
+- La conversazione indica un argomento/corso diverso dal profilo
+- La domanda è generica (procedure, servizi, docenti, mensa, erasmus)
+- La domanda menziona esplicitamente un altro corso o dipartimento
+- La domanda è un follow-up ("e nella sessione X?", "invece per...", "e gli orari?") e il contesto conversazionale indica un corso diverso
+
+ESEMPI CON PROFILO (corso: ingegneria informatica, anno: 1, magistrale):
+- "che materie ho al secondo anno?" → materie secondo anno ingegneria informatica magistrale unibg
+- "i miei esami della prossima sessione" → esami prossima sessione ingegneria informatica magistrale 2025/2026 unibg
+
+ESEMPI SENZA PROFILO:
+- "come faccio a iscrivermi al test di ammissione?" → iscrizione test ammissione unibg
+- "chi è il docente di algoritmi?" → docente algoritmi unibg
+- "dove si trova la mensa?" → mensa universitaria unibg
+- "esami giurisprudenza terzo anno" → date esami giurisprudenza terzo anno 2025/2026 unibg
+
+ESEMPIO FOLLOW-UP (contesto: si parlava di esami di giurisprudenza):
+- "invece nella sessione estiva?" → date esami giurisprudenza sessione estiva 2025/2026 unibg
+- "e quelli del quarto anno?" → date esami giurisprudenza quarto anno 2025/2026 unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+
+Informazioni studente:
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Ultima richiesta dello studente: Che convenzioni ho con i trasporti?
+
+Genera la query di ricerca web:
+
+>>> RISPOSTA:
+convenzioni trasporti unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status              : success
+Query di ricerca    : convenzioni trasporti unibg
+Totale risultati    : 13
+Risultati usati     : 5
+
+>>> RISULTATI PRINCIPALI:
+  [1] Score: 0.8783
+      Titolo   : Convenzioni e sconti | Università degli studi di Bergamo - UniBg
+      URL      : https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti
+      Contenuto: ![](https://www.facebook.com/tr?id=981134568621857&ev=PageView&noscript=1)
+
+## Info
+
+## Link utili utente
+
+## Navigazione principale - desktop
+
+## Informazioni per
+
+![Home](/themes/custom/unibg/logo.svg)
+
+## Link utili utente
+
+## Navigazione principale
+
+## Servizi on line
+
+## Navigazione principale
+
+# Convenzioni e sconti
+
+## Breadcrumb
+
+Per agevolare la **mobilità sostenibile** dei propri studenti, l’Università degli studi di Bergamo promuove l'accesso a tariffe preferenziali con Società di Trasporto pubblico operanti a livello urbano ed extraurbano.
+
+L'Ateneo ha anche siglato convenzioni con operatori privati del territorio per l'erogazione di **prestazioni sanitarie** a condizioni economiche.
+
+Inoltre, il **tesserino universitario** per studenti, oltre alla valenza di documento di riconoscimento nelle varie sedi universitarie, assume anche la funzione di carta prepagata, con condizioni vantaggiose.
+
+### Convenzione Trenitalia
+
+L’Università degli studi di Bergamo ha aderito all’offerta commerciale Trenitalia for Business che prevede, tra l’altro, la formula **Trenitalia Welfare Plus.**
+
+Trenitalia riconosce uno sconto a **dipendenti e studenti dell'Ateneo** che scelgono Trenitalia per i loro viaggi privati.
+
+Accedi all'area riservata **[My UniBg](https://my.unibg.it/)** per saperne di più e beneficiare della formula Trenitalia Welfare Plus.
+
+### Convenzione Trenord
+
+### Convenzione ATB e Bergamo Trasporti
+
+Se sei uno studente o una studentessa UniBg, puoi acquistare l'**abbonamento annuale ATB** al prezzo speciale di **200 euro** (165 euro se residenti in uno dei comuni convenzionati).
+
+Per quanto riguarda l'utilizzo del servizio **La BiGi**, gli utenti UNIBG possono fruire di due iniziative che vanno utilizzate in maniera sequenziale: dapprima l'utente può fruire di 100 corse gratuite per "sperimentare" il servizio e, una volta esaurite, può attivare l’**abbonamento annuale** a 10 € tramite il codice sconto da richiedere all’ATB Point (solo nel caso in cui abbia già attivo anche un abbonamento al servizio di trasporto urbano ATB).
+
+Leggi la documentazione e scopri condizioni e modalità di attivazione!
+
+### Convenzioni per prestazioni sanitarie a condizioni agevolate
+
+Nell’ambito delle iniziative rivolte a conseguire il benessere organizzativo della propria comunità, l'Ateneo ha stipulate convenzioni per fruire di prestazioni sanitarie a condizioni economiche di vantaggio con alcuni operatori privati del territorio.
+
+Accedi all'area riservata **[My UniBg](https://my.unibg.it/)** per saperne di più.
+
+### Flash Up Studio: la tua tessera
+
+**Flash Up Studio**: la tua tessera – dettagli della carta prepagata presenti sulla [Scheda Prodotto](https://www.intesasanpaolo.com/it/persone-e-famiglie/prodotti/carte/carte-prepagate/carta-flash-up-studio-universita-bergamo.html) raggiungibile sul sito della Banca.
+
+**Carta Flash Up Studio**   
+Gli studenti dell'Università degli studi di Bergamo avranno a disposizione la tessera universitaria Flash Up Studio, la speciale carta multifunzione nata dalla collaborazione tra l'Università e Banca Intesa Sanpaolo. Oltre a rappresentare la tessera universitaria di riconoscimento dello studente, ti permetterà di effettuare i pagamenti e usufruire facilmente dei servizi dentro e fuori l'Università.
+
+Con la tessera universitaria Flash Up Studio potrai:
+
+La carta prevede condizioni vantaggiose:
+
+Grazie alle funzioni di pagamento (a zero spese), potrai inoltre:
+
+**Come richiedere la tessera Flash Up Studio**
+
+Durante la procedura di immatricolazione online, ti verrà richiesto di effettuare l'upload della tua fotografia necessaria per il rilascio della tessera, nel rispetto del formato che sarà indicato nella procedura stessa.
+
+Il rilascio della tessera universitaria è strettamente funzionale alla fruizione dei servizi universitari e non comporta per lo studente alcun obbligo di utilizzo delle funzionalità bancarie, usufruibili a scelta dello studente.
+
+La carta potrà essere richiesta gratuitamente, esclusivamente attraverso l’APP Intesa Sanpaolo Mobile, e potrà essere recapitata al tuo indirizzo di residenza o altro indirizzo a tua scelta, purché sul territorio italiano.
+
+Prima di richiedere la carta è necessario sottoscrivere gratuitamente il Contratto My Key, direttamente dal sito della Banca, al [link](https://www.intesasanpaolo.com/it/persone-e-famiglie/tutti-i-giorni/my-key/my-key.html) [My](https://www.intesasanpaolo.com/it/persone-e-famiglie/tutti-i-giorni/my-key/my-key.html) [Key](https://www.intesasanpaolo.com/it/persone-e-famiglie/tutti-i-giorni/my-key/my-key.html).
+
+My key è un contratto gratuito d'identità digitale della banca, che norma le firme digitali (Firma Digitale Remota e Firma Elettronica Avanzata) e l'accesso ai canali della banca.
+
+Per Sottoscrivere il Contratto My Key online è necessario possedere un documento d’identità Italiano (carta d’identità, patente italiana, passaporto italiano); in caso contrario è necessario prendere appuntamento nella filiale più vicina per la sottoscrizione in sede.
+
+### Potrebbe interessarti
+
+## Seguici su
+
+## Footer - 1
+
+## Footer - 2
+
+## Footer - 3
+
+**Università degli studi di Bergamo**  
+via Salvecchio 19  
+24129 Bergamo  
+Cod. Fiscale 80004350163  
+P.IVA 01612800167  
+Centralino 035 2052111
+
+## Piè di pagina
+
+  [2] Score: 0.8560
+      Titolo   : [PDF] Interventi per il Diritto allo studio - UniBg
+      URL      : https://www.unibg.it/sites/default/files/media/documents/2026-01-27/Diritto%20allo%20studio_per%20pubblicazione.pdf
+      Contenuto: INTERVENTI  PER  IL  DIRITTO  ALLO STUDIO 
+
+> A.A. 2026/2027
+
+# DIRITTO ALLO STUDIO 
+
+Il  Servizio Benefici e prestazioni per il DSU  si occupa di: 
+
+• Borse di Studio 
+
+• Servizio Abitativo 
+
+• Servizio Ristorazione 
+
+• Mobilità Sostenibile 
+
+• Contributi alloggi BORSA DI STUDIO 
+
+Benefici: 
+
+• borsa di studio in denaro 
+
+• esonero dal pagamento del contributo onnicomprensivo 
+
+• mensa gratuita 
+
+REQUISITI 
+
+Reddito 
+
+Per l’ a.a  2025/2026  i limiti ISEE Universitario sono stati :
+
+• ISEE: € 26.516,70 
+
+• ISP/scala equivalenza: € 57.645,03 
+
+Merito 
+
+• Prima immatricolazione universitaria 
+
+• Voto di maturità minimo di 70/100 
+
+Successivamente sarà richiesto il conseguimento di un minimo di CFU, indicati nel bando 
+
+Maggiori informazioni:  www.unibg.it  > Studiare > Focus on > Borse di studio SERVIZIO ABITATIVO 
+
+Residenze universitarie 
+
+• Bergamo  - via Caboto, 12 (15 posti + 
+
+camera disabile) 
+
+• Bergamo  - via G. Garibaldi, 3/F (87 posti 
+
++ 6 camere disabili) 
+
+• Bergamo  – Seminario (46 posti) 
+
+• Dalmine  - via G. Verdi, 72 (46 posti + 2 
+
+camere disabili) 
+
+Requisiti 
+
+• distanza, reddito e merito (voto di 
+
+maturità non inferiore a 70/100),  per 
+
+accedere alle residenze come  borsista 
+
+• solo merito e distanza  per accedere alle 
+
+residenze come  fuori fascia , pagando la 
+
+retta BANDO E DOMANDA ON LINE 
+
+Bando di concorso 
+
+Nel  mese  di  luglio  2026  alle  pagine  web  www .unibg .it  > Studiare  > Focus  on  > Borse  di 
+
+studio  sarà  pubblicato  il  bando  per  i benefici  del  diritto  allo  studio  in  cui  verificare  i
+
+requisiti,  i documenti  necessari  e le  scadenze .
+
+Domanda on line 
+
+Link  e scadenze  saranno  indicati  nel  Bando  di  concorso  (solitamente  la  domanda 
+
+scade  nel  mese  di  settembre) .
+
+Graduatorie 
+
+Servizio  Abitativo : settembre  2026 
+
+Borsa  di  Studio : novembre  2026 , dicembre  2026  e maggio  2027 SERVIZIO RISTORAZIONE 
+
+Mense universitarie 
+
+• Bergamo  - via dei Caniana, 2 (pranzo da lunedì a sabato) 
+
+• Bergamo  - via S. Lorenzo, 11 (pranzo da lunedì a venerdì) 
+
+• Bergamo  - via G. Garibaldi, 3/F (cena residenti da lunedì a venerdì) 
+
+• Dalmine  - via Pasubio, 7 (pranzo da lunedì a venerdì) 
+
+• Dalmine  - via G. Verdi, 72 (cena residenti da lunedì a venerdì) 
+
+Il  Servizio  è assicurato  con  sconti  relativi  alle  fasce  di  reddito  ISEEU .
+
+La  tariffa  massima  per  gli  studenti  di  un  pasto  completo,  bevande  escluse,  è di  circa  € 6,00 .
+
+Per godere del pasto gratuito o degli sconti gli studenti dovranno scaricare la app  Unibg.EAT  e
+
+mostrare un  QRcode  dinamico generato dalla app. 
+
+Presso le sedi di via Pignolo e di Sant’Agostino a Bergamo sono attive due caffetterie con prezzi 
+
+agevolati, ma senza ulteriori sconti relativi al reddito. 
+
+È prevista una specifica offerta, su prenotazione, per i celiaci. 
+
+Maggiori informazioni:  www.unibg.it  > vivere  unibg  > spazi e risorse > mense e caffetterie MOBILITÀ SOSTENIBILE 
+
+Agevolazioni trasporti 
+
+L’Università  ha  stipulato  accordi  con  ATB,  Bergamo  Trasporti  e Trenord 
+
+che  consentono  l’acquisto  di  abbonamenti  a tariffa  ridotta :
+
+• Abbonamento  annuale  con  ATB  rete  urbana  € 200 ,00  (€  165 ,00  se 
+
+residenti  in  uno  dei  comuni  convenzionati)  e bike  sharing  BiGi 
+
+• Abbonamento  annuale  con  ATB  e Bergamo  Trasporti  € 470 ,00 
+
+• Abbonamento  mensile  del  treno  con  Trenord  sconto  10 % sulle  tariffe 
+
+in  vigore 
+
+Maggiori informazioni: www.unibg.it > Vivere  UniBg  > Opportunità e 
+
+servizi > Convenzioni e sconti, a supporto della quotidianità GRAZIE DELL’ATTENZIONE 
+
+UniBg  > Studiare > Focus on > Borse di studio 
+
+# SCOPRI DI PIÙ!
+
+  [3] Score: 0.8480
+      Titolo   : [PDF] unibg per la mobilità sostenibile trenord – atb – bergamo trasporti
+      URL      : https://www.unibg.it/sites/default/files/mobilita_sostenibile_studenti_2021_2023_1.pdf
+      Contenuto: 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# UNIBG PER LA MOBILITÀ SOSTENIBILE 
+
+# TRENORD – ATB – BERGAMO TRASPORTI 
+
+Per agevolare la mobilità sostenibile dei propri studenti l’Università degli Studi di Bergamo ha 
+
+promosso con le Società di Trasporto pubblico nuove agevolazioni che prevedono interventi a livello 
+
+cittadino, provinciale e regionale per incentivare il trasporto su gomma e su rotaia. Le opportunità 
+
+offerte sono specificate di seguito. 
+
+# TRENORD S.P.A. 
+
+http://www.trenord.it 
+
+La convenzione con Trenord S.p.A. prevede un abbonamento mensile del treno il cui costo risulterà 
+
+ridotto del 10% grazie all’intervento dell’Ateneo. Nella convenzione è prevista l’automatica 
+
+attribuzione di un bo nus qualora Trenord non rispetti lo standard minimo di affidabilità previsto dal 
+
+Contratto di Servizio. 
+
+Modalità di richiesta : gli studenti interessati dovranno inoltrare richiesta della Tessera TRENORD 
+
+(validità 3 anni/36 mesi) accedendo alla propria are a personale dello Sportello Internet Studenti, alla 
+
+sezione Segreteria > Altri Servizi > Trenord (scegliendo tra “Nuova Richiesta” e “Possiedo già la 
+
+tessera”), cliccando poi su “Invia Richiesta Trenord”. 
+
+L’Università, dopo aver verificato la presenza ne l proprio archivio della fotografia dello studente in 
+
+formato JPEG, invierà l’elenco a Trenord secondo il calendario sotto riportato: 
+
+VALIDITA’ TESSERA ITINERO  RICHIESTA ON LINE  SPEDIZIONE ENTRO 
+
+1 FEB 21 - 31 GEN 2 4 entro 1 1 Dicembre 20 20  entro 20 Gennaio 20 21
+
+1 MAR 21 - 28 FEB 2 4 entro 20 Gennaio 20 21 entro 19 Febbraio 20 21
+
+1 APR 21 - 31 MAR 2 4 entro 19 Febbraio 20 21 entro 19 Marzo 20 21
+
+1 MAG 21 - 30 APR 2 4 entro 1 9 Marzo 20 21 entro 23 Aprile 20 21
+
+1 GIU 21 - 31 MAG 2 4 entro 23 Aprile 20 21 entro 21 Maggio 20 21
+
+1 LUG 21 - 30 GIU 2 4 entro 21 Maggio 20 21 entro 23 Giugno 20 21
+
+1 AGO 21 - 31 LUG 2 4 entro 23 Giugno 20 21 entro 23 Luglio 20 21
+
+1 SET 21 – 31 AGO 2 4 entro 23 Luglio 20 21 entro 2 0 Agosto 20 21
+
+1 OTT 21 - 30 SET 2 4 entro 20 Agosto 20 21 entro 2 4 Settembre 20 21
+
+1 NOV 21 - 31 OTT 2 4 entro 24 Settembre 20 21 entro 22 Ottobre 20 21
+
+1 DIC 21 - 30 NOV 2 4 entro 22 Ottobre 20 21 entro 1 9 Novembre 20 21
+
+1 GEN 2 2 - 31 DIC 2 4 entro 1 6 Novembre 20 21 entro 10 Dicembre 20 21
+
+Alle scadenze indicate (dopo aver ricevuto la mail di notifica) lo studente potrà ritirare la tessera presso 
+
+il Servizio Diritto allo Studio di via dei Caniana , 2 - Bergamo e acquistare l’Abbonamento Speciale 
+
+studenti mensile presso le biglietterie e i distributori automatici Trenord. 
+
+IMPORTANTE: la tessera ha validità di 3 anni dalla data del rilascio. Al cessare dell’iscrizione 
+
+andrà riconsegnata all’Ateneo, presso il Servizio Diritto allo Studio. 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# ATB 
+
+http://www.atb.bergamo.it 
+
+È stata rinnovata per il biennio accademico 20 21/202 2 e 2022/2023 la convenzione che consente di 
+
+acquistare l’ abbonamento annuale per studenti fino a 26 anni di età non compiuti ad una tariffa 
+
+flat di € 200,00 indipendentemente dalle zone tariffarie attraversate per raggiungere la sede 
+
+universitaria dalla propria residenza. 
+
+Modalità di stipula : l’abbonamento si può richiedere o rinnovare presso l’ATB Point di Porta N uova 
+
+BG esibendo la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre -
+
+iscrizione previsto per la Laurea Magistrale. 
+
+# ATB e Bergamo Trasporti 
+
+http://www.atb.bergamo.it 
+
+L’intesa consente allo studente di stipulare un abbonamento annuale per studenti fino a 26 anni di 
+
+età non compiuti che integri il trasporto in area urbana e quello in ambito provinciale ad una tariffa 
+
+flat di € 470,00 indipendentemente dalla località di p rovenienza. 
+
+Modalità di stipula : l’abbonamento si può richiedere presso l’ATB Point di Porta Nuova BG – lo 
+
+Sportello interno alla Stazione Autolinee BG – gli Autoservizi Locatelli di via Toscanini, 6 a 
+
+Bonate Sopra oppure in via Furietti, 17 Bergamo esibendo la ricevuta di pagamento della prima rata 
+
+delle tasse universitarie o del contributo di pre -iscrizione previsto per la Laurea Magistrale.
+
+  [4] Score: 0.8480
+      Titolo   : [PDF] unibg per la mobilità sostenibile trenord – atb – bergamo trasporti
+      URL      : https://www.unibg.it/sites/default/files/media/documents/2023-08-02/MOBILITA%27%20SOSTENIBILE%20STUDENTI%202022%202023.pdf
+      Contenuto: 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# UNIBG PER LA MOBILITÀ SOSTENIBILE 
+
+# TRENORD – ATB – BERGAMO TRASPORTI 
+
+Per agevolare la mobilità sostenibile dei propri studenti l’Università degli Studi di Bergamo ha 
+
+promosso con le Società di Trasporto pubblico nuove agevolazioni che prevedono interventi a livello 
+
+cittadino, provinciale e regionale per incentivare il trasporto su gomma e su rotaia. Le opportunità 
+
+offerte sono specificate di seguito. 
+
+# TRENORD S.P.A. 
+
+http://www.tren ord.it 
+
+La convenzione con Trenord S.p.A. prevede un abbonamento mensile del treno il cui costo risulterà 
+
+ridotto del 10% grazie all’intervento dell’Ateneo. Nella convenzione è prevista l’automatica 
+
+attribuzione di un bonus qualora Trenord non rispetti lo standard minimo di affidabilità previsto dal 
+
+Contratto di Servizio. 
+
+Modalità di richiesta : gli studenti interessati dovranno inoltrare richiesta della Tessera TRENORD 
+
+(validità 3 anni/36 mesi) accedendo alla propria area personale dello Sportello Internet Studenti, alla 
+
+sezione Segreteria > Altri Servizi > Trenord (scegliendo tra “Nuova Richiesta” e “Possiedo già la 
+
+tessera”), cliccando poi su “Invia Richiesta Trenord”. 
+
+L’Università, dopo aver verificato la presenza nel proprio archivio della fotografia dello studente in 
+
+formato JPEG, invierà l’elenco a Trenord secondo il calendario sotto riportato: 
+
+VALIDITA’ TESSERA ITINERO  RICHIESTA ON LINE  SPEDIZIONE ENTRO 
+
+1 FEB 23 - 31 GEN 2 6 entro 1 1 Dicembre 20 22 entro 20 Gennaio 20 23
+
+1 MAR 23 - 28 FEB 2 6 entro 19 Gennaio 20 23 entro 19 Febbraio 20 23 
+
+1 APR 23 - 31 MAR 2 6 entro 19 Febbraio 20 23 entro 19 Marzo 20 23
+
+1 MAG 23 - 30 APR 2 6 entro 1 9 Marzo 20 23 entro 23 Aprile 20 23
+
+1 GIU 23 - 31 MAG 2 6 entro 23 Aprile 20 23 entro 21 Maggio 20 23
+
+1 LUG 23 - 30 GIU 2 6 entro 21 Maggio 20 23 entro 23 Giugno 20 23
+
+1 AGO 23 - 31 LUG 2 6 entro 22 Giugno 20 23 entro 23 Luglio 20 23
+
+1 SET 23 – 31 AGO 2 6 entro 23 Luglio 20 23 entro 2 0 Agosto 20 23
+
+1 OTT 23 - 30 SET 2 6 entro 20 Agosto 20 23 entro 2 4 Settembre 20 23
+
+1 NOV 23 - 31 OTT 2 6 entro 24 Settembre 20 23 entro 22 Ottobre 20 23
+
+1 DIC 23 - 30 NOV 2 6 entro 22 Ottobre 20 23 entro 1 9 Novembre 20 23
+
+1 GEN 2 4 - 31 DIC 2 6 entro 1 5 Novembre 20 23 entro 10 Dicembre 20 23
+
+Dopo aver ricevuto la mail di notifica dell’arrivo della tessera lo studente potrà ritirarla presso il Servizio 
+
+Diritto allo Studio di via dei Caniana, 2 - Bergamo e acquistare l’Abbonamento Speciale studenti 
+
+mensile presso le biglietterie e i distributori automatici Trenord. 
+
+IMPORTANTE: la tessera ha validità di 3 anni dalla data del rilascio. Al cessare dell’iscrizione 
+
+andrà riconsegnata all’Ateneo, presso il Servizio Diritto allo Studio. 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# ATB 
+
+http://www.atb.bergamo.it 
+
+È stata rinnovata per il bienni o accademico 202 3/202 5 la convenzione che consente di acquistare 
+
+l’ abbonamento annuale per studenti fino a 26 anni di età non compiuti ad una tariffa flat di €
+
+20 0,00 indipendentemente dalle zone tariffarie attraversate per raggiungere la sede universitaria 
+
+dalla propria residenza. 
+
+Modalità di stipula : l’abbonamento si può richiedere o rinnovare presso l’ATB Point di Porta Nuova 
+
+BG esibendo la ricevuta di pagament o della prima rata delle tasse universitarie o del contributo di pre -
+
+iscrizione previsto per la Laurea Magistrale. 
+
+# ATB e Bergamo Trasporti 
+
+http://www.atb.bergamo.it 
+
+L’intesa consente allo studente di stipulare un abbonamento annuale per studenti fino a 26 anni di 
+
+età non compiuti che integri il trasporto in area urbana e quello in ambito provinciale ad una tariffa 
+
+flat di € 470,00 indipendentemente dalla località di p rovenienza. 
+
+Modalità di stipula : l’abbonamento si può richiedere presso l’ATB Point di Porta Nuova BG – lo 
+
+Sportello interno alla Stazione Autolinee BG – gli Autoservizi Locatelli di via Toscanini, 6 a 
+
+Bonate Sopra oppure in via Furietti, 17 Bergamo esibe ndo la ricevuta di pagamento della prima rata 
+
+delle tasse universitarie o del contributo di pre -iscrizione previsto per la Laurea Magistrale.
+
+  [5] Score: 0.8452
+      Titolo   : [PDF] ATB ATB e Bergamo trasporti - UniBg
+      URL      : https://www.unibg.it/sites/default/files/media/documents/2023-08-22/Diritto%20allo%20studio%20-%20convenzione%20ATB.pdf
+      Contenuto: 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio  
+
+> Università degli studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+## ATB 
+
+www.atb.bergamo.it 
+
+È stata rinnovata per il biennio accademico 2023/2025 la convenzione che consente 
+
+di acquistare l’ abbonamento annuale per le zone urbane servite da ATB e TEB alla 
+
+tariffa speciale di 200 euro (165 euro se residenti in uno dei comuni 
+
+convenzionati) , beneficiando quindi di uno sconto medio di circa il 60% rispetto 
+
+ad un abbonamento ordinario. L’abbonamento è valido per il tragitto casa - sede 
+
+universitaria. 
+
+Modalità di stipula : l’abbonamento si può richiedere o rinnovare presso l’ATB Point 
+
+di Porta Nuova BG esibendo la ricevuta di pagamento della prima rata delle tasse 
+
+universitarie o del contributo d i preiscrizione previsto per la Laurea Magistrale. 
+
+Docenti e personale dell’Un iversità possono acquistare l’abbonamento annuale per il 
+
+tragitto casa - lavoro nelle zone urbane servite da ATB e TEB alla medesima tariffa 
+
+riservata agli studenti, pari a 200 euro. 
+
+Per gli studenti e dipen denti dell’Università abbonati al trasporto pubblico inoltre 
+
+l’abbonamento annuale La BiGi ha un costo di soli 10 Euro .
+
+La partnership prevede anche la “ tariffa speciale Erasmus ”: un abbonamento 
+
+mensile valido nella sola zona urbana acq uistabile al costo di 24 euro (invece di 36 
+
+euro), oppure per la tratta Bergamo -Dalmine acquistabile al costo di 31 euro (invece 
+
+di 58 euro). 
+
+## ATB e Bergamo trasporti 
+
+www.atb.bergamo.it 
+
+Confermato anche per quest’anno l’abbonamento annuale cumulativo del costo di 
+
+470 euro per gli studenti universitari che, oltre ad ATB e TEB, utilizzano anche un 
+
+vettore extraurbano Bergamo Trasporti , indipendentemente dalla località di 
+
+provenienza .
+
+Modalità di st ipula: l’abbonamento si può richiedere presso l’ATB Point di Porta 
+
+Nuova BG – lo Sportello interno alla Stazione Autolinee BG – gli Autoservizi 
+
+Locatelli di via Toscanini, 6 a Bonate Sopra oppure in via Furietti, 17 Bergamo 
+
+allegare al modulo di richiesta dell’abbonamento la ricevuta di pagamento della prima 
+
+rata delle tasse universitarie o del contributo di pre -iscrizione previsto per la Laurea 
+
+Magistrale.
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: servizi
+
+>>> SYSTEM PROMPT:
+Sei un assistente per i servizi universitari dell'Università di Bergamo.
+Fornisci informazioni su mense, biblioteche, aule studio, servizi agli studenti.
+Indica orari di apertura e location quando possibile.
+
+
+DATA ODIERNA: 07 marzo 2026 (Anno accademico 2025/2026)
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+8. Alcune fonti sono documenti PDF: in quel caso vengono forniti anche i link ipertestuali estratti direttamente dal PDF con la pagina di provenienza. Se uno di questi link è rilevante per la risposta dello studente, includilo nella risposta in forma cliccabile (formato Markdown: [testo](url)) indicando anche da quale parte del documento proviene.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: Convenzioni e sconti | Università degli studi di Bergamo - UniBg
+URL: https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti
+Contenuto: ![](https://www.facebook.com/tr?id=981134568621857&ev=PageView&noscript=1)
+
+## Info
+
+## Link utili utente
+
+## Navigazione principale - desktop
+
+## Informazioni per
+
+![Home](/themes/custom/unibg/logo.svg)
+
+## Link utili utente
+
+## Navigazione principale
+
+## Servizi on line
+
+## Navigazione principale
+
+# Convenzioni e sconti
+
+## Breadcrumb
+
+Per agevolare la **mobilità sostenibile** dei propri studenti, l’Università degli studi di Bergamo promuove l'accesso a tariffe preferenziali con Società di Trasporto pubblico operanti a livello urbano ed extraurbano.
+
+L'Ateneo ha anche siglato convenzioni con operatori privati del territorio per l'erogazione di **prestazioni sanitarie** a condizioni economiche.
+
+Inoltre, il **tesserino universitario** per studenti, oltre alla valenza di documento di riconoscimento nelle varie sedi universitarie, assume anche la funzione di carta prepagata, con condizioni vantaggiose.
+
+### Convenzione Trenitalia
+
+L’Università degli studi di Bergamo ha aderito all’offerta commerciale Trenitalia for Business che prevede, tra l’altro, la formula **Trenitalia Welfare Plus.**
+
+Trenitalia riconosce uno sconto a **dipendenti e studenti dell'Ateneo** che scelgono Trenitalia per i loro viaggi privati.
+
+Accedi all'area riservata **[My UniBg](https://my.unibg.it/)** per saperne di più e beneficiare della formula Trenitalia Welfare Plus.
+
+### Convenzione Trenord
+
+### Convenzione ATB e Bergamo Trasporti
+
+Se sei uno studente o una studentessa UniBg, puoi acquistare l'**abbonamento annuale ATB** al prezzo speciale di **200 euro** (165 euro se residenti in uno dei comuni convenzionati).
+
+Per quanto riguarda l'utilizzo del servizio **La BiGi**, gli utenti UNIBG possono fruire di due iniziative che vanno utilizzate in maniera sequenziale: dapprima l'utente può fruire di 100 corse gratuite per "sperimentare" il servizio e, una volta esaurite, può attivare l’**abbonamento annuale** a 10 € tramite il codice sconto da richiedere all’ATB Point (solo nel caso in cui abbia già attivo anche un abbonamento al servizio di trasporto urbano ATB).
+
+Leggi la documentazione e scopri condizioni e modalità di attivazione!
+
+### Convenzioni per prestazioni sanitarie a condizioni agevolate
+
+Nell’ambito delle iniziative rivolte a conseguire il benessere organizzativo della propria comunità, l'Ateneo ha stipulate convenzioni per fruire di prestazioni sanitarie a condizioni economiche di vantaggio con alcuni operatori privati del territorio.
+
+Accedi all'area riservata **[My UniBg](https://my.unibg.it/)** per saperne di più.
+
+### Flash Up Studio: la tua tessera
+
+**Flash Up Studio**: la tua tessera – dettagli della carta prepagata presenti sulla [Scheda Prodotto](https://www.intesasanpaolo.com/it/persone-e-famiglie/prodotti/carte/carte-prepagate/carta-flash-up-studio-universita-bergamo.html) raggiungibile sul sito della Banca.
+
+**Carta Flash Up Studio**   
+Gli studenti dell'Università degli studi di Bergamo avranno a disposizione la tessera universitaria Flash Up Studio, la speciale carta multifunzione nata dalla collaborazione tra l'Università e Banca Intesa Sanpaolo. Oltre a rappresentare la tessera universitaria di riconoscimento dello studente, ti permetterà di effettuare i pagamenti e usufruire facilmente dei servizi dentro e fuori l'Università.
+
+Con la tessera universitaria Flash Up Studio potrai:
+
+La carta prevede condizioni vantaggiose:
+
+Grazie alle funzioni di pagamento (a zero spese), potrai inoltre:
+
+**Come richiedere la tessera Flash Up Studio**
+
+Durante la procedura di immatricolazione online, ti verrà richiesto di effettuare l'upload della tua fotografia necessaria per il rilascio della tessera, nel rispetto del formato che sarà indicato nella procedura stessa.
+
+Il rilascio della tessera universitaria è strettamente funzionale alla fruizione dei servizi universitari e non comporta per lo studente alcun obbligo di utilizzo delle funzionalità bancarie, usufruibili a scelta dello studente.
+
+La carta potrà essere richiesta gratuitamente, esclusivamente attraverso l’APP Intesa Sanpaolo Mobile, e potrà essere recapitata al tuo indirizzo di residenza o altro indirizzo a tua scelta, purché sul territorio italiano.
+
+Prima di richiedere la carta è necessario sottoscrivere gratuitamente il Contratto My Key, direttamente dal sito della Banca, al [link](https://www.intesasanpaolo.com/it/persone-e-famiglie/tutti-i-giorni/my-key/my-key.html) [My](https://www.intesasanpaolo.com/it/persone-e-famiglie/tutti-i-giorni/my-key/my-key.html) [Key](https://www.intesasanpaolo.com/it/persone-e-famiglie/tutti-i-giorni/my-key/my-key.html).
+
+My key è un contratto gratuito d'identità digitale della banca, che norma le firme digitali (Firma Digitale Remota e Firma Elettronica Avanzata) e l'accesso ai canali della banca.
+
+Per Sottoscrivere il Contratto My Key online è necessario possedere un documento d’identità Italiano (carta d’identità, patente italiana, passaporto italiano); in caso contrario è necessario prendere appuntamento nella filiale più vicina per la sottoscrizione in sede.
+
+### Potrebbe interessarti
+
+## Seguici su
+
+## Footer - 1
+
+## Footer - 2
+
+## Footer - 3
+
+**Università degli studi di Bergamo**  
+via Salvecchio 19  
+24129 Bergamo  
+Cod. Fiscale 80004350163  
+P.IVA 01612800167  
+Centralino 035 2052111
+
+## Piè di pagina
+
+Fonte 2: [PDF] Interventi per il Diritto allo studio - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2026-01-27/Diritto%20allo%20studio_per%20pubblicazione.pdf
+Tipo: PDF
+Link estratti dal PDF:
+  - http://www.unibg.it/ (pagina 3)
+Contenuto: INTERVENTI  PER  IL  DIRITTO  ALLO STUDIO 
+
+> A.A. 2026/2027
+
+# DIRITTO ALLO STUDIO 
+
+Il  Servizio Benefici e prestazioni per il DSU  si occupa di: 
+
+• Borse di Studio 
+
+• Servizio Abitativo 
+
+• Servizio Ristorazione 
+
+• Mobilità Sostenibile 
+
+• Contributi alloggi BORSA DI STUDIO 
+
+Benefici: 
+
+• borsa di studio in denaro 
+
+• esonero dal pagamento del contributo onnicomprensivo 
+
+• mensa gratuita 
+
+REQUISITI 
+
+Reddito 
+
+Per l’ a.a  2025/2026  i limiti ISEE Universitario sono stati :
+
+• ISEE: € 26.516,70 
+
+• ISP/scala equivalenza: € 57.645,03 
+
+Merito 
+
+• Prima immatricolazione universitaria 
+
+• Voto di maturità minimo di 70/100 
+
+Successivamente sarà richiesto il conseguimento di un minimo di CFU, indicati nel bando 
+
+Maggiori informazioni:  www.unibg.it  > Studiare > Focus on > Borse di studio SERVIZIO ABITATIVO 
+
+Residenze universitarie 
+
+• Bergamo  - via Caboto, 12 (15 posti + 
+
+camera disabile) 
+
+• Bergamo  - via G. Garibaldi, 3/F (87 posti 
+
++ 6 camere disabili) 
+
+• Bergamo  – Seminario (46 posti) 
+
+• Dalmine  - via G. Verdi, 72 (46 posti + 2 
+
+camere disabili) 
+
+Requisiti 
+
+• distanza, reddito e merito (voto di 
+
+maturità non inferiore a 70/100),  per 
+
+accedere alle residenze come  borsista 
+
+• solo merito e distanza  per accedere alle 
+
+residenze come  fuori fascia , pagando la 
+
+retta BANDO E DOMANDA ON LINE 
+
+Bando di concorso 
+
+Nel  mese  di  luglio  2026  alle  pagine  web  www .unibg .it  > Studiare  > Focus  on  > Borse  di 
+
+studio  sarà  pubblicato  il  bando  per  i benefici  del  diritto  allo  studio  in  cui  verificare  i
+
+requisiti,  i documenti  necessari  e le  scadenze .
+
+Domanda on line 
+
+Link  e scadenze  saranno  indicati  nel  Bando  di  concorso  (solitamente  la  domanda 
+
+scade  nel  mese  di  settembre) .
+
+Graduatorie 
+
+Servizio  Abitativo : settembre  2026 
+
+Borsa  di  Studio : novembre  2026 , dicembre  2026  e maggio  2027 SERVIZIO RISTORAZIONE 
+
+Mense universitarie 
+
+• Bergamo  - via dei Caniana, 2 (pranzo da lunedì a sabato) 
+
+• Bergamo  - via S. Lorenzo, 11 (pranzo da lunedì a venerdì) 
+
+• Bergamo  - via G. Garibaldi, 3/F (cena residenti da lunedì a venerdì) 
+
+• Dalmine  - via Pasubio, 7 (pranzo da lunedì a venerdì) 
+
+• Dalmine  - via G. Verdi, 72 (cena residenti da lunedì a venerdì) 
+
+Il  Servizio  è assicurato  con  sconti  relativi  alle  fasce  di  reddito  ISEEU .
+
+La  tariffa  massima  per  gli  studenti  di  un  pasto  completo,  bevande  escluse,  è di  circa  € 6,00 .
+
+Per godere del pasto gratuito o degli sconti gli studenti dovranno scaricare la app  Unibg.EAT  e
+
+mostrare un  QRcode  dinamico generato dalla app. 
+
+Presso le sedi di via Pignolo e di Sant’Agostino a Bergamo sono attive due caffetterie con prezzi 
+
+agevolati, ma senza ulteriori sconti relativi al reddito. 
+
+È prevista una specifica offerta, su prenotazione, per i celiaci. 
+
+Maggiori informazioni:  www.unibg.it  > vivere  unibg  > spazi e risorse > mense e caffetterie MOBILITÀ SOSTENIBILE 
+
+Agevolazioni trasporti 
+
+L’Università  ha  stipulato  accordi  con  ATB,  Bergamo  Trasporti  e Trenord 
+
+che  consentono  l’acquisto  di  abbonamenti  a tariffa  ridotta :
+
+• Abbonamento  annuale  con  ATB  rete  urbana  € 200 ,00  (€  165 ,00  se 
+
+residenti  in  uno  dei  comuni  convenzionati)  e bike  sharing  BiGi 
+
+• Abbonamento  annuale  con  ATB  e Bergamo  Trasporti  € 470 ,00 
+
+• Abbonamento  mensile  del  treno  con  Trenord  sconto  10 % sulle  tariffe 
+
+in  vigore 
+
+Maggiori informazioni: www.unibg.it > Vivere  UniBg  > Opportunità e 
+
+servizi > Convenzioni e sconti, a supporto della quotidianità GRAZIE DELL’ATTENZIONE 
+
+UniBg  > Studiare > Focus on > Borse di studio 
+
+# SCOPRI DI PIÙ!
+
+Fonte 3: [PDF] unibg per la mobilità sostenibile trenord – atb – bergamo trasporti
+URL: https://www.unibg.it/sites/default/files/mobilita_sostenibile_studenti_2021_2023_1.pdf
+Tipo: PDF
+Link estratti dal PDF:
+  - https://helpdesk.unibg.it/helpdesksegrestud/login.php (pagina 1)
+  - http://www.trenord.it/ (pagina 1)
+  - http://www.atb.bergamo.it/ (pagina 2)
+Contenuto: 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# UNIBG PER LA MOBILITÀ SOSTENIBILE 
+
+# TRENORD – ATB – BERGAMO TRASPORTI 
+
+Per agevolare la mobilità sostenibile dei propri studenti l’Università degli Studi di Bergamo ha 
+
+promosso con le Società di Trasporto pubblico nuove agevolazioni che prevedono interventi a livello 
+
+cittadino, provinciale e regionale per incentivare il trasporto su gomma e su rotaia. Le opportunità 
+
+offerte sono specificate di seguito. 
+
+# TRENORD S.P.A. 
+
+http://www.trenord.it 
+
+La convenzione con Trenord S.p.A. prevede un abbonamento mensile del treno il cui costo risulterà 
+
+ridotto del 10% grazie all’intervento dell’Ateneo. Nella convenzione è prevista l’automatica 
+
+attribuzione di un bo nus qualora Trenord non rispetti lo standard minimo di affidabilità previsto dal 
+
+Contratto di Servizio. 
+
+Modalità di richiesta : gli studenti interessati dovranno inoltrare richiesta della Tessera TRENORD 
+
+(validità 3 anni/36 mesi) accedendo alla propria are a personale dello Sportello Internet Studenti, alla 
+
+sezione Segreteria > Altri Servizi > Trenord (scegliendo tra “Nuova Richiesta” e “Possiedo già la 
+
+tessera”), cliccando poi su “Invia Richiesta Trenord”. 
+
+L’Università, dopo aver verificato la presenza ne l proprio archivio della fotografia dello studente in 
+
+formato JPEG, invierà l’elenco a Trenord secondo il calendario sotto riportato: 
+
+VALIDITA’ TESSERA ITINERO  RICHIESTA ON LINE  SPEDIZIONE ENTRO 
+
+1 FEB 21 - 31 GEN 2 4 entro 1 1 Dicembre 20 20  entro 20 Gennaio 20 21
+
+1 MAR 21 - 28 FEB 2 4 entro 20 Gennaio 20 21 entro 19 Febbraio 20 21
+
+1 APR 21 - 31 MAR 2 4 entro 19 Febbraio 20 21 entro 19 Marzo 20 21
+
+1 MAG 21 - 30 APR 2 4 entro 1 9 Marzo 20 21 entro 23 Aprile 20 21
+
+1 GIU 21 - 31 MAG 2 4 entro 23 Aprile 20 21 entro 21 Maggio 20 21
+
+1 LUG 21 - 30 GIU 2 4 entro 21 Maggio 20 21 entro 23 Giugno 20 21
+
+1 AGO 21 - 31 LUG 2 4 entro 23 Giugno 20 21 entro 23 Luglio 20 21
+
+1 SET 21 – 31 AGO 2 4 entro 23 Luglio 20 21 entro 2 0 Agosto 20 21
+
+1 OTT 21 - 30 SET 2 4 entro 20 Agosto 20 21 entro 2 4 Settembre 20 21
+
+1 NOV 21 - 31 OTT 2 4 entro 24 Settembre 20 21 entro 22 Ottobre 20 21
+
+1 DIC 21 - 30 NOV 2 4 entro 22 Ottobre 20 21 entro 1 9 Novembre 20 21
+
+1 GEN 2 2 - 31 DIC 2 4 entro 1 6 Novembre 20 21 entro 10 Dicembre 20 21
+
+Alle scadenze indicate (dopo aver ricevuto la mail di notifica) lo studente potrà ritirare la tessera presso 
+
+il Servizio Diritto allo Studio di via dei Caniana , 2 - Bergamo e acquistare l’Abbonamento Speciale 
+
+studenti mensile presso le biglietterie e i distributori automatici Trenord. 
+
+IMPORTANTE: la tessera ha validità di 3 anni dalla data del rilascio. Al cessare dell’iscrizione 
+
+andrà riconsegnata all’Ateneo, presso il Servizio Diritto allo Studio. 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# ATB 
+
+http://www.atb.bergamo.it 
+
+È stata rinnovata per il biennio accademico 20 21/202 2 e 2022/2023 la convenzione che consente di 
+
+acquistare l’ abbonamento annuale per studenti fino a 26 anni di età non compiuti ad una tariffa 
+
+flat di € 200,00 indipendentemente dalle zone tariffarie attraversate per raggiungere la sede 
+
+universitaria dalla propria residenza. 
+
+Modalità di stipula : l’abbonamento si può richiedere o rinnovare presso l’ATB Point di Porta N uova 
+
+BG esibendo la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre -
+
+iscrizione previsto per la Laurea Magistrale. 
+
+# ATB e Bergamo Trasporti 
+
+http://www.atb.bergamo.it 
+
+L’intesa consente allo studente di stipulare un abbonamento annuale per studenti fino a 26 anni di 
+
+età non compiuti che integri il trasporto in area urbana e quello in ambito provinciale ad una tariffa 
+
+flat di € 470,00 indipendentemente dalla località di p rovenienza. 
+
+Modalità di stipula : l’abbonamento si può richiedere presso l’ATB Point di Porta Nuova BG – lo 
+
+Sportello interno alla Stazione Autolinee BG – gli Autoservizi Locatelli di via Toscanini, 6 a 
+
+Bonate Sopra oppure in via Furietti, 17 Bergamo esibendo la ricevuta di pagamento della prima rata 
+
+delle tasse universitarie o del contributo di pre -iscrizione previsto per la Laurea Magistrale.
+
+Fonte 4: [PDF] unibg per la mobilità sostenibile trenord – atb – bergamo trasporti
+URL: https://www.unibg.it/sites/default/files/media/documents/2023-08-02/MOBILITA%27%20SOSTENIBILE%20STUDENTI%202022%202023.pdf
+Tipo: PDF
+Link estratti dal PDF:
+  - https://helpdesk.unibg.it/helpdesksegrestud/login.php (pagina 1)
+  - http://www.trenord.it/ (pagina 1)
+  - http://www.atb.bergamo.it/ (pagina 2)
+Contenuto: 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# UNIBG PER LA MOBILITÀ SOSTENIBILE 
+
+# TRENORD – ATB – BERGAMO TRASPORTI 
+
+Per agevolare la mobilità sostenibile dei propri studenti l’Università degli Studi di Bergamo ha 
+
+promosso con le Società di Trasporto pubblico nuove agevolazioni che prevedono interventi a livello 
+
+cittadino, provinciale e regionale per incentivare il trasporto su gomma e su rotaia. Le opportunità 
+
+offerte sono specificate di seguito. 
+
+# TRENORD S.P.A. 
+
+http://www.tren ord.it 
+
+La convenzione con Trenord S.p.A. prevede un abbonamento mensile del treno il cui costo risulterà 
+
+ridotto del 10% grazie all’intervento dell’Ateneo. Nella convenzione è prevista l’automatica 
+
+attribuzione di un bonus qualora Trenord non rispetti lo standard minimo di affidabilità previsto dal 
+
+Contratto di Servizio. 
+
+Modalità di richiesta : gli studenti interessati dovranno inoltrare richiesta della Tessera TRENORD 
+
+(validità 3 anni/36 mesi) accedendo alla propria area personale dello Sportello Internet Studenti, alla 
+
+sezione Segreteria > Altri Servizi > Trenord (scegliendo tra “Nuova Richiesta” e “Possiedo già la 
+
+tessera”), cliccando poi su “Invia Richiesta Trenord”. 
+
+L’Università, dopo aver verificato la presenza nel proprio archivio della fotografia dello studente in 
+
+formato JPEG, invierà l’elenco a Trenord secondo il calendario sotto riportato: 
+
+VALIDITA’ TESSERA ITINERO  RICHIESTA ON LINE  SPEDIZIONE ENTRO 
+
+1 FEB 23 - 31 GEN 2 6 entro 1 1 Dicembre 20 22 entro 20 Gennaio 20 23
+
+1 MAR 23 - 28 FEB 2 6 entro 19 Gennaio 20 23 entro 19 Febbraio 20 23 
+
+1 APR 23 - 31 MAR 2 6 entro 19 Febbraio 20 23 entro 19 Marzo 20 23
+
+1 MAG 23 - 30 APR 2 6 entro 1 9 Marzo 20 23 entro 23 Aprile 20 23
+
+1 GIU 23 - 31 MAG 2 6 entro 23 Aprile 20 23 entro 21 Maggio 20 23
+
+1 LUG 23 - 30 GIU 2 6 entro 21 Maggio 20 23 entro 23 Giugno 20 23
+
+1 AGO 23 - 31 LUG 2 6 entro 22 Giugno 20 23 entro 23 Luglio 20 23
+
+1 SET 23 – 31 AGO 2 6 entro 23 Luglio 20 23 entro 2 0 Agosto 20 23
+
+1 OTT 23 - 30 SET 2 6 entro 20 Agosto 20 23 entro 2 4 Settembre 20 23
+
+1 NOV 23 - 31 OTT 2 6 entro 24 Settembre 20 23 entro 22 Ottobre 20 23
+
+1 DIC 23 - 30 NOV 2 6 entro 22 Ottobre 20 23 entro 1 9 Novembre 20 23
+
+1 GEN 2 4 - 31 DIC 2 6 entro 1 5 Novembre 20 23 entro 10 Dicembre 20 23
+
+Dopo aver ricevuto la mail di notifica dell’arrivo della tessera lo studente potrà ritirarla presso il Servizio 
+
+Diritto allo Studio di via dei Caniana, 2 - Bergamo e acquistare l’Abbonamento Speciale studenti 
+
+mensile presso le biglietterie e i distributori automatici Trenord. 
+
+IMPORTANTE: la tessera ha validità di 3 anni dalla data del rilascio. Al cessare dell’iscrizione 
+
+andrà riconsegnata all’Ateneo, presso il Servizio Diritto allo Studio. 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio 
+
+> Università degli Studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+# ATB 
+
+http://www.atb.bergamo.it 
+
+È stata rinnovata per il bienni o accademico 202 3/202 5 la convenzione che consente di acquistare 
+
+l’ abbonamento annuale per studenti fino a 26 anni di età non compiuti ad una tariffa flat di €
+
+20 0,00 indipendentemente dalle zone tariffarie attraversate per raggiungere la sede universitaria 
+
+dalla propria residenza. 
+
+Modalità di stipula : l’abbonamento si può richiedere o rinnovare presso l’ATB Point di Porta Nuova 
+
+BG esibendo la ricevuta di pagament o della prima rata delle tasse universitarie o del contributo di pre -
+
+iscrizione previsto per la Laurea Magistrale. 
+
+# ATB e Bergamo Trasporti 
+
+http://www.atb.bergamo.it 
+
+L’intesa consente allo studente di stipulare un abbonamento annuale per studenti fino a 26 anni di 
+
+età non compiuti che integri il trasporto in area urbana e quello in ambito provinciale ad una tariffa 
+
+flat di € 470,00 indipendentemente dalla località di p rovenienza. 
+
+Modalità di stipula : l’abbonamento si può richiedere presso l’ATB Point di Porta Nuova BG – lo 
+
+Sportello interno alla Stazione Autolinee BG – gli Autoservizi Locatelli di via Toscanini, 6 a 
+
+Bonate Sopra oppure in via Furietti, 17 Bergamo esibe ndo la ricevuta di pagamento della prima rata 
+
+delle tasse universitarie o del contributo di pre -iscrizione previsto per la Laurea Magistrale.
+
+Fonte 5: [PDF] ATB ATB e Bergamo trasporti - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2023-08-22/Diritto%20allo%20studio%20-%20convenzione%20ATB.pdf
+Tipo: PDF
+Link estratti dal PDF:
+  - https://helpdesk.unibg.it/helpdesksegrestud/login.php (pagina 1)
+  - http://www.atb.bergamo.it/ (pagina 1)
+Contenuto: 24127 Bergamo, via dei Caniana 2 tel. 035 2052870 Ticket Diritto allo Studio  
+
+> Università degli studi di Bergamo www.unibg.it Cod. Fiscale 80004350163 P.IVA 01612800167
+
+## ATB 
+
+www.atb.bergamo.it 
+
+È stata rinnovata per il biennio accademico 2023/2025 la convenzione che consente 
+
+di acquistare l’ abbonamento annuale per le zone urbane servite da ATB e TEB alla 
+
+tariffa speciale di 200 euro (165 euro se residenti in uno dei comuni 
+
+convenzionati) , beneficiando quindi di uno sconto medio di circa il 60% rispetto 
+
+ad un abbonamento ordinario. L’abbonamento è valido per il tragitto casa - sede 
+
+universitaria. 
+
+Modalità di stipula : l’abbonamento si può richiedere o rinnovare presso l’ATB Point 
+
+di Porta Nuova BG esibendo la ricevuta di pagamento della prima rata delle tasse 
+
+universitarie o del contributo d i preiscrizione previsto per la Laurea Magistrale. 
+
+Docenti e personale dell’Un iversità possono acquistare l’abbonamento annuale per il 
+
+tragitto casa - lavoro nelle zone urbane servite da ATB e TEB alla medesima tariffa 
+
+riservata agli studenti, pari a 200 euro. 
+
+Per gli studenti e dipen denti dell’Università abbonati al trasporto pubblico inoltre 
+
+l’abbonamento annuale La BiGi ha un costo di soli 10 Euro .
+
+La partnership prevede anche la “ tariffa speciale Erasmus ”: un abbonamento 
+
+mensile valido nella sola zona urbana acq uistabile al costo di 24 euro (invece di 36 
+
+euro), oppure per la tratta Bergamo -Dalmine acquistabile al costo di 31 euro (invece 
+
+di 58 euro). 
+
+## ATB e Bergamo trasporti 
+
+www.atb.bergamo.it 
+
+Confermato anche per quest’anno l’abbonamento annuale cumulativo del costo di 
+
+470 euro per gli studenti universitari che, oltre ad ATB e TEB, utilizzano anche un 
+
+vettore extraurbano Bergamo Trasporti , indipendentemente dalla località di 
+
+provenienza .
+
+Modalità di st ipula: l’abbonamento si può richiedere presso l’ATB Point di Porta 
+
+Nuova BG – lo Sportello interno alla Stazione Autolinee BG – gli Autoservizi 
+
+Locatelli di via Toscanini, 6 a Bonate Sopra oppure in via Furietti, 17 Bergamo 
+
+allegare al modulo di richiesta dell’abbonamento la ricevuta di pagamento della prima 
+
+rata delle tasse universitarie o del contributo di pre -iscrizione previsto per la Laurea 
+
+Magistrale.
+
+
+>>> USER PROMPT:
+Che convenzioni ho con i trasporti?
+
+>>> RISPOSTA:
+Ciao Raphael, in quanto studente magistrale di Ingegneria Informatica, hai a disposizione diverse convenzioni per i trasporti che l'Università di Bergamo ha stipulato per agevolare la mobilità sostenibile.
+
+Ecco un riepilogo delle principali convenzioni:
+
+### Convenzione Trenitalia
+L'Università ha aderito all'offerta commerciale Trenitalia for Business, che include la formula **Trenitalia Welfare Plus**. Questa formula riconosce uno sconto a studenti e dipendenti dell'Ateneo per i viaggi privati.
+Per maggiori informazioni e per beneficiare di questa formula, devi accedere all'area riservata [My UniBg](https://my.unibg.it/).
+
+### Convenzione Trenord
+Hai diritto a un **abbonamento mensile del treno con uno sconto del 10%** sulle tariffe in vigore.
+Per richiedere la Tessera TRENORD (con validità di 3 anni/36 mesi), devi inoltrare la richiesta dalla tua area personale dello Sportello Internet Studenti, nella sezione Segreteria > Altri Servizi > Trenord. L'Università, dopo aver verificato la tua fotografia, invierà l'elenco a Trenord. Una volta ricevuta la mail di notifica, potrai ritirare la tessera presso il Servizio Diritto allo Studio di via dei Caniana, 2 a Bergamo e acquistare l'Abbonamento Speciale studenti mensile presso le biglietterie e i distributori automatici Trenord.
+*Nota: Le scadenze specifiche per la richiesta online della tessera indicate nelle fonti si riferiscono ad anni accademici precedenti. Ti consiglio di verificare le procedure aggiornate direttamente sul sito o contattando il Servizio Diritto allo Studio per le tempistiche attuali.*
+
+### Convenzione ATB e Bergamo Trasporti
+L'Università ha rinnovato le convenzioni con ATB e Bergamo Trasporti:
+
+1.  **Abbonamento annuale ATB (rete urbana)**: Puoi acquistare l'abbonamento annuale per le zone urbane servite da ATB e TEB al prezzo speciale di **200 euro** (o **165 euro** se sei residente in uno dei comuni convenzionati). Questo abbonamento è valido per il tragitto casa-sede universitaria.
+    *   **Modalità di stipula**: Puoi richiederlo o rinnovarlo presso l'ATB Point di Porta Nuova BG, esibendo la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre-iscrizione previsto per la Laurea Magistrale.
+
+2.  **Servizio La BiGi (bike sharing)**: Se sei già abbonato al servizio di trasporto urbano ATB, puoi fruire di 100 corse gratuite per "sperimentare" il servizio. Una volta esaurite, puoi attivare l'**abbonamento annuale a 10 €** tramite un codice sconto da richiedere all’ATB Point.
+
+3.  **Abbonamento annuale cumulativo ATB e Bergamo Trasporti (urbano ed extraurbano)**: Se utilizzi anche un vettore extraurbano Bergamo Trasporti, puoi stipulare un abbonamento annuale al costo di **470 euro**, indipendentemente dalla località di provenienza.
+    *   **Modalità di stipula**: Puoi richiederlo presso l'ATB Point di Porta Nuova BG, lo Sportello interno alla Stazione Autolinee BG, gli Autoservizi Locatelli di via Toscanini, 6 a Bonate Sopra, oppure in via Furietti, 17 a Bergamo. Anche in questo caso, dovrai allegare al modulo di richiesta la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre-iscrizione previsto per la Laurea Magistrale.
+
+Pagina di riferimento: https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Domanda originale: Che convenzioni ho con i trasporti?
+Categoria: servizi
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Raphael, in quanto studente magistrale di Ingegneria Informatica, hai a disposizione diverse convenzioni per i trasporti che l'Università di Bergamo ha stipulato per agevolare la mobilità sostenibile.
+
+Ecco un riepilogo delle principali convenzioni:
+
+### Convenzione Trenitalia
+L'Università ha aderito all'offerta commerciale Trenitalia for Business, che include la formula **Trenitalia Welfare Plus**. Questa formula riconosce uno sconto a studenti e dipendenti dell'Ateneo per i viaggi privati.
+Per maggiori informazioni e per beneficiare di questa formula, devi accedere all'area riservata [My UniBg](https://my.unibg.it/).
+
+### Convenzione Trenord
+Hai diritto a un **abbonamento mensile del treno con uno sconto del 10%** sulle tariffe in vigore.
+Per richiedere la Tessera TRENORD (con validità di 3 anni/36 mesi), devi inoltrare la richiesta dalla tua area personale dello Sportello Internet Studenti, nella sezione Segreteria > Altri Servizi > Trenord. L'Università, dopo aver verificato la tua fotografia, invierà l'elenco a Trenord. Una volta ricevuta la mail di notifica, potrai ritirare la tessera presso il Servizio Diritto allo Studio di via dei Caniana, 2 a Bergamo e acquistare l'Abbonamento Speciale studenti mensile presso le biglietterie e i distributori automatici Trenord.
+*Nota: Le scadenze specifiche per la richiesta online della tessera indicate nelle fonti si riferiscono ad anni accademici precedenti. Ti consiglio di verificare le procedure aggiornate direttamente sul sito o contattando il Servizio Diritto allo Studio per le tempistiche attuali.*
+
+### Convenzione ATB e Bergamo Trasporti
+L'Università ha rinnovato le convenzioni con ATB e Bergamo Trasporti:
+
+1.  **Abbonamento annuale ATB (rete urbana)**: Puoi acquistare l'abbonamento annuale per le zone urbane servite da ATB e TEB al prezzo speciale di **200 euro** (o **165 euro** se sei residente in uno dei comuni convenzionati). Questo abbonamento è valido per il tragitto casa-sede universitaria.
+    *   **Modalità di stipula**: Puoi richiederlo o rinnovarlo presso l'ATB Point di Porta Nuova BG, esibendo la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre-iscrizione previsto per la Laurea Magistrale.
+
+2.  **Servizio La BiGi (bike sharing)**: Se sei già abbonato al servizio di trasporto urbano ATB, puoi fruire di 100 corse gratuite per "sperimentare" il servizio. Una volta esaurite, puoi attivare l'**abbonamento annuale a 10 €** tramite un codice sconto da richiedere all’ATB Point.
+
+3.  **Abbonamento annuale cumulativo ATB e Bergamo Trasporti (urbano ed extraurbano)**: Se utilizzi anche un vettore extraurbano Bergamo Trasporti, puoi stipulare un abbonamento annuale al costo di **470 euro**, indipendentemente dalla località di provenienza.
+    *   **Modalità di stipula**: Puoi richiederlo presso l'ATB Point di Porta Nuova BG, lo Sportello interno alla Stazione Autolinee BG, gli Autoservizi Locatelli di via Toscanini, 6 a Bonate Sopra, oppure in via Furietti, 17 a Bergamo. Anche in questo caso, dovrai allegare al modulo di richiesta la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre-iscrizione previsto per la Laurea Magistrale.
+
+Pagina di riferimento: https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RISPOSTA:
+Raphael, in quanto studente magistrale di Ingegneria Informatica, hai a disposizione diverse convenzioni per i trasporti stipulate dall'Università di Bergamo:
+
+CONVENZIONE TRENITALIA
+L'Università ha aderito all'offerta commerciale Trenitalia for Business, che include la formula Trenitalia Welfare Plus. Questa formula riconosce uno sconto a studenti e dipendenti dell'Ateneo per i viaggi privati.
+Per maggiori informazioni e per beneficiare di questa formula, accedi all'area riservata My UniBg: https://my.unibg.it/
+
+CONVENZIONE TRENORD
+- Hai diritto a un abbonamento mensile del treno con uno sconto del 10% sulle tariffe in vigore.
+- Per richiedere la Tessera TRENORD (validità 3 anni/36 mesi), inoltra la richiesta dalla tua area personale dello Sportello Internet Studenti (sezione Segreteria > Altri Servizi > Trenord).
+- L'Università, dopo aver verificato la tua fotografia, invierà l'elenco a Trenord.
+- Una volta ricevuta la mail di notifica, potrai ritirare la tessera presso il Servizio Diritto allo Studio di via dei Caniana, 2 a Bergamo e acquistare l'Abbonamento Speciale studenti mensile presso le biglietterie e i distributori automatici Trenord.
+- NOTA IMPORTANTE: Le scadenze specifiche per la richiesta online della tessera indicate nelle fonti si riferiscono ad anni accademici precedenti. Verifica le procedure aggiornate direttamente sul sito o contatta il Servizio Diritto allo Studio per le tempistiche attuali.
+
+CONVENZIONI ATB E BERGAMO TRASPORTI
+L'Università ha rinnovato le convenzioni con ATB e Bergamo Trasporti:
+
+1.  ABBONAMENTO ANNUALE ATB (rete urbana):
+    - Prezzo speciale: 200 euro (o 165 euro se residente in uno dei comuni convenzionati).
+    - Valido per il tragitto casa-sede universitaria nelle zone urbane servite da ATB e TEB.
+    - Modalità di stipula: Richiedilo o rinnovalo presso l'ATB Point di Porta Nuova BG, esibendo la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre-iscrizione per la Laurea Magistrale.
+
+2.  SERVIZIO LA BIGI (bike sharing):
+    - Se già abbonato al servizio di trasporto urbano ATB, hai 100 corse gratuite.
+    - Dopo le corse gratuite, puoi attivare l'abbonamento annuale a 10 euro tramite un codice sconto da richiedere all’ATB Point.
+
+3.  ABBONAMENTO ANNUALE CUMULATIVO ATB E BERGAMO TRASPORTI (urbano ed extraurbano):
+    - Costo: 470 euro, indipendentemente dalla località di provenienza.
+    - Modalità di stipula: Richiedilo presso l'ATB Point di Porta Nuova BG, lo Sportello interno alla Stazione Autolinee BG, gli Autoservizi Locatelli di via Toscanini, 6 a Bonate Sopra, oppure in via Furietti, 17 a Bergamo.
+    - Dovrai allegare al modulo di richiesta la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre-iscrizione per la Laurea Magistrale.
+
+Pagina di riferimento: https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti
+
+================================================================================
+RISPOSTA FINALE
+================================================================================
+Raphael, in quanto studente magistrale di Ingegneria Informatica, hai a disposizione diverse convenzioni per i trasporti stipulate dall'Università di Bergamo:
+
+CONVENZIONE TRENITALIA
+L'Università ha aderito all'offerta commerciale Trenitalia for Business, che include la formula Trenitalia Welfare Plus. Questa formula riconosce uno sconto a studenti e dipendenti dell'Ateneo per i viaggi privati.
+Per maggiori informazioni e per beneficiare di questa formula, accedi all'area riservata My UniBg: https://my.unibg.it/
+
+CONVENZIONE TRENORD
+- Hai diritto a un abbonamento mensile del treno con uno sconto del 10% sulle tariffe in vigore.
+- Per richiedere la Tessera TRENORD (validità 3 anni/36 mesi), inoltra la richiesta dalla tua area personale dello Sportello Internet Studenti (sezione Segreteria > Altri Servizi > Trenord).
+- L'Università, dopo aver verificato la tua fotografia, invierà l'elenco a Trenord.
+- Una volta ricevuta la mail di notifica, potrai ritirare la tessera presso il Servizio Diritto allo Studio di via dei Caniana, 2 a Bergamo e acquistare l'Abbonamento Speciale studenti mensile presso le biglietterie e i distributori automatici Trenord.
+- NOTA IMPORTANTE: Le scadenze specifiche per la richiesta online della tessera indicate nelle fonti si riferiscono ad anni accademici precedenti. Verifica le procedure aggiornate direttamente sul sito o contatta il Servizio Diritto allo Studio per le tempistiche attuali.
+
+CONVENZIONI ATB E BERGAMO TRASPORTI
+L'Università ha rinnovato le convenzioni con ATB e Bergamo Trasporti:
+
+1.  ABBONAMENTO ANNUALE ATB (rete urbana):
+    - Prezzo speciale: 200 euro (o 165 euro se residente in uno dei comuni convenzionati).
+    - Valido per il tragitto casa-sede universitaria nelle zone urbane servite da ATB e TEB.
+    - Modalità di stipula: Richiedilo o rinnovalo presso l'ATB Point di Porta Nuova BG, esibendo la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre-iscrizione per la Laurea Magistrale.
+
+2.  SERVIZIO LA BIGI (bike sharing):
+    - Se già abbonato al servizio di trasporto urbano ATB, hai 100 corse gratuite.
+    - Dopo le corse gratuite, puoi attivare l'abbonamento annuale a 10 euro tramite un codice sconto da richiedere all’ATB Point.
+
+3.  ABBONAMENTO ANNUALE CUMULATIVO ATB E BERGAMO TRASPORTI (urbano ed extraurbano):
+    - Costo: 470 euro, indipendentemente dalla località di provenienza.
+    - Modalità di stipula: Richiedilo presso l'ATB Point di Porta Nuova BG, lo Sportello interno alla Stazione Autolinee BG, gli Autoservizi Locatelli di via Toscanini, 6 a Bonate Sopra, oppure in via Furietti, 17 a Bergamo.
+    - Dovrai allegare al modulo di richiesta la ricevuta di pagamento della prima rata delle tasse universitarie o del contributo di pre-iscrizione per la Laurea Magistrale.
+
+Pagina di riferimento: https://www.unibg.it/vivere-unibg/opportunita-e-servizi/convenzioni-e-sconti
+
+------------------------------------------------------------
+TEMPI DI ESECUZIONE
+------------------------------------------------------------
+  Classifier Agent         : 1.257s
+  Query Agent              : 1.070s
+  Web Agent                : 4.295s
+  Generator Agent          : 10.267s
+  Revision Agent           : 13.811s
+
+  TEMPO TOTALE             : 30.702s
+
+================================================================================
+FINE DEL LOG
+================================================================================

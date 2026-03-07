@@ -1,0 +1,2554 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-07 16:16:03
+Status    : success
+
+------------------------------------------------------------
+INFORMAZIONI UTENTE
+------------------------------------------------------------
+Tipo utente   : loggato
+Nome          : Raphael Mazzoleni
+Matricola     : 1086531
+Dipartimento  : Scuola di Ingegneria
+Corso         : Ingegneria informatica
+Tipologia     : Magistrale
+Anno          : 1
+
+------------------------------------------------------------
+QUERY ORIGINALE DELL'UTENTE
+------------------------------------------------------------
+Attualmente dove posso studiare all'estero?
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: generale
+Description: Domande generiche sull'università
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, ricevimenti
+- date_esami: Richieste su date e orari degli esami, sessioni d'esame, quando si svolge un esame
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+- "Quando è l'esame di analisi?" -> date_esami
+- "Che esami ho alla prossima sessione?" -> date_esami
+- "In che date sono gli esami della sessione estiva?" -> date_esami
+- "Quando posso dare l'esame di basi di dati?" -> date_esami
+
+
+>>> USER PROMPT:
+Attualmente dove posso studiare all'estero?
+
+>>> RISPOSTA:
+generale
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: studiare estero unibg
+Original Query: Attualmente dove posso studiare all'estero?
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+DATA ODIERNA: 07 marzo 2026 (Anno accademico 2025/2026)
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE FONDAMENTALI:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- La query deve essere in italiano
+- Massimo 8 parole
+- Quando la domanda riguarda date, sessioni o periodi temporali, includi l'anno accademico (2025/2026) o il periodo specifico (es. "marzo 2026", "sessione estiva 2026") nella query
+
+REGOLA CRITICA - CONTESTO CONVERSAZIONE:
+Il contesto della conversazione ha SEMPRE la priorità sul profilo dello studente.
+Se la conversazione indica che l'utente sta chiedendo informazioni su un corso/dipartimento DIVERSO dal proprio, la query DEVE riferirsi al corso/dipartimento menzionato nella conversazione, NON a quello del profilo.
+
+Esempio critico:
+- Profilo studente: Ingegneria informatica, Magistrale
+- Conversazione precedente: lo studente chiedeva degli esami di Giurisprudenza
+- Nuova domanda: "invece nella sessione estiva?"
+- Query CORRETTA: date esami giurisprudenza sessione estiva 2025/2026 unibg
+- Query SBAGLIATA: esami sessione estiva ingegneria informatica magistrale unibg
+Motivo: dalla conversazione è chiaro che "invece" si riferisce sempre a Giurisprudenza, non al suo corso.
+
+QUANDO USARE LE INFORMAZIONI DEL PROFILO STUDENTE:
+INCLUDI le info del profilo SOLO quando:
+- La domanda riguarda esplicitamente il PROPRIO corso dello studente (es. "che materie ho?", "i miei esami")
+- Non c'è contesto conversazionale che indichi un argomento diverso
+- La domanda usa pronomi possessivi ("mio", "miei", "il mio corso")
+
+NON INCLUDERE le info del profilo quando:
+- La conversazione indica un argomento/corso diverso dal profilo
+- La domanda è generica (procedure, servizi, docenti, mensa, erasmus)
+- La domanda menziona esplicitamente un altro corso o dipartimento
+- La domanda è un follow-up ("e nella sessione X?", "invece per...", "e gli orari?") e il contesto conversazionale indica un corso diverso
+
+ESEMPI CON PROFILO (corso: ingegneria informatica, anno: 1, magistrale):
+- "che materie ho al secondo anno?" → materie secondo anno ingegneria informatica magistrale unibg
+- "i miei esami della prossima sessione" → esami prossima sessione ingegneria informatica magistrale 2025/2026 unibg
+
+ESEMPI SENZA PROFILO:
+- "come faccio a iscrivermi al test di ammissione?" → iscrizione test ammissione unibg
+- "chi è il docente di algoritmi?" → docente algoritmi unibg
+- "dove si trova la mensa?" → mensa universitaria unibg
+- "esami giurisprudenza terzo anno" → date esami giurisprudenza terzo anno 2025/2026 unibg
+
+ESEMPIO FOLLOW-UP (contesto: si parlava di esami di giurisprudenza):
+- "invece nella sessione estiva?" → date esami giurisprudenza sessione estiva 2025/2026 unibg
+- "e quelli del quarto anno?" → date esami giurisprudenza quarto anno 2025/2026 unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+
+Informazioni studente:
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Ultima richiesta dello studente: Attualmente dove posso studiare all'estero?
+
+Genera la query di ricerca web:
+
+>>> RISPOSTA:
+studiare estero unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status              : success
+Query di ricerca    : studiare estero unibg
+Totale risultati    : 18
+Risultati usati     : 5
+
+>>> RISULTATI PRINCIPALI:
+  [1] Score: 0.9999
+      Titolo   : Studiare all'estero | UniBG Ingegneria delle tecnologie per l'edilizia
+      URL      : https://lt-ie.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero
+      Contenuto: # Menu top
+
+## Form di ricerca
+
+# 
+
+![](/sites/all/themes/b3unibgcdl/images/sigillo.svg)
+
+# [Ingegneria delle tecnologie per l'edilizia](/it "Torna alla home page di Ingegneria delle tecnologie per l'edilizia")
+
+## Form di ricerca
+
+# Studiare all'estero
+
+**[LM-24 Ingegneria delle Costruzioni Edili / INGINERIE CIVILÃ, Inginerie structuralã (IS)](https://ls-ie.unibg.it/it/opportunita-e-studi-allestero/doppio-titolo-double-degree)**
+
+![Erasmus + Blended Intensive “ReUso Riga 2025”](https://lt-ie.unibg.it/sites/cl08/files/styles/paragrafo_grande/public/adobestock_169270475.jpeg?itok=mzcHVV6s "Erasmus + Blended Intensive “ReUso Riga 2025”")
+
+È stato pubblicato il **bando per la selezione e l’assegnazione di contributi per la partecipazione al programma Erasmus+ Blended Intensive “ReUso Riga 2025”**, organizzato dalla **Riga Technical University (RTU) (Lettonia)**, in collaborazione con l’Università degli studi di Bergamo, l’Università Politècnica de València (Spagna) e l’Università degli studi di Enna ‘Kore’ (Italia).
+
+I **Blended Intensive Programme (BIP)**sono **percorsi di studio intensivi transnazionali** di breve durata, caratterizzati da una **combinazione di lezioni online e una Summer School in presenza**della durata di circa una settimana, comprensiva del viaggio.
+
+Periodo **online: 9 giugno 2025 – 20 giugno 2025**  
+Attività in presenza presso la **Riga Technical University** in Lettonia: **30 giugno 2025 – 5 luglio 2025**
+
+L’opportunità è rivolta agli **studenti iscritti al III anno del corso di laurea L-23 “Ingegneria delle Tecnologie per l'Edilizia”**e agli **studenti del corso di laurea magistrale LM-24 “Ingegneria delle Costruzioni Edili”.**
+
+**Per approfondimenti:**[https://www.unibg.it/bandi/bando-selezione-formazione-graduatorie-lassegnazione-contributi-partecipazione-blended](https://disa.unibg.it/it/avvisi/pubblicato-bando-erasmus-blended-intensive-reuso-riga-2025)
+
+**Scadenza**per la presentazione delle domande: **21 febbraio 2025 alle ore 14:00**
+
+[**Accedi al bando**](https://www.unibg.it/bandi/bando-selezione-formazione-graduatorie-lassegnazione-contributi-partecipazione-blended)
+
+## [Marie Skłodowska-Curie Actions (MSCA)](https://www.unibg.it/ricerca/fare-ricerca/erc-e-msca-unibg/marie-sklodowska-curie-actions-msca)
+
+### Successo di UniBg nelle prestigiose “Marie Curie Postdoctoral Fellowships | febbraio 2025
+
+*Bergamo, 18 febbraio 2025* – Successo dell'Università degli studi di Bergamo nel programma ***Marie Curie Postdoctoral Fellowships***: cinque ricercatori hanno avuto approvata la loro proposta di ricerca, sviluppata in collaborazione con docenti dell’Ateneo che saranno loro supervisori durante l’attività, nell’ambito del programma finanziato dalla Commissione europea ***Marie Curie Postdoctoral Fellowships***,uno dei più competitivi e scientificamente prestigiosi.
+
+Nel bando 2024, su oltre **10.000 candidature** presentate, sono stati **1.700 i progetti** **selezionati (provenienti da tutta Europa)**. Tra questi vi sono quelli presentati da cinque ricercatori che, insieme a docenti dell’Università degli studi di Bergamo, hanno partecipato a un programma interno per lo sviluppo della ricerca internazionale di eccellenza dell’Ateneo. L’Università ha infatti lanciato, nell’ultimo anno, un programma per identificare i giovani di talento e i potenziali supervisori, motivandoli a ingaggiarsi nei programmi europei di ricerca di eccellenza. Successivamente, ha organizzato un percorso di formazione avanzata e coaching individuale di ricercatori e docenti, che sono stati stimolati e accompagnati a sviluppare la propria idea di ricerca, in accordo con i requisiti di eccellenza scientifica e gestionale prevista in questi bandi europei.
+
+I temi di ricerca sono vasti e ambiziosi: si passa dall’area della **formazione** a quella dell’**energia**, dalla **filologia italiana** alla **storia ambientale**. **Tre ricercatori** condurranno i loro progetti biennali presso l’Università degli studi di Bergamo, con una *European Fellowship*, mentre **due ricercatrici**, vincitrici del bando *Global Fellowship*, trascorreranno un periodo di **24 mesi presso università straniere** e rientreranno all’Università degli studi di Bergamo per un anno.
+
+Il Rettore dell'Università degli studi di Bergamo, prof. **Sergio Cavalieri**, esprime grande orgoglio per questo risultato: *"Questo riconoscimento testimonia l'eccellenza e l'impegno dei nostri ricercatori nel contribuire all'avanzamento della conoscenza. Le Marie Curie Postdoctoral Fellowships sono tra i riconoscimenti più competitivi al mondo, e vedere premiati ben cinque nostri progetti è motivo di grande soddisfazione per tutta la nostra comunità accademica".*
+
+Anche la prof.ssa **Mariafrancesca Sicilia**, Prorettrice con Delega alla ricerca scientifica, ha sottolineato l'importanza di questo successo: *"Questi premi evidenziano l'alto livello della ricerca che viene condotta all'Università di Bergamo. I progetti selezionati non solo contribuiscono allo sviluppo scientifico globale, ma rafforzano anche il nostro ruolo come polo di innovazione e sapere".*
+
+Ai progetti approvati si aggiungono **3 progetti che hanno ottenuto il Seal of Excellence**, un marchio di qualità assegnato dalla Commissione europea ai progetti che ottengono un punteggio elevato. Di questi, due sono in lista di attesa e potrebbero essere finanziati nel caso di ulteriore disponibilità di fondi.
+
+Inoltre, oltre ai progetti che vedranno protagonisti i cinque ricercatori, l’attività di internazionalizzazione ha avuto successo attraendo anche due ricercatori di altre Università – la **Norwegian University of Life Sciences**e **l’Università Ca’ Foscari di Venezia** –che hanno avuto approvato un progetto nello stesso bando Marie Curie e che trascorreranno un periodo di *secondment* (distacco) presso l’Università di Bergamo, supervisionati da docenti dell’Ateneo (la prof.ssa Giovanna Barigozzi del Dipartimento di Ingegneria e Scienze Applicate e la prof.ssa Micol Pizzolati del Dipartimento di Lettere, Filosofia, Comunicazione).
+
+Con questi importanti risultati, l'Università di Bergamo conferma il successo della propria azione di crescita nella ricerca scientifica internazionale di eccellenza.
+
+**I PROGETTI PREMIATI**
+
+Fellow: **Oksana Melnyk**
+
+Area: Formazione 
+
+Il progetto ***“TWISTY: School-to-Work Transition of Youth with Vocational Qualifications.*** ***Cases of Germany and Italy”***, coordinato dal prof. Francesco Magni, docente di Pedagogia generale e sociale presso il Dipartimento di Scienze Umane e Sociali si propone di analizzare in chiave comparata le pratiche formative e le traiettorie professionali dei giovani con qualifiche tecnico-professionali in Italia e Germania. Attraverso un’indagine qualitativa sulle esperienze nei due Paesi, il progetto mira a sviluppare strategie formative e formulare proposte di politiche pubbliche volte a contrastare la disoccupazione giovanile, migliorare l’occupabilità dei giovani e ridurre il mismatch tra percorsi formativi e opportunità del mercato del lavoro.
+
+Fellow: **Ali Zimiri**
+
+Area: Energia  
+
+Il progetto ***“OURLEM: Optimization of Gas Turbine Cooling Hole Ramp Configuration via Multi-Fidelity AI/ML Model”*** coordinato dalla prof.ssa Giovanna Barigozzi, docente di Macchine a fluido del Dipartimento di Ingegneria e Scienze Applicate, si focalizzerà sull’utilizzo dell’Intelligenza Artificiale e di tecniche di Machine Learning, combinate con la modellazione fluidodinamica ad alta fedeltà, per ottimizzare sistemi di raffreddamento di motori aeronautici e per la generazione di energia elettrica alimentati a idrogeno, a supporto della transizione energetica e digitale. 
+
+Fellow: **Alessandra Forte**
+
+Area: Filologia italiana
+
+Il progetto ***“IcoNet: Iconographic Networks: Unveiling Exchanges and Connections between Illuminated Manuscripts in Late Medieval Italy (1260-1510)”*** coordinato dal prof. Luca Lombardo, docente di Filologia della letteratura italiana del Dipartimento di Lettere, Filosofia, Comunicazione, in collaborazione con l’Università della Svizzera Italiana, mira a intraprendere la prima classificazione sistematica delle tradizioni manoscritte miniate relative a un corpus di quattro opere letterarie strettamente interconnesse, composte in Toscana tra il XIII e il XIV secolo. Il corpus è costituito dalle tradizioni manoscritte illustrate del Tresor e del Tesoretto di Brunetto Latini, dei Documenti d’Amore di Francesco da Barberino, della Commedia di Dante Alighieri, dei Trionfi di Francesco Petrarca.
+
+Research Fellow: **Marialaura Aghelu**
+
+Area: Filologia italiana
+
+Il progetto ***“HeNaId: Shaping Hellenic National Identity between 18th and 19th centuries: how European intellectuals steered Greek and European History)”*** coordinato dal prof. Luca Lombardo, docente di Filologia della letteratura italiana del Dipartimento di Lettere, Filosofia, Comunicazione, in collaborazione con l’Université de Fribourg, mira a ricostruire le reti di relazioni politiche e culturali tra gli intellettuali italo-greci residenti in Grecia, Italia e Svizzera tra il XVIII e il XIX sec.; esso ambisce quindi a studiare i testi letterari scambiati dagli scrittori militanti all’interno di queste reti e in particolare a evidenziare il ruolo, in larga parte trascurato, che Ugo Foscolo svolse attivamente nei processi di promozione e di orientamento di queste stesse reti culturali.
+
+Research Fellow: **Judit Gil-Farrero**
+
+Area: Storia ambientale 
+
+Il progetto ***“DAMSECIS: DAMS - Environmental Conflicts between Italy and Spain in an environmental history perspective”*** coordinato dal prof. Stefano Morosini, docente di Storia contemporanea del Dipartimento di Lingue, Letterature e Culture Straniere, si focalizzerà in una prospettiva comparativa e internazionale sulle dighe in Spagna e in Italia dal 1900 a oggi. L’analisi si concentra sull'impatto ambientale e sociale di una serie di casi studio, mettendo in luce i conflitti generati dalla pianificazione e costruzione di bacini artificiali e svelando gli aspetti nascosti dalle narrazioni egemoniche.
+
+### Call for proposal
+
+UniBg offre un supporto importante supporto alle ricercatrici e ai ricercatori che intendono presentare una proposta per una Marie Skłodowska-Curie Actions Postdoctoral Fellowship (MSCA-PF) scegliendo l'Università degli studi di Bergamo come Host Institution.
+
+Dall’anno 2024 è attivo anche un programma destinato a candidati/e motivati (coinvolgendo una società di consulenza altamente specializzata), progettato per formare relativamente all’opportunità offerte da questa linea di finanziamento e supportare l'intero processo di scrittura della proposta, fino alla presentazione, anche attraverso un mentoring one-to-one.
+
+L’Università degli studi di Bergamo accoglie, inoltre, proposte congiunte con altre istituzioni per la presentazione di proposte in risposta alle altre azioni Marie Skłodowska-Curie Actions (MSCA): Doctoral Networks (DN), Staff Exchanges (SE) e altre previste dal Programma Horizon Europe.
+
+### Doctoral Networks (DN)
+
+Le Azioni [Doctoral Networks](https://marie-sklodowska-curie-actions.ec.europa.eu/actions/doctoral-networks) sono destinate ai dottorandi e ai ricercatori nelle prime fasi di carriera.  
+L’obiettivo è sostenere la ricerca di eccellenza e i percorsi dottorali, formando una nuova generazione di ricercatori creativi, innovativi e dotati di spirito imprenditoriale.  
+Rientrano in questa tipologia di azioni i dottorati congiunti e i dottorati industriali.
+
+**Call:** sul portale [Funding & tenders opportunities](https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home).
+
+**Scadenza prossima call:** indicativamente novembre 2026
+
+### Postdoctoral Fellowships (PF)
+
+Le [Postdoctoral Fellowships](https://marie-sklodowska-curie-actions.ec.europa.eu/actions/postdoctoral-fellowships)si rivolgono a ricercatori esperti interessati a esperienze di mobilità internazionale o intersettoriale, per valorizzare il potenziale creativo e innovativo fornendo loro l’opportunità di acquisire nuove conoscenze, lavorare su progetti di ricerca in contesto europeo o internazionale, avviare nuove prospettive di carriera o rientrare in Europa.
+
+**Call:** sul portale [Funding & tenders opportunities](https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home).
+
+**Scadenza prossima call:** 9 settembre 2026
+
+### Staff Exchanges (SE)
+
+[Staff Exchanges (SE)](https://marie-sklodowska-curie-actions.ec.europa.eu/actions/staff-exchanges) si tratta di azioni volte a sostenere la collaborazione intersettoriale e internazionale a livello europeo, attraverso scambi del capitale umano d’eccellenza, e a promuovere la creazione di una cultura condivisa della ricerca e dell’innovazione. Da queste azioni ci si aspetta il rafforzamento dell’interazione tra organizzazioni accademiche e organizzazioni non accademiche.
+
+**Call:** sul portale [Funding & tenders opportunities](https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home).
+
+**Scadenza prossima call:** indicativamente febbraio 2027
+
+### Co-funding of regional, national and international programmes (COFUND)
+
+[Co-funding of regional, national and international programmes (COFUND)](https://ec.europa.eu/research/mariecurieactions/actions/co-funding-programmes_en) queste azioni mirano a supportare programmi di dottorato e fellowship cofinanziati a livello regionale, nazionale e internazionale.  
+L’obiettivo è indirizzare la programmazione territoriale, nazionale e internazionale verso l’eccellenza nella formazione, nella mobilità e nella crescita professionale dei ricercatori.
+
+**Call:** sul portale [Funding & tenders opportunities](https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home).
+
+**Scadenza:** indicativamente aprile 2027
+
+## Contatti
+
+Contatti di riferimento:  
++ 39 035 2052830 - 831- 833 - 468;  
+[relint@unibg.it](mailto:relint@unibg.it)
+
+## Ti interessa anche
+
+![logo](/sites/all/themes/b3unibg/images/sigillo-bianco.svg)
+
+  [2] Score: 0.9999
+      Titolo   : Studiare all'estero | UniBG Culture Umanistiche
+      URL      : https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero
+      Contenuto: Studiare all'estero | UniBG Culture Umanistiche
+===============
+
+[Salta al contenuto principale](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#main-content)
+
+Menu top
+========
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+
+Form di ricerca
+---------------
+
+*   [](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+[![Image 1](https://ls-cmc.unibg.it/sites/all/themes/b3unibgcdl/images/sigillo.svg)](https://ls-cmc.unibg.it/it "Home")
+=======================================================================================================================
+
+Corso di laurea magistrale
+
+[Culture Umanistiche](https://ls-cmc.unibg.it/it "Torna alla home page di Culture Umanistiche")
+===============================================================================================
+
+[Dipartimento di Lettere, Filosofia, Comunicazione](http://www.unibg.it/dlam "Vai al sito del dipartimento")
+
+Toggle navigation
+
+*   [IT](https://ls-cmc.unibg.it/it "IT")
+*   [EN](https://ls-cmc.unibg.it/en "EN")
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+*   [](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+Form di ricerca
+---------------
+
+*   [Il corso](https://ls-cmc.unibg.it/it/il-corso)
+    *           *   [Scegliere](https://ls-cmc.unibg.it/it/il-corso/scegliere)
+        *   [Piano di studio](https://ls-cmc.unibg.it/it/il-corso/piano-di-studio)
+        *   [Requisiti di accesso](https://ls-cmc.unibg.it/it/il-corso/requisiti-di-accesso)
+        *   [Obiettivi e figure professionali](https://ls-cmc.unibg.it/it/il-corso/obiettivi-e-figure-professionali)
+        *   [Statistiche del corso](https://ls-cmc.unibg.it/it/il-corso/statistiche-del-corso)
+        *   [Organizzazione e Assicurazione Qualità](https://ls-cmc.unibg.it/it/il-corso/organizzazione-e-assicurazione-qualita)
+
+*   [Studiare](https://ls-cmc.unibg.it/it/studiare)
+    *           *   [Insegnamenti attivi](https://ls-cmc.unibg.it/it/studiare/insegnamenti-attivi)
+        *   [Docenti](https://ls-cmc.unibg.it/it/studiare/docenti)
+        *   [Calendario didattico](https://ls-cmc.unibg.it/it/studiare/calendario-didattico-0)
+        *   [Riconoscimento certificazioni](https://ls-cmc.unibg.it/it/studiare/riconoscimento-certificazioni)
+        *   [Orario lezioni](https://ls-cmc.unibg.it/it/studiare/orario-lezioni)
+        *   [Esami](https://ls-cmc.unibg.it/it/studiare/esami)
+        *   [Esercitazioni](https://ls-cmc.unibg.it/it/studiare/esercitazioni)
+        *   [Tirocinio](https://ls-cmc.unibg.it/it/studiare/tirocinio)
+
+*   [Opportunità e studi all'estero](https://ls-cmc.unibg.it/it/opportunita-ed-esperienze)
+    *           *   [Studiare all'estero](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+        *   [Summer school](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/summer-school)
+
+*   [Come fare per](https://ls-cmc.unibg.it/it/come-fare)
+    *           *   [Iscriversi](https://ls-cmc.unibg.it/it/come-fare/iscriversi)
+        *   [Laurearsi](https://ls-cmc.unibg.it/it/come-fare/laurearsi)
+
+*   [Contatti](https://ls-cmc.unibg.it/it/contatti)
+*   [Sempre utili](https://ls-cmc.unibg.it/it/sempre-utili)
+    *           *   [Orari del Dipartimento di LFC](https://logistica.unibg.it/PortaleStudenti/index.php?view=easycourse&include=corso&scuola=Dipartimento_di_Lettere-_Filosofia-_Comunicazione)
+        *   [Sportello internet](http://sportello.unibg.it/esse3/Home.do)
+        *   [E-learning](https://elearning15.unibg.it/course/index.php?categoryid=7)
+        *   [Universitaly](https://www.universitaly.com/index.php/offerta/search/id_struttura/54/azione/ricerca)
+
+1.   [Home](https://ls-cmc.unibg.it/it)
+2.   [Opportunità e studi all'estero](https://ls-cmc.unibg.it/it/opportunita-ed-esperienze)
+
+[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+Studiare all'estero
+===================
+
+Durante il biennio è possibile trascorrere un periodo di studio all’estero nel quadro del programma comunitario [Erasmus +](https://www.unibg.it/internazionale/andare-allestero/erasmus), di mobilità di [breve durata](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-0) (in particolare Winter School o Summer School) o di convenzioni analoghe con [Paesi extraeuropei](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue).
+
+I programmi di mobilità offrono la possibilità di svolgere parte del proprio percorso formativo nell'università di un altro Paese, con il pieno e integrale riconoscimento degli esami sostenuti, e prevedono delle borse di studio a parziale copertura delle spese di viaggio e soggiorno.
+
+Maggiori dettagli sulle università coinvolte e i periodi di mobilità proposti alla [pagina dedicata](https://www.unibg.it/sites/default/files/media/documents/2023-01-24/Tabella%20LFC%202023-2024.pdf).
+
+Per partecipare ai bandi di mobilità Erasmus + o extraeuropei è richiesto il possesso di una competenza linguistica il cui livello varia secondo la sede ospitante. Le modalità e le tempistiche dell’[accertamento del livello linguistico](https://www.unibg.it/node/4332) proposte dall’Università di Bergamo sono pubblicate sul sito di Ateneo all’esordio dell’anno accademico. È possibile approfondire lo studio delle lingue attraverso le svariate attività proposte dal [Centro Competenza Lingue di Ateneo.](https://ccl.unibg.it/it/apprendimento-lingue/servizi-studenti)
+
+[Mobilità per tesi di laurea](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#)
+
+Grazie al generoso lascito della Sig.ra Lucia Maria Teresa Previtali Radici, le studentesse e gli studenti del corso di laurea magistrale c possono svolgere un periodo di mobilità presso un ateneo estero al fine di elaborare la loro tesi di laurea, beneficiando di una borsa di 2.000 euro. Maggiori informazioni alla [pagina dedicata](https://www.unibg.it/bandi/bando-memoria-gianni-e-luciana-radici-redazione-tesi-magistrali-allestero-1).
+
+[Doppio titolo](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#)
+
+**Bergamo e Varsavia: Corso di laurea magistrale in Culture moderne comparate / Dyplom ukończenia studiów II stopnia magisterskich**
+
+A partire dall’anno accademico 2023-2024 le studentesse e gli studenti iscritti al primo anno del Corso di laurea magistrale in Culture moderne comparate avranno la possibilità di ottenere un doppio titolo, il Dyplom ukończenia studiów II stopnia magisterskich, erogato dal Dipartimento di Studi italiani dell’Università di Varsavia.
+
+Le studentesse e gli studenti selezionati seguiranno (in italiano e inglese) i corsi del secondo anno in mobilità presso l’Università di Varsavia, senza ulteriori tasse di iscrizione. Potranno beneficiare di una borsa Erasmus + in base alla normativa vigente.
+
+La tesi magistrale sarà redatta in italiano sotto la guida di due relatori (uno di Bergamo e uno di Varsavia).
+
+Il piano di studi e altre informazioni saranno visibili sul bando, all’atto della pubblicazione.
+
+Referente: prof.ssa[Amelia Valtolina (link sends e-mail)](mailto:amelia.valtolina@unibg.it).
+
+Contatti
+--------
+
+Contatti di riferimento:
+
+T +39 035 205 2830-831-833-468;
+
+[relint@unibg.it (link sends e-mail)](mailto:relint@unibg.it)
+
+*   [Facebook](https://www.facebook.com/UniBergamo "facebook")
+*   [Twitter](https://twitter.com/@UniBergamo "twitter")
+*   [Youtube](https://www.youtube.com/user/UniBgTube/playlists "youtube")
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6 "linkedin")
+*   [Instagram](https://www.instagram.com/unibergamo/ "instagram")
+
+*   [Mappa del sito](https://ls-cmc.unibg.it/it/mappa-del-sito)
+*   [Normativa cookie](https://ls-cmc.unibg.it/it/normativa-cookie)
+*   [Informativa privacy](http://www.unibg.it/privacy)
+*   [Cookie settings](https://ls-cmc.unibg.it/it/cookiesettings)
+
+*   [Wi-fi](http://www.unibg.it/wi-fi)
+*   [Webmail](http://www.unibg.it/evidenza/web-mail)
+
+[![Image 2: logo](https://ls-cmc.unibg.it/sites/all/themes/b3unibg/images/sigillo-bianco.svg)](https://www.unibg.it/)
+
+**Università degli studi di Bergamo**
+
+ via Salvecchio 19
+
+ 24129 Bergamo
+
+ Cod. Fiscale 80004350163
+
+ P.IVA 01612800167
+
+ Centralino 035 2052111 
+
+Back to top
+
+Questo sito utilizza cookie tecnici e di profilazione, propri e di terze parti, per garantire la corretta navigazione, analizzare il traffico e misurare l'efficacia delle attività di comunicazione istituzionale.
+
+Puoi rifiutare i cookie non necessari e di profilazione cliccando su **“Solo cookie tecnici”**.
+
+Puoi scegliere di acconsentirne l’utilizzo cliccando su **“Accetta tutti”** oppure puoi personalizzare le tue scelte cliccando su **“Personalizza”**.
+
+Per maggiori informazioni leggi la nostra [Privacy e cookie policy](http://www.unibg.it/privacy)
+
+Solo cookie tecnici Accetta tutti Personalizza
+
+in caricamento
+
+[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Chiudi")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Avanti")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Play")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Pausa")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Indietro")
+
+  [3] Score: 0.9997
+      Titolo   : Studiare all'estero | UniBG Giurisprudenza
+      URL      : https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero
+      Contenuto: Studiare all'estero | UniBG Giurisprudenza
+===============
+
+[Salta al contenuto principale](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#main-content)
+
+Menu top
+========
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+
+Form di ricerca
+---------------
+
+*   [](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+[![Image 1](https://lm-giu.unibg.it/sites/all/themes/b3unibgcdl/images/sigillo.svg)](https://lm-giu.unibg.it/it "Home")
+=======================================================================================================================
+
+Corso di laurea magistrale a ciclo unico
+
+[Giurisprudenza](https://lm-giu.unibg.it/it "Torna alla home page di Giurisprudenza")
+=====================================================================================
+
+[Dipartimento di Giurisprudenza](https://dgiu.unibg.it/it "Vai al sito del dipartimento")
+
+Toggle navigation
+
+*   [IT](https://lm-giu.unibg.it/it "IT")
+*   [EN](https://lm-giu.unibg.it/en "EN")
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+*   [](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+Form di ricerca
+---------------
+
+*   [Il corso](https://lm-giu.unibg.it/it/il-corso)
+    *           *   [Scegliere](https://lm-giu.unibg.it/it/il-corso/scegliere)
+        *   [Piano di studio](https://lm-giu.unibg.it/it/il-corso/piano-di-studio)
+        *   [Obiettivi e figure professionali](https://lm-giu.unibg.it/it/il-corso/obiettivi-e-figure-professionali)
+        *   [Comitato d'indirizzo](https://lm-giu.unibg.it/it/il-corso/unibgjusnetwork-comitato-dindirizzo)
+        *   [Regolamento didattico](https://lm-giu.unibg.it/it/il-corso/regolamento-didattico)
+        *   [Statistiche del corso](https://lm-giu.unibg.it/it/il-corso/statistiche-del-corso)
+
+*   [Iscriversi](https://lm-giu.unibg.it/it/iscriversi)
+    *           *   [Requisiti di accesso](https://lm-giu.unibg.it/it/iscriversi/requisiti-di-accesso)
+        *   [Modalità, scadenze, esiti TOLC](https://lm-giu.unibg.it/it/iscriversi/modalita-scadenze-esiti-tolc)
+        *   [Cos'è il TOLC-SU](https://lm-giu.unibg.it/it/iscriversi/cose-il-tolc-su)
+        *   [Assolvere gli OFA](https://lm-giu.unibg.it/it/iscriversi/assolvere-gli-ofa)
+
+*   [Studiare](https://lm-giu.unibg.it/it/studiare)
+    *           *   [Insegnamenti attivi](https://lm-giu.unibg.it/it/studiare/insegnamenti-attivi)
+        *   [Docenti](https://lm-giu.unibg.it/it/studiare/docenti)
+        *   [Calendario didattico e appelli](https://lm-giu.unibg.it/it/studiare/calendario-didattico-e-appelli)
+        *   [Orario lezioni](https://lm-giu.unibg.it/it/studiare/orario-lezioni)
+        *   [Attività didattiche integrative e tutorato](https://lm-giu.unibg.it/it/studiare/attivita-didattiche-integrative-e-tutorato)
+        *   [Apprendimento linguistico](https://lm-giu.unibg.it/it/studiare/apprendimento-linguistico)
+        *   [Laurearsi](https://lm-giu.unibg.it/it/studiare/laurearsi)
+        *   [Modulistica riservata a GdF](https://lm-giu.unibg.it/it/studiare/modulistica-riservata-gdf)
+
+*   [Opportunità e studi all'estero](https://lm-giu.unibg.it/it/opportunita-ed-esperienze)
+    *           *   [Studiare all'estero](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+        *   [Double Degree](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/double-degree)
+        *   [Didattica innovativa, esperienze e progetti](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/didattica-innovativa-esperienze-e-progetti)
+        *   [Tirocini e Stage](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/tirocini-e-stage)
+        *   [Tirocinio professionale anticipato](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/tirocinio-professionale-anticipato)
+
+*   [Contatti](https://lm-giu.unibg.it/it/contatti)
+*   [Sempre utili](https://lm-giu.unibg.it/it/sempre-utili)
+    *           *   [E-learning](https://elearning15.unibg.it/course/index.php?categoryid=2)
+        *   [Sportello internet](http://sportello.unibg.it/esse3/Home.do)
+        *   [Orari Dipartimento di Giurisprudenza](https://logistica.unibg.it/PortaleStudenti/index.php?view=easycourse&include=corso&scuola=Dipartimento_di_Giurisprudenza)
+
+1.   [Home](https://lm-giu.unibg.it/it)
+2.   [Opportunità e studi all'estero](https://lm-giu.unibg.it/it/opportunita-ed-esperienze)
+
+[](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+Studiare all'estero
+===================
+
+Durante gli studi è possibile trascorrere un periodo di studio o tirocinio all’estero. Le mobilità in Europa sono finanziate attraverso il [**programma Erasmus+**](https://www.unibg.it/node/343), quelle al di fuori dell’Europa sono sostenute con fondi di Ateneo.
+
+Contatti
+--------
+
+Contatti di riferimento:
+
+T + 39 035 205 2830-831-833-468
+
+[relint@unibg.it (link sends e-mail)](mailto:relint@unibg.it)
+
+*   [Facebook](https://www.facebook.com/UniBergamo "facebook")
+*   [Twitter](https://twitter.com/@UniBergamo "twitter")
+*   [Youtube](https://www.youtube.com/user/UniBgTube/playlists "youtube")
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6 "linkedin")
+*   [Instagram](https://www.instagram.com/unibergamo/ "instagram")
+
+*   [Mappa del sito](https://lm-giu.unibg.it/it/mappa-del-sito)
+*   [Normativa cookie](https://lm-giu.unibg.it/it/normativa-cookie)
+*   [Informativa privacy](http://www.unibg.it/privacy)
+*   [Cookie settings](https://lm-giu.unibg.it/it/cookiesettings)
+
+*   [Wi-fi](http://www.unibg.it/wi-fi)
+*   [Webmail](http://www.unibg.it/evidenza/web-mail)
+
+[![Image 2: logo](https://lm-giu.unibg.it/sites/all/themes/b3unibg/images/sigillo-bianco.svg)](https://www.unibg.it/)
+
+**Università degli studi di Bergamo**
+
+ via Salvecchio 19
+
+ 24129 Bergamo
+
+ Cod. Fiscale 80004350163
+
+ P.IVA 01612800167
+
+ Centralino 035 2052111 
+
+Back to top
+
+Questo sito utilizza cookie tecnici e di profilazione, propri e di terze parti, per garantire la corretta navigazione, analizzare il traffico e misurare l'efficacia delle attività di comunicazione istituzionale.
+
+Puoi rifiutare i cookie non necessari e di profilazione cliccando su **“Solo cookie tecnici”**.
+
+Puoi scegliere di acconsentirne l’utilizzo cliccando su **“Accetta tutti”** oppure puoi personalizzare le tue scelte cliccando su **“Personalizza”**.
+
+Per maggiori informazioni leggi la nostra **[Privacy e cookie policy](https://lm-giu.unibg.it/it/privacy)**
+
+Solo cookie tecnici Accetta tutti Personalizza
+
+in caricamento
+
+[](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Chiudi")[](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Avanti")[](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Play")[](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Pausa")[](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Indietro")
+
+  [4] Score: 0.9995
+      Titolo   : Studiare all'estero - Lingue e Letterature Straniere Moderne - UniBg
+      URL      : https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero
+      Contenuto: Studiare all'estero | UniBG Lingue e Letterature Straniere Moderne
+===============
+
+[Salta al contenuto principale](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#main-content)
+
+Menu top
+========
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+
+Form di ricerca
+---------------
+
+*   [](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+[![Image 1](https://lt-llsm.unibg.it/sites/all/themes/b3unibgcdl/images/sigillo.svg)](https://lt-llsm.unibg.it/it "Home")
+=========================================================================================================================
+
+Corso di laurea triennale
+
+[Lingue e Letterature Straniere Moderne](https://lt-llsm.unibg.it/it "Torna alla home page di Lingue e Letterature Straniere Moderne")
+======================================================================================================================================
+
+[Dipartimento di Lingue, Letterature e Culture Straniere](http://www.unibg.it/dllc "Vai al sito del dipartimento")
+
+Toggle navigation
+
+*   [IT](https://lt-llsm.unibg.it/it "IT")
+*   [EN](https://lt-llsm.unibg.it/en "EN")
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+*   [](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+Form di ricerca
+---------------
+
+*   [Il corso](https://lt-llsm.unibg.it/it/il-corso)
+    *           *   [Scegliere](https://lt-llsm.unibg.it/it/il-corso/scegliere)
+        *   [Piano di studio](https://lt-llsm.unibg.it/it/il-corso/piano-di-studio)
+        *   [Obiettivi e figure professionali](https://lt-llsm.unibg.it/it/il-corso/obiettivi-e-figure-professionali)
+        *   [Organizzazione e Assicurazione Qualità](https://lt-llsm.unibg.it/it/il-corso/organizzazione-e-assicurazione-qualita)
+        *   [Statistiche del corso](https://lt-llsm.unibg.it/it/il-corso/statistiche-del-corso)
+        *   [Strutture e aule disponibili](https://lt-llsm.unibg.it/it/il-corso/strutture-e-aule-disponibili)
+
+*   [Iscriversi](https://lt-llsm.unibg.it/it/iscriversi)
+    *           *   [Requisiti di accesso](https://lt-llsm.unibg.it/it/iscriversi/requisiti-di-accesso)
+        *   [Modalità, scadenze, esiti TOLC](https://lt-llsm.unibg.it/it/iscriversi/modalita-scadenze-esiti-tolc)
+        *   [Cos'è il TOLC-SU](https://lt-llsm.unibg.it/it/iscriversi/cose-il-tolc-su)
+        *   [Assolvere gli OFA](https://lt-llsm.unibg.it/it/iscriversi/assolvere-gli-ofa)
+        *   [Placement test](https://lt-llsm.unibg.it/it/iscriversi/placement-test)
+
+*   [Studiare](https://lt-llsm.unibg.it/it/studiare)
+    *           *   [Insegnamenti attivi](https://lt-llsm.unibg.it/it/studiare/insegnamenti-attivi)
+        *   [Docenti](https://lt-llsm.unibg.it/it/studiare/docenti)
+        *   [Calendario didattico e appelli](https://lt-llsm.unibg.it/it/studiare/calendario-didattico-e-appelli)
+        *   [Frequentare corsi per principianti](https://lt-llsm.unibg.it/it/studiare/frequentare-corsi-principianti)
+        *   [Apprendimento linguistico (AAL)](https://lt-llsm.unibg.it/it/studiare/apprendimento-linguistico-aal)
+        *   [Riconoscimento certificazioni linguistiche e informatiche](https://lt-llsm.unibg.it/it/studiare/riconoscimento-certificazioni-linguistiche-e-informatiche)
+        *   [Lingue straniere TVI primo anno](https://lt-llsm.unibg.it/it/studiare/lingue-straniere-tvi-primo-anno)
+        *   [Orario lezioni](https://lt-llsm.unibg.it/it/studiare/orario-lezioni)
+        *   [Esami](https://lt-llsm.unibg.it/it/studiare/esami)
+        *   [Laurearsi](https://lt-llsm.unibg.it/it/studiare/laurearsi)
+        *   [Videotutorials (italiano e inglese)](https://lt-llsm.unibg.it/it/studiare/videotutorials-italiano-e-inglese)
+
+*   [Opportunità e studi all'estero](https://lt-llsm.unibg.it/it/opportunita)
+    *           *   [Studiare all'estero](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+        *   [Doppio titolo con l’UNIVERSITÉ MARIE ET LOUIS PASTEUR, BESANÇON](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/doppio-titolo-con-luniversite-marie-et-louis-pasteur-besancon)
+        *   [Tirocini](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/tirocini)
+
+*   [Contatti](https://lt-llsm.unibg.it/it/contatti)
+*   [Sempre utili](https://lt-llsm.unibg.it/it/sempre-utili)
+    *           *   [Orari del Dipartimento di LLCS](https://logistica.unibg.it/PortaleStudenti/index.php?view=easycourse&include=corso&scuola=Dipartimento_di_Lingue-_letterature_e_culture_straniere)
+        *   [Sportello internet](http://sportello.unibg.it/esse3/Home.do)
+        *   [E-learning](https://elearning15.unibg.it/course/index.php?categoryid=5)
+
+1.   [Home](https://lt-llsm.unibg.it/it)
+2.   [Opportunità e studi all'estero](https://lt-llsm.unibg.it/it/opportunita)
+
+[](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+Studiare all'estero
+===================
+
+Durante il triennio in cui è articolato il Corso di laurea è possibile trascorrere un periodo di studio di minimo 3 e massimo 12 mesi all’estero nel quadro del programma comunitario LLP/Erasmus o di convenzioni analoghe con Paesi extraeuropei.
+
+I programmi di mobilità prevedono la possibilità di svolgere parte del proprio curriculum nell'università di un altro Paese, con il pieno e integrale riconoscimento degli esami sostenuti.A tal fine, in aggiunta al programma di [**mobilità LLP/Erasmus**](https://www.unibg.it/node/343)sono stati attivati accordi di scambio con università straniere di**[paesi extraeruopei](https://www.unibg.it/node/344)**nell'ambito dell'azione d'internazionalizzazione promossa dal MIUR.
+
+Informazioni utili relative ai bandi di mobilità e alla modalità di partecipazione e di **[accertamento del livello linguistico](https://www.unibg.it/node/4332)** richiesto dalla sedi ospitanti sono pubblicate sul sito di Ateneo e raggiungibili attraverso i seguenti link:
+
+- **PAESI EUROPEI:**[Mobilità studenti ERASMUS in uscita](https://www.unibg.it/node/343)
+
+- **PAESI EXTRAEUROPEI:**[Mobilità studenti in uscita](https://www.unibg.it/node/344)
+
+Per maggiori dettagli sulle date di pubblicazione dei bandi di mobilità per l'a.a. 2019-2020 e sul calendario dei test informatizzati di verifica del livello lingusitico, è possibile contattare l'Ufficio programmi internazionali:
+
+*   tramite posta elettronica all'indirizzo[relint@unibg.it (link sends e-mail)](mailto:relint@unibg.it)
+*   direttamente in ufficio (Sede di Via San Bernardino) il martedì o il giovedì dalle 10 alle 12 e dalle 14 alle 16.
+*   telefonicamente (per i programmi di scambio con i Paesi europei)ai seguenti numeri: +39 035 205 2831-2833-2468
+*   telefonicamente (nello specifico per i programmi extraeuropei): +39 035 205 2476
+
+Contatti
+--------
+
+Contatti di riferimento:
+
+T +39 035 205 2830-831-833-468
+
+[relint@unibg.it](mailto:relint@unibg.it)
+
+Approfondimenti
+---------------
+
+*   [Doppio titolo con l’Université de Franche-Comté (sede di Besançon).](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/doppio-titolo-con-luniversite-de-franche-comte)  
+
+Ti interessa anche
+------------------
+
+*   [Che cos'è il programma Erasmus+?](https://www.unibg.it/internazionale/andare-allestero/erasmus)  
+
+*   [Facebook](https://www.facebook.com/UniBergamo "facebook")
+*   [Twitter](https://twitter.com/@UniBergamo "twitter")
+*   [Youtube](https://www.youtube.com/user/UniBgTube/playlists "youtube")
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6 "linkedin")
+*   [Instagram](https://www.instagram.com/unibergamo/ "instagram")
+
+*   [Mappa del sito](https://lt-llsm.unibg.it/it/mappa-del-sito)
+*   [Normativa cookie](https://lt-llsm.unibg.it/it/normativa-cookie)
+*   [Informativa privacy](http://www.unibg.it/privacy)
+*   [Cookie settings](https://lt-llsm.unibg.it/it/cookiesettings)
+
+*   [Wi-fi](http://www.unibg.it/wi-fi)
+*   [Webmail](http://www.unibg.it/evidenza/web-mail)
+
+[![Image 2: logo](https://lt-llsm.unibg.it/sites/all/themes/b3unibg/images/sigillo-bianco.svg)](https://www.unibg.it/)
+
+**Università degli studi di Bergamo**
+
+ via Salvecchio 19
+
+ 24129 Bergamo
+
+ Cod. Fiscale 80004350163
+
+ P.IVA 01612800167
+
+ Centralino 035 2052111 
+
+Back to top
+
+Questo sito utilizza cookie tecnici e di profilazione, propri e di terze parti, per garantire la corretta navigazione, analizzare il traffico e misurare l'efficacia delle attività di comunicazione istituzionale.
+
+Puoi rifiutare i cookie non necessari e di profilazione cliccando su **“Solo cookie tecnici”**.
+
+Puoi scegliere di acconsentirne l’utilizzo cliccando su **“Accetta tutti”** oppure puoi personalizzare le tue scelte cliccando su **“Personalizza”**.
+
+Per maggiori informazioni leggi la nostra [Privacy e cookie policy](http://www.unibg.it/privacy)
+
+Solo cookie tecnici Accetta tutti Personalizza
+
+in caricamento
+
+[](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Chiudi")[](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Avanti")[](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Play")[](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Pausa")[](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Indietro")
+
+  [5] Score: 0.9995
+      Titolo   : Erasmus+ | Università degli studi di Bergamo - UniBg
+      URL      : https://www.unibg.it/internazionale/andare-allestero/erasmus
+      Contenuto: Erasmus+ | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/internazionale/andare-allestero/erasmus#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/internazionale/andare-allestero/erasmus#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7598 "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/internazionale/andare-allestero/erasmus#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7598 "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Erasmus+
+========
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Internazionale](https://www.unibg.it/internazionale)
+3.   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+4.   [Erasmus+](https://www.unibg.it/internazionale/andare-allestero/erasmus)
+
+[](https://www.unibg.it/internazionale/andare-allestero/erasmus)
+
+### Che cos'è il programma Erasmus+?
+
+**Erasmus+ 2021-2027**è il programma dell'Unione Europea per l'istruzione, la formazione, la gioventù e lo sport,finalizzato a promuovere le competenze, e l'occupabilità, nonché a sostenere la modernizzazione dei sistemi d'istruzione, formazione e gioventù.
+
+Il programma consente di vivere esperienze culturali e professionali all'estero, conoscere nuovi sistemi di istruzione superiore, perfezionare la conoscenza di almeno un'altra lingua e incontrare giovani di altri Paesi, partecipando attivamente alla costruzione di un'Europa sempre più unita.
+
+[Erasmus Policy Statement 2021-2027](https://www.unibg.it/sites/default/files/erasmus_policy_statement_2021-2027.pdf "erasmus_policy_statement_2021-2027.pdf")
+
+[Erasmus Policy Statement 2014-2020](https://www.unibg.it/sites/default/files/internazionalizzazione/erasmus_policy_statement_per_sito_web_in_italiano.pdf "erasmus_policy_statement_per_sito_web_in_italiano.pdf")
+
+[Guida ECTS](https://www.unibg.it/sites/default/files/internazionalizzazione/ects_guida_utente_pdf_exe.pdf "ects_guida_utente_pdf_exe.pdf")
+
+[ECHE I BERGAMO 01 2021-2027](https://www.unibg.it/sites/default/files/eche_unibg.pdf "eche_unibg.pdf")
+
+[ECHE I BERGAMO 01 2014-2020](https://www.unibg.it/sites/default/files/eche_template_en-ok_2014_-_2020.pdf "eche_template_en-ok_2014_-_2020.pdf")
+
+### Erasmus+ BIP
+
+La nuova programmazione Erasmus+ ha introdotto i programmi intensivi misti – Blended Intensive Programs, BIP.
+
+Sviluppati da gruppi di Istituti di istruzione superiore con un approccio pedagogico innovativo, i BIP prevedono brevi periodi di attività in presenza combinata con attività di apprendimento e cooperazione online, a cui possono partecipare gruppi congiunti di studenti, personale docente e staff amministrativo provenienti da diversi Paesi per collaborare a specifici compiti in modo collettivo e simultaneo.
+
+[Presentazione BIP](https://www.unibg.it/sites/default/files/media/documents/2023-10-25/Presentazione%20BIP.pdf "Presentazione BIP.pdf")
+
+### Erasmus+ KA 131 (UE)
+
+Erasmus+ per Studio offre agli studenti l'opportunità di trascorrere **un periodo di studio (da 3 a 12 mesi)** presso una delle Università Partner Europee con cui l'Università di Bergamo ha firmato un accordo inter-istituzionale.
+
+Gli studenti Erasmus+ possono inoltre ricevere un contributo comunitario _ad hoc_, seguire corsi universitari e usufruire delle strutture disponibili presso l'Università ospitante senza dover pagare tasse aggiuntive, con la garanzia del riconoscimento del periodo di studi all'estero tramite il trasferimento dei rispettivi crediti formativi all'interno della loro carriera.
+
+Scorri questa pagina per consultare il bando e accedere a tutte le informazioni relative a sedi disponibili, scadenze e modalità.
+
+### Erasmus+ KA 107 (extra-UE)
+
+L'**Erasmus+ KA107 ICM International Credit Mobility**è un programma innovativo che permette di attivare progetti di**mobilità internazionale fuori dall’Unione Europea**ed è destinato a studenti,docenti e personale tecnico amministrativo europei.
+
+In particolare, gli studenti iscritti ai Corsi di laurea triennale, laurea magistrale e dottorato hanno la possibilità di svolgere un periodo di studio o di ricerca presso le università partner che va da un minimo di 3 a un massimo di 12 mesi.Le borse di studio sono finanziate dall'Unione Europea e vengono assegnate mediante bandi.
+
+Scorri questa pagina per consultare il bando e accedere a tutte le informazioni relative a sedi disponibili, scadenze e modalità.
+
+### Erasmus+ Traineeship
+
+Il Programma Erasmus+ Traineeship, in generale, consente agli studenti universitari iscritti, di candidarsi per un'esperienza di tirocinio presso imprese attive nel mercato del lavoro o in settori quali l’istruzione, la formazione e la gioventù e presenti in uno dei Paesi partecipanti al Programma. I beneficiari avranno così l’opportunità di acquisire competenze specifiche e una migliore comprensione della cultura socio-economica del Paese ospitante. E' previsto un contributo comunitario per la durata del tirocinio all'estero.
+
+_The Erasmus+ Traineeship Programme allows university students to carry out a traineeship period in companies active in the labour market or in sectors such as education, training and youth and present in one of the countries participating in the Programme.This will give beneficiaries the opportunity to acquire specific skills and a better understanding of the socio-economic culture of the host country. Students receive a monthly EU grant for their period abroad_
+
+**N.B.**: nell'ambito del Bando Erasmus+Traineeship CALL 2024 (2024/2025 e 2025/2026), sono ammessi tirocini curriculari, in piano di studio, oppure tirocini da inserire come scelta libera o in sovrannumero (laddove non sia presente il tirocinio in piano), mentre sono esclusi i tirocini post-laurea.
+
+_**N.B**. In the framework of the Call 2024 Erasmus+ Traineeship (a.y 2024/2025 - 2025/2026),grants are assigned for curricular traineeships or, if not included in the study plan, as an elective or as extra credits._
+
+Lo studente che ha già assolto i cfu per tirocinio in piano non potrà candidarsi per un secondo tirocinio nell'ambito del Bando di cui sopra.
+
+_If a student has already earned credits for a traineeship, they cannot apply for the Erasmus + Traineeship Programme._
+
+Visita la [pagina dedicata](https://www.unibg.it/internazionale/andare-allestero/erasmus/erasmus-traineeships)per tutte le informazioni relative al Bando, scadenze e modalità.
+
+For information concerning the Call, deadlines and procedures please access the Erasmus Traineeship [webpage](https://www.unibg.it/internazionale/andare-allestero/erasmus/erasmus-traineeships)
+
+### Tabelle delle equipollenze
+
+Le tabelle pubblicate sono riportate esclusivamente a titolo esemplificativo.
+
+Lo studente deve necessariamente confrontarsi con i docenti referenti per individuare la corretta conversione dei corsi.
+
+[equipollenze GIURISPRUDENZA extraue.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/equipollenze%20GIURISPRUDENZA%20extraue.pdf)
+
+[equipollenze GIURISPRUDENZA.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/equipollenze%20GIURISPRUDENZA.pdf)
+
+[equipollenze ING IGIP.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/equipollenze%20ING%20IGIP.pdf)
+
+[Equipollenze ING ISA.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING%20ISA.pdf)
+
+[Equipollenze ING_EXTRAUE.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING_EXTRAUE.pdf)
+
+[Equipollenze LFC EXTRA UE.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20LFC%20EXTRA%20UE.pdf)
+
+[Equipollenze LFC.pdf](https://www.unibg.it/sites/default/files/media/documents/2023-09-18/Equipollenze%20LFC_0.pdf "Equipollenze LFC_0.pdf")
+
+[Equipollenze LLCS Extra UE.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20Extra%20UE.pdf)
+
+[Equipollenze LLCS LLEP.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LLEP.pdf)
+
+[Equipollenze LLCS LLSM.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LLSM.pdf)
+
+[Equipollenze LLCS LLSM_0.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LLSM_0.pdf)
+
+[Equipollenze LLCS LMCCI.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LMCCI.pdf)
+
+[Equipollenze LLCS PMTS.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20PMTS.pdf)
+
+[Equipollenze SA-SE.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20SA-SE.pdf)
+
+[Equipollenze SA-SE_Extra UE.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20SA-SE_Extra%20UE.pdf)
+
+[Equipollenze SUS EXTRA UE.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20SUS%20EXTRA%20UE.pdf)
+
+[Equipollenze SUS.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20SUS.pdf)
+
+### Tabelle di conversione voti per Dipartimento
+
+Le tabelle di conversione voti di seguito riportate sono indicative ed a cura dei docenti incaricati di ogni Dipartimento.
+
+Si precisa che si tratta di corrispondenze numeriche tendenziali e non assolute, essendoci la possibilità, da parte del responsabile Erasmus del Dipartimento, di adattamenti alle condizioni di ciascuna specifica sede.
+
+[Tabella conversione voti Dipartimento di Giurisprudenza](https://www.unibg.it/sites/default/files/media/documents/2022-07-05/GIU%20Erasmus%20-%20Conversione%20voti%20Giurisprudenza.pdf "GIU Erasmus - Conversione voti Giurisprudenza.pdf")
+
+[Tabella conversione voti Erasmus Dip.ti ISA-IGIP](https://www.unibg.it/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20ERASMUS_0.pdf "DIP ING _ TABELLE DI CONVERSIONE ERASMUS_0.pdf")
+
+[Tabella conversione voti Extra-UE Dip.ti ISA-IGIP](https://www.unibg.it/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20EXTRA-UE_0.pdf "DIP ING _ TABELLE DI CONVERSIONE EXTRA-UE_0.pdf")
+
+[Tabella conversione voti Dip. LFC](https://www.unibg.it/sites/default/files/media/documents/2026-01-14/Tabella%20conversione%20LFC%202025-2026.pdf "Tabella conversione LFC 2025-2026.pdf")
+
+[Dipartimento di LLCS](https://www.unibg.it/sites/default/files/media/documents/2023-07-18/tabelle%20conversione%20voti%20da%20a.a.%202023-24.pdf "tabelle conversione voti da a.a. 2023-24.pdf")
+
+[Tabella conversione voti SUS](https://www.unibg.it/sites/default/files/media/documents/2023-11-08/Tabella%20conversione%20voti%20SUS.docx.pdf "Tabella conversione voti SUS.docx.pdf")
+
+[Tabella conversione voti SA-SE](https://www.unibg.it/sites/default/files/media/documents/2024-03-04/Tabelle%20conversioni%20voti%20SA-SE..pdf "Tabelle conversioni voti SA-SE..pdf")
+
+### Diari di viaggio - Travel diaries (info generali dagli studenti rientrati dalle mobilità per studio)
+
+Nell'allegato sono disponibili le informazioni fornite da studentesse e studenti che hanno partecipato ai programmi di scambio negli anni scorsi in merito all’alloggio, trasporti, costo della vita e sui pro e contro dell’università ospitante.
+
+Le indicazioni contenute non intendono essere esaustive, ma vogliono essere un ulteriore aiuto e supporto a chi intende trascorrere un periodo di mobilità per studio.
+
+Essendo appunto basate sulle esperienze soggettive l’Ateneo non è responsabile delle informazioni qui riportate.
+
+Ovviamente nel caso di più mobilità verso la stessa sede le informazioni potrebbero essere diverse o replicate.
+
+Ringraziamo le studentesse e gli studenti che hanno contribuito alla creazione di questo documento.
+
+Le informazioni sono state catalogate in ordine di nazione.
+
+Buon Viaggio!
+
+[Travel diaries - agg. 04.03.2024](https://www.unibg.it/sites/default/files/media/documents/2024-03-04/2024_Your%20travel%20diary.pdf "2024_Your travel diary.pdf")
+
+### Guida Erasmus ESN
+
+Di seguito la guida predisposta dall'associazione Erasmus Student Network
+
+[Erasmus: a complete guide by ESN](https://issuu.com/esnint/docs/erasmus_e-book?fbclid=IwAR2qe7aEfQXqqVkoL8FWMJBiPhCOcuqtLOTCW6XaMJ_bf_Ovx9efX-z5rIc)
+
+### Erasmus days 2024 - slides webinar
+
+[Erasmus per studio](https://www.unibg.it/sites/default/files/media/documents/2024-10-14/Erasmus%20days%202024_ERASMUS.pdf "Erasmus days 2024_ERASMUS.pdf")
+
+[Erasmus per tirocinio](https://www.unibg.it/sites/default/files/media/documents/2024-10-14/Erasmus%20days%202024_TRAINEESHIPS.pdf "Erasmus days 2024_TRAINEESHIPS.pdf")
+
+[Erasmus BIP (Blended Intensive Programs)](https://www.unibg.it/sites/default/files/media/documents/2024-10-14/Erasmus%20days%202024_BIP.pdf "Erasmus days 2024_BIP.pdf")
+
+### Bando Erasmus+ a.a. 2026-2027 - Mobilità per studio
+
+[Bando Erasmus+ a.a. 2026-2027 - Mobilità per studio](https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027)
+
+### Bandi Erasmus+ a.a. 2023-24 e 2024-25 - Mobilità per Traineeship
+
+[Bandi Erasmus+ a.a. 2023-24 e 2024-25 - Mobilità per Traineeship](https://www.unibg.it/node/16133)
+
+### Bando Erasmus + Mobilità Studenti KA107
+
+[Bando Erasmus Plus per la mobilità studenti KA107 – International Credit Mobility a.a. 2022/2023 – verso Ort Braude College, Israele](https://www.unibg.it/bandi/bando-erasmus-plus-mobilita-studenti-ka107-aa-2022-2023-verso-sede-ort-braude-college-israele)
+
+### Naviga la sezione
+
+*   [Erasmus+ traineeships](https://www.unibg.it/internazionale/andare-allestero/erasmus/erasmus-traineeships)
+*   [BAUHAUS4EU](https://www.unibg.it/internazionale/andare-allestero/erasmus/bauhaus4eu)
+
+### Contatti
+
+**Ufficio programmi internazionali**
+
+ via S. Bernardino, 72/e
+
+ 24122 Bergamo
+
+Per informazioni relative al bando Erasmus+ per studio inviare un ticket selezionando l'indirizzo **"Erasmus in uscita (Outgoing)**">**servizio ticket [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud/)**
+
+Per prendere un appuntamento presso l'ufficio programmi internazionali**[Prenota un appuntamento](https://logistica.unibg.it/PortalePlanning/UNIBG-servizi/index.php)**
+
+Per contattare l'ufficio telefonicamente:
+
+Studenti di LLCS
+
+ T +39 035 205 2831
+
+Studenti di LFC e SUS
+
+ T +39 035 205 2830
+
+Studenti Scuola di Economia e Management
+
+ T +39 035 205 2833
+
+Studenti Scuola di Ingegneria
+
+ T +39 035 205 2109
+
+Studenti di Giurisprudenza e info riguardo a borse di studio
+
+ T +39 035 205 2468
+
+Erasmus KA 107
+
+ T +39 035 205 2290
+
+**Attenzione:** negli orari di apertura la reperibilità telefonica potrebbe non essere garantita.
+
+### Potrebbe interessarti
+
+*   [Regolamento per la mobilità internazionale](https://www.unibg.it/normativa/regolamento-ateneo-mobilita-internazionale)  
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/internazionale/andare-allestero/erasmus#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: generale
+
+>>> SYSTEM PROMPT:
+Sei un assistente generale dell'Università di Bergamo.
+Fornisci informazioni utili e orientamento agli studenti e visitatori.
+
+
+DATA ODIERNA: 07 marzo 2026 (Anno accademico 2025/2026)
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+8. Alcune fonti sono documenti PDF: in quel caso vengono forniti anche i link ipertestuali estratti direttamente dal PDF con la pagina di provenienza. Se uno di questi link è rilevante per la risposta dello studente, includilo nella risposta in forma cliccabile (formato Markdown: [testo](url)) indicando anche da quale parte del documento proviene.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: Studiare all'estero | UniBG Ingegneria delle tecnologie per l'edilizia
+URL: https://lt-ie.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero
+Contenuto: # Menu top
+
+## Form di ricerca
+
+# 
+
+![](/sites/all/themes/b3unibgcdl/images/sigillo.svg)
+
+# [Ingegneria delle tecnologie per l'edilizia](/it "Torna alla home page di Ingegneria delle tecnologie per l'edilizia")
+
+## Form di ricerca
+
+# Studiare all'estero
+
+**[LM-24 Ingegneria delle Costruzioni Edili / INGINERIE CIVILÃ, Inginerie structuralã (IS)](https://ls-ie.unibg.it/it/opportunita-e-studi-allestero/doppio-titolo-double-degree)**
+
+![Erasmus + Blended Intensive “ReUso Riga 2025”](https://lt-ie.unibg.it/sites/cl08/files/styles/paragrafo_grande/public/adobestock_169270475.jpeg?itok=mzcHVV6s "Erasmus + Blended Intensive “ReUso Riga 2025”")
+
+È stato pubblicato il **bando per la selezione e l’assegnazione di contributi per la partecipazione al programma Erasmus+ Blended Intensive “ReUso Riga 2025”**, organizzato dalla **Riga Technical University (RTU) (Lettonia)**, in collaborazione con l’Università degli studi di Bergamo, l’Università Politècnica de València (Spagna) e l’Università degli studi di Enna ‘Kore’ (Italia).
+
+I **Blended Intensive Programme (BIP)**sono **percorsi di studio intensivi transnazionali** di breve durata, caratterizzati da una **combinazione di lezioni online e una Summer School in presenza**della durata di circa una settimana, comprensiva del viaggio.
+
+Periodo **online: 9 giugno 2025 – 20 giugno 2025**  
+Attività in presenza presso la **Riga Technical University** in Lettonia: **30 giugno 2025 – 5 luglio 2025**
+
+L’opportunità è rivolta agli **studenti iscritti al III anno del corso di laurea L-23 “Ingegneria delle Tecnologie per l'Edilizia”**e agli **studenti del corso di laurea magistrale LM-24 “Ingegneria delle Costruzioni Edili”.**
+
+**Per approfondimenti:**[https://www.unibg.it/bandi/bando-selezione-formazione-graduatorie-lassegnazione-contributi-partecipazione-blended](https://disa.unibg.it/it/avvisi/pubblicato-bando-erasmus-blended-intensive-reuso-riga-2025)
+
+**Scadenza**per la presentazione delle domande: **21 febbraio 2025 alle ore 14:00**
+
+[**Accedi al bando**](https://www.unibg.it/bandi/bando-selezione-formazione-graduatorie-lassegnazione-contributi-partecipazione-blended)
+
+## [Marie Skłodowska-Curie Actions (MSCA)](https://www.unibg.it/ricerca/fare-ricerca/erc-e-msca-unibg/marie-sklodowska-curie-actions-msca)
+
+### Successo di UniBg nelle prestigiose “Marie Curie Postdoctoral Fellowships | febbraio 2025
+
+*Bergamo, 18 febbraio 2025* – Successo dell'Università degli studi di Bergamo nel programma ***Marie Curie Postdoctoral Fellowships***: cinque ricercatori hanno avuto approvata la loro proposta di ricerca, sviluppata in collaborazione con docenti dell’Ateneo che saranno loro supervisori durante l’attività, nell’ambito del programma finanziato dalla Commissione europea ***Marie Curie Postdoctoral Fellowships***,uno dei più competitivi e scientificamente prestigiosi.
+
+Nel bando 2024, su oltre **10.000 candidature** presentate, sono stati **1.700 i progetti** **selezionati (provenienti da tutta Europa)**. Tra questi vi sono quelli presentati da cinque ricercatori che, insieme a docenti dell’Università degli studi di Bergamo, hanno partecipato a un programma interno per lo sviluppo della ricerca internazionale di eccellenza dell’Ateneo. L’Università ha infatti lanciato, nell’ultimo anno, un programma per identificare i giovani di talento e i potenziali supervisori, motivandoli a ingaggiarsi nei programmi europei di ricerca di eccellenza. Successivamente, ha organizzato un percorso di formazione avanzata e coaching individuale di ricercatori e docenti, che sono stati stimolati e accompagnati a sviluppare la propria idea di ricerca, in accordo con i requisiti di eccellenza scientifica e gestionale prevista in questi bandi europei.
+
+I temi di ricerca sono vasti e ambiziosi: si passa dall’area della **formazione** a quella dell’**energia**, dalla **filologia italiana** alla **storia ambientale**. **Tre ricercatori** condurranno i loro progetti biennali presso l’Università degli studi di Bergamo, con una *European Fellowship*, mentre **due ricercatrici**, vincitrici del bando *Global Fellowship*, trascorreranno un periodo di **24 mesi presso università straniere** e rientreranno all’Università degli studi di Bergamo per un anno.
+
+Il Rettore dell'Università degli studi di Bergamo, prof. **Sergio Cavalieri**, esprime grande orgoglio per questo risultato: *"Questo riconoscimento testimonia l'eccellenza e l'impegno dei nostri ricercatori nel contribuire all'avanzamento della conoscenza. Le Marie Curie Postdoctoral Fellowships sono tra i riconoscimenti più competitivi al mondo, e vedere premiati ben cinque nostri progetti è motivo di grande soddisfazione per tutta la nostra comunità accademica".*
+
+Anche la prof.ssa **Mariafrancesca Sicilia**, Prorettrice con Delega alla ricerca scientifica, ha sottolineato l'importanza di questo successo: *"Questi premi evidenziano l'alto livello della ricerca che viene condotta all'Università di Bergamo. I progetti selezionati non solo contribuiscono allo sviluppo scientifico globale, ma rafforzano anche il nostro ruolo come polo di innovazione e sapere".*
+
+Ai progetti approvati si aggiungono **3 progetti che hanno ottenuto il Seal of Excellence**, un marchio di qualità assegnato dalla Commissione europea ai progetti che ottengono un punteggio elevato. Di questi, due sono in lista di attesa e potrebbero essere finanziati nel caso di ulteriore disponibilità di fondi.
+
+Inoltre, oltre ai progetti che vedranno protagonisti i cinque ricercatori, l’attività di internazionalizzazione ha avuto successo attraendo anche due ricercatori di altre Università – la **Norwegian University of Life Sciences**e **l’Università Ca’ Foscari di Venezia** –che hanno avuto approvato un progetto nello stesso bando Marie Curie e che trascorreranno un periodo di *secondment* (distacco) presso l’Università di Bergamo, supervisionati da docenti dell’Ateneo (la prof.ssa Giovanna Barigozzi del Dipartimento di Ingegneria e Scienze Applicate e la prof.ssa Micol Pizzolati del Dipartimento di Lettere, Filosofia, Comunicazione).
+
+Con questi importanti risultati, l'Università di Bergamo conferma il successo della propria azione di crescita nella ricerca scientifica internazionale di eccellenza.
+
+**I PROGETTI PREMIATI**
+
+Fellow: **Oksana Melnyk**
+
+Area: Formazione 
+
+Il progetto ***“TWISTY: School-to-Work Transition of Youth with Vocational Qualifications.*** ***Cases of Germany and Italy”***, coordinato dal prof. Francesco Magni, docente di Pedagogia generale e sociale presso il Dipartimento di Scienze Umane e Sociali si propone di analizzare in chiave comparata le pratiche formative e le traiettorie professionali dei giovani con qualifiche tecnico-professionali in Italia e Germania. Attraverso un’indagine qualitativa sulle esperienze nei due Paesi, il progetto mira a sviluppare strategie formative e formulare proposte di politiche pubbliche volte a contrastare la disoccupazione giovanile, migliorare l’occupabilità dei giovani e ridurre il mismatch tra percorsi formativi e opportunità del mercato del lavoro.
+
+Fellow: **Ali Zimiri**
+
+Area: Energia  
+
+Il progetto ***“OURLEM: Optimization of Gas Turbine Cooling Hole Ramp Configuration via Multi-Fidelity AI/ML Model”*** coordinato dalla prof.ssa Giovanna Barigozzi, docente di Macchine a fluido del Dipartimento di Ingegneria e Scienze Applicate, si focalizzerà sull’utilizzo dell’Intelligenza Artificiale e di tecniche di Machine Learning, combinate con la modellazione fluidodinamica ad alta fedeltà, per ottimizzare sistemi di raffreddamento di motori aeronautici e per la generazione di energia elettrica alimentati a idrogeno, a supporto della transizione energetica e digitale. 
+
+Fellow: **Alessandra Forte**
+
+Area: Filologia italiana
+
+Il progetto ***“IcoNet: Iconographic Networks: Unveiling Exchanges and Connections between Illuminated Manuscripts in Late Medieval Italy (1260-1510)”*** coordinato dal prof. Luca Lombardo, docente di Filologia della letteratura italiana del Dipartimento di Lettere, Filosofia, Comunicazione, in collaborazione con l’Università della Svizzera Italiana, mira a intraprendere la prima classificazione sistematica delle tradizioni manoscritte miniate relative a un corpus di quattro opere letterarie strettamente interconnesse, composte in Toscana tra il XIII e il XIV secolo. Il corpus è costituito dalle tradizioni manoscritte illustrate del Tresor e del Tesoretto di Brunetto Latini, dei Documenti d’Amore di Francesco da Barberino, della Commedia di Dante Alighieri, dei Trionfi di Francesco Petrarca.
+
+Research Fellow: **Marialaura Aghelu**
+
+Area: Filologia italiana
+
+Il progetto ***“HeNaId: Shaping Hellenic National Identity between 18th and 19th centuries: how European intellectuals steered Greek and European History)”*** coordinato dal prof. Luca Lombardo, docente di Filologia della letteratura italiana del Dipartimento di Lettere, Filosofia, Comunicazione, in collaborazione con l’Université de Fribourg, mira a ricostruire le reti di relazioni politiche e culturali tra gli intellettuali italo-greci residenti in Grecia, Italia e Svizzera tra il XVIII e il XIX sec.; esso ambisce quindi a studiare i testi letterari scambiati dagli scrittori militanti all’interno di queste reti e in particolare a evidenziare il ruolo, in larga parte trascurato, che Ugo Foscolo svolse attivamente nei processi di promozione e di orientamento di queste stesse reti culturali.
+
+Research Fellow: **Judit Gil-Farrero**
+
+Area: Storia ambientale 
+
+Il progetto ***“DAMSECIS: DAMS - Environmental Conflicts between Italy and Spain in an environmental history perspective”*** coordinato dal prof. Stefano Morosini, docente di Storia contemporanea del Dipartimento di Lingue, Letterature e Culture Straniere, si focalizzerà in una prospettiva comparativa e internazionale sulle dighe in Spagna e in Italia dal 1900 a oggi. L’analisi si concentra sull'impatto ambientale e sociale di una serie di casi studio, mettendo in luce i conflitti generati dalla pianificazione e costruzione di bacini artificiali e svelando gli aspetti nascosti dalle narrazioni egemoniche.
+
+### Call for proposal
+
+UniBg offre un supporto importante supporto alle ricercatrici e ai ricercatori che intendono presentare una proposta per una Marie Skłodowska-Curie Actions Postdoctoral Fellowship (MSCA-PF) scegliendo l'Università degli studi di Bergamo come Host Institution.
+
+Dall’anno 2024 è attivo anche un programma destinato a candidati/e motivati (coinvolgendo una società di consulenza altamente specializzata), progettato per formare relativamente all’opportunità offerte da questa linea di finanziamento e supportare l'intero processo di scrittura della proposta, fino alla presentazione, anche attraverso un mentoring one-to-one.
+
+L’Università degli studi di Bergamo accoglie, inoltre, proposte congiunte con altre istituzioni per la presentazione di proposte in risposta alle altre azioni Marie Skłodowska-Curie Actions (MSCA): Doctoral Networks (DN), Staff Exchanges (SE) e altre previste dal Programma Horizon Europe.
+
+### Doctoral Networks (DN)
+
+Le Azioni [Doctoral Networks](https://marie-sklodowska-curie-actions.ec.europa.eu/actions/doctoral-networks) sono destinate ai dottorandi e ai ricercatori nelle prime fasi di carriera.  
+L’obiettivo è sostenere la ricerca di eccellenza e i percorsi dottorali, formando una nuova generazione di ricercatori creativi, innovativi e dotati di spirito imprenditoriale.  
+Rientrano in questa tipologia di azioni i dottorati congiunti e i dottorati industriali.
+
+**Call:** sul portale [Funding & tenders opportunities](https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home).
+
+**Scadenza prossima call:** indicativamente novembre 2026
+
+### Postdoctoral Fellowships (PF)
+
+Le [Postdoctoral Fellowships](https://marie-sklodowska-curie-actions.ec.europa.eu/actions/postdoctoral-fellowships)si rivolgono a ricercatori esperti interessati a esperienze di mobilità internazionale o intersettoriale, per valorizzare il potenziale creativo e innovativo fornendo loro l’opportunità di acquisire nuove conoscenze, lavorare su progetti di ricerca in contesto europeo o internazionale, avviare nuove prospettive di carriera o rientrare in Europa.
+
+**Call:** sul portale [Funding & tenders opportunities](https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home).
+
+**Scadenza prossima call:** 9 settembre 2026
+
+### Staff Exchanges (SE)
+
+[Staff Exchanges (SE)](https://marie-sklodowska-curie-actions.ec.europa.eu/actions/staff-exchanges) si tratta di azioni volte a sostenere la collaborazione intersettoriale e internazionale a livello europeo, attraverso scambi del capitale umano d’eccellenza, e a promuovere la creazione di una cultura condivisa della ricerca e dell’innovazione. Da queste azioni ci si aspetta il rafforzamento dell’interazione tra organizzazioni accademiche e organizzazioni non accademiche.
+
+**Call:** sul portale [Funding & tenders opportunities](https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home).
+
+**Scadenza prossima call:** indicativamente febbraio 2027
+
+### Co-funding of regional, national and international programmes (COFUND)
+
+[Co-funding of regional, national and international programmes (COFUND)](https://ec.europa.eu/research/mariecurieactions/actions/co-funding-programmes_en) queste azioni mirano a supportare programmi di dottorato e fellowship cofinanziati a livello regionale, nazionale e internazionale.  
+L’obiettivo è indirizzare la programmazione territoriale, nazionale e internazionale verso l’eccellenza nella formazione, nella mobilità e nella crescita professionale dei ricercatori.
+
+**Call:** sul portale [Funding & tenders opportunities](https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home).
+
+**Scadenza:** indicativamente aprile 2027
+
+## Contatti
+
+Contatti di riferimento:  
++ 39 035 2052830 - 831- 833 - 468;  
+[relint@unibg.it](mailto:relint@unibg.it)
+
+## Ti interessa anche
+
+![logo](/sites/all/themes/b3unibg/images/sigillo-bianco.svg)
+
+Fonte 2: Studiare all'estero | UniBG Culture Umanistiche
+URL: https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero
+Contenuto: Studiare all'estero | UniBG Culture Umanistiche
+===============
+
+[Salta al contenuto principale](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#main-content)
+
+Menu top
+========
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+
+Form di ricerca
+---------------
+
+*   [](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+[![Image 1](https://ls-cmc.unibg.it/sites/all/themes/b3unibgcdl/images/sigillo.svg)](https://ls-cmc.unibg.it/it "Home")
+=======================================================================================================================
+
+Corso di laurea magistrale
+
+[Culture Umanistiche](https://ls-cmc.unibg.it/it "Torna alla home page di Culture Umanistiche")
+===============================================================================================
+
+[Dipartimento di Lettere, Filosofia, Comunicazione](http://www.unibg.it/dlam "Vai al sito del dipartimento")
+
+Toggle navigation
+
+*   [IT](https://ls-cmc.unibg.it/it "IT")
+*   [EN](https://ls-cmc.unibg.it/en "EN")
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+*   [](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+Form di ricerca
+---------------
+
+*   [Il corso](https://ls-cmc.unibg.it/it/il-corso)
+    *           *   [Scegliere](https://ls-cmc.unibg.it/it/il-corso/scegliere)
+        *   [Piano di studio](https://ls-cmc.unibg.it/it/il-corso/piano-di-studio)
+        *   [Requisiti di accesso](https://ls-cmc.unibg.it/it/il-corso/requisiti-di-accesso)
+        *   [Obiettivi e figure professionali](https://ls-cmc.unibg.it/it/il-corso/obiettivi-e-figure-professionali)
+        *   [Statistiche del corso](https://ls-cmc.unibg.it/it/il-corso/statistiche-del-corso)
+        *   [Organizzazione e Assicurazione Qualità](https://ls-cmc.unibg.it/it/il-corso/organizzazione-e-assicurazione-qualita)
+
+*   [Studiare](https://ls-cmc.unibg.it/it/studiare)
+    *           *   [Insegnamenti attivi](https://ls-cmc.unibg.it/it/studiare/insegnamenti-attivi)
+        *   [Docenti](https://ls-cmc.unibg.it/it/studiare/docenti)
+        *   [Calendario didattico](https://ls-cmc.unibg.it/it/studiare/calendario-didattico-0)
+        *   [Riconoscimento certificazioni](https://ls-cmc.unibg.it/it/studiare/riconoscimento-certificazioni)
+        *   [Orario lezioni](https://ls-cmc.unibg.it/it/studiare/orario-lezioni)
+        *   [Esami](https://ls-cmc.unibg.it/it/studiare/esami)
+        *   [Esercitazioni](https://ls-cmc.unibg.it/it/studiare/esercitazioni)
+        *   [Tirocinio](https://ls-cmc.unibg.it/it/studiare/tirocinio)
+
+*   [Opportunità e studi all'estero](https://ls-cmc.unibg.it/it/opportunita-ed-esperienze)
+    *           *   [Studiare all'estero](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+        *   [Summer school](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/summer-school)
+
+*   [Come fare per](https://ls-cmc.unibg.it/it/come-fare)
+    *           *   [Iscriversi](https://ls-cmc.unibg.it/it/come-fare/iscriversi)
+        *   [Laurearsi](https://ls-cmc.unibg.it/it/come-fare/laurearsi)
+
+*   [Contatti](https://ls-cmc.unibg.it/it/contatti)
+*   [Sempre utili](https://ls-cmc.unibg.it/it/sempre-utili)
+    *           *   [Orari del Dipartimento di LFC](https://logistica.unibg.it/PortaleStudenti/index.php?view=easycourse&include=corso&scuola=Dipartimento_di_Lettere-_Filosofia-_Comunicazione)
+        *   [Sportello internet](http://sportello.unibg.it/esse3/Home.do)
+        *   [E-learning](https://elearning15.unibg.it/course/index.php?categoryid=7)
+        *   [Universitaly](https://www.universitaly.com/index.php/offerta/search/id_struttura/54/azione/ricerca)
+
+1.   [Home](https://ls-cmc.unibg.it/it)
+2.   [Opportunità e studi all'estero](https://ls-cmc.unibg.it/it/opportunita-ed-esperienze)
+
+[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+Studiare all'estero
+===================
+
+Durante il biennio è possibile trascorrere un periodo di studio all’estero nel quadro del programma comunitario [Erasmus +](https://www.unibg.it/internazionale/andare-allestero/erasmus), di mobilità di [breve durata](https://www.unibg.it/bandi/borse-studio-mobilita-allestero-breve-durata-favore-studenti-delluniversita-studi-bergamo-0) (in particolare Winter School o Summer School) o di convenzioni analoghe con [Paesi extraeuropei](https://www.unibg.it/internazionale/andare-allestero/mobilita-extra-ue).
+
+I programmi di mobilità offrono la possibilità di svolgere parte del proprio percorso formativo nell'università di un altro Paese, con il pieno e integrale riconoscimento degli esami sostenuti, e prevedono delle borse di studio a parziale copertura delle spese di viaggio e soggiorno.
+
+Maggiori dettagli sulle università coinvolte e i periodi di mobilità proposti alla [pagina dedicata](https://www.unibg.it/sites/default/files/media/documents/2023-01-24/Tabella%20LFC%202023-2024.pdf).
+
+Per partecipare ai bandi di mobilità Erasmus + o extraeuropei è richiesto il possesso di una competenza linguistica il cui livello varia secondo la sede ospitante. Le modalità e le tempistiche dell’[accertamento del livello linguistico](https://www.unibg.it/node/4332) proposte dall’Università di Bergamo sono pubblicate sul sito di Ateneo all’esordio dell’anno accademico. È possibile approfondire lo studio delle lingue attraverso le svariate attività proposte dal [Centro Competenza Lingue di Ateneo.](https://ccl.unibg.it/it/apprendimento-lingue/servizi-studenti)
+
+[Mobilità per tesi di laurea](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#)
+
+Grazie al generoso lascito della Sig.ra Lucia Maria Teresa Previtali Radici, le studentesse e gli studenti del corso di laurea magistrale c possono svolgere un periodo di mobilità presso un ateneo estero al fine di elaborare la loro tesi di laurea, beneficiando di una borsa di 2.000 euro. Maggiori informazioni alla [pagina dedicata](https://www.unibg.it/bandi/bando-memoria-gianni-e-luciana-radici-redazione-tesi-magistrali-allestero-1).
+
+[Doppio titolo](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#)
+
+**Bergamo e Varsavia: Corso di laurea magistrale in Culture moderne comparate / Dyplom ukończenia studiów II stopnia magisterskich**
+
+A partire dall’anno accademico 2023-2024 le studentesse e gli studenti iscritti al primo anno del Corso di laurea magistrale in Culture moderne comparate avranno la possibilità di ottenere un doppio titolo, il Dyplom ukończenia studiów II stopnia magisterskich, erogato dal Dipartimento di Studi italiani dell’Università di Varsavia.
+
+Le studentesse e gli studenti selezionati seguiranno (in italiano e inglese) i corsi del secondo anno in mobilità presso l’Università di Varsavia, senza ulteriori tasse di iscrizione. Potranno beneficiare di una borsa Erasmus + in base alla normativa vigente.
+
+La tesi magistrale sarà redatta in italiano sotto la guida di due relatori (uno di Bergamo e uno di Varsavia).
+
+Il piano di studi e altre informazioni saranno visibili sul bando, all’atto della pubblicazione.
+
+Referente: prof.ssa[Amelia Valtolina (link sends e-mail)](mailto:amelia.valtolina@unibg.it).
+
+Contatti
+--------
+
+Contatti di riferimento:
+
+T +39 035 205 2830-831-833-468;
+
+[relint@unibg.it (link sends e-mail)](mailto:relint@unibg.it)
+
+*   [Facebook](https://www.facebook.com/UniBergamo "facebook")
+*   [Twitter](https://twitter.com/@UniBergamo "twitter")
+*   [Youtube](https://www.youtube.com/user/UniBgTube/playlists "youtube")
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6 "linkedin")
+*   [Instagram](https://www.instagram.com/unibergamo/ "instagram")
+
+*   [Mappa del sito](https://ls-cmc.unibg.it/it/mappa-del-sito)
+*   [Normativa cookie](https://ls-cmc.unibg.it/it/normativa-cookie)
+*   [Informativa privacy](http://www.unibg.it/privacy)
+*   [Cookie settings](https://ls-cmc.unibg.it/it/cookiesettings)
+
+*   [Wi-fi](http://www.unibg.it/wi-fi)
+*   [Webmail](http://www.unibg.it/evidenza/web-mail)
+
+[![Image 2: logo](https://ls-cmc.unibg.it/sites/all/themes/b3unibg/images/sigillo-bianco.svg)](https://www.unibg.it/)
+
+**Università degli studi di Bergamo**
+
+ via Salvecchio 19
+
+ 24129 Bergamo
+
+ Cod. Fiscale 80004350163
+
+ P.IVA 01612800167
+
+ Centralino 035 2052111 
+
+Back to top
+
+Questo sito utilizza cookie tecnici e di profilazione, propri e di terze parti, per garantire la corretta navigazione, analizzare il traffico e misurare l'efficacia delle attività di comunicazione istituzionale.
+
+Puoi rifiutare i cookie non necessari e di profilazione cliccando su **“Solo cookie tecnici”**.
+
+Puoi scegliere di acconsentirne l’utilizzo cliccando su **“Accetta tutti”** oppure puoi personalizzare le tue scelte cliccando su **“Personalizza”**.
+
+Per maggiori informazioni leggi la nostra [Privacy e cookie policy](http://www.unibg.it/privacy)
+
+Solo cookie tecnici Accetta tutti Personalizza
+
+in caricamento
+
+[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Chiudi")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Avanti")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Play")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Pausa")[](https://ls-cmc.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Indietro")
+
+Fonte 3: Studiare all'estero | UniBG Giurisprudenza
+URL: https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero
+Contenuto: Studiare all'estero | UniBG Giurisprudenza
+===============
+
+[Salta al contenuto principale](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#main-content)
+
+Menu top
+========
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+
+Form di ricerca
+---------------
+
+*   [](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+[![Image 1](https://lm-giu.unibg.it/sites/all/themes/b3unibgcdl/images/sigillo.svg)](https://lm-giu.unibg.it/it "Home")
+=======================================================================================================================
+
+Corso di laurea magistrale a ciclo unico
+
+[Giurisprudenza](https://lm-giu.unibg.it/it "Torna alla home page di Giurisprudenza")
+=====================================================================================
+
+[Dipartimento di Giurisprudenza](https://dgiu.unibg.it/it "Vai al sito del dipartimento")
+
+Toggle navigation
+
+*   [IT](https://lm-giu.unibg.it/it "IT")
+*   [EN](https://lm-giu.unibg.it/en "EN")
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+*   [](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+Form di ricerca
+---------------
+
+*   [Il corso](https://lm-giu.unibg.it/it/il-corso)
+    *           *   [Scegliere](https://lm-giu.unibg.it/it/il-corso/scegliere)
+        *   [Piano di studio](https://lm-giu.unibg.it/it/il-corso/piano-di-studio)
+        *   [Obiettivi e figure professionali](https://lm-giu.unibg.it/it/il-corso/obiettivi-e-figure-professionali)
+        *   [Comitato d'indirizzo](https://lm-giu.unibg.it/it/il-corso/unibgjusnetwork-comitato-dindirizzo)
+        *   [Regolamento didattico](https://lm-giu.unibg.it/it/il-corso/regolamento-didattico)
+        *   [Statistiche del corso](https://lm-giu.unibg.it/it/il-corso/statistiche-del-corso)
+
+*   [Iscriversi](https://lm-giu.unibg.it/it/iscriversi)
+    *           *   [Requisiti di accesso](https://lm-giu.unibg.it/it/iscriversi/requisiti-di-accesso)
+        *   [Modalità, scadenze, esiti TOLC](https://lm-giu.unibg.it/it/iscriversi/modalita-scadenze-esiti-tolc)
+        *   [Cos'è il TOLC-SU](https://lm-giu.unibg.it/it/iscriversi/cose-il-tolc-su)
+        *   [Assolvere gli OFA](https://lm-giu.unibg.it/it/iscriversi/assolvere-gli-ofa)
+
+*   [Studiare](https://lm-giu.unibg.it/it/studiare)
+    *           *   [Insegnamenti attivi](https://lm-giu.unibg.it/it/studiare/insegnamenti-attivi)
+        *   [Docenti](https://lm-giu.unibg.it/it/studiare/docenti)
+        *   [Calendario didattico e appelli](https://lm-giu.unibg.it/it/studiare/calendario-didattico-e-appelli)
+        *   [Orario lezioni](https://lm-giu.unibg.it/it/studiare/orario-lezioni)
+        *   [Attività didattiche integrative e tutorato](https://lm-giu.unibg.it/it/studiare/attivita-didattiche-integrative-e-tutorato)
+        *   [Apprendimento linguistico](https://lm-giu.unibg.it/it/studiare/apprendimento-linguistico)
+        *   [Laurearsi](https://lm-giu.unibg.it/it/studiare/laurearsi)
+        *   [Modulistica riservata a GdF](https://lm-giu.unibg.it/it/studiare/modulistica-riservata-gdf)
+
+*   [Opportunità e studi all'estero](https://lm-giu.unibg.it/it/opportunita-ed-esperienze)
+    *           *   [Studiare all'estero](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+        *   [Double Degree](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/double-degree)
+        *   [Didattica innovativa, esperienze e progetti](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/didattica-innovativa-esperienze-e-progetti)
+        *   [Tirocini e Stage](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/tirocini-e-stage)
+        *   [Tirocinio professionale anticipato](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/tirocinio-professionale-anticipato)
+
+*   [Contatti](https://lm-giu.unibg.it/it/contatti)
+*   [Sempre utili](https://lm-giu.unibg.it/it/sempre-utili)
+    *           *   [E-learning](https://elearning15.unibg.it/course/index.php?categoryid=2)
+        *   [Sportello internet](http://sportello.unibg.it/esse3/Home.do)
+        *   [Orari Dipartimento di Giurisprudenza](https://logistica.unibg.it/PortaleStudenti/index.php?view=easycourse&include=corso&scuola=Dipartimento_di_Giurisprudenza)
+
+1.   [Home](https://lm-giu.unibg.it/it)
+2.   [Opportunità e studi all'estero](https://lm-giu.unibg.it/it/opportunita-ed-esperienze)
+
+[](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+Studiare all'estero
+===================
+
+Durante gli studi è possibile trascorrere un periodo di studio o tirocinio all’estero. Le mobilità in Europa sono finanziate attraverso il [**programma Erasmus+**](https://www.unibg.it/node/343), quelle al di fuori dell’Europa sono sostenute con fondi di Ateneo.
+
+Contatti
+--------
+
+Contatti di riferimento:
+
+T + 39 035 205 2830-831-833-468
+
+[relint@unibg.it (link sends e-mail)](mailto:relint@unibg.it)
+
+*   [Facebook](https://www.facebook.com/UniBergamo "facebook")
+*   [Twitter](https://twitter.com/@UniBergamo "twitter")
+*   [Youtube](https://www.youtube.com/user/UniBgTube/playlists "youtube")
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6 "linkedin")
+*   [Instagram](https://www.instagram.com/unibergamo/ "instagram")
+
+*   [Mappa del sito](https://lm-giu.unibg.it/it/mappa-del-sito)
+*   [Normativa cookie](https://lm-giu.unibg.it/it/normativa-cookie)
+*   [Informativa privacy](http://www.unibg.it/privacy)
+*   [Cookie settings](https://lm-giu.unibg.it/it/cookiesettings)
+
+*   [Wi-fi](http://www.unibg.it/wi-fi)
+*   [Webmail](http://www.unibg.it/evidenza/web-mail)
+
+[![Image 2: logo](https://lm-giu.unibg.it/sites/all/themes/b3unibg/images/sigillo-bianco.svg)](https://www.unibg.it/)
+
+**Università degli studi di Bergamo**
+
+ via Salvecchio 19
+
+ 24129 Bergamo
+
+ Cod. Fiscale 80004350163
+
+ P.IVA 01612800167
+
+ Centralino 035 2052111 
+
+Back to top
+
+Questo sito utilizza cookie tecnici e di profilazione, propri e di terze parti, per garantire la corretta navigazione, analizzare il traffico e misurare l'efficacia delle attività di comunicazione istituzionale.
+
+Puoi rifiutare i cookie non necessari e di profilazione cliccando su **“Solo cookie tecnici”**.
+
+Puoi scegliere di acconsentirne l’utilizzo cliccando su **“Accetta tutti”** oppure puoi personalizzare le tue scelte cliccando su **“Personalizza”**.
+
+Per maggiori informazioni leggi la nostra **[Privacy e cookie policy](https://lm-giu.unibg.it/it/privacy)**
+
+Solo cookie tecnici Accetta tutti Personalizza
+
+in caricamento
+
+[](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Chiudi")[](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Avanti")[](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Play")[](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Pausa")[](https://lm-giu.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Indietro")
+
+Fonte 4: Studiare all'estero - Lingue e Letterature Straniere Moderne - UniBg
+URL: https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero
+Contenuto: Studiare all'estero | UniBG Lingue e Letterature Straniere Moderne
+===============
+
+[Salta al contenuto principale](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero#main-content)
+
+Menu top
+========
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+
+Form di ricerca
+---------------
+
+*   [](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+[![Image 1](https://lt-llsm.unibg.it/sites/all/themes/b3unibgcdl/images/sigillo.svg)](https://lt-llsm.unibg.it/it "Home")
+=========================================================================================================================
+
+Corso di laurea triennale
+
+[Lingue e Letterature Straniere Moderne](https://lt-llsm.unibg.it/it "Torna alla home page di Lingue e Letterature Straniere Moderne")
+======================================================================================================================================
+
+[Dipartimento di Lingue, Letterature e Culture Straniere](http://www.unibg.it/dllc "Vai al sito del dipartimento")
+
+Toggle navigation
+
+*   [IT](https://lt-llsm.unibg.it/it "IT")
+*   [EN](https://lt-llsm.unibg.it/en "EN")
+
+*   [](https://www.unibg.it/ "www.unibg.it")
+*   [](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero# "Cerca")
+
+Form di ricerca
+---------------
+
+*   [Il corso](https://lt-llsm.unibg.it/it/il-corso)
+    *           *   [Scegliere](https://lt-llsm.unibg.it/it/il-corso/scegliere)
+        *   [Piano di studio](https://lt-llsm.unibg.it/it/il-corso/piano-di-studio)
+        *   [Obiettivi e figure professionali](https://lt-llsm.unibg.it/it/il-corso/obiettivi-e-figure-professionali)
+        *   [Organizzazione e Assicurazione Qualità](https://lt-llsm.unibg.it/it/il-corso/organizzazione-e-assicurazione-qualita)
+        *   [Statistiche del corso](https://lt-llsm.unibg.it/it/il-corso/statistiche-del-corso)
+        *   [Strutture e aule disponibili](https://lt-llsm.unibg.it/it/il-corso/strutture-e-aule-disponibili)
+
+*   [Iscriversi](https://lt-llsm.unibg.it/it/iscriversi)
+    *           *   [Requisiti di accesso](https://lt-llsm.unibg.it/it/iscriversi/requisiti-di-accesso)
+        *   [Modalità, scadenze, esiti TOLC](https://lt-llsm.unibg.it/it/iscriversi/modalita-scadenze-esiti-tolc)
+        *   [Cos'è il TOLC-SU](https://lt-llsm.unibg.it/it/iscriversi/cose-il-tolc-su)
+        *   [Assolvere gli OFA](https://lt-llsm.unibg.it/it/iscriversi/assolvere-gli-ofa)
+        *   [Placement test](https://lt-llsm.unibg.it/it/iscriversi/placement-test)
+
+*   [Studiare](https://lt-llsm.unibg.it/it/studiare)
+    *           *   [Insegnamenti attivi](https://lt-llsm.unibg.it/it/studiare/insegnamenti-attivi)
+        *   [Docenti](https://lt-llsm.unibg.it/it/studiare/docenti)
+        *   [Calendario didattico e appelli](https://lt-llsm.unibg.it/it/studiare/calendario-didattico-e-appelli)
+        *   [Frequentare corsi per principianti](https://lt-llsm.unibg.it/it/studiare/frequentare-corsi-principianti)
+        *   [Apprendimento linguistico (AAL)](https://lt-llsm.unibg.it/it/studiare/apprendimento-linguistico-aal)
+        *   [Riconoscimento certificazioni linguistiche e informatiche](https://lt-llsm.unibg.it/it/studiare/riconoscimento-certificazioni-linguistiche-e-informatiche)
+        *   [Lingue straniere TVI primo anno](https://lt-llsm.unibg.it/it/studiare/lingue-straniere-tvi-primo-anno)
+        *   [Orario lezioni](https://lt-llsm.unibg.it/it/studiare/orario-lezioni)
+        *   [Esami](https://lt-llsm.unibg.it/it/studiare/esami)
+        *   [Laurearsi](https://lt-llsm.unibg.it/it/studiare/laurearsi)
+        *   [Videotutorials (italiano e inglese)](https://lt-llsm.unibg.it/it/studiare/videotutorials-italiano-e-inglese)
+
+*   [Opportunità e studi all'estero](https://lt-llsm.unibg.it/it/opportunita)
+    *           *   [Studiare all'estero](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+        *   [Doppio titolo con l’UNIVERSITÉ MARIE ET LOUIS PASTEUR, BESANÇON](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/doppio-titolo-con-luniversite-marie-et-louis-pasteur-besancon)
+        *   [Tirocini](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/tirocini)
+
+*   [Contatti](https://lt-llsm.unibg.it/it/contatti)
+*   [Sempre utili](https://lt-llsm.unibg.it/it/sempre-utili)
+    *           *   [Orari del Dipartimento di LLCS](https://logistica.unibg.it/PortaleStudenti/index.php?view=easycourse&include=corso&scuola=Dipartimento_di_Lingue-_letterature_e_culture_straniere)
+        *   [Sportello internet](http://sportello.unibg.it/esse3/Home.do)
+        *   [E-learning](https://elearning15.unibg.it/course/index.php?categoryid=5)
+
+1.   [Home](https://lt-llsm.unibg.it/it)
+2.   [Opportunità e studi all'estero](https://lt-llsm.unibg.it/it/opportunita)
+
+[](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero)
+Studiare all'estero
+===================
+
+Durante il triennio in cui è articolato il Corso di laurea è possibile trascorrere un periodo di studio di minimo 3 e massimo 12 mesi all’estero nel quadro del programma comunitario LLP/Erasmus o di convenzioni analoghe con Paesi extraeuropei.
+
+I programmi di mobilità prevedono la possibilità di svolgere parte del proprio curriculum nell'università di un altro Paese, con il pieno e integrale riconoscimento degli esami sostenuti.A tal fine, in aggiunta al programma di [**mobilità LLP/Erasmus**](https://www.unibg.it/node/343)sono stati attivati accordi di scambio con università straniere di**[paesi extraeruopei](https://www.unibg.it/node/344)**nell'ambito dell'azione d'internazionalizzazione promossa dal MIUR.
+
+Informazioni utili relative ai bandi di mobilità e alla modalità di partecipazione e di **[accertamento del livello linguistico](https://www.unibg.it/node/4332)** richiesto dalla sedi ospitanti sono pubblicate sul sito di Ateneo e raggiungibili attraverso i seguenti link:
+
+- **PAESI EUROPEI:**[Mobilità studenti ERASMUS in uscita](https://www.unibg.it/node/343)
+
+- **PAESI EXTRAEUROPEI:**[Mobilità studenti in uscita](https://www.unibg.it/node/344)
+
+Per maggiori dettagli sulle date di pubblicazione dei bandi di mobilità per l'a.a. 2019-2020 e sul calendario dei test informatizzati di verifica del livello lingusitico, è possibile contattare l'Ufficio programmi internazionali:
+
+*   tramite posta elettronica all'indirizzo[relint@unibg.it (link sends e-mail)](mailto:relint@unibg.it)
+*   direttamente in ufficio (Sede di Via San Bernardino) il martedì o il giovedì dalle 10 alle 12 e dalle 14 alle 16.
+*   telefonicamente (per i programmi di scambio con i Paesi europei)ai seguenti numeri: +39 035 205 2831-2833-2468
+*   telefonicamente (nello specifico per i programmi extraeuropei): +39 035 205 2476
+
+Contatti
+--------
+
+Contatti di riferimento:
+
+T +39 035 205 2830-831-833-468
+
+[relint@unibg.it](mailto:relint@unibg.it)
+
+Approfondimenti
+---------------
+
+*   [Doppio titolo con l’Université de Franche-Comté (sede di Besançon).](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/doppio-titolo-con-luniversite-de-franche-comte)  
+
+Ti interessa anche
+------------------
+
+*   [Che cos'è il programma Erasmus+?](https://www.unibg.it/internazionale/andare-allestero/erasmus)  
+
+*   [Facebook](https://www.facebook.com/UniBergamo "facebook")
+*   [Twitter](https://twitter.com/@UniBergamo "twitter")
+*   [Youtube](https://www.youtube.com/user/UniBgTube/playlists "youtube")
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6 "linkedin")
+*   [Instagram](https://www.instagram.com/unibergamo/ "instagram")
+
+*   [Mappa del sito](https://lt-llsm.unibg.it/it/mappa-del-sito)
+*   [Normativa cookie](https://lt-llsm.unibg.it/it/normativa-cookie)
+*   [Informativa privacy](http://www.unibg.it/privacy)
+*   [Cookie settings](https://lt-llsm.unibg.it/it/cookiesettings)
+
+*   [Wi-fi](http://www.unibg.it/wi-fi)
+*   [Webmail](http://www.unibg.it/evidenza/web-mail)
+
+[![Image 2: logo](https://lt-llsm.unibg.it/sites/all/themes/b3unibg/images/sigillo-bianco.svg)](https://www.unibg.it/)
+
+**Università degli studi di Bergamo**
+
+ via Salvecchio 19
+
+ 24129 Bergamo
+
+ Cod. Fiscale 80004350163
+
+ P.IVA 01612800167
+
+ Centralino 035 2052111 
+
+Back to top
+
+Questo sito utilizza cookie tecnici e di profilazione, propri e di terze parti, per garantire la corretta navigazione, analizzare il traffico e misurare l'efficacia delle attività di comunicazione istituzionale.
+
+Puoi rifiutare i cookie non necessari e di profilazione cliccando su **“Solo cookie tecnici”**.
+
+Puoi scegliere di acconsentirne l’utilizzo cliccando su **“Accetta tutti”** oppure puoi personalizzare le tue scelte cliccando su **“Personalizza”**.
+
+Per maggiori informazioni leggi la nostra [Privacy e cookie policy](http://www.unibg.it/privacy)
+
+Solo cookie tecnici Accetta tutti Personalizza
+
+in caricamento
+
+[](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Chiudi")[](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Avanti")[](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Play")[](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Pausa")[](https://lt-llsm.unibg.it/it/opportunita-e-studi-allestero/studiare-allestero "Indietro")
+
+Fonte 5: Erasmus+ | Università degli studi di Bergamo - UniBg
+URL: https://www.unibg.it/internazionale/andare-allestero/erasmus
+Contenuto: Erasmus+ | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/internazionale/andare-allestero/erasmus#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/internazionale/andare-allestero/erasmus#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7598 "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/internazionale/andare-allestero/erasmus#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7598 "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Erasmus+
+========
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Internazionale](https://www.unibg.it/internazionale)
+3.   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+4.   [Erasmus+](https://www.unibg.it/internazionale/andare-allestero/erasmus)
+
+[](https://www.unibg.it/internazionale/andare-allestero/erasmus)
+
+### Che cos'è il programma Erasmus+?
+
+**Erasmus+ 2021-2027**è il programma dell'Unione Europea per l'istruzione, la formazione, la gioventù e lo sport,finalizzato a promuovere le competenze, e l'occupabilità, nonché a sostenere la modernizzazione dei sistemi d'istruzione, formazione e gioventù.
+
+Il programma consente di vivere esperienze culturali e professionali all'estero, conoscere nuovi sistemi di istruzione superiore, perfezionare la conoscenza di almeno un'altra lingua e incontrare giovani di altri Paesi, partecipando attivamente alla costruzione di un'Europa sempre più unita.
+
+[Erasmus Policy Statement 2021-2027](https://www.unibg.it/sites/default/files/erasmus_policy_statement_2021-2027.pdf "erasmus_policy_statement_2021-2027.pdf")
+
+[Erasmus Policy Statement 2014-2020](https://www.unibg.it/sites/default/files/internazionalizzazione/erasmus_policy_statement_per_sito_web_in_italiano.pdf "erasmus_policy_statement_per_sito_web_in_italiano.pdf")
+
+[Guida ECTS](https://www.unibg.it/sites/default/files/internazionalizzazione/ects_guida_utente_pdf_exe.pdf "ects_guida_utente_pdf_exe.pdf")
+
+[ECHE I BERGAMO 01 2021-2027](https://www.unibg.it/sites/default/files/eche_unibg.pdf "eche_unibg.pdf")
+
+[ECHE I BERGAMO 01 2014-2020](https://www.unibg.it/sites/default/files/eche_template_en-ok_2014_-_2020.pdf "eche_template_en-ok_2014_-_2020.pdf")
+
+### Erasmus+ BIP
+
+La nuova programmazione Erasmus+ ha introdotto i programmi intensivi misti – Blended Intensive Programs, BIP.
+
+Sviluppati da gruppi di Istituti di istruzione superiore con un approccio pedagogico innovativo, i BIP prevedono brevi periodi di attività in presenza combinata con attività di apprendimento e cooperazione online, a cui possono partecipare gruppi congiunti di studenti, personale docente e staff amministrativo provenienti da diversi Paesi per collaborare a specifici compiti in modo collettivo e simultaneo.
+
+[Presentazione BIP](https://www.unibg.it/sites/default/files/media/documents/2023-10-25/Presentazione%20BIP.pdf "Presentazione BIP.pdf")
+
+### Erasmus+ KA 131 (UE)
+
+Erasmus+ per Studio offre agli studenti l'opportunità di trascorrere **un periodo di studio (da 3 a 12 mesi)** presso una delle Università Partner Europee con cui l'Università di Bergamo ha firmato un accordo inter-istituzionale.
+
+Gli studenti Erasmus+ possono inoltre ricevere un contributo comunitario _ad hoc_, seguire corsi universitari e usufruire delle strutture disponibili presso l'Università ospitante senza dover pagare tasse aggiuntive, con la garanzia del riconoscimento del periodo di studi all'estero tramite il trasferimento dei rispettivi crediti formativi all'interno della loro carriera.
+
+Scorri questa pagina per consultare il bando e accedere a tutte le informazioni relative a sedi disponibili, scadenze e modalità.
+
+### Erasmus+ KA 107 (extra-UE)
+
+L'**Erasmus+ KA107 ICM International Credit Mobility**è un programma innovativo che permette di attivare progetti di**mobilità internazionale fuori dall’Unione Europea**ed è destinato a studenti,docenti e personale tecnico amministrativo europei.
+
+In particolare, gli studenti iscritti ai Corsi di laurea triennale, laurea magistrale e dottorato hanno la possibilità di svolgere un periodo di studio o di ricerca presso le università partner che va da un minimo di 3 a un massimo di 12 mesi.Le borse di studio sono finanziate dall'Unione Europea e vengono assegnate mediante bandi.
+
+Scorri questa pagina per consultare il bando e accedere a tutte le informazioni relative a sedi disponibili, scadenze e modalità.
+
+### Erasmus+ Traineeship
+
+Il Programma Erasmus+ Traineeship, in generale, consente agli studenti universitari iscritti, di candidarsi per un'esperienza di tirocinio presso imprese attive nel mercato del lavoro o in settori quali l’istruzione, la formazione e la gioventù e presenti in uno dei Paesi partecipanti al Programma. I beneficiari avranno così l’opportunità di acquisire competenze specifiche e una migliore comprensione della cultura socio-economica del Paese ospitante. E' previsto un contributo comunitario per la durata del tirocinio all'estero.
+
+_The Erasmus+ Traineeship Programme allows university students to carry out a traineeship period in companies active in the labour market or in sectors such as education, training and youth and present in one of the countries participating in the Programme.This will give beneficiaries the opportunity to acquire specific skills and a better understanding of the socio-economic culture of the host country. Students receive a monthly EU grant for their period abroad_
+
+**N.B.**: nell'ambito del Bando Erasmus+Traineeship CALL 2024 (2024/2025 e 2025/2026), sono ammessi tirocini curriculari, in piano di studio, oppure tirocini da inserire come scelta libera o in sovrannumero (laddove non sia presente il tirocinio in piano), mentre sono esclusi i tirocini post-laurea.
+
+_**N.B**. In the framework of the Call 2024 Erasmus+ Traineeship (a.y 2024/2025 - 2025/2026),grants are assigned for curricular traineeships or, if not included in the study plan, as an elective or as extra credits._
+
+Lo studente che ha già assolto i cfu per tirocinio in piano non potrà candidarsi per un secondo tirocinio nell'ambito del Bando di cui sopra.
+
+_If a student has already earned credits for a traineeship, they cannot apply for the Erasmus + Traineeship Programme._
+
+Visita la [pagina dedicata](https://www.unibg.it/internazionale/andare-allestero/erasmus/erasmus-traineeships)per tutte le informazioni relative al Bando, scadenze e modalità.
+
+For information concerning the Call, deadlines and procedures please access the Erasmus Traineeship [webpage](https://www.unibg.it/internazionale/andare-allestero/erasmus/erasmus-traineeships)
+
+### Tabelle delle equipollenze
+
+Le tabelle pubblicate sono riportate esclusivamente a titolo esemplificativo.
+
+Lo studente deve necessariamente confrontarsi con i docenti referenti per individuare la corretta conversione dei corsi.
+
+[equipollenze GIURISPRUDENZA extraue.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/equipollenze%20GIURISPRUDENZA%20extraue.pdf)
+
+[equipollenze GIURISPRUDENZA.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/equipollenze%20GIURISPRUDENZA.pdf)
+
+[equipollenze ING IGIP.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/equipollenze%20ING%20IGIP.pdf)
+
+[Equipollenze ING ISA.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING%20ISA.pdf)
+
+[Equipollenze ING_EXTRAUE.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING_EXTRAUE.pdf)
+
+[Equipollenze LFC EXTRA UE.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20LFC%20EXTRA%20UE.pdf)
+
+[Equipollenze LFC.pdf](https://www.unibg.it/sites/default/files/media/documents/2023-09-18/Equipollenze%20LFC_0.pdf "Equipollenze LFC_0.pdf")
+
+[Equipollenze LLCS Extra UE.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20Extra%20UE.pdf)
+
+[Equipollenze LLCS LLEP.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LLEP.pdf)
+
+[Equipollenze LLCS LLSM.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LLSM.pdf)
+
+[Equipollenze LLCS LLSM_0.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LLSM_0.pdf)
+
+[Equipollenze LLCS LMCCI.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20LMCCI.pdf)
+
+[Equipollenze LLCS PMTS.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20LLCS%20PMTS.pdf)
+
+[Equipollenze SA-SE.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20SA-SE.pdf)
+
+[Equipollenze SA-SE_Extra UE.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20SA-SE_Extra%20UE.pdf)
+
+[Equipollenze SUS EXTRA UE.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20SUS%20EXTRA%20UE.pdf)
+
+[Equipollenze SUS.pdf](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20SUS.pdf)
+
+### Tabelle di conversione voti per Dipartimento
+
+Le tabelle di conversione voti di seguito riportate sono indicative ed a cura dei docenti incaricati di ogni Dipartimento.
+
+Si precisa che si tratta di corrispondenze numeriche tendenziali e non assolute, essendoci la possibilità, da parte del responsabile Erasmus del Dipartimento, di adattamenti alle condizioni di ciascuna specifica sede.
+
+[Tabella conversione voti Dipartimento di Giurisprudenza](https://www.unibg.it/sites/default/files/media/documents/2022-07-05/GIU%20Erasmus%20-%20Conversione%20voti%20Giurisprudenza.pdf "GIU Erasmus - Conversione voti Giurisprudenza.pdf")
+
+[Tabella conversione voti Erasmus Dip.ti ISA-IGIP](https://www.unibg.it/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20ERASMUS_0.pdf "DIP ING _ TABELLE DI CONVERSIONE ERASMUS_0.pdf")
+
+[Tabella conversione voti Extra-UE Dip.ti ISA-IGIP](https://www.unibg.it/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20EXTRA-UE_0.pdf "DIP ING _ TABELLE DI CONVERSIONE EXTRA-UE_0.pdf")
+
+[Tabella conversione voti Dip. LFC](https://www.unibg.it/sites/default/files/media/documents/2026-01-14/Tabella%20conversione%20LFC%202025-2026.pdf "Tabella conversione LFC 2025-2026.pdf")
+
+[Dipartimento di LLCS](https://www.unibg.it/sites/default/files/media/documents/2023-07-18/tabelle%20conversione%20voti%20da%20a.a.%202023-24.pdf "tabelle conversione voti da a.a. 2023-24.pdf")
+
+[Tabella conversione voti SUS](https://www.unibg.it/sites/default/files/media/documents/2023-11-08/Tabella%20conversione%20voti%20SUS.docx.pdf "Tabella conversione voti SUS.docx.pdf")
+
+[Tabella conversione voti SA-SE](https://www.unibg.it/sites/default/files/media/documents/2024-03-04/Tabelle%20conversioni%20voti%20SA-SE..pdf "Tabelle conversioni voti SA-SE..pdf")
+
+### Diari di viaggio - Travel diaries (info generali dagli studenti rientrati dalle mobilità per studio)
+
+Nell'allegato sono disponibili le informazioni fornite da studentesse e studenti che hanno partecipato ai programmi di scambio negli anni scorsi in merito all’alloggio, trasporti, costo della vita e sui pro e contro dell’università ospitante.
+
+Le indicazioni contenute non intendono essere esaustive, ma vogliono essere un ulteriore aiuto e supporto a chi intende trascorrere un periodo di mobilità per studio.
+
+Essendo appunto basate sulle esperienze soggettive l’Ateneo non è responsabile delle informazioni qui riportate.
+
+Ovviamente nel caso di più mobilità verso la stessa sede le informazioni potrebbero essere diverse o replicate.
+
+Ringraziamo le studentesse e gli studenti che hanno contribuito alla creazione di questo documento.
+
+Le informazioni sono state catalogate in ordine di nazione.
+
+Buon Viaggio!
+
+[Travel diaries - agg. 04.03.2024](https://www.unibg.it/sites/default/files/media/documents/2024-03-04/2024_Your%20travel%20diary.pdf "2024_Your travel diary.pdf")
+
+### Guida Erasmus ESN
+
+Di seguito la guida predisposta dall'associazione Erasmus Student Network
+
+[Erasmus: a complete guide by ESN](https://issuu.com/esnint/docs/erasmus_e-book?fbclid=IwAR2qe7aEfQXqqVkoL8FWMJBiPhCOcuqtLOTCW6XaMJ_bf_Ovx9efX-z5rIc)
+
+### Erasmus days 2024 - slides webinar
+
+[Erasmus per studio](https://www.unibg.it/sites/default/files/media/documents/2024-10-14/Erasmus%20days%202024_ERASMUS.pdf "Erasmus days 2024_ERASMUS.pdf")
+
+[Erasmus per tirocinio](https://www.unibg.it/sites/default/files/media/documents/2024-10-14/Erasmus%20days%202024_TRAINEESHIPS.pdf "Erasmus days 2024_TRAINEESHIPS.pdf")
+
+[Erasmus BIP (Blended Intensive Programs)](https://www.unibg.it/sites/default/files/media/documents/2024-10-14/Erasmus%20days%202024_BIP.pdf "Erasmus days 2024_BIP.pdf")
+
+### Bando Erasmus+ a.a. 2026-2027 - Mobilità per studio
+
+[Bando Erasmus+ a.a. 2026-2027 - Mobilità per studio](https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027)
+
+### Bandi Erasmus+ a.a. 2023-24 e 2024-25 - Mobilità per Traineeship
+
+[Bandi Erasmus+ a.a. 2023-24 e 2024-25 - Mobilità per Traineeship](https://www.unibg.it/node/16133)
+
+### Bando Erasmus + Mobilità Studenti KA107
+
+[Bando Erasmus Plus per la mobilità studenti KA107 – International Credit Mobility a.a. 2022/2023 – verso Ort Braude College, Israele](https://www.unibg.it/bandi/bando-erasmus-plus-mobilita-studenti-ka107-aa-2022-2023-verso-sede-ort-braude-college-israele)
+
+### Naviga la sezione
+
+*   [Erasmus+ traineeships](https://www.unibg.it/internazionale/andare-allestero/erasmus/erasmus-traineeships)
+*   [BAUHAUS4EU](https://www.unibg.it/internazionale/andare-allestero/erasmus/bauhaus4eu)
+
+### Contatti
+
+**Ufficio programmi internazionali**
+
+ via S. Bernardino, 72/e
+
+ 24122 Bergamo
+
+Per informazioni relative al bando Erasmus+ per studio inviare un ticket selezionando l'indirizzo **"Erasmus in uscita (Outgoing)**">**servizio ticket [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud/)**
+
+Per prendere un appuntamento presso l'ufficio programmi internazionali**[Prenota un appuntamento](https://logistica.unibg.it/PortalePlanning/UNIBG-servizi/index.php)**
+
+Per contattare l'ufficio telefonicamente:
+
+Studenti di LLCS
+
+ T +39 035 205 2831
+
+Studenti di LFC e SUS
+
+ T +39 035 205 2830
+
+Studenti Scuola di Economia e Management
+
+ T +39 035 205 2833
+
+Studenti Scuola di Ingegneria
+
+ T +39 035 205 2109
+
+Studenti di Giurisprudenza e info riguardo a borse di studio
+
+ T +39 035 205 2468
+
+Erasmus KA 107
+
+ T +39 035 205 2290
+
+**Attenzione:** negli orari di apertura la reperibilità telefonica potrebbe non essere garantita.
+
+### Potrebbe interessarti
+
+*   [Regolamento per la mobilità internazionale](https://www.unibg.it/normativa/regolamento-ateneo-mobilita-internazionale)  
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/internazionale/andare-allestero/erasmus#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+
+>>> USER PROMPT:
+Attualmente dove posso studiare all'estero?
+
+>>> RISPOSTA:
+Ciao Raphael, in quanto studente del 1° anno della Laurea Magistrale in Ingegneria Informatica, hai diverse opportunità per studiare all'estero attraverso i programmi offerti dall'Università di Bergamo.
+
+Le principali opportunità per un periodo di studio all'estero sono:
+
+1.  **Erasmus+ KA 131 (Mobilità per studio in Paesi UE)**: Questo programma ti permette di trascorrere un periodo di studio (da 3 a 12 mesi) presso una delle Università Partner Europee con cui l'Università di Bergamo ha accordi. Potrai seguire corsi universitari, usufruire delle strutture dell'università ospitante senza costi aggiuntivi e ottenere il riconoscimento dei crediti formativi.
+    *   **Bando attuale**: È stato pubblicato il [Bando Erasmus+ a.a. 2026-2027 - Mobilità per studio](https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027). Ti consiglio di consultarlo per conoscere le sedi disponibili, i requisiti e le scadenze per presentare la domanda per il prossimo anno accademico.
+
+2.  **Erasmus+ KA 107 (Mobilità per studio in Paesi extra-UE)**: Questo programma, noto come International Credit Mobility, offre la possibilità di svolgere un periodo di studio o ricerca (da 3 a 12 mesi) presso università partner al di fuori dell'Unione Europea. Le borse di studio sono finanziate dall'Unione Europea e assegnate tramite bandi specifici.
+
+3.  **Erasmus+ Traineeship**: Se sei interessato a un'esperienza di tirocinio all'estero, il programma Erasmus+ Traineeship ti consente di svolgere un tirocinio curriculare presso imprese o enti in uno dei Paesi partecipanti al Programma. Anche per questo sono previsti contributi comunitari.
+    *   **Bandi attuali**: Sono disponibili i [Bandi Erasmus+ a.a. 2023-24 e 2024-25 - Mobilità per Traineeship](https://www.unibg.it/node/16133).
+
+4.  **Blended Intensive Programs (BIP)**: Questi sono percorsi di studio intensivi transnazionali di breve durata, che combinano lezioni online con una Summer School o attività in presenza di circa una settimana.
+
+Per la Scuola di Ingegneria, sono disponibili tabelle di equipollenza e conversione voti che ti saranno utili per la pianificazione del tuo percorso all'estero:
+*   [Tabelle di equipollenza per Ingegneria](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING%20ISA.pdf)
+*   [Tabelle di equipollenza per Ingegneria extra-UE](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING_EXTRAUE.pdf)
+*   [Tabelle di conversione voti Erasmus per Dipartimenti ISA-IGIP](https://www.unibg.it/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20ERASMUS_0.pdf)
+*   [Tabelle di conversione voti Extra-UE per Dipartimenti ISA-IGIP](https://www.unibg.it/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20EXTRA-UE_0.pdf)
+
+Ti suggerisco di consultare attentamente il bando di tuo interesse per tutti i dettagli relativi a requisiti linguistici, destinazioni, scadenze e modalità di candidatura.
+
+Per ulteriori informazioni e per prendere un appuntamento, puoi contattare l'Ufficio programmi internazionali:
+*   **Telefono (per studenti Scuola di Ingegneria)**: +39 035 205 2109
+*   **Email generale**: relint@unibg.it
+*   **Help Desk Studenti**: Puoi inviare un ticket selezionando "Erasmus in uscita (Outgoing)" tramite il [servizio ticket Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud/).
+*   **Prenota un appuntamento**: Puoi prenotare un appuntamento presso l'ufficio tramite [questo link](https://logistica.unibg.it/PortalePlanning/UNIBG-servizi/index.php).
+
+Pagina di riferimento: https://www.unibg.it/internazionale/andare-allestero/erasmus
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Domanda originale: Attualmente dove posso studiare all'estero?
+Categoria: generale
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Raphael, in quanto studente del 1° anno della Laurea Magistrale in Ingegneria Informatica, hai diverse opportunità per studiare all'estero attraverso i programmi offerti dall'Università di Bergamo.
+
+Le principali opportunità per un periodo di studio all'estero sono:
+
+1.  **Erasmus+ KA 131 (Mobilità per studio in Paesi UE)**: Questo programma ti permette di trascorrere un periodo di studio (da 3 a 12 mesi) presso una delle Università Partner Europee con cui l'Università di Bergamo ha accordi. Potrai seguire corsi universitari, usufruire delle strutture dell'università ospitante senza costi aggiuntivi e ottenere il riconoscimento dei crediti formativi.
+    *   **Bando attuale**: È stato pubblicato il [Bando Erasmus+ a.a. 2026-2027 - Mobilità per studio](https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027). Ti consiglio di consultarlo per conoscere le sedi disponibili, i requisiti e le scadenze per presentare la domanda per il prossimo anno accademico.
+
+2.  **Erasmus+ KA 107 (Mobilità per studio in Paesi extra-UE)**: Questo programma, noto come International Credit Mobility, offre la possibilità di svolgere un periodo di studio o ricerca (da 3 a 12 mesi) presso università partner al di fuori dell'Unione Europea. Le borse di studio sono finanziate dall'Unione Europea e assegnate tramite bandi specifici.
+
+3.  **Erasmus+ Traineeship**: Se sei interessato a un'esperienza di tirocinio all'estero, il programma Erasmus+ Traineeship ti consente di svolgere un tirocinio curriculare presso imprese o enti in uno dei Paesi partecipanti al Programma. Anche per questo sono previsti contributi comunitari.
+    *   **Bandi attuali**: Sono disponibili i [Bandi Erasmus+ a.a. 2023-24 e 2024-25 - Mobilità per Traineeship](https://www.unibg.it/node/16133).
+
+4.  **Blended Intensive Programs (BIP)**: Questi sono percorsi di studio intensivi transnazionali di breve durata, che combinano lezioni online con una Summer School o attività in presenza di circa una settimana.
+
+Per la Scuola di Ingegneria, sono disponibili tabelle di equipollenza e conversione voti che ti saranno utili per la pianificazione del tuo percorso all'estero:
+*   [Tabelle di equipollenza per Ingegneria](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING%20ISA.pdf)
+*   [Tabelle di equipollenza per Ingegneria extra-UE](https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING_EXTRAUE.pdf)
+*   [Tabelle di conversione voti Erasmus per Dipartimenti ISA-IGIP](https://www.unibg.it/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20ERASMUS_0.pdf)
+*   [Tabelle di conversione voti Extra-UE per Dipartimenti ISA-IGIP](https://www.unibg.it/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20EXTRA-UE_0.pdf)
+
+Ti suggerisco di consultare attentamente il bando di tuo interesse per tutti i dettagli relativi a requisiti linguistici, destinazioni, scadenze e modalità di candidatura.
+
+Per ulteriori informazioni e per prendere un appuntamento, puoi contattare l'Ufficio programmi internazionali:
+*   **Telefono (per studenti Scuola di Ingegneria)**: +39 035 205 2109
+*   **Email generale**: relint@unibg.it
+*   **Help Desk Studenti**: Puoi inviare un ticket selezionando "Erasmus in uscita (Outgoing)" tramite il [servizio ticket Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud/).
+*   **Prenota un appuntamento**: Puoi prenotare un appuntamento presso l'ufficio tramite [questo link](https://logistica.unibg.it/PortalePlanning/UNIBG-servizi/index.php).
+
+Pagina di riferimento: https://www.unibg.it/internazionale/andare-allestero/erasmus
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RISPOSTA:
+Come studente del 1° anno della Laurea Magistrale in Ingegneria Informatica, hai diverse opportunità per studiare all'estero attraverso i programmi offerti dall'Università di Bergamo.
+
+Le principali opportunità per un periodo di studio all'estero sono:
+
+1.  ERASMUS+ KA 131 (MOBILITÀ PER STUDIO IN PAESI UE): Questo programma ti permette di trascorrere un periodo di studio (da 3 a 12 mesi) presso una delle Università Partner Europee con cui l'Università di Bergamo ha accordi. Potrai seguire corsi universitari, usufruire delle strutture dell'università ospitante senza costi aggiuntivi e ottenere il riconoscimento dei crediti formativi.
+    *   Bando attuale: È stato pubblicato il Bando Erasmus+ a.a. 2026-2027 - Mobilità per studio.
+        https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027
+
+2.  ERASMUS+ KA 107 (MOBILITÀ PER STUDIO IN PAESI EXTRA-UE): Questo programma, noto come International Credit Mobility, offre la possibilità di svolgere un periodo di studio o ricerca (da 3 a 12 mesi) presso università partner al di fuori dell'Unione Europea. Le borse di studio sono finanziate dall'Unione Europea e assegnate tramite bandi specifici.
+
+3.  ERASMUS+ TRAINEESHIP: Se sei interessato a un'esperienza di tirocinio all'estero, il programma Erasmus+ Traineeship ti consente di svolgere un tirocinio curriculare presso imprese o enti in uno dei Paesi partecipanti al Programma. Sono previsti contributi comunitari.
+    *   Bandi attuali: Sono disponibili i Bandi Erasmus+ a.a. 2023-24 e 2024-25 - Mobilità per Traineeship.
+        https://www.unibg.it/node/16133
+
+4.  BLENDED INTENSIVE PROGRAMS (BIP): Questi sono percorsi di studio intensivi transnazionali di breve durata, che combinano lezioni online con una Summer School o attività in presenza di circa una settimana.
+
+Per la Scuola di Ingegneria, sono disponibili tabelle di equipollenza e conversione voti utili per la pianificazione del tuo percorso all'estero:
+-   Tabelle di equipollenza per Ingegneria
+    https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING%20ISA.pdf
+-   Tabelle di equipollenza per Ingegneria extra-UE
+    https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING_EXTRAUE.pdf
+-   Tabelle di conversione voti Erasmus per Dipartimenti ISA-IGIP
+    https://www.unibg.it/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20ERASMUS_0.pdf
+-   Tabelle di conversione voti Extra-UE per Dipartimenti ISA-IGIP
+    https://www.unibg.it/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20EXTRA-UE_0.pdf
+
+Per ulteriori informazioni e per prendere un appuntamento, puoi contattare l'Ufficio programmi internazionali:
+-   Telefono (per studenti Scuola di Ingegneria): +39 035 205 2109
+-   Email generale: relint@unibg.it
+-   Help Desk Studenti: Puoi inviare un ticket selezionando "Erasmus in uscita (Outgoing)" tramite il servizio ticket Help Desk Studenti.
+    https://helpdesk.unibg.it/helpdesksegrestud/
+-   Prenota un appuntamento: Puoi prenotare un appuntamento presso l'ufficio tramite questo link.
+    https://logistica.unibg.it/PortalePlanning/UNIBG-servizi/index.php
+
+Pagina di riferimento: https://www.unibg.it/internazionale/andare-allestero/erasmus
+
+================================================================================
+RISPOSTA FINALE
+================================================================================
+Come studente del 1° anno della Laurea Magistrale in Ingegneria Informatica, hai diverse opportunità per studiare all'estero attraverso i programmi offerti dall'Università di Bergamo.
+
+Le principali opportunità per un periodo di studio all'estero sono:
+
+1.  ERASMUS+ KA 131 (MOBILITÀ PER STUDIO IN PAESI UE): Questo programma ti permette di trascorrere un periodo di studio (da 3 a 12 mesi) presso una delle Università Partner Europee con cui l'Università di Bergamo ha accordi. Potrai seguire corsi universitari, usufruire delle strutture dell'università ospitante senza costi aggiuntivi e ottenere il riconoscimento dei crediti formativi.
+    *   Bando attuale: È stato pubblicato il Bando Erasmus+ a.a. 2026-2027 - Mobilità per studio.
+        https://www.unibg.it/bandi/bando-erasmus-mobilita-fini-studio-aa-20262027
+
+2.  ERASMUS+ KA 107 (MOBILITÀ PER STUDIO IN PAESI EXTRA-UE): Questo programma, noto come International Credit Mobility, offre la possibilità di svolgere un periodo di studio o ricerca (da 3 a 12 mesi) presso università partner al di fuori dell'Unione Europea. Le borse di studio sono finanziate dall'Unione Europea e assegnate tramite bandi specifici.
+
+3.  ERASMUS+ TRAINEESHIP: Se sei interessato a un'esperienza di tirocinio all'estero, il programma Erasmus+ Traineeship ti consente di svolgere un tirocinio curriculare presso imprese o enti in uno dei Paesi partecipanti al Programma. Sono previsti contributi comunitari.
+    *   Bandi attuali: Sono disponibili i Bandi Erasmus+ a.a. 2023-24 e 2024-25 - Mobilità per Traineeship.
+        https://www.unibg.it/node/16133
+
+4.  BLENDED INTENSIVE PROGRAMS (BIP): Questi sono percorsi di studio intensivi transnazionali di breve durata, che combinano lezioni online con una Summer School o attività in presenza di circa una settimana.
+
+Per la Scuola di Ingegneria, sono disponibili tabelle di equipollenza e conversione voti utili per la pianificazione del tuo percorso all'estero:
+-   Tabelle di equipollenza per Ingegneria
+    https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING%20ISA.pdf
+-   Tabelle di equipollenza per Ingegneria extra-UE
+    https://www.unibg.it/sites/default/files/media/documents/2022-10-06/Equipollenze%20ING_EXTRAUE.pdf
+-   Tabelle di conversione voti Erasmus per Dipartimenti ISA-IGIP
+    https://www.unibg.it/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20ERASMUS_0.pdf
+-   Tabelle di conversione voti Extra-UE per Dipartimenti ISA-IGIP
+    https://www.unibg.it/sites/default/files/media/documents/2022-07-05/DIP%20ING%20_%20TABELLE%20DI%20CONVERSIONE%20EXTRA-UE_0.pdf
+
+Per ulteriori informazioni e per prendere un appuntamento, puoi contattare l'Ufficio programmi internazionali:
+-   Telefono (per studenti Scuola di Ingegneria): +39 035 205 2109
+-   Email generale: relint@unibg.it
+-   Help Desk Studenti: Puoi inviare un ticket selezionando "Erasmus in uscita (Outgoing)" tramite il servizio ticket Help Desk Studenti.
+    https://helpdesk.unibg.it/helpdesksegrestud/
+-   Prenota un appuntamento: Puoi prenotare un appuntamento presso l'ufficio tramite questo link.
+    https://logistica.unibg.it/PortalePlanning/UNIBG-servizi/index.php
+
+Pagina di riferimento: https://www.unibg.it/internazionale/andare-allestero/erasmus
+
+------------------------------------------------------------
+TEMPI DI ESECUZIONE
+------------------------------------------------------------
+  Classifier Agent         : 2.364s
+  Query Agent              : 3.041s
+  Web Agent                : 4.538s
+  Generator Agent          : 13.239s
+  Revision Agent           : 11.366s
+
+  TEMPO TOTALE             : 34.550s
+
+================================================================================
+FINE DEL LOG
+================================================================================

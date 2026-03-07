@@ -1,0 +1,3154 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-07 15:46:50
+Status    : success
+
+------------------------------------------------------------
+INFORMAZIONI UTENTE
+------------------------------------------------------------
+Tipo utente   : loggato
+Nome          : Raphael Mazzoleni
+Matricola     : 1086531
+Dipartimento  : Scuola di Ingegneria
+Corso         : Ingegneria informatica
+Tipologia     : Magistrale
+Anno          : 1
+
+------------------------------------------------------------
+QUERY ORIGINALE DELL'UTENTE
+------------------------------------------------------------
+Elencami tutte le sedi dell'università di Bergamo.
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: generale
+Description: Domande generiche sull'università
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, ricevimenti
+- date_esami: Richieste su date e orari degli esami, sessioni d'esame, quando si svolge un esame
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+- "Quando è l'esame di analisi?" -> date_esami
+- "Che esami ho alla prossima sessione?" -> date_esami
+- "In che date sono gli esami della sessione estiva?" -> date_esami
+- "Quando posso dare l'esame di basi di dati?" -> date_esami
+
+
+>>> USER PROMPT:
+Elencami tutte le sedi dell'università di Bergamo.
+
+>>> RISPOSTA:
+generale
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: sedi università Bergamo unibg
+Original Query: Elencami tutte le sedi dell'università di Bergamo.
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+DATA ODIERNA: 07 marzo 2026 (Anno accademico 2025/2026)
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE FONDAMENTALI:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- La query deve essere in italiano
+- Massimo 8 parole
+- Quando la domanda riguarda date, sessioni o periodi temporali, includi l'anno accademico (2025/2026) o il periodo specifico (es. "marzo 2026", "sessione estiva 2026") nella query
+
+REGOLA CRITICA - CONTESTO CONVERSAZIONE:
+Il contesto della conversazione ha SEMPRE la priorità sul profilo dello studente.
+Se la conversazione indica che l'utente sta chiedendo informazioni su un corso/dipartimento DIVERSO dal proprio, la query DEVE riferirsi al corso/dipartimento menzionato nella conversazione, NON a quello del profilo.
+
+Esempio critico:
+- Profilo studente: Ingegneria informatica, Magistrale
+- Conversazione precedente: lo studente chiedeva degli esami di Giurisprudenza
+- Nuova domanda: "invece nella sessione estiva?"
+- Query CORRETTA: date esami giurisprudenza sessione estiva 2025/2026 unibg
+- Query SBAGLIATA: esami sessione estiva ingegneria informatica magistrale unibg
+Motivo: dalla conversazione è chiaro che "invece" si riferisce sempre a Giurisprudenza, non al suo corso.
+
+QUANDO USARE LE INFORMAZIONI DEL PROFILO STUDENTE:
+INCLUDI le info del profilo SOLO quando:
+- La domanda riguarda esplicitamente il PROPRIO corso dello studente (es. "che materie ho?", "i miei esami")
+- Non c'è contesto conversazionale che indichi un argomento diverso
+- La domanda usa pronomi possessivi ("mio", "miei", "il mio corso")
+
+NON INCLUDERE le info del profilo quando:
+- La conversazione indica un argomento/corso diverso dal profilo
+- La domanda è generica (procedure, servizi, docenti, mensa, erasmus)
+- La domanda menziona esplicitamente un altro corso o dipartimento
+- La domanda è un follow-up ("e nella sessione X?", "invece per...", "e gli orari?") e il contesto conversazionale indica un corso diverso
+
+ESEMPI CON PROFILO (corso: ingegneria informatica, anno: 1, magistrale):
+- "che materie ho al secondo anno?" → materie secondo anno ingegneria informatica magistrale unibg
+- "i miei esami della prossima sessione" → esami prossima sessione ingegneria informatica magistrale 2025/2026 unibg
+
+ESEMPI SENZA PROFILO:
+- "come faccio a iscrivermi al test di ammissione?" → iscrizione test ammissione unibg
+- "chi è il docente di algoritmi?" → docente algoritmi unibg
+- "dove si trova la mensa?" → mensa universitaria unibg
+- "esami giurisprudenza terzo anno" → date esami giurisprudenza terzo anno 2025/2026 unibg
+
+ESEMPIO FOLLOW-UP (contesto: si parlava di esami di giurisprudenza):
+- "invece nella sessione estiva?" → date esami giurisprudenza sessione estiva 2025/2026 unibg
+- "e quelli del quarto anno?" → date esami giurisprudenza quarto anno 2025/2026 unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+
+Informazioni studente:
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Ultima richiesta dello studente: Elencami tutte le sedi dell'università di Bergamo.
+
+Genera la query di ricerca web:
+
+>>> RISPOSTA:
+sedi università Bergamo unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Tavily Search)
+------------------------------------------------------------
+Status              : success
+Query di ricerca    : sedi università Bergamo unibg
+Totale risultati    : 12
+Risultati usati     : 5
+
+>>> RISULTATI PRINCIPALI:
+  [1] Score: 0.9153
+      Titolo   : Le nostre sedi | Università degli studi di Bergamo - UniBg
+      URL      : https://www.unibg.it/ateneo/chi-siamo/sedi
+      Contenuto: Le nostre sedi | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/ateneo/chi-siamo/sedi#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/chi-siamo/sedi#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7052 "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/chi-siamo/sedi#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7052 "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Le sedi
+=======
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Ateneo](https://www.unibg.it/ateneo)
+3.   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+4.   [Le sedi](https://www.unibg.it/ateneo/chi-siamo/sedi)
+
+[](https://www.unibg.it/ateneo/chi-siamo/sedi)
+
+### Il campus diffuso
+
+![Image 3: Graduation Day 2018](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2023-05-18/04.%20Graduation%20Day%202018_UniBg_Lancio%20del%20tocco%20in%20Piazza%20Vecchia.jpeg?itok=CLIxeWQR)
+
+Le sedi dell’**Università degli studi di Bergamo** riflettono il modello di _campus diffuso_ dell’ateneo, articolato tra il centro storico della città e il territorio provinciale. Gli spazi universitari ospitano attività didattiche, di ricerca, servizi amministrativi e strutture a supporto della comunità accademica, integrandosi con il contesto urbano e favorendo il dialogo con il territorio.
+
+### Campus umanistico
+
+Il Campus umanistico dell’**Università degli studi di Bergamo** è situato prevalentemente in Città Alta e rappresenta il cuore storico dell’ateneo. Comprende sedi di particolare valore architettonico e culturale, tra cui Sant’Agostino, Salvecchio, Rosate e Pignolo, che ospitano attività didattiche, di ricerca e servizi legati alle discipline umanistiche, linguistiche e sociali. Il campus si inserisce nel tessuto storico della città, contribuendo in modo significativo all’identità culturale dell’università.
+
+### Campus economico-giuridico
+
+Il Campus economico-giuridico dell’**Università degli studi di Bergamo**, situato in Città Bassa, è dedicato alle attività didattiche e istituzionali nei settori dell’economia, delle scienze aziendali e del diritto. Comprende le sedi di via dei Caniana e via Moroni, che ospitano dipartimenti, aule, uffici e servizi per studenti e personale. Il campus rappresenta un punto di riferimento per la formazione e la ricerca in ambito economico e giuridico, in stretta connessione con il contesto urbano e istituzionale.
+
+### Campus ingegneristico
+
+La sede di Dalmine ospita il Campus ingegneristico dell’**Università degli studi di Bergamo**, polo dedicato alle discipline ingegneristiche e alle scienze applicate. Il campus accoglie la Scuola di Ingegneria, dipartimenti, laboratori e spazi per la didattica e la ricerca, favorendo un forte collegamento con il sistema produttivo e industriale del territorio. La struttura supporta attività formative e di ricerca orientate all’innovazione tecnologica e allo sviluppo sostenibile.
+
+### Kilometro Rosso
+
+L’**Università degli studi di Bergamo** è infine presente presso il Kilometro Rosso, uno dei principali distretti italiani dedicati alla ricerca e all’innovazione tecnologica. Questa sede rappresenta un punto di incontro tra università, imprese e centri di ricerca e favorisce lo sviluppo di collaborazioni scientifiche e progettuali. La presenza dell’ateneo nel distretto rafforza il trasferimento di conoscenze e il dialogo tra mondo accademico e sistema produttivo.
+
+### Potrebbe interessarti
+
+[Immobili storici e patrimonio artistico](https://www.unibg.it/terza-missione/cultura-e-societa/immobili-storici-e-patrimonio-artistico)
+
+### Naviga la sezione
+
+*   [Palazzo Bassi-Rathgeb](https://www.unibg.it/ateneo/chi-siamo/sedi/palazzo-bassi-rathgeb)
+*   [Caniana](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana)
+*   [Dalmine](https://www.unibg.it/ateneo/chi-siamo/sedi/dalmine)
+*   [Kilometro Rosso](https://www.unibg.it/ateneo/chi-siamo/sedi/kilometro-rosso)
+*   [Pignolo](https://www.unibg.it/ateneo/chi-siamo/sedi/pignolo)
+*   [Rosate](https://www.unibg.it/ateneo/chi-siamo/sedi/rosate)
+*   [Salvecchio](https://www.unibg.it/ateneo/chi-siamo/sedi/salvecchio)
+*   [Sant'Agostino](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino)
+*   [Il campus economico-giuridico](https://www.unibg.it/ateneo/chi-siamo/sedi/campus-economico-giuridico)
+*   [Il campus ingegneristico](https://www.unibg.it/ateneo/chi-siamo/sedi/campus-ingegneristico)
+*   [Il campus umanistico](https://www.unibg.it/ateneo/chi-siamo/sedi/campus-umanistico)
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/ateneo/chi-siamo/sedi#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+  [2] Score: 0.8832
+      Titolo   : Sedi - SDM UniBG
+      URL      : https://sdm.unibg.it/sdm/sedi-sdm/
+      Contenuto: Sedi - SDM UniBG
+===============
+
+[![Image 1](https://sdm.unibg.it/wp-content/themes/sdm2023/img/logo-sdm.svg)![Image 2](https://sdm.unibg.it/wp-content/themes/sdm2023/img/logo-sdm-simbolo.svg)](https://sdm.unibg.it/)
+
+*   [Ammissione ai corsi](https://sdm.unibg.it/guida-procedura-di-pre-iscrizione/)
+*   [Modulistica](https://sdm.unibg.it/modulistica-e-faq/modulistica/)
+*   [Sedi](https://sdm.unibg.it/sdm/sedi-sdm/)
+*   [Contatti](https://sdm.unibg.it/sdm/contatti/)
+
+*   [![Image 3](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_search.svg)](https://sdm.unibg.it/sdm/sedi-sdm/)
+
+*   [](https://www.linkedin.com/company/sdm-school-of-management-universit%C3%A0-di-bergamo/)
+*   [](https://www.instagram.com/sdm_unibg/)
+*   [](https://it-it.facebook.com/master.sdm.unibg)
+*   [](https://www.youtube.com/@sdm-scuoladialtaformazione6445)
+
+[![Image 4](https://sdm.unibg.it/wp-content/themes/sdm2023/img/logo-universita-bg.svg)](https://www.unibg.it/)
+
+*   [SDM](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [Formazione](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [Enti e imprese](https://sdm.unibg.it/enti-e-imprese/)
+*   [Modulistica e Faq](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [News & Eventi](https://sdm.unibg.it/category/news/)
+
+[![Image 5](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_close.svg)](https://sdm.unibg.it/sdm/sedi-sdm/)
+
+Ricerca per: 
+
+[![Image 6](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_close.svg)](https://sdm.unibg.it/sdm/sedi-sdm/#)
+
+L’incontro tra risorse accademiche e professionali
+
+Grazie all’offerta formativa e alle attività di ricerca SdM rappresenta un ponte tra il mondo lavorativo e quello accademico, contribuendo al futuro del territorio in una prospettiva internazionale.
+
+*   [Scuola](https://sdm.unibg.it/sdm/scuola/)
+*   [Giunta](https://sdm.unibg.it/sdm/giunta/)
+*   [Sedi](https://sdm.unibg.it/sdm/sedi-sdm/)
+*   [Contatti](https://sdm.unibg.it/sdm/contatti/)
+
+[![Image 7](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_close.svg)](https://sdm.unibg.it/sdm/sedi-sdm/#)
+
+Un solido riferimento per accompagnare la crescita del territorio
+
+Gli Enti e le imprese in fase di cambiamento trovano nella consulenza di SdM un valido supporto per indirizzare il proprio cammino su basi solide.
+
+ Grazie all’esperienza accumulata, SdM offre infatti possibilità di formazione su misura, organizzando corsi ad hoc, tirocini, project work e svolgendo ricerche mirate.
+
+ Questo tipo di collaborazione permette anche a SdM di verificare sul campo la validità della propria offerta rispetto alle esigenze operative aziendali e ai mercati di riferimento, ottimizzando sempre più le proposte formative in un’ottica win-win.
+
+[![Image 8](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_close.svg)](https://sdm.unibg.it/sdm/sedi-sdm/#)
+
+Non porti limiti di crescita.
+
+ Investi su te stesso e comincia il tuo cammino.
+
+Tutti coloro che sono interessati ad accrescere le proprie capacità trovano nei percorsi formativi di SdM un’offerta eccellente e un’importante opportunità finalizzata alla loro crescita professionale e umana.
+
+ La proposta di SdM, consiste in: Master di I o II livello, Corsi di Perfezionamento Corsi di alta formazione personalizzati, che consentono di acquisire competenze in vari ambiti disciplinari e conoscenze specifiche al fine di creare profili professionali in linea con le richieste del mercato del lavoro.
+
+[![Image 9](https://sdm.unibg.it/wp-content/uploads/2023/07/master_1_livello.svg) ##### Master 1° livello Riservato a chi possiede almeno una laurea triennale; durata almeno annuale, con 60 CFU. Rilascia il diploma di Master di I livello.](https://sdm.unibg.it/categoria-corso/master-1-livello/)
+
+[![Image 10](https://sdm.unibg.it/wp-content/uploads/2023/07/master_2_livello.svg) ##### Master 2° livello Riservato a chi possiede una laurea specialistica, magistrale o equivalenti (ad esempio laurea vecchio ordinamento); durata almeno annuale, con 60 CFU; rilascia il diploma di Master di II livello.](https://sdm.unibg.it/categoria-corso/master-2-livello/)
+
+[![Image 11](https://sdm.unibg.it/wp-content/uploads/2023/07/corsi_di_perfezionamento.svg) ##### Corsi di perfezionamento Riservato a chi possiede una laurea almeno triennale; rilascia attestato di CDP.](https://sdm.unibg.it/categoria-corso/corsi-di-perfezionamento/)
+
+[![Image 12](https://sdm.unibg.it/wp-content/uploads/2023/07/alta_formazione.svg) ##### Alta formazione Corsi specifici organizzati in collaborazione o su richiesta di enti, aziende, istituzioni.](https://sdm.unibg.it/categoria-corso/alta-formazione/)
+
+[Scopri tutti i corsi](https://sdm.unibg.it/corso/)
+
+[![Image 13](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_close.svg)](https://sdm.unibg.it/sdm/sedi-sdm/#)
+
+Trova le risposte alla tua ricerca
+
+In questa sezione potrai trovare tutta la modulistica necessaria per iscriverti ai nostri corsi.
+
+ Per qualsiasi dubbio scorri le nostre FAQ.
+
+*   [Modulistica](https://sdm.unibg.it/modulistica-e-faq/modulistica/)
+*   [FAQ](https://sdm.unibg.it/modulistica-e-faq/faq/)
+
+*   [Home](https://sdm.unibg.it/)
+*   SDM
+*   Sedi
+
+Sedi
+====
+
+Le lezioni dei Corsi si svolgono presso le sedi distribuite sul territorio dell'Università degli Studi di Bergamo
+-----------------------------------------------------------------------------------------------------------------
+
+![Image 14](https://sdm.unibg.it/wp-content/themes/sdm2023/img/square-placeholder.gif)
+
+### Km Rosso
+
+**Ingresso Est**
+
+ via Stezzano, 87,Bergamo
+
+_Casello di Bergamo dell’Autostrada A4_
+
+**Ingresso Ovest**
+
+ viale Europa, 4,Stezzano (Bergamo)
+
+_Casello di Dalmine dell’Autostrada A4_
+
+[Guarda la mappa >](https://www.google.it/maps/place/Kilometro+Rosso/@45.6604258,9.6494119,17z/data=!3m1!4b1!4m6!3m5!1s0x478151b84444aedd:0x5c906e4e25a602f2!8m2!3d45.6604221!4d9.6519922!16s%2Fg%2F1tqf_5j8?entry=ttu)
+
+![Image 15](https://sdm.unibg.it/wp-content/themes/sdm2023/img/square-placeholder.gif)
+
+### Caniana
+
+via dei Caniana, 2
+
+ 24127 Bergamo
+
+[Guarda la mappa >](https://www.google.it/maps/place/Via+dei+Caniana,+2,+24127+Bergamo+BG/@45.6862366,9.6582073,17z/data=!3m1!4b1!4m6!3m5!1s0x4781510a6d3aa0a1:0xcb438f035fda2024!8m2!3d45.6862329!4d9.6607822!16s%2Fg%2F11c269p48w?entry=ttu)
+
+![Image 16](https://sdm.unibg.it/wp-content/themes/sdm2023/img/square-placeholder.gif)
+
+### Moroni
+
+via Moroni, 255
+
+ 24127 Bergamo
+
+[Guarda la mappa >](https://www.google.it/maps/place/Via+Gianbattista+Moroni,+255,+24127+Bergamo+BG/@45.6862366,9.6582073,17z/data=!4m6!3m5!1s0x4781510a5e7d3397:0x7ad3889699708c46!8m2!3d45.6869972!4d9.6599495!16s%2Fg%2F11bw4mb_g5?entry=ttu)
+
+![Image 17](https://sdm.unibg.it/wp-content/themes/sdm2023/img/square-placeholder.gif)
+
+### Sant'Agostino
+
+piazzale Sant’Agostino, 2
+
+ 24129 Bergamo
+
+[Guarda la mappa >](https://www.google.it/maps/place/Piazzale+S.+Agostino,+2,+24129+Bergamo+BG/@45.7046797,9.669271,17z/data=!3m1!4b1!4m6!3m5!1s0x4781513d7378c8bf:0xae4d9b65cfb638f6!8m2!3d45.704676!4d9.6718459!16s%2Fg%2F11crvllz6q?entry=ttu)
+
+![Image 18](https://sdm.unibg.it/wp-content/themes/sdm2023/img/square-placeholder.gif)
+
+### Pignolo
+
+via Pignolo, 123
+
+ 24121 Bergamo
+
+[Guarda la mappa >](https://www.google.it/maps/place/Via+Pignolo,+123,+24121+Bergamo+BG/@45.7032181,9.670031,17z/data=!3m1!4b1!4m6!3m5!1s0x47815117dd8f61d9:0x6385b7a6fdac448b!8m2!3d45.7032144!4d9.6726059!16s%2Fg%2F11csjmg8_3?entry=ttu)
+
+![Image 19](https://sdm.unibg.it/wp-content/themes/sdm2023/img/square-placeholder.gif)
+
+### Dalmine
+
+via Pasubio, 3
+
+ 24044 Dalmine
+
+[Guarda la mappa >](https://www.google.it/maps/place/Via+Pasubio,+3,+24044+Dalmine+BG/@45.6459976,9.5970582,17z/data=!3m1!4b1!4m6!3m5!1s0x47814df3ba15efbf:0xb2eec577b1c626d0!8m2!3d45.6459939!4d9.5996331!16s%2Fg%2F11bw3_gzyc?entry=ttu)
+
+[![Image 20](https://sdm.unibg.it/wp-content/themes/sdm2023/img/logo-footer-sdm.svg)](https://sdm.unibg.it/)
+
+*   [](https://www.linkedin.com/company/sdm-school-of-management-universit%C3%A0-di-bergamo/)
+*   [](https://www.instagram.com/sdm_unibg/)
+*   [](https://it-it.facebook.com/master.sdm.unibg)
+*   [](https://www.youtube.com/@sdm-scuoladialtaformazione6445)
+
+[![Image 21](https://sdm.unibg.it/wp-content/themes/sdm2023/img/logo-footer-sdm.svg)](https://sdm.unibg.it/)
+
+*   [](https://www.linkedin.com/company/sdm-school-of-management-universit%C3%A0-di-bergamo/)
+*   [](https://www.instagram.com/sdm_unibg/)
+*   [](https://it-it.facebook.com/master.sdm.unibg)
+*   [](https://www.youtube.com/@sdm-scuoladialtaformazione6445)
+
+[![Image 22](https://sdm.unibg.it/wp-content/themes/sdm2023/img/logo-universita-bg.svg)](https://www.unibg.it/)
+
+© 2024 **SdM Scuola di Alta Formazione**
+
+ via dei Caniana, 2
+
+ 24122 Bergamo – Italia
+
+Tel. 035 2052872
+
+ Pec: [protocollo@unibg.legalmail.it](mailto:protocollo@unibg.legalmail.it)
+
+###### SDM
+
+*   [Scuola](https://sdm.unibg.it/sdm/scuola/)
+*   [Giunta](https://sdm.unibg.it/sdm/giunta/)
+*   [Sedi](https://sdm.unibg.it/sdm/sedi-sdm/)
+*   [Contatti](https://sdm.unibg.it/sdm/contatti/)
+
+###### FORMAZIONE
+
+*   [Master 1° livello](https://sdm.unibg.it/categoria-corso/master-1-livello/)
+*   [Master 2° livello](https://sdm.unibg.it/categoria-corso/master-2-livello/)
+*   [Corsi di perfezionamento](https://sdm.unibg.it/categoria-corso/corsi-di-perfezionamento/)
+*   [Alta formazione](https://sdm.unibg.it/categoria-corso/alta-formazione/)
+
+###### [ENTI E IMPRESE](https://sdm.unibg.it/enti-e-imprese/)
+
+###### [MODULISTICA](https://sdm.unibg.it/segreteria-e-faq/modulistica/)
+
+###### [NEWS & EVENTI](https://sdm.unibg.it/category/news/)
+
+###### [I CORSI IN 3 PAROLE](https://www.unibgonair.it/2024/07/07/unibg-i-master-e-i-corsi-di-perfezionamento-in-tre-parole/)
+
+C.F. 80004350163 | P.IVA 01612800167
+
+[Privacy Policy](https://sdm.unibg.it/privacy-policy/) | [Cookie policy](https://sdm.unibg.it/cookie-policy-ue/) | [Informativa sull’uso](https://sdm.unibg.it/informativa-sulluso-dei-cookie/) | [Web agency](https://www.d-com.it/)
+
+[![Image 23](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_close.svg)](https://sdm.unibg.it/sdm/sedi-sdm/)[Indietro](https://sdm.unibg.it/sdm/sedi-sdm/)
+
+*   [SDM](https://sdm.unibg.it/sdm/)
+    *   [Scuola](https://sdm.unibg.it/sdm/scuola/)
+    *   [Giunta](https://sdm.unibg.it/sdm/giunta/)
+    *   [Sedi](https://sdm.unibg.it/sdm/sedi-sdm/)
+    *   [Contatti](https://sdm.unibg.it/sdm/contatti/)
+
+*   [Formazione](https://sdm.unibg.it/sdm/sedi-sdm/#)
+    *   [Master 1° livello](https://sdm.unibg.it/categoria-corso/master-1-livello/)
+    *   [Master 2° livello](https://sdm.unibg.it/categoria-corso/master-2-livello/)
+    *   [Corsi di perfezionamento](https://sdm.unibg.it/categoria-corso/corsi-di-perfezionamento/)
+    *   [Alta formazione](https://sdm.unibg.it/categoria-corso/alta-formazione/)
+
+*   [Enti e imprese](https://sdm.unibg.it/enti-e-imprese/)
+*   [Modulistica e FAQ](https://sdm.unibg.it/modulistica-e-faq/)
+    *   [Modulistica](https://sdm.unibg.it/modulistica-e-faq/modulistica/)
+    *   [FAQ](https://sdm.unibg.it/modulistica-e-faq/faq/)
+
+*   [News & Eventi](https://sdm.unibg.it/category/news/)
+*   [Ammissione ai corsi](https://sdm.unibg.it/guida-procedura-di-pre-iscrizione/)
+
+*   [![Image 24](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_search.svg)](https://sdm.unibg.it/sdm/sedi-sdm/)
+
+*   [](https://www.linkedin.com/company/sdm-school-of-management-universit%C3%A0-di-bergamo/)
+*   [](https://www.instagram.com/sdm_unibg/)
+*   [](https://it-it.facebook.com/master.sdm.unibg)
+*   [](https://www.youtube.com/@sdm-scuoladialtaformazione6445)
+
+Gestisci Consenso Cookie
+
+Il sito **SdM****Scuola di alta formazione**utilizza cookie tecnici per facilitare la navigazione. Chiudendo questo banner o continuando la navigazione acconsenti al loro uso.
+
+Funzionale- [x] Funzionale  Sempre attivo 
+
+L'archiviazione tecnica o l'accesso sono strettamente necessari al fine legittimo di consentire l'uso di un servizio specifico esplicitamente richiesto dall'abbonato o dall'utente, o al solo scopo di effettuare la trasmissione di una comunicazione su una rete di comunicazione elettronica.
+
+Preferenze- [x] Preferenze 
+
+L'archiviazione tecnica o l'accesso sono necessari per lo scopo legittimo di memorizzare le preferenze che non sono richieste dall'abbonato o dall'utente.
+
+Statistiche- [x] Statistiche 
+
+L'archiviazione tecnica o l'accesso che viene utilizzato esclusivamente per scopi statistici.L'archiviazione tecnica o l'accesso che viene utilizzato esclusivamente per scopi statistici anonimi. Senza un mandato di comparizione, una conformità volontaria da parte del vostro Fornitore di Servizi Internet, o ulteriori registrazioni da parte di terzi, le informazioni memorizzate o recuperate per questo scopo da sole non possono di solito essere utilizzate per l'identificazione.
+
+Marketing- [x] Marketing 
+
+L'archiviazione tecnica o l'accesso sono necessari per creare profili di utenti per inviare pubblicità, o per tracciare l'utente su un sito web o su diversi siti web per scopi di marketing simili.
+
+*   [Gestisci opzioni](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [Gestisci servizi](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [Gestisci {vendor_count} fornitori](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [Per saperne di più su questi scopi](https://cookiedatabase.org/tcf/purposes/)
+
+Accetta Nega Visualizza le preferenze Salva preferenze[Visualizza le preferenze](https://sdm.unibg.it/sdm/sedi-sdm/#)
+
+*   [{title}](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [{title}](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [{title}](https://sdm.unibg.it/sdm/sedi-sdm/#)
+
+Gestisci consenso
+
+  [3] Score: 0.8737
+      Titolo   : Caniana | Università degli studi di Bergamo - UniBg
+      URL      : https://www.unibg.it/ateneo/chi-siamo/sedi/caniana
+      Contenuto: Caniana | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7115 "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7115 "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Caniana
+=======
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Ateneo](https://www.unibg.it/ateneo)
+3.   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+4.   [Le sedi](https://www.unibg.it/ateneo/chi-siamo/sedi)
+5.   [Caniana](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana)
+
+[](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana)
+
+### La sede di Caniana
+
+![Image 3: Caniana dall'alto](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/album_fotografico/unibg_caniana_0444.jpg?itok=WCu7qcnO)
+
+Il campus economico-giuridico si divide tra:
+
+*   la sede principale di Caniana, sede del Dipartimento di [Scienze Aziendali](https://dipsa.unibg.it/it) e del Dipartimento di [Scienze Economiche](https://dse.unibg.it/it)
+*   la sede attigua di Moroni, sede del Dipartimento di [Giurisprudenza](https://dgiu.unibg.it/)
+
+### Mappa
+
+[La sede di Caniana è anche su Google Maps](https://goo.gl/maps/RamGJZubRMn)
+
+![Image 4](https://mt2.google.com/vt/x=69053&y=46793&z=17)![Image 5](https://mt3.google.com/vt/x=69053&y=46794&z=17)![Image 6](https://mt1.google.com/vt/x=69052&y=46793&z=17)![Image 7](https://mt3.google.com/vt/x=69054&y=46793&z=17)![Image 8](https://mt2.google.com/vt/x=69052&y=46794&z=17)![Image 9](https://mt0.google.com/vt/x=69054&y=46794&z=17)
+
+![Image 10](https://www.unibg.it//themes/custom/unibg/assets/map/default-map-marker-shadow.svg)
+
+![Image 11](https://www.unibg.it//themes/custom/unibg/assets/map/default-map-marker.svg)
+
+[+](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana# "Zoom in")[−](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana# "Zoom out")
+
+[](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana# "View Fullscreen")
+
+[Leaflet](http://leafletjs.com/ "A JS library for interactive maps") | Map data © [Google](https://googlemaps.com/)
+
+### Come arrivare
+
+**Dall'Aeroporto**
+
+Dall'aeroporto di Bergamo ([Milan-Bergamo Airport - Orio al Serio](https://www.milanbergamoairport.it/ "Bergamo - Sito esterno")) occorre prendere il**BUS Linea 1/aeroporto**che raggiunge la Stazione di Bergamo.
+
+**Dalla Stazione**
+
+Usciti dalla stazione, in Piazza Marconi, girare a sinistra e imboccare via Geremia Bonomelli, proseguire dritto e continuare su via San Giorgio. Arrivati al largo Giuseppe Tironi, attraversare la strada e imboccare via de' Caniana.
+
+ In autobus è possibile raggiungere il campus da Piazza Marconi con le linee 5A e 5B.
+
+[Linee e Orari ATB - Trasporti Bergamo](https://www.atb.bergamo.it/it/viaggia-con-noi/linee-e-orari)
+
+### La storia del campus economico-giuridico
+
+All’inizio degli anni Cinquanta fu costruito un complesso industriale su un’area compresa tra le vie San Bernardino e Moroni, che nella metà degli anni Ottanta il pool degli architetti Poli-Mambretti-Traversi-Travisa trasformò nel Centro Servizi terziari dell’allora Banca Provinciale Lombarda.
+
+Le pareti sono realizzate con lastre coibentate di alluminio, che conferiscono all’edificio una forma perfettamente lineare, mentre la facciata si distingue per l’ingresso principale, dove un grande portale incornicia il _bow-window_ del vano scala e la grande pensilina reticolare.
+
+Il nostro Ateneo ne entrò in possesso dopo che la BPL venne ceduta nel 1987 e poi assorbita nel 1993 dall’Istituto San Paolo di Torino, mantenendo sostanzialmente inalterati i locali interni e dedicando l’aula magna a Serio Galeotti, il rettore nel periodo 1972-1975, che istituì il Corso di laurea in Economia e commercio.
+
+_Per il testo sopra riportato si ringrazia Tosca Rossi, storica dell'arte e ricercatrice, guida e accompagnatrice turistica._
+
+### Contatti
+
+**Sede di****Caniana**
+
+ via dei Caniana, 2
+
+ 24127 Bergamo
+
+Apertura:
+
+ lun - ven: 7.30 - 20.30
+
+ sabato: 7.30 - 13.30
+
+ (variazioni in HomePage - Avvisi)
+
+_Uscieri_
+
+ T +39 035 205 2800
+
+[uscieri.caniana@unibg.it](mailto:uscieri.caniana@unibg.it)
+
+Ufficio posta
+
+[Franco Dolci](https://didattica-rubrica.unibg.it/ugov/person/2200)
+
+[uscieri@unibg.it](mailto:uscieri@unibg.it)
+
+**Sede di Moroni**
+
+ via Moroni, 255
+
+ 24127 Bergamo
+
+Apertura:
+
+ lun - ven: 7.30 - 20.30
+
+ (variazioni in HomePage - Avvisi)
+
+_Uscieri_
+
+ T +39 035 205 2660
+
+[uscieri.moroni@unibg.it](mailto:uscieri.moroni@unibg.it)
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Back to top
+
+  [4] Score: 0.8486
+      Titolo   : Sant'Agostino | Università degli studi di Bergamo - UniBg
+      URL      : https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino
+      Contenuto: Sant'Agostino | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7121 "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7121 "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Sant'Agostino
+=============
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Ateneo](https://www.unibg.it/ateneo)
+3.   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+4.   [Le sedi](https://www.unibg.it/ateneo/chi-siamo/sedi)
+5.   [Sant'Agostino](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino)
+
+[](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino)
+
+### La sede di Sant'Agostino
+
+![Image 3: Facciata Sant'Agostino](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/album_fotografico/unibg_sant_agostino_0161.jpg?itok=Dh9Zkid_)
+
+A Sant'Agostino ha sede il Dipartimento di [Scienze Umane e Sociali](https://dsus.unibg.it/) e l'**Aula Magna** dell'Università degli studi di Bergamo.
+
+Una curiosità: l’erezione delle mura, operazione di riassetto urbanistico durata fino al XVI secolo, ha portato alla distruzione di numerosi edifici storici, soprattutto religiosi. Di tutti i monumenti presenti lungo la cinta delle mura si salvò soltanto la chiesa di Sant’Agostino.
+
+### Dal monastero all'Università
+
+[![Image 4: Sant'Agostino, il Chiostro piccolo di sera](https://www.unibg.it/sites/default/files/styles/foto_galleria/public/album_fotografico/sago2.jpg?itok=DqL-I07a)](https://www.unibg.it/sites/default/files/album_fotografico/sago2.jpg "Sant'Agostino, il Chiostro piccolo di sera")
+
+[![Image 5: La sede di Sant'Agostino vista dall'alto](https://www.unibg.it/sites/default/files/styles/foto_galleria/public/album_fotografico/sago4.jpg?itok=g1LKweUf)](https://www.unibg.it/sites/default/files/album_fotografico/sago4.jpg "La sede di Sant'Agostino vista dall'alto")
+
+[![Image 6: Sant'Agostino, la sede di sera](https://www.unibg.it/sites/default/files/styles/foto_galleria/public/album_fotografico/sago1.jpg?itok=U7zC6u5o)](https://www.unibg.it/sites/default/files/album_fotografico/sago1.jpg "Sant'Agostino, la sede di sera")
+
+[![Image 7: Aula Magna Sant'Agostino - interno](https://www.unibg.it/sites/default/files/styles/foto_galleria/public/aula_magna.jpg?itok=zWpyE00u)](https://www.unibg.it/sites/default/files/aula_magna.jpg "Aula Magna Sant'Agostino - interno")
+
+[![Image 8: Il Presidente della Repubblica Sergio Mattarella durante la Cerimonia di Inaugurazione dell'a.a. 2016-17](https://www.unibg.it/sites/default/files/styles/foto_galleria/public/album_fotografico/17tris.jpg?itok=ov2KUrhm)](https://www.unibg.it/sites/default/files/album_fotografico/17tris.jpg "Il Presidente della Repubblica Sergio Mattarella durante la Cerimonia di Inaugurazione dell'a.a. 2016-17")
+
+[![Image 9: Sede di Sant'Agostino, Chiostro grande](https://www.unibg.it/sites/default/files/styles/foto_galleria/public/album_fotografico/05-sedi-agostino.jpg?itok=BTT64qT4)](https://www.unibg.it/sites/default/files/album_fotografico/05-sedi-agostino.jpg "Sede di Sant'Agostino, Chiostro grande")
+
+[![Image 10: Studenti nella biblioteca di Sant'Agostino](https://www.unibg.it/sites/default/files/styles/foto_galleria/public/album_fotografico/sago6.jpg?itok=1MpSoK7L)](https://www.unibg.it/sites/default/files/album_fotografico/sago6.jpg "Studenti nella biblioteca di Sant'Agostino")
+
+‹›
+
+### Intorno a Sant'Agostino
+
+Dalla Fara, il prato antistante Sant'Agostino, si aprono vicine sia il viale delle Mura sia la salita in pochi minuti a Città Alta, tramite la splendida via Porta Dipinta. Allo stesso modo, rapida è la discesa verso Città Bassa, percorrendo via San Tomaso, la via dell'Arte, dove incontriamo le prestigiose Accademia Carrara e GaMeC.
+
+Dalla sede è inoltre possibile raggiungere facilmente[il servizio mensa di via San Lorenzo](https://www.unibg.it/servizi/luoghi/servizio-ristorazione)e numerosi luoghi di ristoro.
+
+### La mappa
+
+[La sede di Sant'Agostino è anche su Google Maps](https://goo.gl/maps/fLu5dkxZK652)
+
+![Image 11](https://mt1.google.com/vt/x=69057&y=46784&z=17)![Image 12](https://mt2.google.com/vt/x=69057&y=46785&z=17)![Image 13](https://mt0.google.com/vt/x=69056&y=46784&z=17)![Image 14](https://mt2.google.com/vt/x=69058&y=46784&z=17)![Image 15](https://mt1.google.com/vt/x=69056&y=46785&z=17)![Image 16](https://mt3.google.com/vt/x=69058&y=46785&z=17)![Image 17](https://mt0.google.com/vt/x=69057&y=46783&z=17)![Image 18](https://mt3.google.com/vt/x=69056&y=46783&z=17)![Image 19](https://mt1.google.com/vt/x=69058&y=46783&z=17)
+
+![Image 20](https://www.unibg.it//themes/custom/unibg/assets/map/default-map-marker-shadow.svg)
+
+![Image 21](https://www.unibg.it//themes/custom/unibg/assets/map/default-map-marker.svg)
+
+[+](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino# "Zoom in")[−](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino# "Zoom out")
+
+[](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino# "View Fullscreen")
+
+[Leaflet](http://leafletjs.com/ "A JS library for interactive maps") | Map data © [Google](https://googlemaps.com/)
+
+### Come arrivare
+
+**Dall'Aeroporto**
+
+Dall'aeroporto di Bergamo (**[Milan-Bergamo Airport - Orio al Serio](https://www.milanbergamoairport.it/ "Bergamo - Sito esterno")**) occorre prendere il**BUS Linea 1/aeroporto**che raggiunge il centro (Porta Nuova) per proseguire direttamente per Città Alta (fermata Porta S. Agostino).
+
+**Dalla Stazione**
+
+**BUS Linea 1**- Dalla stazione ferroviaria a Città Alta (Colle Aperto) l'autobus ha una frequenza di 15'. Il tragitto è: Stazione >Porta Nuova>viale Vittorio Emanuele > Porta S. Agostino.
+
+ Sempre in autobus è possibile raggiungere in pochi minuti a piedi**Porta Nuova**, dove, oltre alla Linea 1, a salire in Città Alta sono le**Linee 1A**(proveniente da Torre de' Roveri),**1B**(da Scanzo) e**1C**(da Grassobbio).
+
+**Dall'Ostello**
+
+**BUS Linea 3**- parte**dall'Ostello di Bergamo**(zona quartiere Monterosso), percorre viale Giulio Cesare e davanti allo stadio gira in via Crescenzi, poi via Baioni, via Maironi da Ponte, Porta S. Lorenzo, via della Fara. Per l'interscambio si consiglia il parcheggio dello stadio.
+
+[Linee e Orari ATB - Trasporti Bergamo](https://www.atb.bergamo.it/it/viaggia-con-noi/linee-e-orari)
+
+### La storia di Sant'Agostino
+
+La grande chiesa annessa al complesso monastico degli Eremitani di Sant'Agostino, oggi Aula Magna dell'Università, fu fondata nel 1290 per volontà del vescovo Roberto Bonghi e consacrata nel 1347 dal vescovo Bernardo Bernardi. Riccamente decorato con affreschi a partire dall'ultimo decennio del Duecento, l'edificio fu solo marginalmente interessato dal grande incendio del 1403 nel quale andò distrutto il monastero che si sviluppava nella zona a nord della chiesa.
+
+Nel 1442 la comunità degli Agostiniani del Convento bergamasco entrò a far parte dell'Osservanza di Lombardia e venne promosso un vasto rinnovamento degli edifici conventuali, nei quali ancora si colgono, accanto a parti trecentesche (ad esempio le trifore e il portale dell'antica sala capitolare), parti tardoquattrocenteschi (come il primo cortile porticato).
+
+In seguito alla soppressione degli ordini religiosi, nell'Ottocento chiesa e convento furono adibiti a caserma e deposito di armi; gli affreschi furono allora nascosti dietro una cortina muraria in laterizio, rimossa soltanto negli anni Cinquanta e Sessanta del Novecento nell'ambito dei restauri diretti da Mauro Pellicioli.
+
+Nel 2001 i chiostri diventarono campus dell'Università degli Studi di Bergamo per incontri di formazione scientifica, mentre nel 2015, dopo un grosso intervento di restauro alla navata principale, la ex chiesa è diventata Aula Magna di UniBg. [Nel 2018 un ulteriore intervento di restauro](https://www.unibg.it/terza-missione/cultura-e-societa/immobili-storici-e-patrimonio-artistico/lavori-restauro-aula-magna) ha restituito gran parte degli affreschi interni della struttura.
+
+_Per il testo sopra riportato si ringrazia Tosca Rossi, storica dell'arte e ricercatrice, guida e accompagnatrice turistica._
+
+### Bene insignito dello Scudo Blu
+
+![Image 22: Scudo Blu](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2023-11-06/scudo%20blu.jpg?itok=5JQUhSd4)
+
+**Lo [Scudo Blu](https://www.scudoperlacultura.it/lo-scudo-blu/) è stato apposto all’Ex Monastero di Sant’Agostino il 3 novembre novembre 2023.**
+
+Sin dalla sua fondazione, il complesso è stato eletto a sede di centro di studi, religiosi e culturali. Si tratta quindi di un luogo con una forte valenza storica, architettonica, artistica, e culturale.
+
+ Come emblema internazionale, lo Scudo Blu riconosce che il depauperamento o il danneggiamento dell’Ex Monastero di Sant’Agostino sarebbe una perdita per l’intera umanità e pertanto deve essere adeguatamente conservato e tutelato in ogni occasione.
+
+### Contatti
+
+**Sede di Sant'Agostino**
+
+ piazzale Sant'Agostino, 2
+
+ 24129 Bergamo
+
+Apertura:
+
+ lun - ven: 7.30 - 20.30
+
+ sabato: 7.30 - 13.30
+
+ (variazioni in HomePage - Avvisi)
+
+_Uscieri_
+
+ Chiostro maggiore
+
+ T +39 035 205 2901
+
+[uscieri.sagostino@unibg.it](mailto:uscieri.sagostino@unibg.it)
+
+Casermette
+
+ T +39 035 205 2900
+
+[uscieri.sagostino@unibg.it](mailto:uscieri.sagostino@unibg.it)
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Back to top
+
+  [5] Score: 0.8273
+      Titolo   : Inaugurazione delle nuove sedi universitarie di via PIgnolo ... - UniBg
+      URL      : https://www.unibg.it/node/5360
+      Contenuto: ![](https://www.facebook.com/tr?id=981134568621857&ev=PageView&noscript=1)
+
+## Info
+
+## Link utili utente
+
+## Navigazione principale - desktop
+
+## Informazioni per
+
+![Home](/themes/custom/unibg/logo.svg)
+
+## Link utili utente
+
+## Navigazione principale
+
+## Servizi on line
+
+## Navigazione principale
+
+# Inaugurazione delle nuove sedi universitarie di via PIgnolo e via S. Tomaso
+
+## Breadcrumb
+
+Martedì 30 maggio 2017, alla presenza di tutte le Istituzioni e di tutti i professionisti che hanno partecipato a progetto, sono state inaugurate le nuove sedi di via Pignolo e via S. Tomaso
+
+![I partecipanti alla cerimonia riuniti nell'aula 16 di via Pignolo](/sites/default/files/album_fotografico/02a-img_7706.jpg "I partecipanti alla cerimonia riuniti nell'aula 16 di via Pignolo")
+![I tre Rettori che hanno promosso il progetto. Da sinistra: i Proff. Alberto Castoldi, Remo Morzenti Pellegrini e Stefano Paleari](/sites/default/files/album_fotografico/02c-img_7701_0.jpg "I tre Rettori che hanno promosso il progetto. Da sinistra: i Proff. Alberto Castoldi, Remo Morzenti Pellegrini e Stefano Paleari")
+![Le Autorità presenti alla cerimonia](/sites/default/files/album_fotografico/03-img_7708.jpg "Le Autorità presenti alla cerimonia")
+![Centri di Ricerca_CCSE](/sites/default/files/ateneo/ccse.png "Centri di Ricerca_CCSE")
+![Il discorso del Rettore, Prof. Remo Morzenti Pellegrini](/sites/default/files/album_fotografico/05a-img_7729.jpg "Il discorso del Rettore, Prof. Remo Morzenti Pellegrini")
+![Il discorso del Rettore, Prof. Remo Morzenti Pellegrini](/sites/default/files/album_fotografico/05b-img_7720.jpg "Il discorso del Rettore, Prof. Remo Morzenti Pellegrini")
+![Il saluto della Dott.ssa Claudia Maria Terzi, Assessore all'Ambiente, Energia e Sviluppo sostenibile, Regione Lombardia](/sites/default/files/album_fotografico/06-img_7743.jpg "Il saluto della Dott.ssa Claudia Maria Terzi, Assessore all'Ambiente, Energia e Sviluppo sostenibile, Regione Lombardia")
+![Il saluto del Dott. Matteo Rossi, Presidente della Provincia di Bergamo](/sites/default/files/album_fotografico/07-img_7755.jpg "Il saluto del Dott. Matteo Rossi, Presidente della Provincia di Bergamo")
+![Il saluto del Dott. Giorgio Gori, Sindaco del Comune di Bergamo](/sites/default/files/album_fotografico/08-img_7769.jpg "Il saluto del Dott. Giorgio Gori, Sindaco del Comune di Bergamo")
+![Tra gli invitati, il Dott. Franco Tentorio, già Sindaco del Comune di Bergamo](/sites/default/files/album_fotografico/09-img_7776.jpg "Tra gli invitati, il Dott. Franco Tentorio, già Sindaco del Comune di Bergamo")
+![Il discorso del Prof. Alberto Castoldi, già Rettore dell'Università di Bergamo](/sites/default/files/album_fotografico/10-img_7780.jpg "Il discorso del Prof. Alberto Castoldi, già Rettore dell'Università di Bergamo")
+![Il discorso del Prof. Stefano Paleari, già Rettore dell'Università di Bergamo](/sites/default/files/album_fotografico/11-img_7785.jpg "Il discorso del Prof. Stefano Paleari, già Rettore dell'Università di Bergamo")
+![L'intervento dell'Ing. Francesco Catalfamo, Direttore dei lavori](/sites/default/files/album_fotografico/12-img_7791.jpg "L'intervento dell'Ing. Francesco Catalfamo, Direttore dei lavori")
+![L'intervento dell'Arch. Marco Tomasi, referente dei lavori di restauro nella sede di via S. Tomaso](/sites/default/files/album_fotografico/13-img_7796.jpg "L'intervento dell'Arch. Marco Tomasi, referente dei lavori di restauro nella sede di via S. Tomaso")
+![Governance, il Rettore](/sites/default/files/album_fotografico/rettore_ph_laura_pietra-6772.jpg "Governance, il Rettore")
+![Centri di Ricerca_HTH](/sites/default/files/ateneo/hth.png "Centri di Ricerca_HTH")
+![Centri di Ricerca_CST](/sites/default/files/ateneo/schermata_2018-09-06_alle_12.12.52.png "Centri di Ricerca_CST")
+![La sala riunioni, Sede di via S. Tomaso](/sites/default/files/album_fotografico/19-img_7820.jpg "La sala riunioni, Sede di via S. Tomaso")
+![I locali della sede di via S. Tomaso](/sites/default/files/album_fotografico/20-img_7834.jpg "I locali della sede di via S. Tomaso")
+![Centri di Ricerca_CYFE](/sites/default/files/ateneo/cyfe.jpg "Centri di Ricerca_CYFE")
+![Il cortile, sede di vi S. Tomaso](/sites/default/files/album_fotografico/22-img_7847.jpg "Il cortile, sede di vi S. Tomaso")
+
+## Seguici su
+
+## Footer - 1
+
+## Footer - 2
+
+## Footer - 3
+
+**Università degli studi di Bergamo**  
+via Salvecchio 19  
+24129 Bergamo  
+Cod. Fiscale 80004350163  
+P.IVA 01612800167  
+Centralino 035 2052111
+
+## Piè di pagina
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: generale
+
+>>> SYSTEM PROMPT:
+Sei un assistente generale dell'Università di Bergamo.
+Fornisci informazioni utili e orientamento agli studenti e visitatori.
+
+
+DATA ODIERNA: 07 marzo 2026 (Anno accademico 2025/2026)
+
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+8. Alcune fonti sono documenti PDF: in quel caso vengono forniti anche i link ipertestuali estratti direttamente dal PDF con la pagina di provenienza. Se uno di questi link è rilevante per la risposta dello studente, includilo nella risposta in forma cliccabile (formato Markdown: [testo](url)) indicando anche da quale parte del documento proviene.
+
+Informazioni aggiuntive:
+INFORMAZIONI DAL SITO DELL'UNIVERSITÀ DI BERGAMO:
+
+Fonte 1: Le nostre sedi | Università degli studi di Bergamo - UniBg
+URL: https://www.unibg.it/ateneo/chi-siamo/sedi
+Contenuto: Le nostre sedi | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/ateneo/chi-siamo/sedi#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/chi-siamo/sedi#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7052 "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/chi-siamo/sedi#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7052 "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Le sedi
+=======
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Ateneo](https://www.unibg.it/ateneo)
+3.   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+4.   [Le sedi](https://www.unibg.it/ateneo/chi-siamo/sedi)
+
+[](https://www.unibg.it/ateneo/chi-siamo/sedi)
+
+### Il campus diffuso
+
+![Image 3: Graduation Day 2018](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2023-05-18/04.%20Graduation%20Day%202018_UniBg_Lancio%20del%20tocco%20in%20Piazza%20Vecchia.jpeg?itok=CLIxeWQR)
+
+Le sedi dell’**Università degli studi di Bergamo** riflettono il modello di _campus diffuso_ dell’ateneo, articolato tra il centro storico della città e il territorio provinciale. Gli spazi universitari ospitano attività didattiche, di ricerca, servizi amministrativi e strutture a supporto della comunità accademica, integrandosi con il contesto urbano e favorendo il dialogo con il territorio.
+
+### Campus umanistico
+
+Il Campus umanistico dell’**Università degli studi di Bergamo** è situato prevalentemente in Città Alta e rappresenta il cuore storico dell’ateneo. Comprende sedi di particolare valore architettonico e culturale, tra cui Sant’Agostino, Salvecchio, Rosate e Pignolo, che ospitano attività didattiche, di ricerca e servizi legati alle discipline umanistiche, linguistiche e sociali. Il campus si inserisce nel tessuto storico della città, contribuendo in modo significativo all’identità culturale dell’università.
+
+### Campus economico-giuridico
+
+Il Campus economico-giuridico dell’**Università degli studi di Bergamo**, situato in Città Bassa, è dedicato alle attività didattiche e istituzionali nei settori dell’economia, delle scienze aziendali e del diritto. Comprende le sedi di via dei Caniana e via Moroni, che ospitano dipartimenti, aule, uffici e servizi per studenti e personale. Il campus rappresenta un punto di riferimento per la formazione e la ricerca in ambito economico e giuridico, in stretta connessione con il contesto urbano e istituzionale.
+
+### Campus ingegneristico
+
+La sede di Dalmine ospita il Campus ingegneristico dell’**Università degli studi di Bergamo**, polo dedicato alle discipline ingegneristiche e alle scienze applicate. Il campus accoglie la Scuola di Ingegneria, dipartimenti, laboratori e spazi per la didattica e la ricerca, favorendo un forte collegamento con il sistema produttivo e industriale del territorio. La struttura supporta attività formative e di ricerca orientate all’innovazione tecnologica e allo sviluppo sostenibile.
+
+### Kilometro Rosso
+
+L’**Università degli studi di Bergamo** è infine presente presso il Kilometro Rosso, uno dei principali distretti italiani dedicati alla ricerca e all’innovazione tecnologica. Questa sede rappresenta un punto di incontro tra università, imprese e centri di ricerca e favorisce lo sviluppo di collaborazioni scientifiche e progettuali. La presenza dell’ateneo nel distretto rafforza il trasferimento di conoscenze e il dialogo tra mondo accademico e sistema produttivo.
+
+### Potrebbe interessarti
+
+[Immobili storici e patrimonio artistico](https://www.unibg.it/terza-missione/cultura-e-societa/immobili-storici-e-patrimonio-artistico)
+
+### Naviga la sezione
+
+*   [Palazzo Bassi-Rathgeb](https://www.unibg.it/ateneo/chi-siamo/sedi/palazzo-bassi-rathgeb)
+*   [Caniana](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana)
+*   [Dalmine](https://www.unibg.it/ateneo/chi-siamo/sedi/dalmine)
+*   [Kilometro Rosso](https://www.unibg.it/ateneo/chi-siamo/sedi/kilometro-rosso)
+*   [Pignolo](https://www.unibg.it/ateneo/chi-siamo/sedi/pignolo)
+*   [Rosate](https://www.unibg.it/ateneo/chi-siamo/sedi/rosate)
+*   [Salvecchio](https://www.unibg.it/ateneo/chi-siamo/sedi/salvecchio)
+*   [Sant'Agostino](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino)
+*   [Il campus economico-giuridico](https://www.unibg.it/ateneo/chi-siamo/sedi/campus-economico-giuridico)
+*   [Il campus ingegneristico](https://www.unibg.it/ateneo/chi-siamo/sedi/campus-ingegneristico)
+*   [Il campus umanistico](https://www.unibg.it/ateneo/chi-siamo/sedi/campus-umanistico)
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/ateneo/chi-siamo/sedi#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Fonte 2: Sedi - SDM UniBG
+URL: https://sdm.unibg.it/sdm/sedi-sdm/
+Contenuto: Sedi - SDM UniBG
+===============
+
+[![Image 1](https://sdm.unibg.it/wp-content/themes/sdm2023/img/logo-sdm.svg)![Image 2](https://sdm.unibg.it/wp-content/themes/sdm2023/img/logo-sdm-simbolo.svg)](https://sdm.unibg.it/)
+
+*   [Ammissione ai corsi](https://sdm.unibg.it/guida-procedura-di-pre-iscrizione/)
+*   [Modulistica](https://sdm.unibg.it/modulistica-e-faq/modulistica/)
+*   [Sedi](https://sdm.unibg.it/sdm/sedi-sdm/)
+*   [Contatti](https://sdm.unibg.it/sdm/contatti/)
+
+*   [![Image 3](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_search.svg)](https://sdm.unibg.it/sdm/sedi-sdm/)
+
+*   [](https://www.linkedin.com/company/sdm-school-of-management-universit%C3%A0-di-bergamo/)
+*   [](https://www.instagram.com/sdm_unibg/)
+*   [](https://it-it.facebook.com/master.sdm.unibg)
+*   [](https://www.youtube.com/@sdm-scuoladialtaformazione6445)
+
+[![Image 4](https://sdm.unibg.it/wp-content/themes/sdm2023/img/logo-universita-bg.svg)](https://www.unibg.it/)
+
+*   [SDM](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [Formazione](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [Enti e imprese](https://sdm.unibg.it/enti-e-imprese/)
+*   [Modulistica e Faq](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [News & Eventi](https://sdm.unibg.it/category/news/)
+
+[![Image 5](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_close.svg)](https://sdm.unibg.it/sdm/sedi-sdm/)
+
+Ricerca per: 
+
+[![Image 6](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_close.svg)](https://sdm.unibg.it/sdm/sedi-sdm/#)
+
+L’incontro tra risorse accademiche e professionali
+
+Grazie all’offerta formativa e alle attività di ricerca SdM rappresenta un ponte tra il mondo lavorativo e quello accademico, contribuendo al futuro del territorio in una prospettiva internazionale.
+
+*   [Scuola](https://sdm.unibg.it/sdm/scuola/)
+*   [Giunta](https://sdm.unibg.it/sdm/giunta/)
+*   [Sedi](https://sdm.unibg.it/sdm/sedi-sdm/)
+*   [Contatti](https://sdm.unibg.it/sdm/contatti/)
+
+[![Image 7](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_close.svg)](https://sdm.unibg.it/sdm/sedi-sdm/#)
+
+Un solido riferimento per accompagnare la crescita del territorio
+
+Gli Enti e le imprese in fase di cambiamento trovano nella consulenza di SdM un valido supporto per indirizzare il proprio cammino su basi solide.
+
+ Grazie all’esperienza accumulata, SdM offre infatti possibilità di formazione su misura, organizzando corsi ad hoc, tirocini, project work e svolgendo ricerche mirate.
+
+ Questo tipo di collaborazione permette anche a SdM di verificare sul campo la validità della propria offerta rispetto alle esigenze operative aziendali e ai mercati di riferimento, ottimizzando sempre più le proposte formative in un’ottica win-win.
+
+[![Image 8](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_close.svg)](https://sdm.unibg.it/sdm/sedi-sdm/#)
+
+Non porti limiti di crescita.
+
+ Investi su te stesso e comincia il tuo cammino.
+
+Tutti coloro che sono interessati ad accrescere le proprie capacità trovano nei percorsi formativi di SdM un’offerta eccellente e un’importante opportunità finalizzata alla loro crescita professionale e umana.
+
+ La proposta di SdM, consiste in: Master di I o II livello, Corsi di Perfezionamento Corsi di alta formazione personalizzati, che consentono di acquisire competenze in vari ambiti disciplinari e conoscenze specifiche al fine di creare profili professionali in linea con le richieste del mercato del lavoro.
+
+[![Image 9](https://sdm.unibg.it/wp-content/uploads/2023/07/master_1_livello.svg) ##### Master 1° livello Riservato a chi possiede almeno una laurea triennale; durata almeno annuale, con 60 CFU. Rilascia il diploma di Master di I livello.](https://sdm.unibg.it/categoria-corso/master-1-livello/)
+
+[![Image 10](https://sdm.unibg.it/wp-content/uploads/2023/07/master_2_livello.svg) ##### Master 2° livello Riservato a chi possiede una laurea specialistica, magistrale o equivalenti (ad esempio laurea vecchio ordinamento); durata almeno annuale, con 60 CFU; rilascia il diploma di Master di II livello.](https://sdm.unibg.it/categoria-corso/master-2-livello/)
+
+[![Image 11](https://sdm.unibg.it/wp-content/uploads/2023/07/corsi_di_perfezionamento.svg) ##### Corsi di perfezionamento Riservato a chi possiede una laurea almeno triennale; rilascia attestato di CDP.](https://sdm.unibg.it/categoria-corso/corsi-di-perfezionamento/)
+
+[![Image 12](https://sdm.unibg.it/wp-content/uploads/2023/07/alta_formazione.svg) ##### Alta formazione Corsi specifici organizzati in collaborazione o su richiesta di enti, aziende, istituzioni.](https://sdm.unibg.it/categoria-corso/alta-formazione/)
+
+[Scopri tutti i corsi](https://sdm.unibg.it/corso/)
+
+[![Image 13](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_close.svg)](https://sdm.unibg.it/sdm/sedi-sdm/#)
+
+Trova le risposte alla tua ricerca
+
+In questa sezione potrai trovare tutta la modulistica necessaria per iscriverti ai nostri corsi.
+
+ Per qualsiasi dubbio scorri le nostre FAQ.
+
+*   [Modulistica](https://sdm.unibg.it/modulistica-e-faq/modulistica/)
+*   [FAQ](https://sdm.unibg.it/modulistica-e-faq/faq/)
+
+*   [Home](https://sdm.unibg.it/)
+*   SDM
+*   Sedi
+
+Sedi
+====
+
+Le lezioni dei Corsi si svolgono presso le sedi distribuite sul territorio dell'Università degli Studi di Bergamo
+-----------------------------------------------------------------------------------------------------------------
+
+![Image 14](https://sdm.unibg.it/wp-content/themes/sdm2023/img/square-placeholder.gif)
+
+### Km Rosso
+
+**Ingresso Est**
+
+ via Stezzano, 87,Bergamo
+
+_Casello di Bergamo dell’Autostrada A4_
+
+**Ingresso Ovest**
+
+ viale Europa, 4,Stezzano (Bergamo)
+
+_Casello di Dalmine dell’Autostrada A4_
+
+[Guarda la mappa >](https://www.google.it/maps/place/Kilometro+Rosso/@45.6604258,9.6494119,17z/data=!3m1!4b1!4m6!3m5!1s0x478151b84444aedd:0x5c906e4e25a602f2!8m2!3d45.6604221!4d9.6519922!16s%2Fg%2F1tqf_5j8?entry=ttu)
+
+![Image 15](https://sdm.unibg.it/wp-content/themes/sdm2023/img/square-placeholder.gif)
+
+### Caniana
+
+via dei Caniana, 2
+
+ 24127 Bergamo
+
+[Guarda la mappa >](https://www.google.it/maps/place/Via+dei+Caniana,+2,+24127+Bergamo+BG/@45.6862366,9.6582073,17z/data=!3m1!4b1!4m6!3m5!1s0x4781510a6d3aa0a1:0xcb438f035fda2024!8m2!3d45.6862329!4d9.6607822!16s%2Fg%2F11c269p48w?entry=ttu)
+
+![Image 16](https://sdm.unibg.it/wp-content/themes/sdm2023/img/square-placeholder.gif)
+
+### Moroni
+
+via Moroni, 255
+
+ 24127 Bergamo
+
+[Guarda la mappa >](https://www.google.it/maps/place/Via+Gianbattista+Moroni,+255,+24127+Bergamo+BG/@45.6862366,9.6582073,17z/data=!4m6!3m5!1s0x4781510a5e7d3397:0x7ad3889699708c46!8m2!3d45.6869972!4d9.6599495!16s%2Fg%2F11bw4mb_g5?entry=ttu)
+
+![Image 17](https://sdm.unibg.it/wp-content/themes/sdm2023/img/square-placeholder.gif)
+
+### Sant'Agostino
+
+piazzale Sant’Agostino, 2
+
+ 24129 Bergamo
+
+[Guarda la mappa >](https://www.google.it/maps/place/Piazzale+S.+Agostino,+2,+24129+Bergamo+BG/@45.7046797,9.669271,17z/data=!3m1!4b1!4m6!3m5!1s0x4781513d7378c8bf:0xae4d9b65cfb638f6!8m2!3d45.704676!4d9.6718459!16s%2Fg%2F11crvllz6q?entry=ttu)
+
+![Image 18](https://sdm.unibg.it/wp-content/themes/sdm2023/img/square-placeholder.gif)
+
+### Pignolo
+
+via Pignolo, 123
+
+ 24121 Bergamo
+
+[Guarda la mappa >](https://www.google.it/maps/place/Via+Pignolo,+123,+24121+Bergamo+BG/@45.7032181,9.670031,17z/data=!3m1!4b1!4m6!3m5!1s0x47815117dd8f61d9:0x6385b7a6fdac448b!8m2!3d45.7032144!4d9.6726059!16s%2Fg%2F11csjmg8_3?entry=ttu)
+
+![Image 19](https://sdm.unibg.it/wp-content/themes/sdm2023/img/square-placeholder.gif)
+
+### Dalmine
+
+via Pasubio, 3
+
+ 24044 Dalmine
+
+[Guarda la mappa >](https://www.google.it/maps/place/Via+Pasubio,+3,+24044+Dalmine+BG/@45.6459976,9.5970582,17z/data=!3m1!4b1!4m6!3m5!1s0x47814df3ba15efbf:0xb2eec577b1c626d0!8m2!3d45.6459939!4d9.5996331!16s%2Fg%2F11bw3_gzyc?entry=ttu)
+
+[![Image 20](https://sdm.unibg.it/wp-content/themes/sdm2023/img/logo-footer-sdm.svg)](https://sdm.unibg.it/)
+
+*   [](https://www.linkedin.com/company/sdm-school-of-management-universit%C3%A0-di-bergamo/)
+*   [](https://www.instagram.com/sdm_unibg/)
+*   [](https://it-it.facebook.com/master.sdm.unibg)
+*   [](https://www.youtube.com/@sdm-scuoladialtaformazione6445)
+
+[![Image 21](https://sdm.unibg.it/wp-content/themes/sdm2023/img/logo-footer-sdm.svg)](https://sdm.unibg.it/)
+
+*   [](https://www.linkedin.com/company/sdm-school-of-management-universit%C3%A0-di-bergamo/)
+*   [](https://www.instagram.com/sdm_unibg/)
+*   [](https://it-it.facebook.com/master.sdm.unibg)
+*   [](https://www.youtube.com/@sdm-scuoladialtaformazione6445)
+
+[![Image 22](https://sdm.unibg.it/wp-content/themes/sdm2023/img/logo-universita-bg.svg)](https://www.unibg.it/)
+
+© 2024 **SdM Scuola di Alta Formazione**
+
+ via dei Caniana, 2
+
+ 24122 Bergamo – Italia
+
+Tel. 035 2052872
+
+ Pec: [protocollo@unibg.legalmail.it](mailto:protocollo@unibg.legalmail.it)
+
+###### SDM
+
+*   [Scuola](https://sdm.unibg.it/sdm/scuola/)
+*   [Giunta](https://sdm.unibg.it/sdm/giunta/)
+*   [Sedi](https://sdm.unibg.it/sdm/sedi-sdm/)
+*   [Contatti](https://sdm.unibg.it/sdm/contatti/)
+
+###### FORMAZIONE
+
+*   [Master 1° livello](https://sdm.unibg.it/categoria-corso/master-1-livello/)
+*   [Master 2° livello](https://sdm.unibg.it/categoria-corso/master-2-livello/)
+*   [Corsi di perfezionamento](https://sdm.unibg.it/categoria-corso/corsi-di-perfezionamento/)
+*   [Alta formazione](https://sdm.unibg.it/categoria-corso/alta-formazione/)
+
+###### [ENTI E IMPRESE](https://sdm.unibg.it/enti-e-imprese/)
+
+###### [MODULISTICA](https://sdm.unibg.it/segreteria-e-faq/modulistica/)
+
+###### [NEWS & EVENTI](https://sdm.unibg.it/category/news/)
+
+###### [I CORSI IN 3 PAROLE](https://www.unibgonair.it/2024/07/07/unibg-i-master-e-i-corsi-di-perfezionamento-in-tre-parole/)
+
+C.F. 80004350163 | P.IVA 01612800167
+
+[Privacy Policy](https://sdm.unibg.it/privacy-policy/) | [Cookie policy](https://sdm.unibg.it/cookie-policy-ue/) | [Informativa sull’uso](https://sdm.unibg.it/informativa-sulluso-dei-cookie/) | [Web agency](https://www.d-com.it/)
+
+[![Image 23](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_close.svg)](https://sdm.unibg.it/sdm/sedi-sdm/)[Indietro](https://sdm.unibg.it/sdm/sedi-sdm/)
+
+*   [SDM](https://sdm.unibg.it/sdm/)
+    *   [Scuola](https://sdm.unibg.it/sdm/scuola/)
+    *   [Giunta](https://sdm.unibg.it/sdm/giunta/)
+    *   [Sedi](https://sdm.unibg.it/sdm/sedi-sdm/)
+    *   [Contatti](https://sdm.unibg.it/sdm/contatti/)
+
+*   [Formazione](https://sdm.unibg.it/sdm/sedi-sdm/#)
+    *   [Master 1° livello](https://sdm.unibg.it/categoria-corso/master-1-livello/)
+    *   [Master 2° livello](https://sdm.unibg.it/categoria-corso/master-2-livello/)
+    *   [Corsi di perfezionamento](https://sdm.unibg.it/categoria-corso/corsi-di-perfezionamento/)
+    *   [Alta formazione](https://sdm.unibg.it/categoria-corso/alta-formazione/)
+
+*   [Enti e imprese](https://sdm.unibg.it/enti-e-imprese/)
+*   [Modulistica e FAQ](https://sdm.unibg.it/modulistica-e-faq/)
+    *   [Modulistica](https://sdm.unibg.it/modulistica-e-faq/modulistica/)
+    *   [FAQ](https://sdm.unibg.it/modulistica-e-faq/faq/)
+
+*   [News & Eventi](https://sdm.unibg.it/category/news/)
+*   [Ammissione ai corsi](https://sdm.unibg.it/guida-procedura-di-pre-iscrizione/)
+
+*   [![Image 24](https://sdm.unibg.it/wp-content/themes/sdm2023/img/icon_search.svg)](https://sdm.unibg.it/sdm/sedi-sdm/)
+
+*   [](https://www.linkedin.com/company/sdm-school-of-management-universit%C3%A0-di-bergamo/)
+*   [](https://www.instagram.com/sdm_unibg/)
+*   [](https://it-it.facebook.com/master.sdm.unibg)
+*   [](https://www.youtube.com/@sdm-scuoladialtaformazione6445)
+
+Gestisci Consenso Cookie
+
+Il sito **SdM****Scuola di alta formazione**utilizza cookie tecnici per facilitare la navigazione. Chiudendo questo banner o continuando la navigazione acconsenti al loro uso.
+
+Funzionale- [x] Funzionale  Sempre attivo 
+
+L'archiviazione tecnica o l'accesso sono strettamente necessari al fine legittimo di consentire l'uso di un servizio specifico esplicitamente richiesto dall'abbonato o dall'utente, o al solo scopo di effettuare la trasmissione di una comunicazione su una rete di comunicazione elettronica.
+
+Preferenze- [x] Preferenze 
+
+L'archiviazione tecnica o l'accesso sono necessari per lo scopo legittimo di memorizzare le preferenze che non sono richieste dall'abbonato o dall'utente.
+
+Statistiche- [x] Statistiche 
+
+L'archiviazione tecnica o l'accesso che viene utilizzato esclusivamente per scopi statistici.L'archiviazione tecnica o l'accesso che viene utilizzato esclusivamente per scopi statistici anonimi. Senza un mandato di comparizione, una conformità volontaria da parte del vostro Fornitore di Servizi Internet, o ulteriori registrazioni da parte di terzi, le informazioni memorizzate o recuperate per questo scopo da sole non possono di solito essere utilizzate per l'identificazione.
+
+Marketing- [x] Marketing 
+
+L'archiviazione tecnica o l'accesso sono necessari per creare profili di utenti per inviare pubblicità, o per tracciare l'utente su un sito web o su diversi siti web per scopi di marketing simili.
+
+*   [Gestisci opzioni](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [Gestisci servizi](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [Gestisci {vendor_count} fornitori](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [Per saperne di più su questi scopi](https://cookiedatabase.org/tcf/purposes/)
+
+Accetta Nega Visualizza le preferenze Salva preferenze[Visualizza le preferenze](https://sdm.unibg.it/sdm/sedi-sdm/#)
+
+*   [{title}](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [{title}](https://sdm.unibg.it/sdm/sedi-sdm/#)
+*   [{title}](https://sdm.unibg.it/sdm/sedi-sdm/#)
+
+Gestisci consenso
+
+Fonte 3: Caniana | Università degli studi di Bergamo - UniBg
+URL: https://www.unibg.it/ateneo/chi-siamo/sedi/caniana
+Contenuto: Caniana | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7115 "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7115 "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Caniana
+=======
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Ateneo](https://www.unibg.it/ateneo)
+3.   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+4.   [Le sedi](https://www.unibg.it/ateneo/chi-siamo/sedi)
+5.   [Caniana](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana)
+
+[](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana)
+
+### La sede di Caniana
+
+![Image 3: Caniana dall'alto](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/album_fotografico/unibg_caniana_0444.jpg?itok=WCu7qcnO)
+
+Il campus economico-giuridico si divide tra:
+
+*   la sede principale di Caniana, sede del Dipartimento di [Scienze Aziendali](https://dipsa.unibg.it/it) e del Dipartimento di [Scienze Economiche](https://dse.unibg.it/it)
+*   la sede attigua di Moroni, sede del Dipartimento di [Giurisprudenza](https://dgiu.unibg.it/)
+
+### Mappa
+
+[La sede di Caniana è anche su Google Maps](https://goo.gl/maps/RamGJZubRMn)
+
+![Image 4](https://mt2.google.com/vt/x=69053&y=46793&z=17)![Image 5](https://mt3.google.com/vt/x=69053&y=46794&z=17)![Image 6](https://mt1.google.com/vt/x=69052&y=46793&z=17)![Image 7](https://mt3.google.com/vt/x=69054&y=46793&z=17)![Image 8](https://mt2.google.com/vt/x=69052&y=46794&z=17)![Image 9](https://mt0.google.com/vt/x=69054&y=46794&z=17)
+
+![Image 10](https://www.unibg.it//themes/custom/unibg/assets/map/default-map-marker-shadow.svg)
+
+![Image 11](https://www.unibg.it//themes/custom/unibg/assets/map/default-map-marker.svg)
+
+[+](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana# "Zoom in")[−](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana# "Zoom out")
+
+[](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana# "View Fullscreen")
+
+[Leaflet](http://leafletjs.com/ "A JS library for interactive maps") | Map data © [Google](https://googlemaps.com/)
+
+### Come arrivare
+
+**Dall'Aeroporto**
+
+Dall'aeroporto di Bergamo ([Milan-Bergamo Airport - Orio al Serio](https://www.milanbergamoairport.it/ "Bergamo - Sito esterno")) occorre prendere il**BUS Linea 1/aeroporto**che raggiunge la Stazione di Bergamo.
+
+**Dalla Stazione**
+
+Usciti dalla stazione, in Piazza Marconi, girare a sinistra e imboccare via Geremia Bonomelli, proseguire dritto e continuare su via San Giorgio. Arrivati al largo Giuseppe Tironi, attraversare la strada e imboccare via de' Caniana.
+
+ In autobus è possibile raggiungere il campus da Piazza Marconi con le linee 5A e 5B.
+
+[Linee e Orari ATB - Trasporti Bergamo](https://www.atb.bergamo.it/it/viaggia-con-noi/linee-e-orari)
+
+### La storia del campus economico-giuridico
+
+All’inizio degli anni Cinquanta fu costruito un complesso industriale su un’area compresa tra le vie San Bernardino e Moroni, che nella metà degli anni Ottanta il pool degli architetti Poli-Mambretti-Traversi-Travisa trasformò nel Centro Servizi terziari dell’allora Banca Provinciale Lombarda.
+
+Le pareti sono realizzate con lastre coibentate di alluminio, che conferiscono all’edificio una forma perfettamente lineare, mentre la facciata si distingue per l’ingresso principale, dove un grande portale incornicia il _bow-window_ del vano scala e la grande pensilina reticolare.
+
+Il nostro Ateneo ne entrò in possesso dopo che la BPL venne ceduta nel 1987 e poi assorbita nel 1993 dall’Istituto San Paolo di Torino, mantenendo sostanzialmente inalterati i locali interni e dedicando l’aula magna a Serio Galeotti, il rettore nel periodo 1972-1975, che istituì il Corso di laurea in Economia e commercio.
+
+_Per il testo sopra riportato si ringrazia Tosca Rossi, storica dell'arte e ricercatrice, guida e accompagnatrice turistica._
+
+### Contatti
+
+**Sede di****Caniana**
+
+ via dei Caniana, 2
+
+ 24127 Bergamo
+
+Apertura:
+
+ lun - ven: 7.30 - 20.30
+
+ sabato: 7.30 - 13.30
+
+ (variazioni in HomePage - Avvisi)
+
+_Uscieri_
+
+ T +39 035 205 2800
+
+[uscieri.caniana@unibg.it](mailto:uscieri.caniana@unibg.it)
+
+Ufficio posta
+
+[Franco Dolci](https://didattica-rubrica.unibg.it/ugov/person/2200)
+
+[uscieri@unibg.it](mailto:uscieri@unibg.it)
+
+**Sede di Moroni**
+
+ via Moroni, 255
+
+ 24127 Bergamo
+
+Apertura:
+
+ lun - ven: 7.30 - 20.30
+
+ (variazioni in HomePage - Avvisi)
+
+_Uscieri_
+
+ T +39 035 205 2660
+
+[uscieri.moroni@unibg.it](mailto:uscieri.moroni@unibg.it)
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/ateneo/chi-siamo/sedi/caniana#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Back to top
+
+Fonte 4: Sant'Agostino | Università degli studi di Bergamo - UniBg
+URL: https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino
+Contenuto: Sant'Agostino | Università degli studi di Bergamo
+===============
+[Salta al contenuto principale](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino#main-content)
+
+Info
+----
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7121 "Switches to the English version of the site")
+
+Cerca 
+
+Cerca
+
+Navigazione principale - desktop
+--------------------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Informazioni per
+----------------
+
+*   [Futuro studente](https://www.unibg.it/informazioni/futuro-studente)
+*   [Studente](https://www.unibg.it/informazioni/studente)
+*   [Laureato](https://www.unibg.it/informazioni/laureato)
+*   [International](https://en.unibg.it/international-student)
+*   [Studente di dottorato](https://www.unibg.it/informazioni/studente-dottorato)
+*   [Docente e ricercatore](https://www.unibg.it/informazioni/personale-docente-e-ricercatore)
+*   [Personale e collaboratori](https://www.unibg.it/informazioni/personale-e-collaboratori)
+*   [Imprese, enti e cittadini](https://www.unibg.it/informazioni/imprese-enti-e-cittadini)
+
+[![Image 2: Home](https://www.unibg.it/themes/custom/unibg/logo.svg)](https://www.unibg.it/ "Home")
+
+Cerca 
+
+Cerca
+
+Link utili utente
+-----------------
+
+*   [MyUniBg](https://my.unibg.it/)
+*   [Webmail](https://www.unibg.it/webmail)
+*   [Motore di ricerca](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino#block-formdiricerca)
+*   [EN](https://www.unibg.it/language-switcher?url=https%3A//en.unibg.it/node/7121 "Switches to the English version of the site")
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+    *   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+    *   [Organizzazione e struttura](https://www.unibg.it/ateneo/organizzazione-e-struttura)
+    *   [Amministrazione](https://www.unibg.it/ateneo/amministrazione)
+    *   [Assicurazione della qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+
+*   [Studiare](https://www.unibg.it/studiare)
+    *   [Perché scegliere UniBg](https://www.unibg.it/studiare/perche-scegliere-unibg)
+    *   [I corsi](https://www.unibg.it/studiare/corsi)
+    *   [Orientarsi](https://www.unibg.it/studiare/orientarsi)
+    *   [Iscriversi](https://www.unibg.it/studiare/iscriversi)
+    *   [Frequentare](https://www.unibg.it/studiare/frequentare)
+    *   [eLearning UniBg](https://www.unibg.it/studiare/elearning-unibg)
+    *   [Laurearsi](https://www.unibg.it/studiare/laurearsi)
+    *   [Diritto allo studio](https://www.unibg.it/dsu)
+    *   [Contatta la Segreteria](https://www.unibg.it/studiare/contatta-segreteria)
+
+*   [Ricerca](https://www.unibg.it/ricerca)
+    *   [Fare ricerca](https://www.unibg.it/ricerca/fare-ricerca)
+    *   [Ambiti e progetti di ricerca](https://www.unibg.it/ricerca/ambiti-e-progetti-ricerca)
+    *   [Ricercatori e prodotti](https://www.unibg.it/ricerca/ricercatori-e-prodotti)
+    *   [Strutture, organizzazione e governance](https://www.unibg.it/ricerca/strutture-organizzazione-e-governance)
+
+*   [Terza missione](https://www.unibg.it/terza-missione)
+    *   [Valorizzare la conoscenza](https://www.unibg.it/terza-missione/valorizzare-conoscenza)
+    *   [Formazione continua](https://www.unibg.it/terza-missione/formazione-continua)
+    *   [Collaborazioni enti e imprese](https://www.unibg.it/terza-missione/collaborazioni-enti-e-imprese)
+    *   [Cultura e Società](https://www.unibg.it/terza-missione/cultura-e-societa)
+
+*   [Internazionale](https://www.unibg.it/internazionale)
+    *   [Andare all’estero](https://www.unibg.it/internazionale/andare-allestero)
+    *   [Destinazione UniBg](https://www.unibg.it/internazionale/destinazione-unibg)
+    *   [Cooperazione allo sviluppo](https://www.unibg.it/internazionale/cooperazione-sviluppo)
+    *   [UniBg for peace: opportunità e iniziative](https://www.unibg.it/internazionale/unibg-for-peace-opportunita-e-iniziative)
+
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+    *   [Open Campus](https://www.unibg.it/vivere-unibg/open-campus)
+    *   [Spazi e risorse](https://www.unibg.it/vivere-unibg/spazi-e-risorse)
+    *   [Opportunità e servizi](https://www.unibg.it/vivere-unibg/opportunita-e-servizi)
+    *   [Eventi istituzionali](https://www.unibg.it/vivere-unibg/eventi-istituzionali)
+
+Servizi on line
+---------------
+
+*   [eLearning](https://elearning15.unibg.it/)
+*   [Orari](https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it)
+*   [Help Desk Studenti](https://helpdesk.unibg.it/helpdesksegrestud)
+*   [Sportello internet](https://sportello.unibg.it/Home.do)
+*   [Rubrica](https://www.unibg.it/rubrica)
+*   [Biblioteche](https://servizibibliotecari.unibg.it/)
+*   [Piano Strategico](https://www.unibg.it/node/15273)
+*   [Web Radio](http://www.unibgonair.it/)
+
+Navigazione principale
+----------------------
+
+*   [Ateneo](https://www.unibg.it/ateneo)
+*   [Studiare](https://www.unibg.it/studiare)
+*   [Ricerca](https://www.unibg.it/ricerca)
+*   [Terza missione](https://www.unibg.it/terza-missione)
+*   [Internazionale](https://www.unibg.it/internazionale)
+*   [Vivere UniBg](https://www.unibg.it/vivere-unibg)
+
+Sant'Agostino
+=============
+
+Breadcrumb
+----------
+
+1.   [Home](https://www.unibg.it/)
+2.   [Ateneo](https://www.unibg.it/ateneo)
+3.   [Chi siamo](https://www.unibg.it/ateneo/chi-siamo)
+4.   [Le sedi](https://www.unibg.it/ateneo/chi-siamo/sedi)
+5.   [Sant'Agostino](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino)
+
+[](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino)
+
+### La sede di Sant'Agostino
+
+![Image 3: Facciata Sant'Agostino](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/album_fotografico/unibg_sant_agostino_0161.jpg?itok=Dh9Zkid_)
+
+A Sant'Agostino ha sede il Dipartimento di [Scienze Umane e Sociali](https://dsus.unibg.it/) e l'**Aula Magna** dell'Università degli studi di Bergamo.
+
+Una curiosità: l’erezione delle mura, operazione di riassetto urbanistico durata fino al XVI secolo, ha portato alla distruzione di numerosi edifici storici, soprattutto religiosi. Di tutti i monumenti presenti lungo la cinta delle mura si salvò soltanto la chiesa di Sant’Agostino.
+
+### Dal monastero all'Università
+
+[![Image 4: Sant'Agostino, il Chiostro piccolo di sera](https://www.unibg.it/sites/default/files/styles/foto_galleria/public/album_fotografico/sago2.jpg?itok=DqL-I07a)](https://www.unibg.it/sites/default/files/album_fotografico/sago2.jpg "Sant'Agostino, il Chiostro piccolo di sera")
+
+[![Image 5: La sede di Sant'Agostino vista dall'alto](https://www.unibg.it/sites/default/files/styles/foto_galleria/public/album_fotografico/sago4.jpg?itok=g1LKweUf)](https://www.unibg.it/sites/default/files/album_fotografico/sago4.jpg "La sede di Sant'Agostino vista dall'alto")
+
+[![Image 6: Sant'Agostino, la sede di sera](https://www.unibg.it/sites/default/files/styles/foto_galleria/public/album_fotografico/sago1.jpg?itok=U7zC6u5o)](https://www.unibg.it/sites/default/files/album_fotografico/sago1.jpg "Sant'Agostino, la sede di sera")
+
+[![Image 7: Aula Magna Sant'Agostino - interno](https://www.unibg.it/sites/default/files/styles/foto_galleria/public/aula_magna.jpg?itok=zWpyE00u)](https://www.unibg.it/sites/default/files/aula_magna.jpg "Aula Magna Sant'Agostino - interno")
+
+[![Image 8: Il Presidente della Repubblica Sergio Mattarella durante la Cerimonia di Inaugurazione dell'a.a. 2016-17](https://www.unibg.it/sites/default/files/styles/foto_galleria/public/album_fotografico/17tris.jpg?itok=ov2KUrhm)](https://www.unibg.it/sites/default/files/album_fotografico/17tris.jpg "Il Presidente della Repubblica Sergio Mattarella durante la Cerimonia di Inaugurazione dell'a.a. 2016-17")
+
+[![Image 9: Sede di Sant'Agostino, Chiostro grande](https://www.unibg.it/sites/default/files/styles/foto_galleria/public/album_fotografico/05-sedi-agostino.jpg?itok=BTT64qT4)](https://www.unibg.it/sites/default/files/album_fotografico/05-sedi-agostino.jpg "Sede di Sant'Agostino, Chiostro grande")
+
+[![Image 10: Studenti nella biblioteca di Sant'Agostino](https://www.unibg.it/sites/default/files/styles/foto_galleria/public/album_fotografico/sago6.jpg?itok=1MpSoK7L)](https://www.unibg.it/sites/default/files/album_fotografico/sago6.jpg "Studenti nella biblioteca di Sant'Agostino")
+
+‹›
+
+### Intorno a Sant'Agostino
+
+Dalla Fara, il prato antistante Sant'Agostino, si aprono vicine sia il viale delle Mura sia la salita in pochi minuti a Città Alta, tramite la splendida via Porta Dipinta. Allo stesso modo, rapida è la discesa verso Città Bassa, percorrendo via San Tomaso, la via dell'Arte, dove incontriamo le prestigiose Accademia Carrara e GaMeC.
+
+Dalla sede è inoltre possibile raggiungere facilmente[il servizio mensa di via San Lorenzo](https://www.unibg.it/servizi/luoghi/servizio-ristorazione)e numerosi luoghi di ristoro.
+
+### La mappa
+
+[La sede di Sant'Agostino è anche su Google Maps](https://goo.gl/maps/fLu5dkxZK652)
+
+![Image 11](https://mt1.google.com/vt/x=69057&y=46784&z=17)![Image 12](https://mt2.google.com/vt/x=69057&y=46785&z=17)![Image 13](https://mt0.google.com/vt/x=69056&y=46784&z=17)![Image 14](https://mt2.google.com/vt/x=69058&y=46784&z=17)![Image 15](https://mt1.google.com/vt/x=69056&y=46785&z=17)![Image 16](https://mt3.google.com/vt/x=69058&y=46785&z=17)![Image 17](https://mt0.google.com/vt/x=69057&y=46783&z=17)![Image 18](https://mt3.google.com/vt/x=69056&y=46783&z=17)![Image 19](https://mt1.google.com/vt/x=69058&y=46783&z=17)
+
+![Image 20](https://www.unibg.it//themes/custom/unibg/assets/map/default-map-marker-shadow.svg)
+
+![Image 21](https://www.unibg.it//themes/custom/unibg/assets/map/default-map-marker.svg)
+
+[+](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino# "Zoom in")[−](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino# "Zoom out")
+
+[](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino# "View Fullscreen")
+
+[Leaflet](http://leafletjs.com/ "A JS library for interactive maps") | Map data © [Google](https://googlemaps.com/)
+
+### Come arrivare
+
+**Dall'Aeroporto**
+
+Dall'aeroporto di Bergamo (**[Milan-Bergamo Airport - Orio al Serio](https://www.milanbergamoairport.it/ "Bergamo - Sito esterno")**) occorre prendere il**BUS Linea 1/aeroporto**che raggiunge il centro (Porta Nuova) per proseguire direttamente per Città Alta (fermata Porta S. Agostino).
+
+**Dalla Stazione**
+
+**BUS Linea 1**- Dalla stazione ferroviaria a Città Alta (Colle Aperto) l'autobus ha una frequenza di 15'. Il tragitto è: Stazione >Porta Nuova>viale Vittorio Emanuele > Porta S. Agostino.
+
+ Sempre in autobus è possibile raggiungere in pochi minuti a piedi**Porta Nuova**, dove, oltre alla Linea 1, a salire in Città Alta sono le**Linee 1A**(proveniente da Torre de' Roveri),**1B**(da Scanzo) e**1C**(da Grassobbio).
+
+**Dall'Ostello**
+
+**BUS Linea 3**- parte**dall'Ostello di Bergamo**(zona quartiere Monterosso), percorre viale Giulio Cesare e davanti allo stadio gira in via Crescenzi, poi via Baioni, via Maironi da Ponte, Porta S. Lorenzo, via della Fara. Per l'interscambio si consiglia il parcheggio dello stadio.
+
+[Linee e Orari ATB - Trasporti Bergamo](https://www.atb.bergamo.it/it/viaggia-con-noi/linee-e-orari)
+
+### La storia di Sant'Agostino
+
+La grande chiesa annessa al complesso monastico degli Eremitani di Sant'Agostino, oggi Aula Magna dell'Università, fu fondata nel 1290 per volontà del vescovo Roberto Bonghi e consacrata nel 1347 dal vescovo Bernardo Bernardi. Riccamente decorato con affreschi a partire dall'ultimo decennio del Duecento, l'edificio fu solo marginalmente interessato dal grande incendio del 1403 nel quale andò distrutto il monastero che si sviluppava nella zona a nord della chiesa.
+
+Nel 1442 la comunità degli Agostiniani del Convento bergamasco entrò a far parte dell'Osservanza di Lombardia e venne promosso un vasto rinnovamento degli edifici conventuali, nei quali ancora si colgono, accanto a parti trecentesche (ad esempio le trifore e il portale dell'antica sala capitolare), parti tardoquattrocenteschi (come il primo cortile porticato).
+
+In seguito alla soppressione degli ordini religiosi, nell'Ottocento chiesa e convento furono adibiti a caserma e deposito di armi; gli affreschi furono allora nascosti dietro una cortina muraria in laterizio, rimossa soltanto negli anni Cinquanta e Sessanta del Novecento nell'ambito dei restauri diretti da Mauro Pellicioli.
+
+Nel 2001 i chiostri diventarono campus dell'Università degli Studi di Bergamo per incontri di formazione scientifica, mentre nel 2015, dopo un grosso intervento di restauro alla navata principale, la ex chiesa è diventata Aula Magna di UniBg. [Nel 2018 un ulteriore intervento di restauro](https://www.unibg.it/terza-missione/cultura-e-societa/immobili-storici-e-patrimonio-artistico/lavori-restauro-aula-magna) ha restituito gran parte degli affreschi interni della struttura.
+
+_Per il testo sopra riportato si ringrazia Tosca Rossi, storica dell'arte e ricercatrice, guida e accompagnatrice turistica._
+
+### Bene insignito dello Scudo Blu
+
+![Image 22: Scudo Blu](https://www.unibg.it/sites/default/files/styles/paragrafo_grande/public/media/images/2023-11-06/scudo%20blu.jpg?itok=5JQUhSd4)
+
+**Lo [Scudo Blu](https://www.scudoperlacultura.it/lo-scudo-blu/) è stato apposto all’Ex Monastero di Sant’Agostino il 3 novembre novembre 2023.**
+
+Sin dalla sua fondazione, il complesso è stato eletto a sede di centro di studi, religiosi e culturali. Si tratta quindi di un luogo con una forte valenza storica, architettonica, artistica, e culturale.
+
+ Come emblema internazionale, lo Scudo Blu riconosce che il depauperamento o il danneggiamento dell’Ex Monastero di Sant’Agostino sarebbe una perdita per l’intera umanità e pertanto deve essere adeguatamente conservato e tutelato in ogni occasione.
+
+### Contatti
+
+**Sede di Sant'Agostino**
+
+ piazzale Sant'Agostino, 2
+
+ 24129 Bergamo
+
+Apertura:
+
+ lun - ven: 7.30 - 20.30
+
+ sabato: 7.30 - 13.30
+
+ (variazioni in HomePage - Avvisi)
+
+_Uscieri_
+
+ Chiostro maggiore
+
+ T +39 035 205 2901
+
+[uscieri.sagostino@unibg.it](mailto:uscieri.sagostino@unibg.it)
+
+Casermette
+
+ T +39 035 205 2900
+
+[uscieri.sagostino@unibg.it](mailto:uscieri.sagostino@unibg.it)
+
+Seguici su
+----------
+
+*   [Twitter](https://twitter.com/@UniBergamo)
+*   [Facebook](https://www.facebook.com/UniBergamo)
+*   [Linkedin](https://www.linkedin.com/edu/school?id=13864&trk=tyah&trkInfo=tarId%3A1413281313161%2Ctas%3Auniversit%C3%A0%20bergamo%2Cidx%3A4-1-6)
+*   [YouTube](https://www.youtube.com/user/UniBgTube/playlists)
+*   [Instagram](https://www.instagram.com/unibergamo)
+*   [Telegram](https://t.me/unibg "Telegram")
+*   [UniBGOnAir](http://www.unibgonair.it/)
+*   [Threads](https://www.threads.net/@unibergamo "Threads")
+*   [Whatsapp](https://whatsapp.com/channel/0029VaLoItN3wtbBlCWBpg2f "Whatsapp")
+
+Footer - 1
+----------
+
+*   [Dipartimenti](https://www.unibg.it/ateneo/organizzazione-e-struttura/dipartimenti)
+*   [Centri di ricerca e terza missione](https://www.unibg.it/ateneo/organizzazione-e-struttura/centri-ricerca-e-terza-missione)
+*   [Strutture speciali](https://www.unibg.it/ateneo/organizzazione/strutture-speciali)
+*   [Assicurazione della Qualità](https://www.unibg.it/ateneo/assicurazione-qualita)
+*   [Piano Strategico](https://trasparenza.unibg.it/node/5459)
+*   [Bilancio di genere](https://www.unibg.it/sites/default/files/primo_bilancio_di_genere_2020_versione_web_aggiornata.pdf)
+*   [Amministrazione trasparente](https://trasparenza.unibg.it/)
+*   [UniFind](https://unibg.unifind.cineca.it/)
+*   [Course Catalogue](https://unibg.coursecatalogue.cineca.it/)
+
+Footer - 2
+----------
+
+*   [Concorsi e selezioni](https://www.unibg.it/node/44)
+*   [Atti di notifica](https://www.unibg.it/atti-notifica)
+*   [Lavora con noi](https://www.unibg.it/node/2577)
+*   [Bandi di gara](https://www.unibg.it/node/45)
+*   [Bilancio di Ateneo](https://trasparenza.unibg.it/node/923)
+*   [Portale dei pagamenti](https://www.unibg.it/node/9485)
+*   [Albo di Ateneo](https://protocollo.unibg.it/albo/viewer?view=html)
+*   [Ateneo Bergamo SpA](https://www.unibg.it/node/12824)
+*   [Servizio di prevenzione e protezione](https://www.unibg.it/vivere-unibg/spazi-e-risorse/servizio-prevenzione-e-protezione)
+
+Footer - 3
+----------
+
+*   [Siti tematici](https://www.unibg.it/siti-tematici)
+*   [Servizi online](https://www.unibg.it/servizi-online)
+*   [Comunicazione e media](https://www.unibg.it/node/5598)
+*   [Ufficio stampa e CS](https://www.unibg.it/node/13722)
+*   [Logo e identità visiva](https://www.unibg.it/logo-e-identita-visiva)
+*   [Patrocinio e richiesta spazi](https://www.unibg.it/node/7033)
+*   [Sostieni UniBg - 5x1000](https://www.unibg.it/sostieni-unibg-5x1000)
+*   [Privacy e Protezione dei dati personali](https://www.unibg.it/privacy-e-protezione-dei-dati-personali)
+*   [Merchandising UniBg](https://www.unibg.it/merchandising-unibg)
+
+**Università degli studi di Bergamo**
+
+via Salvecchio 19
+
+24129 Bergamo
+
+Cod. Fiscale 80004350163
+
+P.IVA 01612800167
+
+Centralino 035 2052111
+
+Piè di pagina
+-------------
+
+*   [Note legali](https://www.unibg.it/note-legali)
+*   [Credits](https://www.unibg.it/credits)
+*   [Informativa uso dei cookie](https://www.unibg.it/privacy-e-protezione-dei-dati-personali/informativa-sulluso-dei-cookie)
+*   [Cookie settings](https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino#editCookieSettings)
+*   [Accessibilità](https://www.unibg.it/accessibilita)
+*   [Mappa del sito](https://www.unibg.it/mappa-sito)
+*   [PEC](https://www.unibg.it/pec)
+*   [Contatti](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti)
+*   [U.O. Comunicazione](https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/servizio-comunicazione-stampa-e-eventi/comunicazione)
+*   [Wi-fi](https://www.unibg.it/wi-fi)
+
+Back to top
+
+Fonte 5: Inaugurazione delle nuove sedi universitarie di via PIgnolo ... - UniBg
+URL: https://www.unibg.it/node/5360
+Contenuto: ![](https://www.facebook.com/tr?id=981134568621857&ev=PageView&noscript=1)
+
+## Info
+
+## Link utili utente
+
+## Navigazione principale - desktop
+
+## Informazioni per
+
+![Home](/themes/custom/unibg/logo.svg)
+
+## Link utili utente
+
+## Navigazione principale
+
+## Servizi on line
+
+## Navigazione principale
+
+# Inaugurazione delle nuove sedi universitarie di via PIgnolo e via S. Tomaso
+
+## Breadcrumb
+
+Martedì 30 maggio 2017, alla presenza di tutte le Istituzioni e di tutti i professionisti che hanno partecipato a progetto, sono state inaugurate le nuove sedi di via Pignolo e via S. Tomaso
+
+![I partecipanti alla cerimonia riuniti nell'aula 16 di via Pignolo](/sites/default/files/album_fotografico/02a-img_7706.jpg "I partecipanti alla cerimonia riuniti nell'aula 16 di via Pignolo")
+![I tre Rettori che hanno promosso il progetto. Da sinistra: i Proff. Alberto Castoldi, Remo Morzenti Pellegrini e Stefano Paleari](/sites/default/files/album_fotografico/02c-img_7701_0.jpg "I tre Rettori che hanno promosso il progetto. Da sinistra: i Proff. Alberto Castoldi, Remo Morzenti Pellegrini e Stefano Paleari")
+![Le Autorità presenti alla cerimonia](/sites/default/files/album_fotografico/03-img_7708.jpg "Le Autorità presenti alla cerimonia")
+![Centri di Ricerca_CCSE](/sites/default/files/ateneo/ccse.png "Centri di Ricerca_CCSE")
+![Il discorso del Rettore, Prof. Remo Morzenti Pellegrini](/sites/default/files/album_fotografico/05a-img_7729.jpg "Il discorso del Rettore, Prof. Remo Morzenti Pellegrini")
+![Il discorso del Rettore, Prof. Remo Morzenti Pellegrini](/sites/default/files/album_fotografico/05b-img_7720.jpg "Il discorso del Rettore, Prof. Remo Morzenti Pellegrini")
+![Il saluto della Dott.ssa Claudia Maria Terzi, Assessore all'Ambiente, Energia e Sviluppo sostenibile, Regione Lombardia](/sites/default/files/album_fotografico/06-img_7743.jpg "Il saluto della Dott.ssa Claudia Maria Terzi, Assessore all'Ambiente, Energia e Sviluppo sostenibile, Regione Lombardia")
+![Il saluto del Dott. Matteo Rossi, Presidente della Provincia di Bergamo](/sites/default/files/album_fotografico/07-img_7755.jpg "Il saluto del Dott. Matteo Rossi, Presidente della Provincia di Bergamo")
+![Il saluto del Dott. Giorgio Gori, Sindaco del Comune di Bergamo](/sites/default/files/album_fotografico/08-img_7769.jpg "Il saluto del Dott. Giorgio Gori, Sindaco del Comune di Bergamo")
+![Tra gli invitati, il Dott. Franco Tentorio, già Sindaco del Comune di Bergamo](/sites/default/files/album_fotografico/09-img_7776.jpg "Tra gli invitati, il Dott. Franco Tentorio, già Sindaco del Comune di Bergamo")
+![Il discorso del Prof. Alberto Castoldi, già Rettore dell'Università di Bergamo](/sites/default/files/album_fotografico/10-img_7780.jpg "Il discorso del Prof. Alberto Castoldi, già Rettore dell'Università di Bergamo")
+![Il discorso del Prof. Stefano Paleari, già Rettore dell'Università di Bergamo](/sites/default/files/album_fotografico/11-img_7785.jpg "Il discorso del Prof. Stefano Paleari, già Rettore dell'Università di Bergamo")
+![L'intervento dell'Ing. Francesco Catalfamo, Direttore dei lavori](/sites/default/files/album_fotografico/12-img_7791.jpg "L'intervento dell'Ing. Francesco Catalfamo, Direttore dei lavori")
+![L'intervento dell'Arch. Marco Tomasi, referente dei lavori di restauro nella sede di via S. Tomaso](/sites/default/files/album_fotografico/13-img_7796.jpg "L'intervento dell'Arch. Marco Tomasi, referente dei lavori di restauro nella sede di via S. Tomaso")
+![Governance, il Rettore](/sites/default/files/album_fotografico/rettore_ph_laura_pietra-6772.jpg "Governance, il Rettore")
+![Centri di Ricerca_HTH](/sites/default/files/ateneo/hth.png "Centri di Ricerca_HTH")
+![Centri di Ricerca_CST](/sites/default/files/ateneo/schermata_2018-09-06_alle_12.12.52.png "Centri di Ricerca_CST")
+![La sala riunioni, Sede di via S. Tomaso](/sites/default/files/album_fotografico/19-img_7820.jpg "La sala riunioni, Sede di via S. Tomaso")
+![I locali della sede di via S. Tomaso](/sites/default/files/album_fotografico/20-img_7834.jpg "I locali della sede di via S. Tomaso")
+![Centri di Ricerca_CYFE](/sites/default/files/ateneo/cyfe.jpg "Centri di Ricerca_CYFE")
+![Il cortile, sede di vi S. Tomaso](/sites/default/files/album_fotografico/22-img_7847.jpg "Il cortile, sede di vi S. Tomaso")
+
+## Seguici su
+
+## Footer - 1
+
+## Footer - 2
+
+## Footer - 3
+
+**Università degli studi di Bergamo**  
+via Salvecchio 19  
+24129 Bergamo  
+Cod. Fiscale 80004350163  
+P.IVA 01612800167  
+Centralino 035 2052111
+
+## Piè di pagina
+
+
+>>> USER PROMPT:
+Elencami tutte le sedi dell'università di Bergamo.
+
+>>> RISPOSTA:
+Ciao Raphael,
+
+Come studente del primo anno della Magistrale in Ingegneria Informatica, ti sarà utile sapere che l'Università degli studi di Bergamo adotta un modello di "campus diffuso" con diverse sedi distribuite tra il centro storico della città e il territorio provinciale.
+
+Ecco l'elenco delle sedi dell'Università di Bergamo, con gli indirizzi dove specificati:
+
+*   **Campus umanistico**: Situato prevalentemente in Città Alta, comprende le sedi di:
+    *   **Sant’Agostino**: piazzale Sant’Agostino, 2, 24129 Bergamo.
+    *   **Salvecchio**: via Salvecchio 19, 24129 Bergamo (questo è anche l'indirizzo generale dell'Ateneo).
+    *   **Pignolo**: via Pignolo, 123, 24121 Bergamo.
+    *   **Rosate**: l'indirizzo specifico non è fornito nelle fonti.
+
+*   **Campus economico-giuridico**: Situato in Città Bassa, include le sedi di:
+    *   **Caniana**: via dei Caniana, 2, 24127 Bergamo.
+    *   **Moroni**: via Moroni, 255, 24127 Bergamo.
+
+*   **Campus ingegneristico**: Questo è il polo dedicato alle discipline ingegneristiche e alle scienze applicate, dove si trova la Scuola di Ingegneria.
+    *   **Dalmine**: via Pasubio, 3, 24044 Dalmine.
+
+*   **Kilometro Rosso**: L'Università è presente anche presso questo distretto di ricerca e innovazione tecnologica, che favorisce collaborazioni scientifiche e progettuali.
+    *   **Ingresso Est**: via Stezzano, 87, Bergamo.
+    *   **Ingresso Ovest**: viale Europa, 4, Stezzano (Stezzano, Bergamo).
+
+Le fonti menzionano anche **Palazzo Bassi-Rathgeb** come una delle sedi, ma non forniscono dettagli specifici sul suo utilizzo o indirizzo.
+
+Pagina di riferimento:
+*   https://www.unibg.it/ateneo/chi-siamo/sedi
+*   https://sdm.unibg.it/sdm/sedi-sdm/
+*   https://www.unibg.it/ateneo/chi-siamo/sedi/caniana
+*   https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Domanda originale: Elencami tutte le sedi dell'università di Bergamo.
+Categoria: generale
+
+INFORMAZIONI STUDENTE (autenticato):
+- Nome: Raphael
+- Cognome: Mazzoleni
+- Matricola: 1086531
+- Dipartimento: Scuola di Ingegneria
+- Corso di laurea: Ingegneria informatica
+- Tipologia: Magistrale
+- Anno di frequentazione: 1
+
+Risposta generata: Ciao Raphael,
+
+Come studente del primo anno della Magistrale in Ingegneria Informatica, ti sarà utile sapere che l'Università degli studi di Bergamo adotta un modello di "campus diffuso" con diverse sedi distribuite tra il centro storico della città e il territorio provinciale.
+
+Ecco l'elenco delle sedi dell'Università di Bergamo, con gli indirizzi dove specificati:
+
+*   **Campus umanistico**: Situato prevalentemente in Città Alta, comprende le sedi di:
+    *   **Sant’Agostino**: piazzale Sant’Agostino, 2, 24129 Bergamo.
+    *   **Salvecchio**: via Salvecchio 19, 24129 Bergamo (questo è anche l'indirizzo generale dell'Ateneo).
+    *   **Pignolo**: via Pignolo, 123, 24121 Bergamo.
+    *   **Rosate**: l'indirizzo specifico non è fornito nelle fonti.
+
+*   **Campus economico-giuridico**: Situato in Città Bassa, include le sedi di:
+    *   **Caniana**: via dei Caniana, 2, 24127 Bergamo.
+    *   **Moroni**: via Moroni, 255, 24127 Bergamo.
+
+*   **Campus ingegneristico**: Questo è il polo dedicato alle discipline ingegneristiche e alle scienze applicate, dove si trova la Scuola di Ingegneria.
+    *   **Dalmine**: via Pasubio, 3, 24044 Dalmine.
+
+*   **Kilometro Rosso**: L'Università è presente anche presso questo distretto di ricerca e innovazione tecnologica, che favorisce collaborazioni scientifiche e progettuali.
+    *   **Ingresso Est**: via Stezzano, 87, Bergamo.
+    *   **Ingresso Ovest**: viale Europa, 4, Stezzano (Stezzano, Bergamo).
+
+Le fonti menzionano anche **Palazzo Bassi-Rathgeb** come una delle sedi, ma non forniscono dettagli specifici sul suo utilizzo o indirizzo.
+
+Pagina di riferimento:
+*   https://www.unibg.it/ateneo/chi-siamo/sedi
+*   https://sdm.unibg.it/sdm/sedi-sdm/
+*   https://www.unibg.it/ateneo/chi-siamo/sedi/caniana
+*   https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RISPOSTA:
+L'Università degli studi di Bergamo adotta un modello di "campus diffuso" con diverse sedi distribuite tra il centro storico della città e il territorio provinciale.
+
+Ecco l'elenco delle sedi dell'Università di Bergamo, con gli indirizzi dove specificati:
+
+-   CAMPUS UMANISTICO: Situato prevalentemente in Città Alta, comprende le sedi di:
+    -   Sant’Agostino: piazzale Sant’Agostino, 2, 24129 Bergamo.
+    -   Salvecchio: via Salvecchio 19, 24129 Bergamo (indirizzo generale dell'Ateneo).
+    -   Pignolo: via Pignolo, 123, 24121 Bergamo.
+    -   Rosate: indirizzo specifico non fornito.
+
+-   CAMPUS ECONOMICO-GIURIDICO: Situato in Città Bassa, include le sedi di:
+    -   Caniana: via dei Caniana, 2, 24127 Bergamo.
+    -   Moroni: via Moroni, 255, 24127 Bergamo.
+
+-   CAMPUS INGEGNERISTICO: Polo dedicato alle discipline ingegneristiche e alle scienze applicate, dove si trova la Scuola di Ingegneria.
+    -   Dalmine: via Pasubio, 3, 24044 Dalmine.
+
+-   KILOMETRO ROSSO: L'Università è presente anche presso questo distretto di ricerca e innovazione tecnologica.
+    -   Ingresso Est: via Stezzano, 87, Bergamo.
+    -   Ingresso Ovest: viale Europa, 4, Stezzano (Stezzano, Bergamo).
+
+Le fonti menzionano anche Palazzo Bassi-Rathgeb come una delle sedi, ma non forniscono dettagli specifici sul suo utilizzo o indirizzo.
+
+Pagina di riferimento:
+-   https://www.unibg.it/ateneo/chi-siamo/sedi
+-   https://sdm.unibg.it/sdm/sedi-sdm/
+-   https://www.unibg.it/ateneo/chi-siamo/sedi/caniana
+-   https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino
+
+================================================================================
+RISPOSTA FINALE
+================================================================================
+L'Università degli studi di Bergamo adotta un modello di "campus diffuso" con diverse sedi distribuite tra il centro storico della città e il territorio provinciale.
+
+Ecco l'elenco delle sedi dell'Università di Bergamo, con gli indirizzi dove specificati:
+
+-   CAMPUS UMANISTICO: Situato prevalentemente in Città Alta, comprende le sedi di:
+    -   Sant’Agostino: piazzale Sant’Agostino, 2, 24129 Bergamo.
+    -   Salvecchio: via Salvecchio 19, 24129 Bergamo (indirizzo generale dell'Ateneo).
+    -   Pignolo: via Pignolo, 123, 24121 Bergamo.
+    -   Rosate: indirizzo specifico non fornito.
+
+-   CAMPUS ECONOMICO-GIURIDICO: Situato in Città Bassa, include le sedi di:
+    -   Caniana: via dei Caniana, 2, 24127 Bergamo.
+    -   Moroni: via Moroni, 255, 24127 Bergamo.
+
+-   CAMPUS INGEGNERISTICO: Polo dedicato alle discipline ingegneristiche e alle scienze applicate, dove si trova la Scuola di Ingegneria.
+    -   Dalmine: via Pasubio, 3, 24044 Dalmine.
+
+-   KILOMETRO ROSSO: L'Università è presente anche presso questo distretto di ricerca e innovazione tecnologica.
+    -   Ingresso Est: via Stezzano, 87, Bergamo.
+    -   Ingresso Ovest: viale Europa, 4, Stezzano (Stezzano, Bergamo).
+
+Le fonti menzionano anche Palazzo Bassi-Rathgeb come una delle sedi, ma non forniscono dettagli specifici sul suo utilizzo o indirizzo.
+
+Pagina di riferimento:
+-   https://www.unibg.it/ateneo/chi-siamo/sedi
+-   https://sdm.unibg.it/sdm/sedi-sdm/
+-   https://www.unibg.it/ateneo/chi-siamo/sedi/caniana
+-   https://www.unibg.it/ateneo/chi-siamo/sedi/santagostino
+
+------------------------------------------------------------
+TEMPI DI ESECUZIONE
+------------------------------------------------------------
+  Classifier Agent         : 1.398s
+  Query Agent              : 0.879s
+  Web Agent                : 3.385s
+  Generator Agent          : 14.830s
+  Revision Agent           : 7.479s
+
+  TEMPO TOTALE             : 27.974s
+
+================================================================================
+FINE DEL LOG
+================================================================================

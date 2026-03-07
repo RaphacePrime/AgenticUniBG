@@ -1,0 +1,395 @@
+================================================================================
+AGENTIC UNIBG - PIPELINE LOG
+================================================================================
+Timestamp : 2026-03-07 16:41:47
+Status    : success
+
+------------------------------------------------------------
+INFORMAZIONI UTENTE
+------------------------------------------------------------
+Tipo utente   : ospite
+(Utente ospite - nessuna informazione di profilo disponibile)
+
+------------------------------------------------------------
+QUERY ORIGINALE DELL'UTENTE
+------------------------------------------------------------
+che esami ho alla prossima sessione?
+
+------------------------------------------------------------
+STEP 1 - CLASSIFIER AGENT
+------------------------------------------------------------
+Status: N/A
+Category: date_esami
+Description: Richieste su date e orari degli esami, sessioni d'esame, quando si svolge un esame
+Confidence: high
+
+>>> SYSTEM PROMPT:
+Sei un agente classificatore per l'Università di Bergamo.
+Il tuo compito è classificare le richieste degli studenti nelle seguenti categorie:
+
+- informazioni_corso: Richieste su corsi, programmi, docenti
+- orari: Richieste su orari delle lezioni, ricevimenti
+- date_esami: Richieste su date e orari degli esami, sessioni d'esame, quando si svolge un esame
+- procedure: Richieste su procedure amministrative, iscrizioni, tasse
+- servizi: Richieste su servizi universitari (mensa, biblioteche, aule studio)
+- generale: Domande generiche sull'università
+- altro: Altre richieste non classificabili
+
+
+INFORMAZIONI UTENTE: L'utente è un OSPITE (non autenticato). Non sono disponibili informazioni personali sullo studente. Fornisci risposte generiche senza poter personalizzare in base al percorso di studio specifico.
+
+Tieni conto delle informazioni dell'utente per classificare meglio la richiesta.
+Se lo studente è autenticato, usa le informazioni del suo profilo per capire il contesto della domanda.
+Se è un ospite, classifica la domanda in modo generico.
+
+Rispondi SOLO con il nome della categoria (una delle chiavi sopra elencate), senza spiegazioni.
+Esempi:
+- "Quali sono gli orari del corso di matematica?" -> orari
+- "Come faccio a iscrivermi all'esame?" -> procedure
+- "Chi è il docente di algoritmi?" -> informazioni_corso
+- "Dove si trova la mensa?" -> servizi
+- "Quando è l'esame di analisi?" -> date_esami
+- "Che esami ho alla prossima sessione?" -> date_esami
+- "In che date sono gli esami della sessione estiva?" -> date_esami
+- "Quando posso dare l'esame di basi di dati?" -> date_esami
+
+
+>>> USER PROMPT:
+che esami ho alla prossima sessione?
+
+>>> RISPOSTA:
+date_esami
+
+------------------------------------------------------------
+STEP 2 - QUERY AGENT
+------------------------------------------------------------
+Status: success
+Search Query: date esami sessione estiva 2025/2026 unibg
+Original Query: che esami ho alla prossima sessione?
+
+>>> SYSTEM PROMPT:
+Sei un agente specializzato nel generare query di ricerca web per il sito dell'Università degli Studi di Bergamo (unibg.it).
+
+DATA ODIERNA: 07 marzo 2026 (Anno accademico 2025/2026)
+
+Il tuo compito è trasformare la richiesta dello studente in una SINGOLA query di ricerca breve e ottimizzata, composta solo da parole chiave semplici.
+
+REGOLE FONDAMENTALI:
+- Genera SOLO la query, senza spiegazioni o commenti
+- Usa parole chiave brevi e pertinenti, come faresti in una ricerca Google
+- Rimuovi articoli, congiunzioni e parole inutili
+- Non formulare domande, solo parole chiave
+- La query deve essere in italiano
+- Massimo 8 parole
+- Quando la domanda riguarda date, sessioni o periodi temporali, includi l'anno accademico (2025/2026) o il periodo specifico (es. "marzo 2026", "sessione estiva 2026") nella query
+
+REGOLA CRITICA - CONTESTO CONVERSAZIONE:
+Il contesto della conversazione ha SEMPRE la priorità sul profilo dello studente.
+Se la conversazione indica che l'utente sta chiedendo informazioni su un corso/dipartimento DIVERSO dal proprio, la query DEVE riferirsi al corso/dipartimento menzionato nella conversazione, NON a quello del profilo.
+
+Esempio critico:
+- Profilo studente: Ingegneria informatica, Magistrale
+- Conversazione precedente: lo studente chiedeva degli esami di Giurisprudenza
+- Nuova domanda: "invece nella sessione estiva?"
+- Query CORRETTA: date esami giurisprudenza sessione estiva 2025/2026 unibg
+- Query SBAGLIATA: esami sessione estiva ingegneria informatica magistrale unibg
+Motivo: dalla conversazione è chiaro che "invece" si riferisce sempre a Giurisprudenza, non al suo corso.
+
+QUANDO USARE LE INFORMAZIONI DEL PROFILO STUDENTE:
+INCLUDI le info del profilo SOLO quando:
+- La domanda riguarda esplicitamente il PROPRIO corso dello studente (es. "che materie ho?", "i miei esami")
+- Non c'è contesto conversazionale che indichi un argomento diverso
+- La domanda usa pronomi possessivi ("mio", "miei", "il mio corso")
+
+NON INCLUDERE le info del profilo quando:
+- La conversazione indica un argomento/corso diverso dal profilo
+- La domanda è generica (procedure, servizi, docenti, mensa, erasmus)
+- La domanda menziona esplicitamente un altro corso o dipartimento
+- La domanda è un follow-up ("e nella sessione X?", "invece per...", "e gli orari?") e il contesto conversazionale indica un corso diverso
+
+ESEMPI CON PROFILO (corso: ingegneria informatica, anno: 1, magistrale):
+- "che materie ho al secondo anno?" → materie secondo anno ingegneria informatica magistrale unibg
+- "i miei esami della prossima sessione" → esami prossima sessione ingegneria informatica magistrale 2025/2026 unibg
+
+ESEMPI SENZA PROFILO:
+- "come faccio a iscrivermi al test di ammissione?" → iscrizione test ammissione unibg
+- "chi è il docente di algoritmi?" → docente algoritmi unibg
+- "dove si trova la mensa?" → mensa universitaria unibg
+- "esami giurisprudenza terzo anno" → date esami giurisprudenza terzo anno 2025/2026 unibg
+
+ESEMPIO FOLLOW-UP (contesto: si parlava di esami di giurisprudenza):
+- "invece nella sessione estiva?" → date esami giurisprudenza sessione estiva 2025/2026 unibg
+- "e quelli del quarto anno?" → date esami giurisprudenza quarto anno 2025/2026 unibg
+
+Rispondi SOLO con la query generata, nient'altro.
+
+>>> USER PROMPT:
+
+Informazioni studente:
+INFORMAZIONI UTENTE: L'utente è un OSPITE (non autenticato). Non sono disponibili informazioni personali sullo studente. Fornisci risposte generiche senza poter personalizzare in base al percorso di studio specifico.
+
+Ultima richiesta dello studente: che esami ho alla prossima sessione?
+
+Genera la query di ricerca web:
+
+>>> RISPOSTA:
+date esami sessione estiva 2025/2026 unibg
+
+------------------------------------------------------------
+STEP 3 - WEB AGENT (Exam Calendar Extract)
+------------------------------------------------------------
+Status              : success
+Query di ricerca    : date esami sessione estiva 2025/2026 unibg
+
+>>> SELEZIONE CALENDARIO:
+  Polo/Dipartimento : None
+  Sessione          : None
+  URL selezionato   : None
+  Motivazione       : NUMERO: 0
+MOTIVO: L'utente è un ospite e non ha specificato il polo o il corso di studi. Non è possibile determinare il calendario corretto.
+
+>>> PROMPT SELEZIONE LINK:
+Oggi è il 07 marzo 2026. Anno accademico 2025/2026.
+
+L'utente ha chiesto: "date esami sessione estiva 2025/2026 unibg"
+
+INFORMAZIONI UTENTE: L'utente è un OSPITE (non autenticato). Non sono disponibili informazioni personali sullo studente. Fornisci risposte generiche senza poter personalizzare in base al percorso di studio specifico.
+
+Ecco i link ai calendari esami disponibili:
+0. NON È POSSIBILE DETERMINARE IL CALENDARIO — L'utente non ha specificato un corso o dipartimento e non è autenticato. Non scegliere un calendario a caso.
+(non disponibile) Scuola di Ingegneria - sessione invernale: Già conclusa
+1. Scuola di Ingegneria - sessione intermedia/aprile straordinaria → https://www.unibg.it/sites/default/files/media/documents/2026-02-09/appelli25-26_aprile.pdf
+2. Scuola di Ingegneria - sessione estiva → https://www.unibg.it/sites/default/files/media/documents/2026-02-23/estiva%202026.pdf
+3. Scuola di Ingegneria - sessione autunnale → https://www.unibg.it/sites/default/files/media/documents/2026-02-23/autunno%2026.pdf
+(non disponibile) Polo Economico-Giuridico - sessione invernale: Non disponibile
+4. Polo Economico-Giuridico - sessione intermedia/aprile straordinaria → https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/628/ttTotalHtml.html
+5. Polo Economico-Giuridico - sessione estiva → https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/606/ttPdf.pdf
+6. Polo Economico-Giuridico - sessione autunnale → https://logistica.unibg.it/Esami/Calendario/Polo_Economico-Giuridico/607/ttPdf.pdf
+(non disponibile) Polo Linguistico - sessione invernale: Già conclusa
+(non disponibile) Polo Linguistico - sessione intermedia/aprile straordinaria: Non ancora disponibile
+7. Polo Linguistico - sessione estiva → https://logistica.unibg.it/Esami/Calendario/Polo_di_Lingue_e_culture_straniere/614/ttPdf.pdf
+8. Polo Linguistico - sessione autunnale → https://logistica.unibg.it/Esami/Calendario/Polo_di_Lingue_e_culture_straniere/615/ttPdf.pdf
+(non disponibile) Polo Umanistico - sessione invernale: Non disponibile
+9. Polo Umanistico - sessione intermedia/primaverile → https://logistica.unibg.it/Esami/Calendario/Polo_Umanistico/617/ttPdf.pdf
+10. Polo Umanistico - sessione scienze formazione primaria/fine maggio → https://logistica.unibg.it/Esami/Calendario/Polo_Umanistico/618/ttPdf.pdf
+11. Polo Umanistico - sessione estiva → https://logistica.unibg.it/Esami/Calendario/Polo_Umanistico/619/ttPdf.pdf
+12. Polo Umanistico - sessione autunnale → https://logistica.unibg.it/Esami/Calendario/Polo_Umanistico/620/ttPdf.pdf
+
+Portale generale esami: https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it
+
+Scegli IL NUMERO del link più appropriato da cui estrarre le date degli esami per rispondere alla domanda dell'utente.
+
+REGOLA CRITICA:
+- Se l'utente è un OSPITE (non autenticato) E la sua domanda NON specifica un corso, dipartimento o polo preciso (es. "che esami ho?", "esami quest'anno?", "prossima sessione?"), DEVI rispondere con NUMERO: 0.
+  In questo caso NON scegliere un calendario a caso (es. Ingegneria). Senza sapere il corso dell'utente, non puoi sapere quale calendario serve.
+- Rispondi con un numero diverso da 0 SOLO se:
+  a) L'utente è autenticato (ha un profilo con corso/dipartimento), OPPURE
+  b) L'utente ha specificato esplicitamente nella domanda il corso, il dipartimento o il polo (es. "esami di giurisprudenza", "calendario ingegneria", "esami polo umanistico").
+
+IMPORTANTE: Scegli il calendario del POLO/DIPARTIMENTO che corrisponde alla domanda dell'utente, NON necessariamente quello del suo profilo.
+Per esempio, se l'utente è iscritto a Ingegneria ma chiede degli esami di Giurisprudenza, scegli il calendario del Polo Economico-Giuridico.
+Considera quale sessione è più vicina o pertinente alla domanda.
+Se la domanda dice "prossima sessione", scegli la sessione più prossima tra quelle disponibili rispetto alla data odierna.
+
+Rispondi con questo formato esatto:
+NUMERO: <numero>
+MOTIVO: <breve spiegazione>
+
+>>> RISPOSTA LLM SELEZIONE:
+NUMERO: 0
+MOTIVO: L'utente è un ospite e non ha specificato il polo o il corso di studi. Non è possibile determinare il calendario corretto.
+
+>>> TAVILY EXTRACT:
+  URL estratto      : N/D
+  Status extract    : N/D
+  Lunghezza content : 0 caratteri
+
+  Fonti web aggiuntive: 3
+
+------------------------------------------------------------
+STEP 4 - GENERATOR AGENT
+------------------------------------------------------------
+Status: success
+Category Used: date_esami
+
+>>> SYSTEM PROMPT:
+Sei un assistente specializzato nelle date e orari degli esami dell'Università di Bergamo.
+Aiuta gli studenti a trovare quando si svolgono gli esami, in quale sessione e in quali date.
+Ti vengono fornite informazioni estratte dai calendari ufficiali degli esami.
+Cerca le date degli esami specifici richiesti dallo studente all'interno del contenuto fornito.
+Se non trovi l'esame specifico, indica chiaramente che non è presente nel calendario fornito e suggerisci di controllare il portale esami.
+Se lo studente è un ospite e non sai il suo corso, chiedigli gentilmente quale corso frequenta per poterti aiutare meglio.
+IMPORTANTE: Se non è stato possibile determinare quale calendario consultare (perché l'utente è ospite e non ha specificato il corso), NON aggiungere 'Pagina di riferimento' in fondo alla risposta. Non includere nella risposta dettagli interni come numeri di selezione, motivi della scelta o metadati del processo.
+
+
+DATA ODIERNA: 07 marzo 2026 (Anno accademico 2025/2026)
+
+
+INFORMAZIONI UTENTE: L'utente è un OSPITE (non autenticato). Non sono disponibili informazioni personali sullo studente. Fornisci risposte generiche senza poter personalizzare in base al percorso di studio specifico.
+
+Usa queste informazioni per personalizzare la risposta. Se lo studente è autenticato,
+puoi fare riferimento al suo corso, dipartimento e anno per dare risposte più mirate.
+Se è un ospite, fornisci risposte generiche e orientative.
+Rispondi in italiano in modo chiaro, conciso e professionale.
+Se la domanda è fuori dal tuo ambito, indirizza cortesemente l'utente verso la risorsa appropriata.
+
+ISTRUZIONI PER L'USO DELLE FONTI WEB:
+Ti vengono fornite informazioni estratte dal sito ufficiale dell'Università di Bergamo.
+
+REGOLE FONDAMENTALI:
+1. Basa la tua risposta ESCLUSIVAMENTE sulle informazioni contenute nelle fonti fornite.
+2. NON inventare date, scadenze, procedure o informazioni non presenti nelle fonti.
+3. Estrai dalle fonti SOLO le parti pertinenti alla domanda dello studente, ignorando il resto.
+4. Se le fonti contengono date e scadenze specifiche, riportale fedelmente.
+5. Se le fonti non contengono informazioni sufficienti per rispondere, dillo chiaramente e suggerisci di contattare la Segreteria Studenti o consultare il sito.
+6. In fondo alla risposta, indica la pagina di riferimento con il formato: "Pagina di riferimento: [URL]", usando l'URL della fonte principale utilizzata.
+7. Le fonti possono contenere testo lungo e non perfettamente ordinato: analizzalo con attenzione per estrarre le informazioni corrette.
+8. Alcune fonti sono documenti PDF: in quel caso vengono forniti anche i link ipertestuali estratti direttamente dal PDF con la pagina di provenienza. Se uno di questi link è rilevante per la risposta dello studente, includilo nella risposta in forma cliccabile (formato Markdown: [testo](url)) indicando anche da quale parte del documento proviene.
+
+Informazioni aggiuntive:
+DATA ODIERNA: 07 marzo 2026
+
+═══ CALENDARIO ESAMI ═══
+Non è stato possibile determinare quale calendario consultare.
+L'utente non ha specificato il corso o il dipartimento e non è autenticato.
+Chiedi gentilmente all'utente quale corso di laurea o dipartimento frequenta per poter consultare il calendario corretto.
+Motivo: NUMERO: 0
+MOTIVO: L'utente è un ospite e non ha specificato il polo o il corso di studi. Non è possibile determinare il calendario corretto.
+
+Portale generale esami UniBG: https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it
+
+═══ FONTI WEB AGGIUNTIVE ═══
+Fonte 1: [PDF] 5.Calendario didattico 2025-2026 LFC.pdf - UniBg
+URL: https://www.unibg.it/sites/default/files/media/documents/2025-10-03/5.Calendario%20didattico%202025-2026%20LFC.pdf
+Contenuto: 1 DIPARTIMENTO DI LETTERE, FILOSOFIA, COMUNICAZIONE CALENDARIO DIDATTICO A.A. 2025-2026 Tutte le informazioni relative alle scadenze per immatricolazioni e pre-iscrizioni sono disponibili alla pagina https://www.unibg.it/studiare/iscriversi/passi-iscriversi 1. IMMATRICOLAZIONI AI CORSI DI LAUREA TRIENNALE a) ad accesso libero dal 1° luglio 2025 al 4 ottobre 2025  Corso di laurea triennale in Lettere  Corso di laurea triennale in Filosofia Sostenimento del TOLC entro il 26 settembre 2025. Per tutte le informazioni utili consultare la pagina web https://www.unibg.it/studiare/iscriversi/passi-iscriversi/corsi-laurea-triennale-iscrizioni b) ad accesso programmato  Corso di laurea triennale in Scienze della comunicazione Per accedere a questi corsi è necessario sostenere il TOLC in presenza oppure il TOLC@casa. Valido il TOLC sostenuto a partire dal 1° ottobre 2024. Tutte le informazioni relative al sostenimento del TOLC-SU, alla pre-iscrizione e all’immatricolazione sono disponibili alla pagina https://www.unibg.it/studiare/iscriversi/scadenze-iscriversi/scadenze-iscriversi-lauree-triennali 2. IMMATRICOLAZIONI CORSI DI LAUREA MAGISTRALE AD ACCESSO LIBERO Le pre-iscrizioni ai corsi di laurea magistrale ad accesso libero possono essere presentate dal 1° aprile 2025. Maggiori informazioni sulle scadenze sono reperibili alla pagina https://www.unibg.it/studiare/iscriversi/scadenze-iscriversi/scadenze-iscriversi-lauree-magistrali Per informazioni relative al colloquio iniziale per la verifica della personale preparazione consultare le seguenti pagine nel sito:  corso di laurea magistrale in Comunicazione, informazione, editoria https://ls-cie.unibg.it/it/come-fare/iscriversi 2  corso di laurea magistrale in Culture umanistiche https://ls-cmc.unibg.it/it/come-fare/iscriversi  corso di laurea magistrale in Filosofia, scienze e società https://ls-fil.unibg.it/it/come-fare/iscriversi  corso di laurea magistrale in Valorizzazione del patrimonio culturale materiale e immateriale https://ls-vpcm.unibg.it/it/come-fare/iscriversi  corso di laurea magistrale in Philosophical knowledge: foundations, methods, applications https://ls-pfma.unibg.it/en/how/how-apply 3. OFA (Obblighi Formativi Aggiuntivi) e TVA (Test di Verifica dell’Assolvimento degli eventuali obblighi formativi aggiuntivi) La verifica della preparazione iniziale viene effettuata tramite TOLC-SU. È prevista, durante il primo anno di corso, l’organizzazione di attività formative finalizzate al recupero dell’eventuale debito formativo (OFA) risultante dai test di verifica della preparazione iniziale (TVI). Al termine di tali corsi verranno effettuate delle prove di accertamento dell’avvenuto assolvimento del debito formativo; l’obbligo formativo aggiuntivo deve essere assolto entro il 30 settembre 2026. In caso di mancato assolvimento del debito formativo (OFA) lo studente non potrà prendere iscrizione al 2° anno di corso e sarà tenuto ad iscriversi come ripetente del 1° anno. Gli studenti iscritti al primo anno con tipologia di iscrizione part-time dovranno assolvere gli OFA entro il 30 settembre 2027. Per i corsi di laurea ad accesso programmato il test di ammissione costituisce al contempo anche test di verifica della preparazione iniziale (TVI). Maggiori informazioni sono reperibili alla pagina seguente https://dlfc.unibg.it/it/studiare/calendari/assolvere-ofa Agli studenti immatricolati ai corsi di Laurea triennale che non dovessero raggiungere il punteggio soglia previsto dal TOLC-SU, verrà assegnato un Obbligo Formativo Aggiuntivo (OFA) secondo le indicazioni pubblicate alle seguenti pagine Lettere: https://lt-let.unibg.it/it/iscriversi/assolvere-gli-ofa Filosofia: https://lt-fil.unibg.it/it/iscriversi/assolvere-gli-ofa Scienze della comunicazione https://lt-sdc.unibg.it/it/iscriversi/ofa Gli studenti immatricolati in anni accademici precedenti dovranno seguire le attività di recupero proposte in corso d’anno. 4. SCADENZA PRESENTAZIONE PIANI DI STUDIO PER L’A.A. 2025-2026 - Corsi di studio laurea triennale e 2° anno laurea magistrale: 3 dal 15 ottobre 2025 al 17 novembre 2025 - Corsi di studio laurea magistrale, 1° anno e immatricolati con riserva: dal 29 ottobre 2025 al 21 novembre 2025 5. ISCRIZIONE AI CORSI SINGOLI Le domande di iscrizione ai corsi singoli potranno essere presentate nel periodo dal 1° agosto 2025 al 15 luglio 2026. Maggiori informazioni sono presenti alla seguente pagina https://www.unibg.it/terza-missione/formazione-continua/corsi-singoli CALENDARIO LEZIONI -Lezioni primo semestre: dal 22 settembre 2025 al 19 dicembre 2025 • Lezioni 1° sottoperiodo: dal 22 settembre 2025 al 31 ottobre 2025 (compresi eventuali recuperi) • Lezioni 2° sottoperiodo: dal 10 novembre 2025 al 19 dicembre 2025 (comprensivi di eventuali recuperi) Festività natalizie: sospensione delle attività didattiche: dal 22 dicembre 2025 al 6 gennaio 2026. -Lezioni secondo semestre: dal 16 febbraio 2026 al 29 maggio 2026 • Lezioni 3° sottoperiodo: dal 16 febbraio 2026 al 27 marzo 2026 • Lezioni 4° sottoperiodo: dal 20 aprile 2026 al 29 maggio 2026 Festività Pasquali: dal 2 aprile 2026 all’8 aprile 2026 CALENDARIO ESAMI A) Esami di profitto Le informazioni relative a date, orari, luogo di svolgimento e risultati degli esami sono consultabili alla pagina https://logistica.unibg.it/PortaleStudenti/index.php?view=home&_lang=it dal 08/01/2026 al 13/02/2026 2 appelli orali o scritti (per tutti gli insegnamenti); dal 30/03/2026 al 17/04/2026 1 appello orale o scritto straordinario (per studenti in corso e fuori corso) 4 Si specifica che gli studenti fuori corso, trascorsi 3 anni dalla disattivazione degli insegnamenti, sono obbligati a modificare il proprio piano di studio. dal 8/06/2026 al 30/07/2026 3 appelli orali o scritti (per tutti gli insegnamenti); 2 appelli scritti e 2 orali per gli esami di Lingua straniera. dal 17/08/2026 al 19/09/2026 2 appelli orali o scritti (per tutti gli insegnamenti); 1 appello solo per gli esami di Lingua straniera. Appello straordinario d’esame nella sessione invernale riservato agli studenti in mobilità internazionale Al termine del periodo di lezioni del primo semestre, entro il 23 dicembre 2024, è permesso sostenere esami fino ad un massimo di 36 cfu relativi esclusivamente a corsi interamente impartiti nel semestre di riferimento. L’appello si intende, per gli studenti in uscita, sostitutivo del primo appello successivo previsto nel calendario didattico. Per maggiori informazioni si prega di contattare il Servizio orientamento e programmi internazionali, con le modalità indicate nella pagina web dedicata: https://www.unibg.it/ateneo/amministrazione/uffici-e-contatti/area-didattica-e-servizi-studenti/servizio-orientamento-e Insegnamenti mutuati da altri Dipartimenti Gli insegnamenti mutuati da altri Dipartimenti dell’Ateneo seguono il calendario didattico del Dipartimento di offerta B) Esame di profitto attività Centro Competenza Lingue Per gli appelli d’esame relativi alle attività erogate dal Centro Competenza Lingue è necessario consultare la pagina web dedicata https://ccl.unibg.it/it CALENDARIO PROVE FINALI E TESI DI LAUREA Prove finali (per i corsi di laurea triennali) e tesi di laurea (per i corsi di laurea magistrale) Per i termini e le modalità di presentazione della domanda di prova finale o di tesi di laurea, consultare il sito web alla pagina https://www.unibg.it/studiare/ti-aiutiamo/laurearsi 5 Per le informazioni relative ai giorni, agli orari e alle sedi di svolgimento delle prove finali e tesi di laurea consultare il sito web alla pagina https://dlfc.unibg.it/it/studiare/calendari/prove-finali-tesi-laurea A) Sessione straordinaria aprile 2026: dal 27 al 30 aprile 2026 11/10/2025 Termine per la presentazione della “Domanda per l’assegnazione del titolo provvisorio della tesi di laurea specialistica/magistrale” - solo per la laurea magistrale in Comunicazione, informazione, editoria – secondo le istruzioni alla pagina https://ls-cie.unibg.it/it/come-fare/laurearsi 8/11/2025 Termine per la presentazione della “Domanda di assegnazione titolo provvisorio e docente relatore per la prova finale” - solo per la laurea triennale in Scienze della Comunicazione – secondo le istruzioni alla pagina https://lt-sdc.unibg.it/it/studiare/laurearsi 20/02/2026 Termine ultimo e tassativo per tutti i corsi del Dipartimento per la compilazione online della domanda di prova finale/laurea (Step 1 – Inserimento titolo tesi) 03/03/2026 Termine approvazione titolo tesi (Step 2) da parte del relatore 09/03/2026 Termine ultimo e tassativo per tutti i corsi del Dipartimento per la compilazione online della domanda di prova finale/laurea (Step 3). 17/04/2026 Data ultima di sostenimento esami 20/04/2026 Termine per il deposito della tesi/prova finale in formato pdf nello sportello internet e per la consegna al proprio relatore e correlatore, laddove richiesto. B) Sessioni estiva luglio 2026: dal 7 al 9 luglio 2026 09/01/2026 Termine per la presentazione della “Domanda per l’assegnazione del titolo provvisorio della tesi di laurea specialistica/magistrale” - solo per la laurea magistrale in Comunicazione, informazione, editoria – secondo le istruzioni alla pagina https://ls-cie.unibg.it/it/come-fare/laurearsi 27/02/2026 Termine per la presentazione della “Domanda di assegnazione titolo provvisorio e docente relatore per la prova finale” - solo per la laurea triennale in Scienze della Comunicazione – secondo le istruzioni alla pagina https://lt-sdc.unibg.it/it/studiare/laurearsi 6 21/05/2026 Termine ultimo e tassativo per tutti i corsi del Dipartimento per la compilazione online della domanda di prova finale/laurea (Step 1 – Inserimento titolo tesi) 27/05/2026 Termine approvazione titolo tesi (Step 2) da parte del relatore 30/05/2026 Termine ultimo e tassativo per tutti i corsi del Dipartimento per la compilazione online della domanda di prova finale/laurea (Step 3). 23/06/2026 Data ultima di sostenimento esami 26/06/2026 Termine per il deposito della tesi/prova finale in formato pdf nello sportello internet e per la consegna al proprio relatore e correlatore, laddove richiesto. D) Sessione autunnale ottobre 2026: dal 28 al 30 ottobre 2026 14/05/2026 Termine per la presentazione della “Domanda per l’assegnazione del titolo provvisorio della tesi di laurea specialistica/magistrale” - solo per la laurea magistrale in Comunicazione, informazione, editoria – secondo le istruzioni alla pagina https://ls-cie.unibg.it/it/come-fare/laurearsi 26/06/2026 Termine per la presentazione della “Domanda di assegnazione titolo provvisorio e docente relatore per la prova finale” - solo per la laurea triennale in Scienze della Comunicazione – secondo le istruzioni alla pagina https://lt-sdc.unibg.it/it/studiare/laurearsi 22/09/2026 Data ultima di sostenimento esami 25/09/2026Termine ultimo e tassativo per tutti i corsi del Dipartimento per la compilazione online della domanda di prova finale/laurea (Step 1 – Inserimento titolo tesi) 02/10/2026 Termine approvazione titolo tesi (Step 2) da parte del relatore 08/10/2026 Termine ultimo e tassativo per tutti i corsi del Dipartimento per la compilazione online della domanda di prova finale/laurea (Step 3). 11/10/2026 Termine per il deposito della tesi/prova finale in formato pdf nello sportello internet e per la consegna al proprio relatore e correlatore, laddove richiesto.
+
+Fonte 2: [PDF] CALENDARIO DIDATTICO A.A. 2025/2026
+URL: https://dgiu.unibg.it/sites/dip1/files/didattica/calendario_didattico_25-26_descrittivo_10.09.2025.pdf
+Contenuto: Via Moroni, 255 – 24127 Bergamo CF 80004350163 - P.IVA 01612800167 https://dgiu.unibg.it - giurisprudenza@unibg.it – Pec: giurisprudenza@unibg.legalmail.it T. 035 2052693 -2692 – Fax 035 2052889 CALENDARIO DIDATTICO A.A. 2025/2026 CORSI DI LAUREA E LAUREA MAGISTRALE A CICLO UNICO ACCESSO LIBERO Per informazioni sull’accesso ai corsi in : Diritto per l’impresa nazionale e internazionale (classe L-14) – 1° anno Giurisprudenza (Classe LMG/01) – 1° anno consultare le informazioni pubblicate alla seguente pagina: https://www.unibg.it/node/10591. Assolvere gli OFA I laboratori di recupero per gli studenti che non hanno raggiunto il punteggio minimo relativo alle conoscenze richieste per l’accesso, sono organizzati dal Dipartimento nel periodo febbraio/marzo 2026. Le informazioni sull’avvio dei laboratori saranno pubblicate alla seguente pagina: Assolvere gli OFA CORSI DI LAUREA MAGISTRALE ACCESSO LIBERO Per informazioni sull’accesso ai corsi in : Diritti umani, migrazioni e cooperazione internazionale (classe LM-81) consultare le informazioni pubblicate alla seguente pagina: https://www.unibg.it/node/9359 L'adeguatezza della preparazione dello studente sarà verificata tramite colloquio orale. La data del colloquio iniziale sarà resa nota alla pagina del corso di laurea https://ls-dumci.unibg.it/it Per maggiori informazioni consultare la pagina del corso Come fare per iscriversi https://ls-dumci.unibg.it/it/come-fare/iscriversi CALENDARIO ATTIVITA’ DIDATTICHE (lezioni, esami e ricevimento studenti) PRIMO SEMESTRE: 15 settembre 2025 - 6 gennaio 2026 Sospensione attività didattiche: 10 – 22 novembre 2025 22 dicembre 2025 – 6 gennaio 2026 Esami - sospensione lezioni Sospensione attività didattiche - Festività natalizie SECONDO SEMESTRE: 16 febbraio 2026 - 30 maggio 2026 Sospensione attività didattiche: 2 aprile – 8 aprile 2026 Sospensione attività didattiche – Festività pasquali 25 aprile 2026 Festività - Chiusura sede Via Moroni, 255 – 24127 Bergamo CF 80004350163 - P.IVA 01612800167 https://dgiu.unibg.it - giurisprudenza@unibg.it – Pec: giurisprudenza@unibg.legalmail.it T. 035 2052693 -2692 – Fax 035 2052889 1- 2 maggio 2026 Festività - Chiusura sede Per tutto il mese di agosto è sospeso il ricevimento studenti Per gli orari di ricevimento consultare la pagina personale del docente. Per conoscere gli orari delle lezioni consultare la pagina: Orari CALENDARIO ESAMI dal 10 al 22 novembre 2025 Un appello per debitori d’esame dal 7 gennaio al 24 gennaio 2026* Un appello per gli esami del primo semestre a.a. 2025/2026 e debitori d’esame dal 26 gennaio al 14 febbraio 2026 Un appello per primo semestre a.a. 2025/2026 e debitori d’esame dal 3 giugno al 27 giugno 2026 Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame dal 29 giugno al 31 luglio 2026 Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame dal 31 agosto al 12 settembre 2026 Un appello per tutti gli insegnamenti del primo e secondo semestre a.a. 2025/2026 e debitori d’esame Il calendario annuale degli esami di profitto sarà pubblicato sul sito web nell’area didattica del Dipartimento di Giurisprudenza alla pagina Calendario didattico e appelli . * Lo svolgimento dell'appello straordinario d'esame nella sessione invernale riservato a studenti in mobilità internazionale - qualora previsto - potrà svolgersi negli ultimi 10 giorni prima della fine del semestre. PROVE FINALI/TESI DI LAUREA Sessione autunnale a.a. 2024/2025 15-16 ottobre 2025 Sessione marzo a.a. 2024/2025 9–10 marzo 2026 Sessione aprile a.a. 2024/2025 15-16 aprile 2026 Sessione estiva a.a. 2025/2026 15-16 luglio 2026 Per informazioni dettagliate sul calendario tesi e relative scadenze consultare la pagina - Prove finali/ tesi di laurea.
+
+Fonte 3: [PDF] CALENDARIO DIDATTICO aa 2025/2026
+URL: https://dllcs.unibg.it/sites/dip5/files/calendario_didattico_a.a._2025_2026_0.pdf
+Contenuto: TORNA ALL’INDICE 1 Dipartimento di Lingue, Letterature e Culture Straniere CALENDARIO DIDATTICO a.a. 2025/2026 INDICE ANALITICO Immatricolazioni Corso di studio triennale in Lingue e Letterature Straniere Moderne (LLSM) Pre-iscrizioni - Corsi di Laurea Magistrale Immatricolazioni Corsi di Laurea Magistrale Iscrizione ai Corsi Singoli Corsi per principianti – 60 ore CALENDARIO LEZIONI CALENDARIO ESAMI Sessione autunnale Novembre 2025 Sessione straordinaria Marzo 2026 Sessione estiva Luglio 2026 Sessione autunnale 2026 Laboratori Didattici Certificazioni di Lingua straniera Titolo provvisorio e docente relatore di Prova finale (Solo per le Lauree Triennali) Verifica dell’adeguatezza della preparazione personale ai fini dell’ammissione ai corsi di laurea magistrale SCADENZA PRESENTAZIONE PIANI DI STUDIO PER L’A.A. 2025/2026 TORNA ALL’INDICE 2 Immatricolazioni Corso di studio triennale in Lingue e Letterature Straniere Moderne (LLSM) Dal 1 luglio all’ 3 ottobre 2025 sostenimento del TOLC-SU entro il 26 settembre 2025 – iscrizione al test on line sul portale del CISIA entro la data prevista dal CISIA (indicativamente 7 gg prima della data di svolgimento del test). Gli studenti immatricolati in Lingue e Letterature Straniere Moderne (LLSM) che, a seguito del mancato raggiungimento del punteggio minimo nella sezione 'Comprensione del testo e conoscenza della lingua italiana' del TOLC-SU (o del mancato svolgimento dello stesso TOLC) hanno contratto un OFA (Obbligo Formativo Aggiuntivo) in lingua italiana sono tenuti ad assolvere tale obbligo formativo entro il 30 settembre 2026, pena l’impossibilità di iscriversi al 2° anno di corso. Il recupero dell’OFA di lingua italiana (codice 13049) è verificato attraverso la somministrazione di un test informatizzato. Gli appelli saranno tre: uno a gennaio, uno a fine maggio/inizio giugno e uno a fine agosto/inizio settembre 2026. L’OFA deve essere assolto PRIMA di sostenere gli esami dell’idoneità di “Lingua Italiana” e di “Letteratura Italiana/Letteratura Italiana Contemporanea”. Immatricolazioni tardive Dal 4 ottobre al 28 novembre 2025 Sostenimento del TOLC-SU entro il 20 novembre 2025 Corsi di Laurea Magistrale ad accesso libero E’ prevista una finestra temporale unica relativa all’intero processo (pre-iscrizione + immatricolazione) dal 1° aprile al 14 novembre 2025. E’ possibile pre-iscriversi a un massimo di due corsi di laurea magistrale versando il previsto contributo di pre-iscrizione per ogni corso di interesse. Le domande di pre-iscrizione presentate (= domanda on line + pagamento contributo) verranno esaminate dalla commissione preposta secondo calendario di seguito indicato per consentire agli studenti l’immatricolazione entro il 21 ottobre 2024: Pre-iscrizione colloquio/test di verifica preparazione iniziale* immatricolazione dal 1/04 al 30/05 dal 23/06 al 27/06 dal 07/07 al 29/08 dal 3/06 al 29/08 dal 11/09 al 19/09 dal 29/09 al 15/10 dal 1/09 al 30/09 dal 15/10 al 21/10 dal 27/10 al 14/11 Sono ammesse pre-iscrizioni tardive (con addebito della mora) Dal 1 al 31 ottobre 2025 e dal 3 al 28 novembre 2025 Verifica preparazione iniziale: (Le date relative agli specifici colloqui sono pubblicate sul minisito dei singoli Corsi di Laurea Magistrale alla voce “come fare per” > iscriversi. Iscrizione ai Corsi Singoli Le domande di iscrizione ai corsi singoli devono essere presentate nel periodo dal 1 agosto 2025 al 15 luglio 2026. Prima dell’inizio delle lezioni il Dipartimento offre corsi da 60 ore destinati a principianti assoluti nelle seguenti lingue straniere (è possibile iscriversi ad un solo corso): TORNA ALL’INDICE 3 Corsi per principianti – 60 ore Nel periodo dal 22 settembre al 12 ottobre 2025 Lingua araba : 1 gruppo Lingua cinese : 1 gruppo Lingua francese: 1 gruppo (ammessi anche studenti del Dipartimento di Lettere, Filosofia, Comunicazione) Lingua giapponese : 1 gruppo unico durante la prima settimana (22-27 settembre 2025, 30 ore in comune), poi due gruppi separati (ulteriori 30 ore per ciascun gruppo) Lingua russa : 1 gruppo Lingua spagnola : 1 gruppo (ammessi anche studenti del Dipartimento di Lettere, Filosofia, Comunicazione) Lingua tedesca : 1 gruppi (ammessi anche studenti del Dipartimento di Lettere, Filosofia, Comunicazione) Per accedere ai corsi è sufficiente avere perfezionato l’iscrizione al corso di studio e prenotarsi on line. Gli studenti che dovessero totalizzare un punteggio insufficiente nel/nei placement test di Lingua straniera sostenuto/i sono caldamente sollecitati a frequentare i Corsi per Principianti delle lingue FRANCESE, SPAGNOLO, TEDESCO o, nel caso della Lingua INGLESE, i Remedial work CALENDARIO LEZIONI Lezioni primo semestre: da lunedì 22 settembre a venerdì 19 dicembre 2025 Lezioni 1° sottoperiodo: da lunedì 22 settembre a sabato 8 novembre 2025 Lezioni 2° sottoperiodo: da lunedì 10 novembre a venerdì 19 dicembre 2025 (Compresi eventuali recuperi lezione) Festività Natalizie: sospensione delle attività didattiche: da lunedì 22 dicembre 2025 a martedì 6 gennaio 2026 Lezioni secondo semestre: da lunedì 16 febbraio a sabato 23 maggio 2026 Lezioni 3° sottoperiodo: da lunedì 16 febbraio a mercoledì 1 aprile 2026 (Compresi eventuali recuperi lezione) Festività Pasquali: sospensione delle attività didattiche: da giovedì 2 a mercoledì 8 aprile 2026. Lezioni 4° sottoperiodo: da giovedì 9 aprile a sabato 23 maggio 2026 Chiusura sedi a.a. 2025/2026 - da sabato 19 a lunedì 21 aprile 2025; - venerdì 25 aprile (Anniversario della Liberazione) e sabato 26 aprile 2025; - giovedì 1° maggio 2025 (festa dei lavoratori); - venerdì 2 e sabato 3 maggio 2025; - lunedì 2 giugno 2025 (Festa della Repubblica); - tutti i sabati dal 19 luglio al 30 agosto 2025; - da lunedì 11 a giovedì 14 agosto 2025 (chiusura estiva); - venerdì 15 agosto 2025 (Ferragosto); - lunedì 25 agosto 2025; - martedì 26 agosto 2025 (Festa di S. Alessandro); - sabato 1 novembre 2025 (Ognissanti); - lunedì 8 dicembre 2025 (Immacolata); - da mercoledì 24 dicembre 2025 a lunedì 5 gennaio 2026; - martedì 6 gennaio 2026 (Epifania). TORNA ALL’INDICE 4 Sospensione delle attività didattiche a.a. 2025/2026: Festività Natalizie: da lunedì 22 dicembre 2025 a martedì 6 gennaio 2026. Festività Pasquali: da giovedì 2 aprile a mercoledì 8 aprile 2026. Calendario Prove finali triennali e Tesi di Laurea Magistrale Le Prove Finali di LLSM si svolgono per valutazione a distanza degli elaborati da parte di Commissioni appositamente nominate. Le Tesi di Laurea Magistrale si svolgono in presenza con proclamazione immediata. Novembre 2025: mercoledì 5, giovedì 6 e venerdì 7 Marzo 2026: lunedì 23, mercoledì 25, giovedì 26, venerdì 27 marzo Luglio 2026: giovedì 9 e venerdì 10 Nei giorni delle sessioni di laurea è prevista la sospensione delle lezioni e delle attività didattiche integrative. CALENDARIO ESAMI Gli studenti laureandi nella sessione estiva devono programmare gli esami tenendo conto delle scadenze previste per il sostenimento di tutti gli esami. (Vedi paragrafi successivi) Esami di profitto Al termine del primo semestre: appello strettamente riservato agli studenti in mobilità internazionale ad esclusione delle Lingue Straniere (delibera CdD 11.12.2012) Dall’ 8 Gennaio al 14 Febbraio 2026: PER TUTTE LE DISCIPLINE COMPRESE LE LINGUE STRANIERE : Due appelli (distanziati di almeno 14 giorni) LINGUA ITALIANA: un appello nel mese di gennaio Dal 25 maggio al 31 Luglio 2026 : (esclusi i due giorni delle tesi 9 e 10 luglio) PER TUTTE LE DISCIPLINE MENO LE LINGUE STRANIERE: Tre appelli (distanziati di almeno 14 giorni) PER LE LINGUE STRANIERE: Due appelli (distanziati di almeno due settimane) Solo nel caso del terzo anno del corso di Laurea Triennale e del secondo anno dei corsi di Laurea Magistrale la prova orale del primo appello dovrà svolgersi entro il 27 giugno 2026 (termine ultimo per il sostenimento degli esami ai fini dell’ammissione all’esame di laurea) LINGUA ITALIANA: due appelli Dal 17 Agosto al 19 Settembre 2026: PER TUTTE LE DISCIPLINE MENO LE LINGUE STRANIERE: Due appelli (distanziati di almeno 14 giorni) PER LE LINGUE STRANIERE: Un appello LINGUA ITALIANA: un appello nel mese di settembre TORNA ALL’INDICE 5 SESSIONE DI TESI PROVE FINALI TRIENNALI E MAGISTRALI Le commissioni dettagliate saranno pubblicate nel link “prove finali” del Dipartimento Sessione autunnale Novembre 2025: mercoledì 5, giovedì 6 e venerdì 7. Le Prove Finali Triennali si svolgono per valutazione a distanza. Le Tesi di Laurea Magistrali si svolgono in presenza con proclamazione immediata. 20 maggio 2025 Laurea magistrale: termine presentazione Domanda per l’assegnazione del titolo provvisorio della tesi di laurea magistrale (Domanda per l’ assegnazione del titolo provvisorio della tesi di laurea quadriennale vecchio ordinamento). 4 luglio 2025 Laurea triennale: termine per la presentazione della Domanda assegnazione titolo provvisorio e docente relatore per la prova finale 10 ottobre 2025 Scadenza TASSATIVA (PENA ESCLUSIONE) per la compilazione online della “Domanda di Tesi” (triennale, specialistica, magistrale e quadriennale del vecchio ordinamento). Vedasi GUIDA alla presentazione della Domanda di Laurea on line. N.B. Il titolo della Tesi deve essere compilato anche in Lingua Inglese ai fini del rilascio del Diploma Supplement, pertanto lo studente deve concordare con il docente relatore la traduzione in lingua inglese. I laureandi magistrali che presentano la tesi in lingua straniera devono inserire in entrambi i campi (italiano e inglese) il solo titolo in lingua straniera. La domanda di ammissione deve essere COMPLETATA, compilata, inviata on line entro la data del 10 ottobre 2025. Contestualmente va effettuato il versamento del contributo di Euro 32,00 (16 per il bollo virtuale sulla pergamena e 16 per il bollo virtuale sulla domanda di ammissione alla prova finale). Tale contributo si genera automaticamente nella sezione Tasse della pagina internet personale dello studente dopo la compilazione on line della domanda di Tesi. In caso di precedente presentazione della domanda di laurea richiedere al servizio studenti di generare l’importo di € 16,00 (bollo virtuale) per la nuova domanda di laurea (http://www.unibg.it/helpdesksegre). 20 settembre 2025 I laureandi devono aver sostenuto entro questa data tutti gli esami utili per l’ammissione alla laurea. (La mera verbalizzazione non impedisce il conseguimento del titolo anche se l’esame viene verbalizzato in una data successiva al suddetto termine. Fa fede la data di sostenimento dell’esame). 25 ottobre 2025 Termine per caricare in formato PDF la prova finale triennale/tesi di laurea magistrale nel proprio sportello TORNA ALL’INDICE 6 internet studenti. N.B. Dopo il caricamento la domanda sarà confermata dalla segreteria; solo nel caso di procedura errata riceverai una comunicazione – vedi la GUIDA. Il candidato può, previo accordo con il docente, consegnare una copia dell’elaborato di prova finale/tesi magistrale su supporto cartaceo al relatore e correlatore. Sessione straordinaria Marzo 2026: lunedì 23, mercoledì 25, giovedì 26, venerdì 27. Le Prove Finali Triennali si svolgono per valutazione a distanza. Le Tesi di Laurea Magistrali si svolgono in presenza con proclamazione immediata. 20 settembre 2025 Laurea magistrale: termine presentazione Domanda per l’assegnazione del titolo provvisorio della tesi di laurea magistrale (Domanda per l’ assegnazione del titolo provvisorio della tesi di laurea quadriennale vecchio ordinamento). 17 ottobre 2025 Laurea triennale: termine per la presentazione della Domanda assegnazione titolo provvisorio e docente relatore per la prova finale 24 febbraio 2026 Scadenza TASSATIVA (PENA ESCLUSIONE) per la compilazione online della “Domanda di Tesi” (triennale, specialistica, magistrale e quadriennale del vecchio ordinamento). Vedasi GUIDA alla presentazione della Domanda di Laurea on line. N.B. Il titolo della Tesi deve essere compilato anche in Lingua Inglese ai fini del rilascio del Diploma Supplement, pertanto lo studente deve concordare con il docente relatore la traduzione in lingua inglese. I laureandi magistrali che presentano la tesi in lingua straniera devono inserire in entrambi i campi (italiano e inglese) il solo titolo in lingua straniera. La domanda di ammissione deve essere COMPLETATA, compilata, inviata on line entro la data del 24 febbraio 2026. Contestualmente va effettuato il versamento del contributo di Euro 32,00 (16 per il bollo virtuale sulla pergamena e 16 per il bollo virtuale sulla domanda di ammissione alla prova finale). Tale contributo si genera automaticamente nella sezione Tasse della pagina internet personale dello studente dopo la compilazione on line della domanda di Tesi. In caso di precedente presentazione della domanda di laurea richiedere al servizio studenti di generare l’importo di € 16,00 (bollo virtuale) per la nuova domanda di laurea (http://www.unibg.it/helpdesksegre). 14 febbraio 2026 I laureandi devono aver sostenuto entro questa data gli esami utili per l’ammissione alla laurea. TORNA ALL’INDICE 7 (La mera verbalizzazione non impedisce il conseguimento del titolo anche se l’esame viene verbalizzato in una data successiva al suddetto termine. Fa fede la data di sostenimento dell’esame). 10 marzo 2026 Termine per caricare in formato PDF la prova finale triennale/tesi di laurea magistrale nel proprio sportello internet studenti. N.B. Dopo il caricamento la domanda sarà confermata dalla segreteria; solo nel caso di procedura errata riceverai una comunicazione – vedi la GUIDA. Il candidato può, previo accordo con il docente, consegnare una copia dell’elaborato di prova finale/tesi magistrale su supporto cartaceo al relatore e correlatore. Sessione estiva Luglio 2026: giovedì 9 e venerdì 10 Le Prove Finali Triennali si svolgono per valutazione a distanza. Le Tesi di Laurea Magistrali si svolgono in presenza con proclamazione immediata. 20 dicembre 2025 Laurea magistrale: termine presentazione Domanda per l’assegnazione del titolo provvisorio della tesi di laurea specialistica/magistrale (Domanda per l’assegnazione del titolo provvisorio della tesi di laurea quadriennale vecchio ordinamento). 17 febbraio 2026 Laurea triennale: termine per la presentazione della Domanda assegnazione titolo provvisorio e docente relatore per la prova finale 19 giugno 2026 Scadenza TASSATIVA (PENA ESCLUSIONE) per la compilazione online della “Domanda di Tesi” (triennale, specialistica, magistrale e quadriennale del vecchio ordinamento). Vedasi GUIDA alla presentazione della Domanda di Laurea on line. N.B. Il titolo della Tesi deve essere compilato anche in Lingua Inglese ai fini del rilascio del Diploma Supplement, pertanto lo studente deve concordare con il docente relatore la traduzione in lingua inglese. I laureandi magistrali che presentano la tesi in lingua straniera devono inserire in entrambi i campi (italiano e inglese) il solo titolo in lingua straniera. La domanda di ammissione deve essere COMPLETATA, compilata, inviata on line entro la data del 19 giugno 2026. Contestualmente va effettuato il versamento del contributo di Euro 32,00 (16 per il bollo virtuale sulla pergamena e 16 per il bollo virtuale sulla domanda di ammissione alla prova finale). Tale contributo si genera automaticamente nella sezione Tasse della pagina internet personale dello studente dopo la compilazione on line della domanda di Tesi. TORNA ALL’INDICE 8 In caso di precedente presentazione della domanda di laurea richiedere al servizio studenti di generare l’importo di € 16,00 (bollo virtuale) per la nuova domanda di laurea (http://www.unibg.it/helpdesksegre). 27 giugno 2026 I laureandi devono aver sostenuto entro questa data gli esami utili per l’ammissione alla laurea. (La mera verbalizzazione non impedisce il conseguimento del titolo anche se l’esame viene verbalizzato in una data successiva al suddetto termine. Fa fede la data di sostenimento dell’esame). 1 luglio 2026 Termine per caricare in formato PDF la prova finale triennale/tesi di laurea magistrale nel proprio sportello internet studenti. N.B. Dopo il caricamento la domanda sarà confermata dalla segreteria; solo nel caso di procedura errata riceverai una comunicazione – vedi la GUIDA. Il candidato può, previo accordo con il docente, consegnare una copia dell’elaborato di prova finale/tesi magistrale su supporto cartaceo al relatore e correlatore. Sessione autunnale 2026 20 maggio 2026 Laurea magistrale: termine presentazione Domanda per l’assegnazione del titolo provvisorio della tesi di laurea magistrale (Domanda per l’ assegnazione del titolo provvisorio della tesi di laurea quadriennale del vecchio ordinamento). 3 luglio 2026 Laurea triennale: termine per la presentazione della Domanda assegnazione titolo provvisorio e docente relatore per la prova finale Termine unico di presentazione della domanda di ammissione ai Laboratori Didattici: 20 ottobre 2025 Scadenze per la presentazione tramite FORM delle “Certificazioni di Lingua straniera” (Centro Competenza Lingue) e “abilità informatiche” Si precisa che il Servizio Studenti accetta le certificazioni durante tutto l'anno accademico. Le scadenze sotto indicate assicurano però allo studente che ci sia almeno un Consiglio di Corso di Studio che possa convalidare la certificazione e concedere le esenzioni spettanti prima dei rispettivi appelli scritti di Gennaio, Maggio e Settembre: 28 novembre 2025 - 31 marzo 2026 - 30 giugno 2026 Definizione termini per la compilazione del modulo “Titolo provvisorio e docente relatore di Prova finale ” (Solo per le Lauree Triennali) - per la sessione di novembre 2025: termine compilazione e invio della domanda 4 luglio 2025 - per la sessione di marzo 2026: termine compilazione e invio della domanda 17 ottobre 2025 TORNA ALL’INDICE 9 - per la sessione di luglio 2026: termine compilazione e invio della domanda 17 febbraio 2026 - per la sessione autunnale 2026: termine compilazione e invio della domanda 3 luglio 2026 Modulo e Modalità di compilazione on line sono visibili nel link del Dipartimento “prove finali”. Il verbale con l’indicazione del docente assegnato verrà pubblicato nel link sopra indicato entro la fine dei rispettivi mesi. Verifica dell’adeguatezza della preparazione personale ai fini dell’ammissione ai corsi di laurea magistrale: modalità, orari e aule per lo svolgimento dei colloqui sono indicati nei singoli Corsi di Studio Magistrale. Gli studenti pre-iscritti che risulteranno in possesso di adeguata preparazione dovranno presentare domanda di immatricolazione unitamente al versamento della tassa regionale per il Diritto allo Studio Universitario e dell’imposta di bollo assolta in modo virtuale, per un totale di 156 euro. Gli studenti che non hanno ancora conseguito la laurea saranno pre-immatricolati con clausola sospensiva relativa al conseguimento del titolo entro la sessione straordinaria di marzo/aprile 2026. Nel caso in cui lo studente pre-immatricolato “con riserva” non consegua la laurea di I livello entro la sessione di laurea di marzo/aprile 2026, ma abbia nel frattempo frequentato gli insegnamenti della laurea magistrale, potrà sostenere i relativi esami dopo il conseguimento della laurea, previa iscrizione ai corsi singoli (senza oneri aggiuntivi se si tratta di laureati Unibg). informazioni dettagliate al link “Immatricolazioni ai Corsi di Laurea Magistrale”. SCADENZA PRESENTAZIONE PIANI DI STUDIO PER L’A.A. 2025/2026 Lo studente deve scegliere un curriculum all’atto dell’immatricolazione e potrà eventualmente chiedere di passare ad altro curriculum entro il termine di presentazione del Piano di studio: Corsi di Studio laurea triennale e secondo anno laurea magistrale: dal 15 ottobre al 17 novembre 2025 Corsi di studio laurea magistrale, primo anno, compresi gli immatricolati con riserva: dal 29 ottobre al 21 novembre 2025
+
+
+>>> USER PROMPT:
+che esami ho alla prossima sessione?
+
+>>> RISPOSTA:
+Gentile studente,
+
+Per poterti aiutare a trovare gli esami della prossima sessione, avrei bisogno di sapere a quale corso di laurea sei iscritto/a. Essendo un ospite, non ho accesso a questa informazione.
+
+Una volta specificato il tuo corso, potrò consultare il calendario didattico corretto.
+
+In generale, per l'anno accademico 2025/2026, le prossime sessioni d'esame previste, a partire dalla data odierna (07 marzo 2026), sono:
+
+*   **Dipartimento di Lettere, Filosofia, Comunicazione:**
+    *   Un appello orale o scritto straordinario (per studenti in corso e fuori corso) si terrà dal **30 marzo 2026 al 17 aprile 2026**.
+*   **Dipartimento di Lingue, Letterature e Culture Straniere:**
+    *   La prossima sessione per gli esami di profitto è prevista dal **25 maggio al 31 luglio 2026** (esclusi i giorni delle tesi 9 e 10 luglio). In questa sessione sono previsti tre appelli per le discipline (meno le lingue straniere) e due appelli per le lingue straniere.
+*   **Dipartimento di Giurisprudenza:**
+    *   La prossima sessione utile per tutti gli insegnamenti del primo e secondo semestre e per i debitori d'esame è prevista dal **3 giugno al 27 giugno 2026**.
+
+Ti invito a indicarmi il tuo corso di laurea per fornirti informazioni più precise sugli esami specifici. Puoi anche consultare il portale generale degli esami dell'Università di Bergamo per i dettagli: [https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it](https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it)
+
+------------------------------------------------------------
+STEP 5 - REVISION AGENT
+------------------------------------------------------------
+Status: success
+Has Changes: True
+
+>>> SYSTEM PROMPT:
+Sei un agente di revisione per le risposte dell'assistente universitario. Il tuo obiettivo è produrre risposte CHIARE, BEN STRUTTURATE e COMPLETE delle informazioni essenziali.
+
+PRIORITÀ:
+1. ACCURATEZZA: non rimuovere MAI date, scadenze, URL o dati specifici. Sono informazioni critiche.
+2. STRUTTURA: quando la risposta elenca più elementi o passi, usa sempre un elenco puntato/numerato.
+3. CONCISIONE INTELLIGENTE: elimina solo frasi vuote, ripetizioni e formule di cortesia inutili. NON tagliare contenuto informativo.
+4. NIENTE DISPERSIONE: no introduzioni del tipo "Ottima domanda", no conclusioni ridondanti.
+5. FONTI: se la risposta contiene una "Pagina di riferimento" con URL, MANTIENILA sempre in fondo.
+
+REGOLE DI FORMATO (testo semplice, compatibile con tag <p> HTML):
+- NON usare markdown (no **, *, #, ecc.)
+- Per elenchi usa "- " oppure "1. " con un elemento per riga
+- Per enfasi usa MAIUSCOLE
+- Niente emoji o simboli decorativi
+- La risposta deve iniziare direttamente con il contenuto, senza formule di apertura
+
+LUNGHEZZA TARGET:
+- Risposta semplice (un fatto, un'informazione): 1-3 frasi
+- Risposta articolata (procedura, elenco con scadenze): max 10-15 punti brevi
+- Se la risposta contiene scadenze o date multiple, NON comprimerle: sono tutte importanti
+
+PROCESSO DI REVISIONE:
+- Se la risposta è già concisa e corretta, restituiscila invariata
+- Se è troppo lunga, elimina le parti ridondanti mantenendo TUTTI i dati fattuali
+- Se è un paragrafo con più elementi, convertila in elenco puntato
+- Correggi eventuali errori grammaticali
+- Verifica che non siano stati inventati dati non presenti nella risposta originale
+
+Rispondi SOLO con la risposta rivista, senza commenti aggiuntivi.
+
+>>> USER PROMPT:
+Domanda originale: che esami ho alla prossima sessione?
+Categoria: date_esami
+
+INFORMAZIONI UTENTE: L'utente è un OSPITE (non autenticato). Non sono disponibili informazioni personali sullo studente. Fornisci risposte generiche senza poter personalizzare in base al percorso di studio specifico.
+
+Risposta generata: Gentile studente,
+
+Per poterti aiutare a trovare gli esami della prossima sessione, avrei bisogno di sapere a quale corso di laurea sei iscritto/a. Essendo un ospite, non ho accesso a questa informazione.
+
+Una volta specificato il tuo corso, potrò consultare il calendario didattico corretto.
+
+In generale, per l'anno accademico 2025/2026, le prossime sessioni d'esame previste, a partire dalla data odierna (07 marzo 2026), sono:
+
+*   **Dipartimento di Lettere, Filosofia, Comunicazione:**
+    *   Un appello orale o scritto straordinario (per studenti in corso e fuori corso) si terrà dal **30 marzo 2026 al 17 aprile 2026**.
+*   **Dipartimento di Lingue, Letterature e Culture Straniere:**
+    *   La prossima sessione per gli esami di profitto è prevista dal **25 maggio al 31 luglio 2026** (esclusi i giorni delle tesi 9 e 10 luglio). In questa sessione sono previsti tre appelli per le discipline (meno le lingue straniere) e due appelli per le lingue straniere.
+*   **Dipartimento di Giurisprudenza:**
+    *   La prossima sessione utile per tutti gli insegnamenti del primo e secondo semestre e per i debitori d'esame è prevista dal **3 giugno al 27 giugno 2026**.
+
+Ti invito a indicarmi il tuo corso di laurea per fornirti informazioni più precise sugli esami specifici. Puoi anche consultare il portale generale degli esami dell'Università di Bergamo per i dettagli: [https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it](https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it)
+
+Rivedi e migliora questa risposta se necessario. Se lo studente è autenticato, assicurati che la risposta sia personalizzata e pertinente al suo percorso di studio. Se è un ospite, assicurati che la risposta sia generica e orientativa.
+
+>>> RISPOSTA:
+Essendo un ospite, non è possibile accedere alle informazioni specifiche del tuo corso di laurea. Per fornirti dettagli precisi sugli esami della prossima sessione, è necessario indicare il tuo corso di studi.
+
+In generale, per l'anno accademico 2025/2026, a partire dal 07 marzo 2026, le prossime sessioni d'esame previste sono:
+
+-   DIPARTIMENTO DI LETTERE, FILOSOFIA, COMUNICAZIONE: Un appello orale o scritto straordinario (per studenti in corso e fuori corso) si terrà dal 30 marzo 2026 al 17 aprile 2026.
+-   DIPARTIMENTO DI LINGUE, LETTERATURE E CULTURE STRANIERE: La prossima sessione per gli esami di profitto è prevista dal 25 maggio al 31 luglio 2026 (esclusi i giorni delle tesi 9 e 10 luglio). Sono previsti tre appelli per le discipline (meno le lingue straniere) e due appelli per le lingue straniere.
+-   DIPARTIMENTO DI GIURISPRUDENZA: La prossima sessione utile per tutti gli insegnamenti del primo e secondo semestre e per i debitori d'esame è prevista dal 3 giugno al 27 giugno 2026.
+
+Puoi consultare il portale generale degli esami dell'Università di Bergamo per i dettagli: https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it
+
+================================================================================
+RISPOSTA FINALE
+================================================================================
+Essendo un ospite, non è possibile accedere alle informazioni specifiche del tuo corso di laurea. Per fornirti dettagli precisi sugli esami della prossima sessione, è necessario indicare il tuo corso di studi.
+
+In generale, per l'anno accademico 2025/2026, a partire dal 07 marzo 2026, le prossime sessioni d'esame previste sono:
+
+-   DIPARTIMENTO DI LETTERE, FILOSOFIA, COMUNICAZIONE: Un appello orale o scritto straordinario (per studenti in corso e fuori corso) si terrà dal 30 marzo 2026 al 17 aprile 2026.
+-   DIPARTIMENTO DI LINGUE, LETTERATURE E CULTURE STRANIERE: La prossima sessione per gli esami di profitto è prevista dal 25 maggio al 31 luglio 2026 (esclusi i giorni delle tesi 9 e 10 luglio). Sono previsti tre appelli per le discipline (meno le lingue straniere) e due appelli per le lingue straniere.
+-   DIPARTIMENTO DI GIURISPRUDENZA: La prossima sessione utile per tutti gli insegnamenti del primo e secondo semestre e per i debitori d'esame è prevista dal 3 giugno al 27 giugno 2026.
+
+Puoi consultare il portale generale degli esami dell'Università di Bergamo per i dettagli: https://logistica.unibg.it/PortaleStudenti/index.php?view=easytest&_lang=it
+
+------------------------------------------------------------
+TEMPI DI ESECUZIONE
+------------------------------------------------------------
+  Classifier Agent         : 0.774s
+  Query Agent              : 7.593s
+  Web Agent (Exam Extract) : 8.849s
+  Generator Agent          : 10.095s
+  Revision Agent           : 7.177s
+
+  TEMPO TOTALE             : 34.493s
+
+================================================================================
+FINE DEL LOG
+================================================================================
