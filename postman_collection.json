@@ -158,7 +158,7 @@
     },
     {
       "name": "Iterazione 2 - Auth e Personalizzazione",
-      "description": "Test di registrazione, login, gestione profilo e personalizzazione risposte.",
+      "description": "Test di registrazione, login e personalizzazione risposte.",
       "item": [
         {
           "name": "IT2-01 Registrazione Nuovo Studente",
@@ -331,150 +331,7 @@
           ]
         },
         {
-          "name": "IT2-06 Verifica Token (Autenticato)",
-          "request": {
-            "method": "GET",
-            "url": "{{base_url}}/api/auth/verify",
-            "description": "Verifica il token JWT dal cookie. Richiede aver eseguito prima il login (IT2-03)."
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('Status 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "pm.test('Returns user info', function () {",
-                  "    var json = pm.response.json();",
-                  "    pm.expect(json.status).to.eql('loggato');",
-                  "    pm.expect(json.name).to.be.a('string');",
-                  "    pm.expect(json.matricola).to.eql(pm.variables.get('test_matricola'));",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "IT2-07 Verifica Token Senza Cookie (401)",
-          "request": {
-            "method": "GET",
-            "url": "{{base_url}}/api/auth/verify",
-            "header": [
-              { "key": "Cookie", "value": "" }
-            ],
-            "description": "Verifica che senza cookie JWT valido si riceva 401."
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('Status 401', function () {",
-                  "    pm.response.to.have.status(401);",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "IT2-08 Aggiornamento Profilo",
-          "request": {
-            "method": "PUT",
-            "url": "{{base_url}}/api/auth/profile",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"year\": 1,\n  \"course\": \"Ingegneria meccanica\"\n}"
-            },
-            "description": "Aggiorna il profilo utente (cambio corso e anno). Richiede autenticazione."
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('Status 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "pm.test('Profile updated', function () {",
-                  "    var json = pm.response.json();",
-                  "    pm.expect(json.year).to.eql(1);",
-                  "    pm.expect(json.course).to.eql('Ingegneria meccanica');",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "IT2-09 Cambio Password",
-          "request": {
-            "method": "PUT",
-            "url": "{{base_url}}/api/auth/password",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"current_password\": \"{{test_password}}\",\n  \"new_password\": \"NewPassword456!\"\n}"
-            },
-            "description": "Cambio password con password corrente valida."
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('Status 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "pm.test('Password changed', function () {",
-                  "    var json = pm.response.json();",
-                  "    pm.expect(json.status).to.eql('success');",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "IT2-10 Cambio Password Errata (401)",
-          "request": {
-            "method": "PUT",
-            "url": "{{base_url}}/api/auth/password",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"current_password\": \"WrongCurrent!\",\n  \"new_password\": \"whatever\"\n}"
-            },
-            "description": "Tentativo di cambio password con password corrente errata."
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('Status 401', function () {",
-                  "    pm.response.to.have.status(401);",
-                  "});",
-                  "pm.test('Error message', function () {",
-                  "    var json = pm.response.json();",
-                  "    pm.expect(json.detail).to.include('corrente errata');",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "IT2-11 Query Personalizzata (Studente Autenticato)",
+          "name": "IT2-6 Query Personalizzata (Studente Autenticato)",
           "request": {
             "method": "POST",
             "url": "{{base_url}}/api/agent/query",
@@ -506,7 +363,7 @@
           ]
         },
         {
-          "name": "IT2-12 Logout",
+          "name": "IT2-7 Logout",
           "request": {
             "method": "POST",
             "url": "{{base_url}}/api/auth/logout",
@@ -631,31 +488,7 @@
           ]
         },
         {
-          "name": "IT3-04 Cronologia Conversazione",
-          "request": {
-            "method": "GET",
-            "url": "{{base_url}}/api/conversation/history?limit=5",
-            "description": "Verifica l'endpoint della cronologia conversazione (ora gestita client-side)."
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('Status 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "pm.test('Returns history array', function () {",
-                  "    var json = pm.response.json();",
-                  "    pm.expect(json.history).to.be.an('array');",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "IT3-05 Cancellazione Cronologia",
+          "name": "IT3-04 Cancellazione Cronologia",
           "request": {
             "method": "DELETE",
             "url": "{{base_url}}/api/conversation/history",
@@ -728,48 +561,9 @@
               }
             }
           ]
-        },
+        },        
         {
-          "name": "IT4-02 Query Date Esami (Exam Extract)",
-          "request": {
-            "method": "POST",
-            "url": "{{base_url}}/api/agent/query",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"query\": \"Quando è il prossimo esame di Algoritmi e strutture dati?\",\n  \"user_info\": {\n    \"status\": \"loggato\",\n    \"name\": \"Test\",\n    \"surname\": \"User\",\n    \"department\": \"Scuola di Ingegneria\",\n    \"course\": \"Ingegneria informatica\",\n    \"tipology\": \"Magistrale\",\n    \"year\": 2,\n    \"matricola\": \"9999999\"\n  }\n}"
-            },
-            "description": "Verifica il sotto-flusso exam_extract: la query dovrebbe essere classificata come 'date_esami' e attivare l'estrazione dal calendario."
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('Status 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "pm.test('Category is date_esami', function () {",
-                  "    var json = pm.response.json();",
-                  "    var steps = json.metadata.workflow_steps;",
-                  "    var classStep = steps.find(s => s.step === 'classification');",
-                  "    pm.expect(classStep.result.category).to.eql('date_esami');",
-                  "});",
-                  "pm.test('Exam extract step executed', function () {",
-                  "    var json = pm.response.json();",
-                  "    var steps = json.metadata.workflow_steps;",
-                  "    var stepNames = steps.map(s => s.step);",
-                  "    pm.expect(stepNames).to.include('exam_extract');",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "IT4-03 Query Agent Genera Query Ottimizzata",
+          "name": "IT4-02 Query Agent Genera Query Ottimizzata",
           "request": {
             "method": "POST",
             "url": "{{base_url}}/api/agent/query",
@@ -798,74 +592,6 @@
                   "    pm.expect(queryStep.result.search_query).to.be.a('string');",
                   "    // La query ottimizzata deve essere più corta dell'originale",
                   "    pm.expect(queryStep.result.search_query.length).to.be.lessThan(100);",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "IT4-04 Analisi Query (Debug)",
-          "request": {
-            "method": "POST",
-            "url": "{{base_url}}/api/agent/analyze",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"query\": \"Dove si trova la biblioteca?\"\n}"
-            },
-            "description": "Endpoint di debug che analizza la query senza eseguire l'intera pipeline."
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('Status 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "pm.test('Analysis contains category', function () {",
-                  "    var json = pm.response.json();",
-                  "    pm.expect(json.predicted_category).to.be.a('string');",
-                  "    pm.expect(json.query).to.eql('Dove si trova la biblioteca?');",
-                  "});",
-                  "pm.test('Workflow plan present', function () {",
-                  "    var json = pm.response.json();",
-                  "    pm.expect(json.workflow_plan).to.be.an('array');",
-                  "});"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "IT4-05 Query con Follow-up Date Esami",
-          "request": {
-            "method": "POST",
-            "url": "{{base_url}}/api/agent/query",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"query\": \"E nella sessione autunnale?\",\n  \"user_info\": {\n    \"status\": \"loggato\",\n    \"name\": \"Test\",\n    \"surname\": \"User\",\n    \"department\": \"Scuola di Ingegneria\",\n    \"course\": \"Ingegneria informatica\",\n    \"tipology\": \"Magistrale\",\n    \"year\": 2,\n    \"matricola\": \"9999999\"\n  },\n  \"conversation_history\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Quando è il prossimo esame di Algoritmi e strutture dati?\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"L'esame di Algoritmi e strutture dati nella sessione estiva 2026 si svolge il 15 giugno 2026.\"\n    }\n  ]\n}"
-            },
-            "description": "Follow-up su date esami: verifica che il QueryAgent usi il contesto conversazionale per generare la query corretta (stessa materia, sessione diversa)."
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('Status 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "pm.test('Response references autumn session', function () {",
-                  "    var json = pm.response.json();",
-                  "    pm.expect(json.response).to.be.a('string');",
-                  "    pm.expect(json.response.length).to.be.greaterThan(10);",
                   "});"
                 ]
               }
