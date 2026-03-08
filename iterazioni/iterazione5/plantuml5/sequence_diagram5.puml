@@ -2,94 +2,74 @@
 title Sequence Diagram (Pipeline Completa con Timestamp e Timing) - Iterazione 5
 
 actor Utente                         as U
-participant "Browser\n(React App)"   as FE
-participant "API Gateway\n(FastAPI)"  as GW
+participant "Browser"   as FE
+participant "API Gateway"  as GW
 participant "Orchestrator Agent"      as Orch
 participant "Classifier Agent"        as Cls
 participant "Query Agent"             as QA
-participant "Web Agent\n(Tavily)"     as WA
+participant "Web Agent"     as WA
 participant "Generator Agent"         as Gen
 participant "Revision Agent"          as Rev
 participant "Pipeline Logger"         as Log
-participant "File System\n(logs/)"    as FS
+participant "File System"    as FS
 
 ' ─── 1. Invio query con history ──────────────────────────────
 U   -> FE   : Inserisce domanda
 FE  -> FE   : Costruisce conversation_history\n(ultimi 10 messaggi)
-FE  -> GW   : POST /api/agent/query\n[Cookie: access_token=<JWT>]\n{ query, user_info, conversation_history }
+FE  -> GW   : [Cookie: access_token=<JWT>]\n{ query, user_info, conversation_history }
 
 ' ─── 2. Inizializzazione stato ────────────────────────────────
 GW  -> Orch : process_query(query, user_info, conversation_history)
-Orch -> Orch : Inizializza AgentState\n(query + profilo + history)
-Orch -> Orch : pipeline_start = time.time()
+Orch -> Orch : query + profilo + history
 
 ' ─── 3. Classificazione ───────────────────────────────────────
 Orch -> Cls  : classify(query, user_context, conversation_history)
-note right: elapsed_time registrato
-Cls  --> Orch : { category, description, confidence }
+Cls  --> Orch : {category, description, confidence}
 
 ' ─── 4. Generazione search query con timestamp ────────────────
 Orch -> QA   : generate_query(query, conversation_history, user_context)
-QA   -> QA   : today = get_italian_timestamp()
-QA   -> QA   : System prompt:\n"DATA ODIERNA: {today}\n(Anno accademico 2025/2026)"
-note right: elapsed_time registrato
 QA   --> Orch : { search_query: "parole chiave ottimizzate" }
 
 ' ─── 5. Routing condizionale ──────────────────────────────────
 alt Categoria = date_esami
   Orch -> WA   : search_and_extract_exams(query, user_context, search_query)
-  WA   -> WA   : _select_calendar_link(query, user_context)\ntramite LLM
-  WA   -> WA   : Extract(calendar_url)\ntramite Tavily Extract
-  WA   -> WA   : Search top 3 aggiuntivi
-  WA   -> WA   : _format_exam_results()\ncon DATA ODIERNA: {today}
-  note right: elapsed_time registrato
-  WA   --> Orch : { calendar_context, web_results, status }
+  WA   -> WA   : _select_calendar_link(query, user_context)
+  WA   -> WA   : Extract(calendar_url)
+  WA   -> WA   : Search top 3
+  WA   -> WA   : _format_exam_results()
+  WA   --> Orch : {calendar_context, web_results, status}
 
 else Tutte le altre categorie
   Orch -> WA   : search(search_query)
-  WA   -> WA   : Tavily.search(query,\ninclude_domains=[unibg.it,\ncoursecatalogue],\nmax_results=30)
+  WA   -> WA   : Tavily.search
   WA   -> WA   : Ordina per score, seleziona top 5
 
   alt Risultato è PDF
-    WA -> WA   : _extract_pdf_links(url)\ntramite PyMuPDF
+    WA -> WA   : _extract_pdf_links(url)
   end
 
   WA   -> WA   : _format_results(top_results)
-  note right: elapsed_time registrato
   WA   --> Orch : { web_results, formatted_context, total_results, status }
 end
 
 ' ─── 6. Generazione risposta con timestamp e fonti ────────────
 Orch -> Gen  : generate(query, category,\ncontext+web_context,\nuser_context, conversation_history)
-Gen  -> Gen  : today = get_italian_timestamp()
-Gen  -> Gen  : System prompt:\n"DATA ODIERNA: {today}\n(Anno accademico 2025/2026)"
 Gen  -> Gen  : Aggiunge SOURCE_INSTRUCTIONS\n(se web_context presente)
-Gen  -> Gen  : Inietta history come\nHumanMessage/AIMessage nativi
-note right: elapsed_time registrato
+Gen  -> Gen  : Inietta history
 Gen  --> Orch : { response, status }
 
 ' ─── 7. Revisione ────────────────────────────────────────────
 Orch -> Rev  : revise(query, draft, category,\nuser_context, conversation_history)
-Rev  -> Rev  : Applica regole formato:\nno Markdown, no emoji, MAIUSCOLE
-Rev  -> Rev  : Preserva date, URL, fonti
-note right: elapsed_time registrato
-Rev  --> Orch : { revised_response, has_changes }
+Rev  --> Orch : {revised_response, has_changes}
 
 ' ─── 8. Calcolo tempo totale e logging ───────────────────────
-Orch -> Orch : total_time = time.time() - pipeline_start
 Orch -> Log  : write_log(state, workflow_steps, total_time)
-Log  -> Log  : _build_filename(matricola, timestamp)
-Log  -> Log  : _format_timing_section()\n(per agente + totale)
-Log  -> FS   : scrive file log txt
 FS   --> Log : filepath
 Log  --> Orch : filepath
 
 ' ─── 9. Risposta finale ───────────────────────────────────────
 Orch --> GW  : { response, category, metadata }
 GW   --> FE  : { response, category, metadata }
-
-FE   -> FE   : Aggiunge messaggio alla UI
-FE   -> FE   : Salva conversazione in localStorage
 FE   --> U   : Visualizza risposta
 
 @enduml
