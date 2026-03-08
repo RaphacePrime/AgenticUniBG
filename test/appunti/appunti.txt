@@ -1,2 +1,0 @@
-da fare evaluation --> calcolare metriche di agreement
- e metriche di valutazione del .xlsx
