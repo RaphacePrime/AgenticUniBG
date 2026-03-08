@@ -8,15 +8,6 @@
   <strong>Sistema multi-agente intelligente per l'Università degli Studi di Bergamo</strong>
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/python-3.11-blue?logo=python&logoColor=white" alt="Python 3.11"/>
-  <img src="https://img.shields.io/badge/node-20-green?logo=node.js&logoColor=white" alt="Node 20"/>
-  <img src="https://img.shields.io/badge/react-18-61DAFB?logo=react&logoColor=white" alt="React 18"/>
-  <img src="https://img.shields.io/badge/FastAPI-0.109+-009688?logo=fastapi&logoColor=white" alt="FastAPI"/>
-  <img src="https://img.shields.io/badge/LangGraph-🦜-orange" alt="LangGraph"/>
-  <img src="https://img.shields.io/badge/Docker-compose-2496ED?logo=docker&logoColor=white" alt="Docker"/>
-</p>
-
 ---
 
 ## Indice
@@ -326,21 +317,6 @@ npm run dev
 
 ---
 
-## Configurazione Variabili d'Ambiente
-
-| Variabile         | Obbligatoria | Descrizione                                | Esempio                      |
-| ----------------- | :----------: | ------------------------------------------ | ---------------------------- |
-| `GOOGLE_API_KEY`  |      ✅      | API key di Google AI per il modello Gemini | `AIzaSy...`                  |
-| `TAVILY_API_KEY`  |      ✅      | API key di Tavily per la ricerca web       | `tvly-...`                   |
-| `MONGODB_URI`     |      ❌      | URI di connessione MongoDB Atlas           | `mongodb+srv://...`          |
-| `MONGODB_DB_NAME` |      ❌      | Nome del database MongoDB                  | `agentic_unibg`              |
-| `ENVIRONMENT`     |      ❌      | Ambiente di esecuzione                     | `development` / `production` |
-| `JWT_SECRET_KEY`  |      ❌      | Chiave segreta per firma JWT               | stringa casuale sicura       |
-
-> Le variabili non obbligatorie hanno valori di default configurati nel codice. Per un ambiente di produzione, è fortemente consigliato impostare un `JWT_SECRET_KEY` robusto.
-
----
-
 ## Utilizzo dell'Applicazione
 
 ### Primo accesso
@@ -354,14 +330,14 @@ npm run dev
 
 Una volta autenticato, accedi alla chat dove puoi porre domande su:
 
-| Categoria              | Esempi                                                                   |
-| ---------------------- | ------------------------------------------------------------------------ |
-| **Informazioni corso** | "Chi è il docente di Algoritmi?", "Quali materie ho al secondo anno?"    |
-| **Orari**              | "A che ora è la lezione di matematica?", "Orari ricevimento prof. Rossi" |
-| **Date esami**         | "Quando è l'esame di Analisi?", "Esami della sessione estiva 2026"       |
-| **Procedure**          | "Come mi iscrivo all'esame?", "Come pago le tasse universitarie?"        |
-| **Servizi**            | "Dove si trova la mensa?", "Orari biblioteca"                            |
-| **Generale**           | "Informazioni sull'Erasmus", "Come raggiungo l'università?"              |
+| Categoria              | Esempi                                                                |
+| ---------------------- | --------------------------------------------------------------------- |
+| **Informazioni corso** | "Chi è il docente di Analisi I?", "Quali materie ho al secondo anno?" |
+| **Orari**              | DA IMPLEMENTARE                                                       |
+| **Date esami**         | "Quando è l'esame di Analisi?", "Esami della sessione estiva 2026"    |
+| **Procedure**          | "Come mi iscrivo all'esame?", "Come pago le tasse universitarie?"     |
+| **Servizi**            | "Dove si trova la mensa?", "Orari biblioteca di Dalmine"              |
+| **Generale**           | "Informazioni sull'Erasmus", "Come raggiungo l'università?"           |
 
 ### Funzionalità principali
 
@@ -370,58 +346,6 @@ Una volta autenticato, accedi alla chat dove puoi porre domande su:
 - **Estrazione date esami**: per domande sulle date degli esami, il sistema estrae automaticamente i dati dai calendari PDF ufficiali
 - **Fonti verificabili**: ogni risposta include link alle pagine ufficiali consultate
 - **Modifica profilo**: dalla pagina Impostazioni puoi aggiornare i tuoi dati o cambiare password
-
----
-
-## API Endpoints
-
-### Generali
-
-| Metodo | Endpoint      | Descrizione                   |
-| ------ | ------------- | ----------------------------- |
-| `GET`  | `/`           | Root endpoint (info versione) |
-| `GET`  | `/api/health` | Health check del servizio     |
-
-### Autenticazione
-
-| Metodo | Endpoint             | Descrizione                     | Auth |
-| ------ | -------------------- | ------------------------------- | :--: |
-| `POST` | `/api/auth/login`    | Login con matricola e password  |  ❌  |
-| `POST` | `/api/auth/register` | Registrazione nuovo studente    |  ❌  |
-| `GET`  | `/api/auth/verify`   | Verifica token JWT (dal cookie) |  ✅  |
-| `PUT`  | `/api/auth/profile`  | Aggiorna dati profilo           |  ✅  |
-| `PUT`  | `/api/auth/password` | Cambia password                 |  ✅  |
-| `POST` | `/api/auth/logout`   | Logout (cancella cookie)        |  ❌  |
-
-### Agenti
-
-| Metodo   | Endpoint                    | Descrizione                             | Auth |
-| -------- | --------------------------- | --------------------------------------- | :--: |
-| `POST`   | `/api/agent/query`          | Invia una query al sistema multi-agente |  ❌  |
-| `GET`    | `/api/agents`               | Lista degli agenti disponibili          |  ❌  |
-| `GET`    | `/api/conversation/history` | Cronologia conversazioni                |  ❌  |
-| `DELETE` | `/api/conversation/history` | Cancella cronologia                     |  ❌  |
-
-### Esempio di richiesta al sistema agenti
-
-```bash
-curl -X POST http://localhost:8000/api/agent/query \
-  -H "Content-Type: application/json" \
-  -d '{
-    "query": "Quando è il prossimo esame di Analisi Matematica?",
-    "user_info": {
-      "status": "loggato",
-      "name": "Mario",
-      "surname": "Rossi",
-      "department": "Scuola di Ingegneria",
-      "course": "Ingegneria informatica",
-      "tipology": "Triennale",
-      "year": 1,
-      "matricola": "1086531"
-    },
-    "conversation_history": []
-  }'
-```
 
 ---
 
@@ -523,29 +447,3 @@ I log sono utili per:
 > Per la documentazione interattiva dell'API, accedi a http://localhost:8000/docs dopo aver avviato il backend.
 
 ---
-
-<p align="center">
-  Sviluppato per l'Università degli Studi di Bergamo
-</p>
-- Groq (Llama 3.3 70B)
-- Python 3.11
-
-### Infrastructure
-
-- Docker
-- Docker Compose
-
-## Note per lo Sviluppo
-
-- Il frontend usa Vite per il development server con hot reload
-- Il backend usa uvicorn con --reload per il development
-- In produzione, il frontend viene servito da Nginx
-- CORS è configurato per permettere richieste dal frontend
-
-## Prossimi Passi
-
-1. Implementare agenti specifici per diversi task
-2. Aggiungere persistenza dei dati (database)
-3. Implementare autenticazione e autorizzazione
-4. Aggiungere testing (unit e integration tests)
-5. Configurare CI/CD
