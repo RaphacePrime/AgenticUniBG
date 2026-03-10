@@ -383,35 +383,6 @@ body {
   margin-bottom: 0.5rem;
 }
 
-/* Workflow Details */
-.workflow-details {
-  margin-top: 1rem;
-  padding: 0.75rem;
-  background: var(--background);
-  border-radius: 14px;
-  font-size: 0.85rem;
-}
-
-.workflow-details summary {
-  cursor: pointer;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
-
-.workflow-steps {
-  margin-top: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.workflow-step {
-  padding: 0.5rem;
-  background: white;
-  border-radius: 8px;
-  border-left: 3px solid var(--primary-color);
-}
-
 /* Loading */
 .message-content.loading {
   background: var(--background);

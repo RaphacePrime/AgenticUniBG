@@ -311,7 +311,7 @@ npm install
 npm run dev
 ```
 
-> **Nota:** Il frontend in sviluppo è configurato con un proxy Vite che inoltra tutte le chiamate `/api/*` al backend su `http://server:8000`. Se esegui il backend in locale (non in Docker), modifica `vite.config.js` cambiando il target del proxy in `http://localhost:8000`.
+> **Nota:** Il frontend in sviluppo è configurato con un proxy Vite che inoltra tutte le chiamate `/api/*` al backend su `http://server:8000`. Se esegui il backend in locale (non in Docker), modifica `vite.config.js` situato in agentic_unibg/app/src cambiando il target del proxy in `http://localhost:8000`.
 
 ---
 

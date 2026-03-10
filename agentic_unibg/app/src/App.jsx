@@ -374,21 +374,6 @@ function App() {
                             ),
                           )}
                       </div>
-                      {msg.metadata && msg.metadata.workflow_steps && (
-                        <details className="workflow-details">
-                          <summary>
-                            Mostra workflow (
-                            {msg.metadata.workflow_steps.length} steps)
-                          </summary>
-                          <div className="workflow-steps">
-                            {msg.metadata.workflow_steps.map((step, i) => (
-                              <div key={i} className="workflow-step">
-                                <strong>{step.agent}:</strong> {step.step}
-                              </div>
-                            ))}
-                          </div>
-                        </details>
-                      )}
                     </div>
                   )}
                   {msg.type === "error" && (
