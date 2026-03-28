@@ -599,6 +599,94 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Iterazione 5 - Profilo e Date Esami",
+      "description": "Test aggiornamento profilo e flusso date_esami con utente autenticato.",
+      "item": [
+        {
+          "name": "IT5-01 Aggiornamento Profilo con Dati Validi",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/api/auth/profile",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"department\": \"Scuola di Ingegneria\",\n  \"course\": \"Ingegneria informatica\",\n  \"tipology\": \"Magistrale\",\n  \"year\": 2\n}"
+            },
+            "description": "Aggiorna il profilo dello studente autenticato con dati validi e verifica i campi restituiti."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Profile updated correctly', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.status).to.eql('loggato');",
+                  "    pm.expect(json.department).to.eql('Scuola di Ingegneria');",
+                  "    pm.expect(json.course).to.eql('Ingegneria informatica');",
+                  "    pm.expect(json.tipology).to.eql('Magistrale');",
+                  "    pm.expect(json.year).to.eql(2);",
+                  "    pm.expect(json.matricola).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "IT5-02 Query date_esame con Utente Autenticato",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/agent/query",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"Quando sono le date degli esami della sessione estiva per ingegneria informatica?\",\n  \"user_info\": {\n    \"status\": \"loggato\",\n    \"name\": \"Test\",\n    \"surname\": \"User\",\n    \"matricola\": \"{{test_matricola}}\",\n    \"department\": \"Scuola di Ingegneria\",\n    \"course\": \"Ingegneria informatica\",\n    \"tipology\": \"Magistrale\",\n    \"year\": 2\n  }\n}"
+            },
+            "description": "Verifica il flusso date_esami con utente autenticato e presenza dello step exam_extract."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response contains answer', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.response).to.be.a('string');",
+                  "    pm.expect(json.response.length).to.be.greaterThan(20);",
+                  "});",
+                  "pm.test('Pipeline includes exam_extract step', function () {",
+                  "    var json = pm.response.json();",
+                  "    var steps = (json.metadata && json.metadata.workflow_steps) ? json.metadata.workflow_steps : [];",
+                  "    var stepNames = steps.map(function (s) { return s.step; });",
+                  "    pm.expect(stepNames).to.include('exam_extract');",
+                  "});",
+                  "pm.test('Classification is date_esami or fallback handled', function () {",
+                  "    var json = pm.response.json();",
+                  "    var steps = (json.metadata && json.metadata.workflow_steps) ? json.metadata.workflow_steps : [];",
+                  "    var classificationStep = steps.find(function (s) { return s.step === 'classification'; });",
+                  "    pm.expect(classificationStep).to.not.be.undefined;",
+                  "    var category = classificationStep.result ? classificationStep.result.category : null;",
+                  "    pm.expect(['date_esami', 'informazioni_corso', 'generale']).to.include(category);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }
