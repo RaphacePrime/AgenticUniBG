@@ -77,6 +77,7 @@ function App() {
     setIsAuthenticated(true);
     // Il login è riuscito → il server è raggiungibile
     setConnectionStatus("connected");
+    setMessage("");
   };
 
   const handleGuest = () => {
@@ -91,6 +92,7 @@ function App() {
       matricola: null,
     });
     setIsAuthenticated(true);
+    setMessage("");
   };
 
   const handleLogout = async () => {
@@ -109,6 +111,7 @@ function App() {
       setUserInfo(null);
       setIsAuthenticated(false);
       setConversation([]);
+      setMessage("");
     }
   };
 
